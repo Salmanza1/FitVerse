@@ -1,0 +1,71 @@
+import React from 'react';
+import { TextInput, StyleSheet, TextInputProps, View, Text, Platform } from 'react-native';
+import Colors from '@/constants/Colors';
+import { Tokens } from '@/constants/Tokens';
+import { useColorScheme } from 'react-native';
+
+interface StyledInputProps extends TextInputProps {
+    label?: string;
+    error?: string;
+    containerStyle?: any;
+}
+
+export function StyledInput({ label, error, style, containerStyle, ...props }: StyledInputProps) {
+    const colorScheme = useColorScheme();
+    const themeColors = Colors[colorScheme ?? 'light'];
+
+    return (
+        <View style={[styles.container, containerStyle]}>
+            {!!label && (
+                <Text style={styles.label}>
+                    {label.toUpperCase()}
+                </Text>
+            )}
+            <TextInput
+                style={[
+                    styles.input,
+                    {
+                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                        borderColor: error ? '#ff6b6b' : 'rgba(255, 255, 255, 0.15)',
+                        color: '#FFFFFF',
+                    },
+                    style
+                ]}
+                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                autoCorrect={props.secureTextEntry ? false : props.autoCorrect}
+                {...props}
+            />
+            {!!error && <Text style={styles.errorText}>{error}</Text>}
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        marginBottom: 20,
+        width: '100%',
+    },
+    label: {
+        fontSize: Tokens.typography.xs,
+        fontWeight: '900',
+        marginBottom: Tokens.spacing.sm,
+        marginLeft: Tokens.spacing.xs,
+        color: '#D4AF37',
+        letterSpacing: 1.5,
+    },
+    input: {
+        width: '100%',
+        paddingHorizontal: Tokens.spacing.lg,
+        paddingVertical: 14,
+        borderRadius: Tokens.radius.md,
+        fontSize: Tokens.typography.md,
+        borderWidth: 1.5,
+    },
+    errorText: {
+        color: '#ff6b6b',
+        fontSize: Tokens.typography.xs,
+        marginTop: Tokens.spacing.xs,
+        marginLeft: Tokens.spacing.xs,
+        fontWeight: 'bold',
+    }
+});

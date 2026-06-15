@@ -28,11 +28,47 @@ export default function Root({ children }: { children: React.ReactNode }) {
 }
 
 const responsiveBackground = `
-body {
-  background-color: #fff;
+:root {
+  color-scheme: dark;
+  --fitverse-navy: #0C2340;
+  --fitverse-navy-deep: #0A1F38;
+  --fitverse-gold: #D4AF37;
 }
-@media (prefers-color-scheme: dark) {
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--fitverse-navy-deep);
+  color: #F4F7FB;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  display: flex;
+  min-height: 100%;
+  overflow: hidden;
+}
+/* Expo / React Native Web root wrappers */
+#root, [data-expo-root], body > div:first-child {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--fitverse-navy);
+}
+/* Prevent transparent RN views from showing browser black */
+div[class*="css-view"] {
+  min-height: 0;
+}
+input, textarea {
+  outline: none;
+}
+input:focus, textarea:focus {
+  border-color: var(--fitverse-gold) !important;
+}
+@media (min-width: 900px) {
   body {
-    background-color: #000;
+    background: linear-gradient(180deg, #081A30 0%, #0C2340 40%, #0C2340 100%);
   }
 }`;

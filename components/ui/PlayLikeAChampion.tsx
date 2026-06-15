@@ -1,0 +1,150 @@
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withRepeat,
+    withTiming,
+    withSequence,
+    withSpring,
+    Easing,
+    interpolate
+} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
+
+export const PlayLikeAChampion = () => {
+    const glint = useSharedValue(-1);
+    const scale = useSharedValue(1);
+    const rotation = useSharedValue(0);
+
+    useEffect(() => {
+        // Continuous glint effect every 4 seconds
+        glint.value = withRepeat(
+            withTiming(2, {
+                duration: 2000,
+                easing: Easing.linear,
+            }),
+            -1,
+            false
+        );
+    }, []);
+
+    const handlePress = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        scale.value = withSequence(
+            withSpring(1.05),
+            withSpring(1)
+        );
+        rotation.value = withSequence(
+            withSpring(2),
+            withSpring(-2),
+            withSpring(0)
+        );
+    };
+
+    const glintStyle = useAnimatedStyle(() => {
+        const translateX = interpolate(glint.value, [-1, 2], [-200, 400]);
+        return {
+            transform: [{ translateX }, { skewX: '-20deg' }],
+        };
+    });
+
+    const animatedContainer = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { scale: scale.value },
+                { rotate: `${rotation.value}deg` }
+            ],
+        };
+    });
+
+    return (
+        <Pressable onPress={handlePress}>
+            <Animated.View style={[styles.container, animatedContainer]}>
+                <LinearGradient
+                    colors={['#D4AF37', '#F5E1A4', '#D4AF37']}
+                    style={styles.board}
+                >
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>PLAY LIKE A</Text>
+                        <Text style={styles.textMain}>CHAMPION</Text>
+                        <Text style={styles.text}>TODAY</Text>
+                    </View>
+
+                    {/* Glint Overlay */}
+                    <Animated.View style={[styles.glintContainer, glintStyle]}>
+                        <LinearGradient
+                            colors={['transparent', 'rgba(255, 255, 255, 0.4)', 'transparent']}
+                            style={StyleSheet.absoluteFill}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                        />
+                    </Animated.View>
+
+                    {/* Border Inner */}
+                    <View style={styles.innerBorder} />
+                </LinearGradient>
+            </Animated.View>
+        </Pressable>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        paddingHorizontal: 20,
+        marginVertical: 15,
+        shadowColor: "#D4AF37",
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 15,
+        elevation: 12,
+    },
+    board: {
+        borderRadius: 8,
+        padding: 4,
+        overflow: 'hidden',
+        position: 'relative',
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#0C2340',
+    },
+    textContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: 10,
+        fontWeight: '900',
+        color: '#000',
+        letterSpacing: 3,
+        opacity: 0.8,
+    },
+    textMain: {
+        fontSize: 22,
+        fontWeight: '900',
+        color: '#000',
+        letterSpacing: 1.5,
+        marginVertical: 2,
+    },
+    glintContainer: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        width: 150,
+        backgroundColor: 'transparent',
+    },
+    innerBorder: {
+        position: 'absolute',
+        top: 4,
+        left: 4,
+        right: 4,
+        bottom: 4,
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.1)',
+        borderRadius: 4,
+    }
+});
