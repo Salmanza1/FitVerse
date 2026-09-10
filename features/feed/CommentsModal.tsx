@@ -19,6 +19,7 @@ import { Post, Comment as SocialComment } from '@/types/social';
 import { supabase } from '@/lib/supabase';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface CommentsModalProps {
     visible: boolean;
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modalContent: {
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         height: '80%',
@@ -257,13 +258,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.1)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
         position: 'relative'
     },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     closeBtn: {
         position: 'absolute',
@@ -282,21 +283,21 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
         borderWidth: 1,
-        borderColor: '#D4AF37'
+        borderColor: VisualSystem.colors.borderGold
     },
     avatarText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 16
     },
     commentContent: {
         flex: 1,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 10,
         borderRadius: 12,
         borderTopLeftRadius: 0,
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     commentUser: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 14
     },
@@ -343,16 +344,16 @@ const styles = StyleSheet.create({
         paddingBottom: 30, // Safe area
         backgroundColor: '#071626',
         borderTopWidth: 1,
-        borderTopColor: 'rgba(255,255,255,0.1)',
+        borderTopColor: VisualSystem.colors.borderSubtle,
         alignItems: 'center'
     },
     input: {
         flex: 1,
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 20,
         paddingHorizontal: 15,
         paddingVertical: 10,
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         maxHeight: 100,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -362,7 +363,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center'
     },

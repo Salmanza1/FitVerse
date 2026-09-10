@@ -75,7 +75,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
                     />
                     {query.length > 0 && (
                         <TouchableOpacity onPress={() => setQuery('')}>
-                            <FontAwesome name="times-circle" size={18} color="rgba(255,255,255,0.35)" />
+                            <FontAwesome name="times-circle" size={18} color={VisualSystem.colors.textTertiary} />
                         </TouchableOpacity>
                     )}
                 </View>
@@ -141,7 +141,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0A1F38',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingTop: 56,
     },
     header: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         paddingVertical: 10,
         borderRadius: 14,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         gap: 10,
@@ -190,9 +190,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 20,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     chipActive: {
         backgroundColor: 'rgba(212, 175, 55, 0.15)',
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.gold,
     },
     sectionHeader: {
-        backgroundColor: '#0A1F38',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingHorizontal: Tokens.spacing.lg,
         paddingVertical: 8,
     },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: Tokens.spacing.lg,
         paddingVertical: 14,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.05)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     rowPressed: {
         backgroundColor: 'rgba(212, 175, 55, 0.08)',

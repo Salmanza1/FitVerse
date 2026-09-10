@@ -11,6 +11,7 @@ import { FoodItem, MealType } from '@/types/nutrition';
 import { fetchLiveMenu } from '@/features/nutrition/NutrisliceService';
 import { calculateMultiplier, getAvailableUnits, UNITS } from '@/features/nutrition/NutritionUtils';
 import { SmartSegmentedControl } from '@/components/ui/SegmentedControl';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -134,14 +135,14 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                 <View style={styles.header}>
                     <Text style={styles.title}>AI Vision Scanner</Text>
                     <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-                        <FontAwesome name="times" size={20} color="#fff" />
+                        <FontAwesome name="times" size={20} color={VisualSystem.colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
 
                 <ScrollView contentContainerStyle={styles.scroll}>
                     {!image ? (
                         <View style={styles.emptyState}>
-                            <FontAwesome name="camera-retro" size={60} color="rgba(255,255,255,0.1)" />
+                            <FontAwesome name="camera-retro" size={60} color={VisualSystem.colors.textTertiary} />
                             <Text style={styles.emptyText}>Place your meal clearly in frame</Text>
                             
                             <TouchableOpacity style={styles.mainActionBtn} onPress={handleTakePhoto}>
@@ -241,7 +242,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                                     onChangeText={setAmountStr}
                                                     keyboardType="decimal-pad"
                                                     style={styles.textInputNative}
-                                                    placeholderTextColor="rgba(255,255,255,0.2)"
+                                                    placeholderTextColor={VisualSystem.colors.textTertiary}
                                                 />
                                             </View>
                                         </View>
@@ -271,7 +272,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                                 value={userDescription}
                                                 onChangeText={setUserDescription}
                                                 placeholder="e.g. 'one scoop of brown rice and a grilled chicken breast'"
-                                                placeholderTextColor="rgba(255,255,255,0.2)"
+                                                placeholderTextColor={VisualSystem.colors.textTertiary}
                                                 style={styles.descriptionInput}
                                                 multiline
                                             />
@@ -301,7 +302,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     header: {
         flexDirection: 'row',
@@ -313,14 +314,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '900',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
     },
     closeBtn: {
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     emptyText: {
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         marginTop: 20,
         marginBottom: 40,
         textAlign: 'center',
@@ -371,24 +372,24 @@ const styles = StyleSheet.create({
     optionRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         width: '100%',
         padding: 20,
         borderRadius: 20,
         marginTop: 40,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     optionLabel: {
         fontSize: 10,
         fontWeight: '900',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
         marginBottom: 4,
     },
     optionSub: {
         fontSize: 12,
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
     },
     locTabs: {
         flexDirection: 'row',
@@ -399,9 +400,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 20,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     locTabOn: {
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
     locTabText: {
         fontSize: 10,
         fontWeight: 'bold',
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         letterSpacing: 1,
     },
     locTabTextOn: {
@@ -444,11 +445,11 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     resultCard: {
-        backgroundColor: 'rgba(255,255,255,0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 24,
         padding: 24,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     resultHeader: {
         flexDirection: 'row',
@@ -466,11 +467,11 @@ const styles = StyleSheet.create({
     itemName: {
         fontSize: 22,
         fontWeight: '900',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
     },
     itemLoc: {
         fontSize: 12,
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         marginTop: 4,
     },
     resetBtn: {
@@ -489,7 +490,7 @@ const styles = StyleSheet.create({
     statBox: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 12,
         borderRadius: 16,
         marginHorizontal: 4,
@@ -497,12 +498,12 @@ const styles = StyleSheet.create({
     statVal: {
         fontSize: 18,
         fontWeight: '900',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
     },
     statLabel: {
         fontSize: 8,
         fontWeight: '700',
-        color: 'rgba(255,255,255,0.3)',
+        color: VisualSystem.colors.textTertiary,
         marginTop: 4,
     },
     quantitySection: {
@@ -516,7 +517,7 @@ const styles = StyleSheet.create({
     qtyLabel: {
         fontSize: 10,
         fontWeight: '900',
-        color: 'rgba(255,255,255,0.5)',
+        color: VisualSystem.colors.textSecondary,
         letterSpacing: 1,
     },
     qtyRow: {
@@ -524,17 +525,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     qtyInputBox: {
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
         paddingHorizontal: 16,
         height: 50,
         width: 100,
         justifyContent: 'center',
     },
     textInputNative: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -542,7 +543,7 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
     },
     confirmBtn: {
         width: '100%',
@@ -561,18 +562,18 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     descriptionSection: {
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 20,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     descriptionInputBox: {
         marginTop: 12,
         minHeight: 80,
     },
     descriptionInput: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontWeight: '500',
         lineHeight: 20,
@@ -593,7 +594,7 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     aiInsightText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         lineHeight: 18,
         fontWeight: '500',

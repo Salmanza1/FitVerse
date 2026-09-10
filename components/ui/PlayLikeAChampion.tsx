@@ -12,6 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export const PlayLikeAChampion = () => {
     const glint = useSharedValue(-1);
@@ -63,7 +64,7 @@ export const PlayLikeAChampion = () => {
         <Pressable onPress={handlePress}>
             <Animated.View style={[styles.container, animatedContainer]}>
                 <LinearGradient
-                    colors={['#D4AF37', '#F5E1A4', '#D4AF37']}
+                    colors={['#D4AF37', VisualSystem.colors.goldText, '#D4AF37']}
                     style={styles.board}
                 >
                     <View style={styles.textContainer}>
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         marginVertical: 15,
-        shadowColor: "#D4AF37",
+        shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
         shadowRadius: 15,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: '#0C2340',
+        borderColor: VisualSystem.colors.borderStrong,
     },
     textContainer: {
         alignItems: 'center',

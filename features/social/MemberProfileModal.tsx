@@ -6,6 +6,7 @@ import { Tokens } from '@/constants/Tokens';
 import { SocialStore } from './SocialStore';
 import { UserProfile } from '@/types/user';
 import { LinearGradient } from 'expo-linear-gradient';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface MemberProfileModalProps {
     userId: string | null;
@@ -63,7 +64,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                                         style={StyleSheet.absoluteFill}
                                     />
                                     <Pressable style={styles.closeBtn} onPress={onClose}>
-                                        <FontAwesome name="chevron-down" size={20} color="#fff" />
+                                        <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.textPrimary} />
                                     </Pressable>
                                 </ImageBackground>
                                 <View style={styles.avatarWrapper}>
@@ -105,7 +106,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                         </View>
                     ) : (
                         <View style={styles.center}>
-                            <Text style={{ color: '#fff' }}>Profile not found.</Text>
+                            <Text style={{ color: VisualSystem.colors.textPrimary }}>Profile not found.</Text>
                             <Pressable onPress={onClose} style={{ marginTop: 20 }}>
                                 <Text style={{ color: FitVerseTheme.colors.accentGold }}>Close</Text>
                             </Pressable>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     container: {
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         borderTopWidth: 1,
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     name: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 4,
@@ -205,14 +206,14 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.4)',
     },
     badgeText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 10,
         fontWeight: '900',
         letterSpacing: 1,
     },
     statsRow: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 20,
         padding: 20,
         marginBottom: 30,
@@ -225,10 +226,10 @@ const styles = StyleSheet.create({
     statDivider: {
         width: 1,
         height: 30,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     statValue: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     sectionTitle: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 12,
@@ -250,14 +251,14 @@ const styles = StyleSheet.create({
     goalCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 15,
         borderRadius: 15,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.15)',
     },
     goalText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         marginLeft: 15,
         fontSize: 14,
         fontWeight: '500',
@@ -268,13 +269,13 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     prefTag: {
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingHorizontal: 15,
         paddingVertical: 8,
         borderRadius: 20,
     },
     prefText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
     }
 });

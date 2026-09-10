@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Animated, Dimensions } from 'react-
 import { Text } from '@/components/Themed';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import * as Haptics from 'expo-haptics';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface SegmentedControlProps {
     options: string[];
@@ -96,12 +97,12 @@ export function SmartSegmentedControl({ options, value, onSelect, containerStyle
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 14,
         padding: 4,
         flexDirection: 'row',
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     activeTab: {
         position: 'absolute',
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     tabText: {
         fontSize: 11,
         fontWeight: '900',
-        color: 'rgba(255, 255, 255, 0.4)',
+        color: VisualSystem.colors.textTertiary,
         letterSpacing: 1,
     },
     tabTextActive: {
@@ -142,9 +143,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: 12,
-        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     pillActive: {
         backgroundColor: 'rgba(212, 175, 55, 0.15)',
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     pillText: {
         fontSize: 12,
         fontWeight: '800',
-        color: 'rgba(255, 255, 255, 0.5)',
+        color: VisualSystem.colors.textSecondary,
         letterSpacing: 0.5,
     },
     pillTextActive: {

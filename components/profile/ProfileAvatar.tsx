@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ImageStyle, StyleProp } from 'react-native';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type Props = {
     uri?: string | null;
@@ -41,7 +42,7 @@ export function ProfileAvatar({ uri, name, size = 52, style }: Props) {
 
 const styles = StyleSheet.create({
     image: {
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.22)',
     },

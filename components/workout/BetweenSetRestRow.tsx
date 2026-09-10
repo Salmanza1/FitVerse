@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     doneBtnText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 12,
     },

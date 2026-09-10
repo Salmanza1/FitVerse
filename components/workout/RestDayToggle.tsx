@@ -210,11 +210,11 @@ const styles = StyleSheet.create({
     compactTitle: {
         fontSize: 15,
         fontWeight: '600',
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
     },
     compactSub: {
         fontSize: 12,
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         marginTop: 2,
     },
 });

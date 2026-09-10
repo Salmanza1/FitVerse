@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { useAuth } from '@/features/auth/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { goToAppHome, resetAppHomeRoute, LAST_TAB_STORAGE_KEY } from '@/lib/navigation';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function NotFoundScreen() {
     const { user, recoverSession, signOut } = useAuth();
@@ -59,7 +60,7 @@ export default function NotFoundScreen() {
                         router.replace('/(auth)');
                     }}
                 >
-                    <Text style={[styles.linkText, { color: 'rgba(255,255,255,0.45)' }]}>
+                    <Text style={[styles.linkText, { color: VisualSystem.colors.textSecondary }]}>
                         Sign out & start over
                     </Text>
                 </TouchableOpacity>
@@ -74,25 +75,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 28,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     title: {
         fontSize: 24,
         fontWeight: '800',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         marginBottom: 10,
         textAlign: 'center',
     },
     subtitle: {
         fontSize: 15,
         lineHeight: 22,
-        color: '#A0AEC0',
+        color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         marginBottom: 28,
         maxWidth: 320,
     },
     primaryBtn: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingHorizontal: 28,
         paddingVertical: 14,
         borderRadius: 14,
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     primaryText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 16,
         textAlign: 'center',
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     secondaryText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '700',
         fontSize: 15,
         textAlign: 'center',
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     linkText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 14,
         fontWeight: '600',
     },

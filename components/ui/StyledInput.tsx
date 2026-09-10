@@ -3,6 +3,7 @@ import { TextInput, StyleSheet, TextInputProps, View, Text, Platform } from 'rea
 import Colors from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
 import { useColorScheme } from 'react-native';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface StyledInputProps extends TextInputProps {
     label?: string;
@@ -25,13 +26,16 @@ export function StyledInput({ label, error, style, containerStyle, ...props }: S
                 style={[
                     styles.input,
                     {
-                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                        borderColor: error ? '#ff6b6b' : 'rgba(255, 255, 255, 0.15)',
-                        color: '#FFFFFF',
+                        // A white field on a white card is invisible — inset it.
+                        backgroundColor: VisualSystem.colors.bgDeep,
+                        borderColor: error
+                            ? VisualSystem.colors.danger
+                            : VisualSystem.colors.borderStrong,
+                        color: VisualSystem.colors.textPrimary,
                     },
                     style
                 ]}
-                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                placeholderTextColor={VisualSystem.colors.textTertiary}
                 autoCorrect={props.secureTextEntry ? false : props.autoCorrect}
                 {...props}
             />
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
     },
     input: {
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
     },
     errorText: {
-        color: '#ff6b6b',
+        color: VisualSystem.colors.danger,
         fontSize: Tokens.typography.xs,
         marginTop: Tokens.spacing.xs,
         marginLeft: Tokens.spacing.xs,

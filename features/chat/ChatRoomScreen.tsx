@@ -45,6 +45,7 @@ import {
     MemberWorkoutStatus,
 } from '@/features/workout/WorkoutPresenceStore';
 import { isRestDayMessage } from './chatSocial';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 /** Shape of a `message_reactions` row as delivered by Supabase realtime. */
 type MessageReactionRow = {
@@ -672,7 +673,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                 {/* Header */}
                 <View style={styles.header}>
                     <Pressable onPress={onClose} style={styles.backBtn} hitSlop={12}>
-                        <FontAwesome name="chevron-left" size={18} color="#D4AF37" />
+                        <FontAwesome name="chevron-left" size={18} color={VisualSystem.colors.gold} />
                     </Pressable>
                     <View style={styles.headerCenter}>
                         <View
@@ -716,7 +717,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
 
                 {activeChat.type === 'group' && pendingInvitees.length > 0 && (
                     <View style={styles.pendingBanner}>
-                        <FontAwesome name="clock-o" size={13} color="#D4AF37" />
+                        <FontAwesome name="clock-o" size={13} color={VisualSystem.colors.gold} />
                         <Text style={styles.pendingBannerText} numberOfLines={2}>
                             Waiting for {pendingInvitees.map((p) => p.name.split(' ')[0]).join(', ')} to accept
                         </Text>
@@ -744,7 +745,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                 >
                     {loading ? (
                         <View style={styles.loadingWrap}>
-                            <ActivityIndicator color="#D4AF37" />
+                            <ActivityIndicator color={VisualSystem.colors.gold} />
                         </View>
                     ) : (
                         <ScrollView
@@ -848,7 +849,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                                 disabled={nudgeSending}
                             >
                                 {nudgeSending ? (
-                                    <ActivityIndicator size="small" color="#D4AF37" />
+                                    <ActivityIndicator size="small" color={VisualSystem.colors.gold} />
                                 ) : (
                                     <Text style={styles.nudgeBtnText}>🏋️</Text>
                                 )}
@@ -859,7 +860,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                             value={inputText}
                             onChangeText={setInputText}
                             placeholder="Message..."
-                            placeholderTextColor="rgba(255,255,255,0.3)"
+                            placeholderTextColor={VisualSystem.colors.textTertiary}
                             multiline
                             maxLength={500}
                             returnKeyType="send"
@@ -950,12 +951,12 @@ function MemberStatusBar({
                 {pendingInvitees.map((p) => (
                     <View
                         key={`pending-${p.id}`}
-                        style={[memberStyles.chip, { borderColor: 'rgba(255,255,255,0.25)' }]}
+                        style={[memberStyles.chip, { borderColor: VisualSystem.colors.borderSubtle }]}
                     >
-                        <View style={[memberStyles.dot, { backgroundColor: 'rgba(255,255,255,0.35)' }]} />
+                        <View style={[memberStyles.dot, { backgroundColor: VisualSystem.colors.bgDeep }]} />
                         <View style={{ flexShrink: 1 }}>
                             <Text
-                                style={[memberStyles.chipName, { color: 'rgba(255,255,255,0.55)' }]}
+                                style={[memberStyles.chipName, { color: VisualSystem.colors.textSecondary }]}
                                 numberOfLines={1}
                             >
                                 {p.name.split(' ')[0]}
@@ -998,27 +999,27 @@ const memberStyles = StyleSheet.create({
         marginBottom: 6,
     },
     meterLabel: {
-        color: 'rgba(255,255,255,0.5)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.6,
         textTransform: 'uppercase',
     },
     meterCount: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
     },
     meterTrack: {
         height: 4,
         borderRadius: 2,
-        backgroundColor: 'rgba(255,255,255,0.08)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginBottom: 10,
         overflow: 'hidden',
     },
     meterFill: {
         height: '100%',
-        backgroundColor: '#51cf66',
+        backgroundColor: VisualSystem.colors.successSoft,
         borderRadius: 2,
     },
     chipRow: {
@@ -1032,7 +1033,7 @@ const memberStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderRadius: 12,
-        backgroundColor: 'rgba(255,255,255,0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         maxWidth: 150,
     },
@@ -1046,7 +1047,7 @@ const memberStyles = StyleSheet.create({
         fontWeight: '800',
     },
     chipSub: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 10,
         marginTop: 1,
     },
@@ -1066,7 +1067,7 @@ const memberStyles = StyleSheet.create({
         borderRadius: 3,
     },
     legendText: {
-        color: 'rgba(255,255,255,0.35)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 10,
         fontWeight: '600',
     },
@@ -1075,11 +1076,11 @@ const memberStyles = StyleSheet.create({
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     rootEmbedded: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     header: {
         flexDirection: 'row',
@@ -1088,7 +1089,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(212,175,55,0.2)',
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     backBtn: {
         width: 44,
@@ -1121,15 +1122,15 @@ const styles = StyleSheet.create({
         height: 10,
         borderRadius: 5,
         borderWidth: 1.5,
-        borderColor: '#0C2340',
+        borderColor: VisualSystem.colors.borderStrong,
     },
     headerTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: '700',
     },
     headerSub: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         marginTop: 1,
     },
@@ -1148,7 +1149,7 @@ const styles = StyleSheet.create({
     },
     pendingBannerText: {
         flex: 1,
-        color: 'rgba(255,255,255,0.75)',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 12,
         fontWeight: '600',
         lineHeight: 16,
@@ -1173,12 +1174,12 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     emptyText: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 16,
         fontWeight: '600',
     },
     emptySubText: {
-        color: 'rgba(255,255,255,0.35)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 13,
         textAlign: 'center',
     },
@@ -1205,12 +1206,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     smallAvatarText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: 'bold',
     },
     msgSenderName: {
-        color: 'rgba(255,255,255,0.5)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         marginBottom: 3,
         marginLeft: 4,
@@ -1221,32 +1222,32 @@ const styles = StyleSheet.create({
         borderRadius: 18,
     },
     bubbleMine: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderBottomRightRadius: 4,
     },
     bubbleTheirs: {
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderBottomLeftRadius: 4,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.15)',
     },
     bubbleNudge: {
         borderWidth: 1.5,
-        borderColor: '#D4AF37',
+        borderColor: VisualSystem.colors.borderGold,
     },
     bubbleText: {
         fontSize: 15,
         lineHeight: 20,
     },
     bubbleTextMine: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '600',
     },
     bubbleTextTheirs: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
     },
     msgTime: {
-        color: 'rgba(255,255,255,0.3)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 10,
         marginTop: 3,
         paddingHorizontal: 4,
@@ -1259,7 +1260,7 @@ const styles = StyleSheet.create({
         gap: 8,
         borderTopWidth: 1,
         borderTopColor: 'rgba(212,175,55,0.15)',
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     nudgeBtn: {
         width: 44,
@@ -1276,11 +1277,11 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 22,
         paddingHorizontal: 16,
         paddingVertical: 10,
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.2)',
@@ -1290,7 +1291,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
     },

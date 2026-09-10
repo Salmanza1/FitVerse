@@ -23,6 +23,7 @@ import {
 import { scheduleWeeklyWeightCheckReminder } from '@/lib/weightCheckNotifications';
 import { Tokens } from '@/constants/Tokens';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type Props = {
     user: UserProfile;
@@ -97,7 +98,7 @@ export function WeeklyWeightCheckCard({ user }: Props) {
             <View style={styles.card}>
                 <View style={styles.headerRow}>
                     <View style={styles.iconWrap}>
-                        <FontAwesome name="balance-scale" size={18} color="#D4AF37" />
+                        <FontAwesome name="balance-scale" size={18} color={VisualSystem.colors.gold} />
                     </View>
                     <View style={styles.headerText}>
                         <Text style={styles.title}>Weekly weigh-in</Text>
@@ -110,7 +111,7 @@ export function WeeklyWeightCheckCard({ user }: Props) {
                 </View>
 
                 {loading ? (
-                    <ActivityIndicator color="#D4AF37" style={styles.loader} />
+                    <ActivityIndicator color={VisualSystem.colors.gold} style={styles.loader} />
                 ) : (
                     <>
                         <View style={styles.statRow}>
@@ -135,7 +136,7 @@ export function WeeklyWeightCheckCard({ user }: Props) {
 
                         {dueToday && (
                             <View style={styles.dueBanner}>
-                                <FontAwesome name="bell" size={12} color="#D4AF37" />
+                                <FontAwesome name="bell" size={12} color={VisualSystem.colors.gold} />
                                 <Text style={styles.dueText}>It&apos;s weigh-in day — log when you&apos;re ready.</Text>
                             </View>
                         )}
@@ -162,7 +163,7 @@ export function WeeklyWeightCheckCard({ user }: Props) {
                             onChangeText={setWeightInput}
                             keyboardType="decimal-pad"
                             placeholder="165"
-                            placeholderTextColor="rgba(255,255,255,0.35)"
+                            placeholderTextColor={VisualSystem.colors.textTertiary}
                         />
                         <View style={styles.modalActions}>
                             <TouchableOpacity style={styles.cancelBtn} onPress={() => setModalOpen(false)}>
@@ -209,7 +210,7 @@ export function useWeeklyWeightCheckReminder(user: UserProfile | null) {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.055)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.lg,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.18)',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     subtitle: {
-        color: 'rgba(255,255,255,0.55)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         marginTop: 2,
     },
@@ -255,11 +256,11 @@ const styles = StyleSheet.create({
     stat: { flex: 1 },
     statDivider: {
         width: 1,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginHorizontal: 12,
     },
     statLabel: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 10,
         fontWeight: '600',
         letterSpacing: 0.5,
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     trendMessage: {
-        color: 'rgba(255,255,255,0.7)',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         lineHeight: 18,
         marginBottom: 8,
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
     },
     dueText: {
         flex: 1,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '600',
     },
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 12,
         borderRadius: Tokens.radius.md,
         marginTop: 4,
@@ -332,28 +333,28 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     modalSub: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 13,
         marginTop: 8,
         marginBottom: 16,
         lineHeight: 18,
     },
     inputLabel: {
-        color: 'rgba(255,255,255,0.5)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '600',
         letterSpacing: 0.5,
         marginBottom: 6,
     },
     input: {
-        backgroundColor: 'rgba(255,255,255,0.08)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         padding: 14,
         color: FitVerseTheme.colors.textPrimary,
         fontSize: 18,
         fontWeight: '600',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.12)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     modalActions: {
         flexDirection: 'row',
@@ -366,15 +367,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.2)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
-    cancelText: { color: 'rgba(255,255,255,0.8)', fontWeight: '600' },
+    cancelText: { color: VisualSystem.colors.textPrimary, fontWeight: '600' },
     saveBtn: {
         flex: 1,
         paddingVertical: 12,
         alignItems: 'center',
         borderRadius: 10,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
     },
     saveBtnDisabled: { opacity: 0.6 },
     saveText: { color: '#0B0C10', fontWeight: '700' },

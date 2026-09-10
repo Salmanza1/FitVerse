@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Pressable, StyleSheet, Text, ViewStyle, ActivityIndicator, Animated } from 'react-native';
 import Colors from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
+import { VisualSystem } from '@/constants/VisualSystem';
 import { useColorScheme } from 'react-native';
 
 interface StyledButtonProps {
@@ -36,14 +37,16 @@ export function StyledButton({ title, onPress, variant = 'primary', loading = fa
 
     const getBackgroundColor = () => {
         if (variant === 'primary') return themeColors.tint;
-        if (variant === 'secondary') return themeColors.tabIconDefault;
+        if (variant === 'secondary') return VisualSystem.colors.navy;
         if (variant === 'glass') return themeColors.glass;
         return 'transparent';
     };
 
     const getTextColor = () => {
-        if (variant === 'outline' || variant === 'glass') return themeColors.tint;
-        return '#fff';
+        if (variant === 'outline' || variant === 'glass') return VisualSystem.colors.goldText;
+        // Primary sits on gold, where white fails contrast — navy is the readable pair.
+        if (variant === 'primary') return VisualSystem.colors.textOnGold;
+        return VisualSystem.colors.textOnNavy;
     };
 
     return (
@@ -82,8 +85,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: Tokens.spacing.md,
-        // Soft, modern shadow
-        shadowColor: '#000',
+        // Soft, modern shadow — navy-tinted; black reads as grime on a light page.
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: {
             width: 0,
             height: 5,

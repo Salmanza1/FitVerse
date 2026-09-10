@@ -10,6 +10,7 @@ import * as Haptics from 'expo-haptics';
 import * as Contacts from 'expo-contacts';
 import { MemberProfileModal } from './MemberProfileModal';
 import { supabase } from '@/lib/supabase';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface SocialDashboardModalProps {
     visible: boolean;
@@ -237,7 +238,7 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
                             onPress={() => handleDecline(otherUser.id)}
                             disabled={isBusy}
                         >
-                            <FontAwesome name="times" size={14} color="#fff" />
+                            <FontAwesome name="times" size={14} color={VisualSystem.colors.textPrimary} />
                         </Pressable>
                         <Pressable
                             style={[styles.miniBtn, styles.acceptBtn]}
@@ -443,7 +444,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     container: {
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         height: '85%',
@@ -468,7 +469,7 @@ const styles = StyleSheet.create({
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 12,
         padding: 4,
         marginBottom: 20,
@@ -493,7 +494,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 12,
         paddingHorizontal: 15,
         height: 50,
@@ -503,7 +504,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         marginLeft: 10,
         fontSize: 16,
     },
@@ -515,7 +516,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 12,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.05)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     avatarContainer: {
         width: 44,
@@ -537,7 +538,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     userName: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         fontWeight: 'bold',
     },
@@ -592,7 +593,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 10,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     badgeTextPending: {
         color: FitVerseTheme.colors.textMuted,

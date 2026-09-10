@@ -3,6 +3,7 @@ import { useColorScheme, View, ActivityIndicator } from 'react-native';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useAuth } from '@/features/auth/AuthContext';
 import { webScreen } from '@/constants/webLayout';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function AuthLayout() {
     const colorScheme = useColorScheme();
@@ -11,7 +12,7 @@ export default function AuthLayout() {
     if (isInitialCheck || isAuthLoading) {
         return (
             <View style={[webScreen, { justifyContent: 'center', alignItems: 'center' }]}>
-                <ActivityIndicator size="large" color="#D4AF37" />
+                <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
             </View>
         );
     }
@@ -24,7 +25,7 @@ export default function AuthLayout() {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            background: '#0C2340', // ndNavy
+            background: VisualSystem.colors.bgMid, // ndNavy
             card: '#152B4D',       // ndAccentNavy
             text: '#F5F5F5',
             border: 'rgba(212, 175, 55, 0.2)',
@@ -34,7 +35,7 @@ export default function AuthLayout() {
 
     return (
         <ThemeProvider value={DarkTheme}>
-            <Stack screenOptions={{ contentStyle: { backgroundColor: '#0C2340' } }}>
+            <Stack screenOptions={{ contentStyle: { backgroundColor: VisualSystem.colors.bgMid } }}>
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen name="signup" options={{ headerShown: false }} />
             </Stack>

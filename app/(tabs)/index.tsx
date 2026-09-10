@@ -21,6 +21,7 @@ import { ChatsListScreen } from '@/features/chat/ChatsListScreen';
 import { ChatStore } from '@/features/chat/ChatStore';
 import { shouldShowWorkoutPostCaption } from '@/features/feed/workoutPostUtils';
 import { webFeedColumn } from '@/constants/webLayout';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type FriendUiStatus = 'none' | 'pending_sent' | 'pending_received' | 'friends';
 
@@ -341,7 +342,7 @@ export default function FeedScreen() {
                             }}
                         >
                             <FontAwesome name="trash" size={20} color="#ff4d4d" style={{ width: 30 }} />
-                            <RNText style={[styles.menuText, { color: '#ff4d4d' }]}>Delete Post</RNText>
+                            <RNText style={[styles.menuText, { color: VisualSystem.colors.danger }]}>Delete Post</RNText>
                         </Pressable>
 
                         <View style={styles.menuDivider} />
@@ -650,7 +651,7 @@ export default function FeedScreen() {
                         style={styles.closePreviewBtn}
                         onPress={() => setIsPreviewVisible(false)}
                     >
-                        <FontAwesome name="times" size={24} color="#fff" />
+                        <FontAwesome name="times" size={24} color={VisualSystem.colors.textPrimary} />
                     </Pressable>
                     {previewImageUrl && (
                         <Image
@@ -794,7 +795,7 @@ function PostCard({
                                     <RNText
                                         style={[
                                             styles.addFriendBtnText,
-                                            friendStatus === 'pending_received' && { color: '#7dcea0' },
+                                            friendStatus === 'pending_received' && { color: VisualSystem.colors.success },
                                             friendStatus === 'pending_sent' && styles.addFriendBtnTextMuted,
                                         ]}
                                     >
@@ -901,7 +902,7 @@ function PostCard({
                     onPress={onLike}
                 >
                     <FontAwesome name={isLiked ? "heart" : "heart-o"} size={20} color={isLiked ? "#ff4d4d" : FitVerseTheme.colors.accentGold} />
-                    <RNText style={[styles.actionText, isLiked && { color: '#ff4d4d' }]}>{post.likes.length}</RNText>
+                    <RNText style={[styles.actionText, isLiked && { color: VisualSystem.colors.danger }]}>{post.likes.length}</RNText>
                 </Pressable>
                 <Pressable
                     style={({ pressed }) => [styles.actionButton, { opacity: pressed ? 0.6 : 1 }]}
@@ -979,7 +980,7 @@ const styles = StyleSheet.create({
     },
     userSubline: {
         fontSize: Tokens.typography.md,
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         opacity: 0.8,
         marginTop: 4,
         fontWeight: '500',
@@ -1001,7 +1002,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 4,
         right: 4,
-        backgroundColor: '#ff4d4d',
+        backgroundColor: VisualSystem.colors.dangerSoft,
         borderRadius: 10,
         minWidth: 18,
         height: 18,
@@ -1012,7 +1013,7 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.background,
     },
     chatBadgeText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 10,
         fontWeight: 'bold',
     },
@@ -1026,8 +1027,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 24,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.08)',
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     filterBtnFlex: {
         flex: 1,
@@ -1095,12 +1096,12 @@ const styles = StyleSheet.create({
         marginBottom: Tokens.spacing.xl,
         padding: Tokens.spacing.xl,
         borderRadius: Tokens.radius.xl,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     postCardWeb: {
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderColor: 'rgba(212, 175, 55, 0.12)',
         ...(Platform.OS === 'web' ? { boxShadow: '0 8px 32px rgba(0,0,0,0.25)' as unknown as undefined } : {}),
     },
@@ -1139,8 +1140,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(125, 206, 160, 0.12)',
     },
     addFriendBtnSent: {
-        borderColor: 'rgba(255, 255, 255, 0.12)',
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        borderColor: VisualSystem.colors.borderSubtle,
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     addFriendBtnText: {
         color: FitVerseTheme.colors.accentGold,
@@ -1198,7 +1199,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     postDescription: {
-        color: 'rgba(255, 255, 255, 0.9)',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         lineHeight: 24,
         marginBottom: Tokens.spacing.lg,
@@ -1210,9 +1211,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         marginBottom: Tokens.spacing.lg,
-        backgroundColor: 'rgba(255,255,255,0.02)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     postImage: {
         width: '100%',
@@ -1228,10 +1229,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.2)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     fizzDateText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 10,
         fontWeight: 'bold',
         textTransform: 'uppercase',
@@ -1283,7 +1284,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         paddingVertical: 12,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.06)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     workoutStatCol: {
         flex: 1,
@@ -1291,7 +1292,7 @@ const styles = StyleSheet.create({
     },
     workoutStatDivider: {
         width: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginVertical: 2,
     },
     workoutStatNum: {
@@ -1309,7 +1310,7 @@ const styles = StyleSheet.create({
     postActions: {
         flexDirection: 'row',
         borderTopWidth: 1,
-        borderTopColor: 'rgba(255,255,255,0.05)',
+        borderTopColor: VisualSystem.colors.borderSubtle,
         paddingTop: Tokens.spacing.md,
     },
     actionButton: {
@@ -1318,7 +1319,7 @@ const styles = StyleSheet.create({
         marginRight: 24,
         paddingVertical: 8,
         paddingHorizontal: 12,
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
     },
     actionText: {
@@ -1332,21 +1333,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 80,
         paddingHorizontal: 30,
-        backgroundColor: 'rgba(255, 255, 255, 0.02)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 24,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
         marginTop: 20,
     },
     emptyText: {
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 22,
         fontWeight: '900',
         marginTop: 20,
         letterSpacing: 0.5,
     },
     emptySubText: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 15,
         textAlign: 'center',
         marginTop: 10,
@@ -1359,10 +1360,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 28,
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#D4AF37',
+        borderColor: VisualSystem.colors.borderGold,
     },
     ctaText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '800',
         fontSize: 16,
         letterSpacing: 1,
@@ -1400,7 +1401,7 @@ const styles = StyleSheet.create({
     },
     menuDivider: {
         height: 1,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     editModalContent: {
         backgroundColor: '#1A2130',
@@ -1417,15 +1418,15 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     editInput: {
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         padding: 15,
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         height: 120,
         textAlignVertical: 'top',
         fontSize: 16,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     modalActions: {
         flexDirection: 'row',
@@ -1471,11 +1472,11 @@ const styles = StyleSheet.create({
     // Social Styles
     searchResultsWrapper: {
         marginTop: 15,
-        backgroundColor: 'rgba(255,255,255,0.02)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.md,
         padding: 12,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     searchSectionTitle: {
         fontSize: 12,
@@ -1490,7 +1491,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 8,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.05)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     resultAvatar: {
         width: 40,
@@ -1503,7 +1504,7 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.accentGold,
     },
     resultName: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontWeight: 'bold',
     },
@@ -1548,7 +1549,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     pendingBadge: {
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 10,

@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     headerTag: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         fontSize: 12,
         textTransform: 'uppercase',
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: 10
     },
-    headerTitle: { fontSize: 34, fontWeight: '900', color: 'white', letterSpacing: 1 },
+    headerTitle: { fontSize: 34, fontWeight: '900', color: VisualSystem.colors.textPrimary, letterSpacing: 1 },
     scroll: { padding: 20, paddingBottom: 120 },
     circleStartContainer: {
         alignItems: 'center',
@@ -165,10 +165,10 @@ const styles = StyleSheet.create({
         width: 220,
         height: 220,
         borderRadius: 110,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: '#D4AF37',
+        shadowColor: VisualSystem.colors.gold,
         boxShadow: '0px 10px 30px rgba(212, 175, 55, 0.5)',
         elevation: 15,
     },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     circleStartText: {
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 18,
         fontWeight: '900',
         marginTop: 20,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     },
     circleStartSub: {
         fontSize: 12,
-        color: 'rgba(255, 255, 255, 0.4)',
+        color: VisualSystem.colors.textTertiary,
         marginTop: 6,
         fontWeight: 'bold',
         textTransform: 'uppercase',
@@ -196,8 +196,8 @@ const styles = StyleSheet.create({
     sectionHeader: { fontSize: 12, fontWeight: '800', marginBottom: 14, color: LOG.textTertiary, letterSpacing: 1.2, textTransform: 'uppercase' },
 
     // Templates
-    blockTitle: { fontSize: 22, fontWeight: 'bold', color: 'white' },
-    iconBtn: { flexDirection: 'row', alignItems: 'center', padding: 8, backgroundColor: '#1E3A5F', borderRadius: 6, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
+    blockTitle: { fontSize: 22, fontWeight: 'bold', color: VisualSystem.colors.textPrimary },
+    iconBtn: { flexDirection: 'row', alignItems: 'center', padding: 8, backgroundColor: VisualSystem.colors.bgMid, borderRadius: 6, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
     subHeader: { fontSize: 14, fontWeight: 'bold', color: '#999', marginTop: 10, marginBottom: 10 },
     templateCard: {
         width: '100%',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     templateRemoveText: {
-        color: 'rgba(255,255,255,0.38)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         fontWeight: '600',
     },
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
         paddingTop: 60,
         paddingHorizontal: 20,
         paddingBottom: 15,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 8,
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -295,12 +295,12 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255, 68, 68, 0.3)',
     },
     headerCancelText: {
-        color: '#FF4444',
+        color: VisualSystem.colors.danger,
         fontWeight: 'bold',
         fontSize: 14,
     },
     finishBtnTheme: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingHorizontal: 25,
         paddingVertical: 10,
         borderRadius: 10,
@@ -309,27 +309,27 @@ const styles = StyleSheet.create({
         width: 28,
         height: 28,
         borderRadius: 14,
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
     },
     metaText: {
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 15,
         fontWeight: '500',
     },
     finishText: {
-        fontWeight: 'bold', fontSize: 15, color: '#0C2340'
+        fontWeight: 'bold', fontSize: 15, color: VisualSystem.colors.textPrimary
     },
     activeWorkoutTitle: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         marginRight: 10,
     },
     menuIconBtn: {
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 12,
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
         width: 16,
     },
     metaTextSecondary: {
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 15,
         fontWeight: '500',
     },
@@ -353,12 +353,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     actionBtnBlue: {
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 16,
         borderRadius: 12,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#D4AF37',
+        borderColor: VisualSystem.colors.borderGold,
     },
     actionBtnRed: {
         backgroundColor: 'rgba(255, 68, 68, 0.1)',
@@ -369,12 +369,12 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255, 68, 68, 0.2)',
     },
     actionBtnText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 16,
     },
     actionBtnTextRed: {
-        color: '#FF4444',
+        color: VisualSystem.colors.danger,
         fontWeight: 'bold',
         fontSize: 16,
     },
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
         borderLeftColor: '#F1C40F'
     },
     stickyNoteInput: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontFamily: 'System',
     },
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     restModalContent: {
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 24,
         padding: 24,
         width: '90%',
@@ -433,13 +433,13 @@ const styles = StyleSheet.create({
     restModalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
         marginBottom: 10
     },
     restModalSub: {
         textAlign: 'center',
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 13,
         marginBottom: 25,
         lineHeight: 18
@@ -451,12 +451,12 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     restInputLabel: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: '600'
     },
     restInputBox: {
-        backgroundColor: 'rgba(21, 45, 85, 0.8)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 12,
         width: 110,
         height: 48,
@@ -466,25 +466,25 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.25)'
     },
     restInputText: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: 'bold',
         fontSize: 16
     },
     restSubmitBtn: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 14,
         borderRadius: 12,
         alignItems: 'center',
         marginTop: 10
     },
     restSubmitText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: 'bold',
         fontSize: 16
     },
     notesInput: {
-        backgroundColor: '#0C2340',
-        color: 'white',
+        backgroundColor: VisualSystem.colors.bgMid,
+        color: VisualSystem.colors.textPrimary,
         padding: 15,
         borderRadius: 10,
         marginBottom: 20,
@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
     exNameBlue: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
     },
     actionIconBtn: {
         marginLeft: 15,
@@ -517,9 +517,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
     },
-    labelSet: { color: '#A0B4CB', fontSize: 13, fontWeight: 'bold', width: 40, textAlign: 'center' },
-    labelPrev: { color: '#A0B4CB', fontSize: 13, fontWeight: 'bold', flex: 1, textAlign: 'center' },
-    labelInput: { color: '#A0B4CB', fontSize: 13, fontWeight: 'bold', width: 75, textAlign: 'center' },
+    labelSet: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', width: 40, textAlign: 'center' },
+    labelPrev: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', flex: 1, textAlign: 'center' },
+    labelInput: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', width: 75, textAlign: 'center' },
 
     setRowSimple: {
         flexDirection: 'row',
@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
     setIndexBox: {
         width: 40,
         height: 30,
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -540,13 +540,13 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.2)'
     },
     setIndexText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 15,
     },
     prevPerformanceText: {
         flex: 1,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         fontSize: 16,
         fontWeight: '500'
@@ -554,9 +554,9 @@ const styles = StyleSheet.create({
     setInlineInput: {
         width: 75,
         height: 38,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 8,
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 17,
@@ -570,19 +570,19 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 8,
     },
     checkCircleActive: {
-        borderColor: '#D4AF37',
-        backgroundColor: '#D4AF37',
+        borderColor: VisualSystem.colors.borderGold,
+        backgroundColor: VisualSystem.colors.gold,
     },
 
     inlineRestBarContainer: {
         height: 24,
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 6,
         overflow: 'hidden',
         marginTop: 6,
@@ -597,11 +597,11 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         bottom: 0,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         opacity: 0.2,
     },
     inlineRestText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -610,33 +610,33 @@ const styles = StyleSheet.create({
     addSetFullBtn: {
         width: '100%',
         paddingVertical: 12,
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         alignItems: 'center',
         marginTop: 10,
     },
     addSetFullText: {
-        color: '#F5E1A4',
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 14,
     },
-    exerciseCard: { marginBottom: 15, padding: 15, backgroundColor: '#1E3A5F', borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.15)' },
+    exerciseCard: { marginBottom: 15, padding: 15, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.15)' },
     exHeader: { marginBottom: 15, flexDirection: 'row', justifyContent: 'space-between' },
-    exName: { fontSize: 18, fontWeight: 'bold', color: 'white' },
+    exName: { fontSize: 18, fontWeight: 'bold', color: VisualSystem.colors.textPrimary },
     setRow_Header: { flexDirection: 'row', marginBottom: 10, paddingHorizontal: 5 },
-    col_Set: { width: 40, fontSize: 10, fontWeight: 'bold', color: '#A0B4CB', textAlign: 'center' },
-    col_Prev: { flex: 1, fontSize: 10, fontWeight: 'bold', color: '#A0B4CB', textAlign: 'center' },
-    col_Input: { width: 60, fontSize: 10, fontWeight: 'bold', color: '#A0B4CB', textAlign: 'center' },
-    setRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, backgroundColor: '#0C2340', padding: 5, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.1)' },
+    col_Set: { width: 40, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    col_Prev: { flex: 1, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    col_Input: { width: 60, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    setRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, backgroundColor: VisualSystem.colors.bgMid, padding: 5, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.1)' },
     setRowCompleted: { backgroundColor: 'rgba(212, 175, 55, 0.1)' }, // GOLD TINT
     setNumberBadge: { width: 40, alignItems: 'center' },
-    setNumberText: { color: '#F5E1A4', fontWeight: 'bold' },
+    setNumberText: { color: VisualSystem.colors.goldText, fontWeight: 'bold' },
     inputContainer: { width: 60, alignItems: 'center' },
-    inputText: { color: 'white', fontWeight: 'bold', fontSize: 16 },
-    checkBtn: { width: 30, height: 30, borderRadius: 6, backgroundColor: '#1E3A5F', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
-    checkBtnActive: { backgroundColor: '#D4AF37', borderColor: '#D4AF37' },
+    inputText: { color: VisualSystem.colors.textPrimary, fontWeight: 'bold', fontSize: 16 },
+    checkBtn: { width: 30, height: 30, borderRadius: 6, backgroundColor: VisualSystem.colors.bgMid, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
+    checkBtnActive: { backgroundColor: VisualSystem.colors.gold, borderColor: VisualSystem.colors.borderGold },
     addSetBtn: { alignItems: 'center', padding: 10, borderTopWidth: 1, borderTopColor: 'rgba(212, 175, 55, 0.1)', marginTop: 5 },
-    addSetText: { color: '#D4AF37', fontWeight: 'bold', fontSize: 12 },
+    addSetText: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 12 },
 
     addExerciseBtnAction: {
         flexDirection: 'row',
@@ -649,7 +649,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.3)',
         marginTop: 16,
     },
-    addExerciseTextAction: { color: '#D4AF37', fontWeight: 'bold', fontSize: 16 },
+    addExerciseTextAction: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 16 },
     cancelBtnAction: {
         padding: 16,
         alignItems: 'center',
@@ -658,8 +658,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgba(255, 68, 68, 0.2)',
     },
-    cancelTextAction: { color: '#FF4444', fontWeight: 'bold', fontSize: 15 },
-    modalFullContainer: { flex: 1, backgroundColor: '#0C2340' },
+    cancelTextAction: { color: VisualSystem.colors.danger, fontWeight: 'bold', fontSize: 15 },
+    modalFullContainer: { flex: 1, backgroundColor: VisualSystem.colors.bgMid },
     addExerciseLoading: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -668,31 +668,31 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     addExerciseLoadingText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '700',
     },
-    modalHeader: { padding: 20, paddingTop: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0C2340', borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' },
+    modalHeader: { padding: 20, paddingTop: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: VisualSystem.colors.bgMid, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' },
     searchContainer: { 
         flexDirection: 'row', 
         alignItems: 'center', 
-        backgroundColor: 'rgba(255, 255, 255, 0.06)', 
+        backgroundColor: VisualSystem.colors.bgMid, 
         paddingHorizontal: 16,
         paddingVertical: 12,
         marginHorizontal: 20,
         marginBottom: 8,
         borderRadius: 14, 
         borderWidth: 1, 
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
-    searchInput: { color: 'white', fontSize: 17, flex: 1, fontWeight: '500' },
+    searchInput: { color: VisualSystem.colors.textPrimary, fontSize: 17, flex: 1, fontWeight: '500' },
 
     // Rest Timer
-    restTimerOverlay: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, backgroundColor: '#1E3A5F', borderTopWidth: 1, borderTopColor: '#D4AF37', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 },
-    restTimerText: { color: '#D4AF37', fontWeight: 'bold', fontSize: 18, fontFamily: 'System' },
-    timerControlBtn: { backgroundColor: '#0C2340', borderWidth: 1, borderColor: '#D4AF37', borderRadius: 6, paddingHorizontal: 10, paddingVertical: 5, marginLeft: 10 },
-    timerControlText: { color: 'white', fontWeight: 'bold' },
-    startRestBtn: { position: 'absolute', bottom: 30, right: 20, width: 60, height: 60, borderRadius: 30, backgroundColor: '#D4AF37', justifyContent: 'center', alignItems: 'center', shadowColor: "#000", boxShadow: '0px 4px 4.65px rgba(0,0,0,0.3)', elevation: 8 },
+    restTimerOverlay: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderGold, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 },
+    restTimerText: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 18, fontFamily: 'System' },
+    timerControlBtn: { backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderGold, borderRadius: 6, paddingHorizontal: 10, paddingVertical: 5, marginLeft: 10 },
+    timerControlText: { color: VisualSystem.colors.textPrimary, fontWeight: 'bold' },
+    startRestBtn: { position: 'absolute', bottom: 30, right: 20, width: 60, height: 60, borderRadius: 30, backgroundColor: VisualSystem.colors.gold, justifyContent: 'center', alignItems: 'center', shadowColor: "#000", boxShadow: '0px 4px 4.65px rgba(0,0,0,0.3)', elevation: 8 },
 
     quickStartBtn: {
         borderRadius: 20,
@@ -708,13 +708,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     quickStartText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '900',
         fontSize: 18,
         letterSpacing: 0.5,
     },
     quickStartSub: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '600',
         marginTop: 5,
@@ -728,7 +728,7 @@ const styles = StyleSheet.create({
     emptyTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         marginBottom: 10,
     },
     emptyTemplates: {
@@ -788,7 +788,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
     },
     logTimerText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: '800',
         fontVariant: ['tabular-nums'],
@@ -869,7 +869,7 @@ const styles = StyleSheet.create({
     },
     logExCategory: {
         fontSize: 9,
-        color: '#5C7A99',
+        color: VisualSystem.colors.textSecondary,
         textTransform: 'uppercase',
         letterSpacing: 1,
         fontWeight: '700',
@@ -877,7 +877,7 @@ const styles = StyleSheet.create({
     },
     logExMenuBtn: {
         padding: 6,
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
@@ -930,7 +930,7 @@ const styles = StyleSheet.create({
         borderTopColor: LOG.borderSubtle,
     },
     logLabel: {
-        color: '#5C7A99',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 8,
         fontWeight: '800',
         letterSpacing: 0.8,
@@ -969,7 +969,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     logPrevText: {
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '600',
     },
@@ -995,8 +995,8 @@ const styles = StyleSheet.create({
         borderColor: LOG.borderSubtle,
     },
     logCheckBtnActive: {
-        backgroundColor: '#2ecc71',
-        borderColor: '#2ecc71',
+        backgroundColor: VisualSystem.colors.successSoft,
+        borderColor: VisualSystem.colors.success,
     },
     logRestTimerBar: {
         height: 20,
@@ -1014,11 +1014,11 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         bottom: 0,
-        backgroundColor: '#2ecc71',
+        backgroundColor: VisualSystem.colors.successSoft,
         opacity: 0.3,
     },
     logRestTimerText: {
-        color: '#2ecc71',
+        color: VisualSystem.colors.success,
         fontSize: 10,
         fontWeight: '900',
         textAlign: 'center',
@@ -1064,7 +1064,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255, 68, 68, 0.15)',
     },
     premiumCancelWorkoutText: {
-        color: '#FF6464',
+        color: VisualSystem.colors.danger,
         fontSize: 14,
         fontWeight: 'bold',
         letterSpacing: 1,
@@ -1090,7 +1090,7 @@ const styles = StyleSheet.create({
     },
     historyTabRow: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 12,
         padding: 4,
         marginBottom: 14,
@@ -1267,28 +1267,28 @@ const styles = StyleSheet.create({
     coachCardTitle: {
         fontSize: 14,
         fontWeight: '900',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     coachCardSub: {
         fontSize: 12,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
     },
     coachBadge: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 8,
         marginRight: 12,
     },
     coachBadgeText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 10,
         fontWeight: '900',
     },
     coachChatContainer: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     coachChatHeader: {
         paddingTop: Platform.OS === 'ios' ? 60 : 40,
@@ -1297,7 +1297,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(212, 175, 55, 0.2)',
     },
@@ -1310,7 +1310,7 @@ const styles = StyleSheet.create({
     coachChatTitle: {
         fontSize: 16,
         fontWeight: '900',
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
     },
     coachChatScroll: {
@@ -1332,7 +1332,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderRadius: 12,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 5,
@@ -1343,41 +1343,41 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     msgTextAI: {
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 4,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.15)',
     },
     msgTextUser: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderTopRightRadius: 4,
     },
     msgText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         lineHeight: 22,
     },
     msgTextUserText: {
-        color: '#0C2340', // Dark text on Gold background for readability
+        color: VisualSystem.colors.textPrimary, // Dark text on Gold background for readability
         fontWeight: '600',
     },
     coachChatInputArea: {
         flexDirection: 'row',
         padding: 15,
         paddingBottom: Platform.OS === 'ios' ? 20 : 15,
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopWidth: 1,
         borderTopColor: 'rgba(212, 175, 55, 0.2)',
         alignItems: 'flex-end',
     },
     coachChatInput: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 10,
         paddingTop: 10,
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         maxHeight: 100,
         borderWidth: 1,
@@ -1387,7 +1387,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -1399,7 +1399,7 @@ const styles = StyleSheet.create({
         borderTopColor: 'rgba(212, 175, 55, 0.2)',
     },
     planPreviewLine: {
-        color: 'rgba(255,255,255,0.75)',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 12,
         lineHeight: 18,
         marginBottom: 2,
@@ -1412,7 +1412,7 @@ const styles = StyleSheet.create({
         borderTopColor: 'rgba(212, 175, 55, 0.25)',
     },
     coachPlanActionsTitle: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '800',
         letterSpacing: 0.5,
@@ -1429,12 +1429,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 12,
         borderRadius: 12,
     },
     coachPlanBtnPrimaryText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 14,
     },
@@ -1444,14 +1444,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingVertical: 12,
         borderRadius: 12,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     coachPlanBtnSecondaryText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '700',
         fontSize: 14,
     },
@@ -1460,12 +1460,12 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     coachPlanSaveLinkText: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         fontWeight: '600',
     },
     coachPlanHint: {
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         textAlign: 'center',
         marginTop: 8,
@@ -1604,14 +1604,14 @@ const styles = StyleSheet.create({
     },
     locationLabel: {
         fontSize: 10,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontWeight: 'bold',
         letterSpacing: 1,
     },
     locationName: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     changeButton: {
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
@@ -1622,13 +1622,13 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.3)',
     },
     changeButtonText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: 'bold',
     },
     locationDivider: {
         height: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginVertical: 12,
     },
     refreshLocation: {
@@ -1764,23 +1764,23 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     choiceModalContent: {
-        backgroundColor: '#1E3A5F',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 24,
         padding: 24,
         width: '100%',
         borderWidth: 1,
-        borderColor: '#D4AF37',
+        borderColor: VisualSystem.colors.borderGold,
     },
     choiceTitle: {
         fontSize: 24,
         fontWeight: '900',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
         marginBottom: 8,
     },
     choiceSubTitle: {
         fontSize: 14,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         marginBottom: 24,
     },
@@ -1794,7 +1794,7 @@ const styles = StyleSheet.create({
         gap: 15,
     },
     choiceBtnText: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -1804,7 +1804,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     choiceCloseText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         letterSpacing: 1,
     },
@@ -1814,7 +1814,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgba(212, 175, 55, 0.1)',
     },
     gymPickerText: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -1826,17 +1826,17 @@ const styles = StyleSheet.create({
     pillText: {
         fontSize: 12,
         fontWeight: '800',
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: 0.5,
     },
     pillTextActive: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
     },
     // New Exercise Modal Styles
     newExLabel: {
         fontSize: 12,
         fontWeight: '900',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         marginLeft: 20,
         marginTop: 20,
         marginBottom: 10,
@@ -1844,11 +1844,11 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     newExInput: {
-        backgroundColor: 'rgba(21, 45, 85, 0.8)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 12,
         marginHorizontal: 20,
         padding: 16,
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -1860,7 +1860,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     newExChip: {
-        backgroundColor: 'rgba(21, 45, 85, 0.6)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: 20,
@@ -1869,23 +1869,23 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.1)',
     },
     newExChipActive: {
-        backgroundColor: '#D4AF37',
-        borderColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
+        borderColor: VisualSystem.colors.borderGold,
     },
     newExChipText: {
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 13,
         fontWeight: '600',
     },
     newExChipTextActive: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: 'bold',
     },
     newExDropdown: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'rgba(21, 45, 85, 0.8)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 12,
         marginHorizontal: 20,
         padding: 16,
@@ -1894,12 +1894,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     newExDropdownText: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: '500',
     },
     newExSaveBtn: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         fontSize: 16,
     },
@@ -2001,7 +2001,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.4)',
     },
     logAddExBtnPrimaryText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontWeight: '800',
         letterSpacing: 0.2,
@@ -2078,7 +2078,7 @@ const styles = StyleSheet.create({
     },
     progressStatCard: {
         flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 12,
         paddingVertical: 12,
         paddingHorizontal: 10,
@@ -2106,7 +2106,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     graphContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
         padding: 16,
         alignItems: 'center',
@@ -2150,7 +2150,7 @@ const styles = StyleSheet.create({
         minHeight: 140,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
         padding: 24,
         borderWidth: 1,
@@ -2240,7 +2240,7 @@ const styles = StyleSheet.create({
     indexLetter: {
         fontSize: 11,
         fontWeight: '900',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         paddingVertical: 3,
         opacity: 0.8,
     },
@@ -3069,7 +3069,7 @@ export default function GymScreen() {
             presentationStyle="fullScreen"
             onRequestClose={() => !isPreparingWorkout && setCoachModalVisible(false)}
         >
-            <View style={{ flex: 1, backgroundColor: '#0C2340' }}>
+            <View style={{ flex: 1, backgroundColor: VisualSystem.colors.bgMid }}>
                 <KeyboardAvoidingView 
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
                     style={styles.coachChatContainer}
@@ -3081,11 +3081,11 @@ export default function GymScreen() {
                             disabled={isPreparingWorkout}
                             style={({ pressed }) => [styles.coachChatClose, pressed && { opacity: 0.6 }]}
                         >
-                            <FontAwesome name="chevron-down" size={20} color="#D4AF37" />
+                            <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.gold} />
                         </Pressable>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={styles.coachChatTitle}>LEPRECHAUN COACH</Text>
-                            <SecondaryText style={{ fontSize: 10, color: '#D4AF37' }}>ONLINE & GAINING</SecondaryText>
+                            <SecondaryText style={{ fontSize: 10, color: VisualSystem.colors.goldText }}>ONLINE & GAINING</SecondaryText>
                         </View>
                         <View style={{ width: 40 }} />
                     </View>
@@ -3178,7 +3178,7 @@ export default function GymScreen() {
                                     disabled={isPreparingWorkout}
                                     onPress={editCoachDraftWorkout}
                                 >
-                                    <FontAwesome name="pencil" size={14} color="#D4AF37" />
+                                    <FontAwesome name="pencil" size={14} color={VisualSystem.colors.gold} />
                                     <Text style={styles.coachPlanBtnSecondaryText}>Open Logger</Text>
                                 </Pressable>
                             </View>
@@ -3224,7 +3224,7 @@ export default function GymScreen() {
 
                     {isPreparingWorkout && (
                         <View style={styles.coachPreparingOverlay}>
-                            <ActivityIndicator size="large" color="#D4AF37" />
+                            <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
                             <Text style={styles.coachPreparingText}>Getting your session ready…</Text>
                         </View>
                     )}
@@ -3541,7 +3541,7 @@ export default function GymScreen() {
                                     ]}
                                     onPress={openAddExerciseModal}
                                 >
-                                    <FontAwesome name="plus" size={14} color="#D4AF37" style={{ marginRight: 8 }} />
+                                    <FontAwesome name="plus" size={14} color={VisualSystem.colors.gold} style={{ marginRight: 8 }} />
                                     <Text style={styles.addExerciseTextAction}>Add your first exercise</Text>
                                 </Pressable>
                             </View>
@@ -3576,7 +3576,7 @@ export default function GymScreen() {
                                 {visibleExerciseNotes.has(ex.id) && (
                                     <View style={styles.logStickyNote}>
                                         <View style={styles.logStickyNoteHeader}>
-                                            <FontAwesome name="sticky-note-o" size={12} color="#D4AF37" />
+                                            <FontAwesome name="sticky-note-o" size={12} color={VisualSystem.colors.gold} />
                                             <Text style={styles.logStickyNoteLabel}>Exercise note</Text>
                                             <View style={styles.logStickyNoteHeaderSpacer} />
                                             <Pressable
@@ -3644,13 +3644,13 @@ export default function GymScreen() {
                                                         set.type === 'warmup' && { backgroundColor: 'rgba(230, 126, 34, 0.2)' },
                                                         set.type === 'dropset' && { backgroundColor: 'rgba(155, 89, 182, 0.2)' },
                                                         set.type === 'failure' && { backgroundColor: 'rgba(231, 76, 60, 0.2)' },
-                                                        set.completed && { backgroundColor: '#D4AF37', borderColor: '#D4AF37' }
+                                                        set.completed && { backgroundColor: VisualSystem.colors.gold, borderColor: VisualSystem.colors.borderGold }
                                                     ]}
                                                     onPress={() => cycleSetType(exIdx, setIdx)}
                                                 >
                                                     <Text style={[
                                                         styles.logSetIndexText, 
-                                                        set.completed && { color: '#0C2340' },
+                                                        set.completed && { color: VisualSystem.colors.textPrimary },
                                                         set.type === 'warmup' && !set.completed && { color: '#E67E22' },
                                                         set.type === 'dropset' && !set.completed && { color: '#9B59B6' },
                                                         set.type === 'failure' && !set.completed && { color: '#E74C3C' }
@@ -3735,7 +3735,7 @@ export default function GymScreen() {
                                         addSet(exIdx);
                                     }}
                                 >
-                                    <FontAwesome name="plus" size={12} color="#D4AF37" style={{ marginRight: 6 }} />
+                                    <FontAwesome name="plus" size={12} color={VisualSystem.colors.gold} style={{ marginRight: 6 }} />
                                     <Text style={styles.logAddSetText}>Add set</Text>
                                 </TouchableOpacity>
                             </Animated.View>
@@ -4003,12 +4003,12 @@ export default function GymScreen() {
             >
                 <View style={styles.menuContent}>
                     <TouchableOpacity style={styles.menuItem} onPress={() => menuExerciseIdx !== null && openExerciseNote(menuExerciseIdx)}>
-                        <FontAwesome name="sticky-note-o" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="sticky-note-o" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Exercise Note</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.menuItem} onPress={() => { setRestModalExerciseIdx(menuExerciseIdx); setMenuExerciseIdx(null); }}>
-                        <FontAwesome name="history" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="history" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Update Rest Timers</Text>
                     </TouchableOpacity>
 
@@ -4022,7 +4022,7 @@ export default function GymScreen() {
                             setMenuExerciseIdx(null); 
                         }}
                     >
-                        <FontAwesome name="calculator" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="calculator" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Plate Calculator</Text>
                     </TouchableOpacity>
 
@@ -4036,7 +4036,7 @@ export default function GymScreen() {
                             setMenuExerciseIdx(null); 
                         }}
                     >
-                        <FontAwesome name="fire" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="fire" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Warm-up Calculator</Text>
                     </TouchableOpacity>
 
@@ -4048,7 +4048,7 @@ export default function GymScreen() {
                                 setMenuExerciseIdx(null);
                             }}
                         >
-                            <FontAwesome name="arrow-up" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                            <FontAwesome name="arrow-up" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                             <Text style={styles.menuItemText}>Move Up</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
@@ -4058,23 +4058,23 @@ export default function GymScreen() {
                                 setMenuExerciseIdx(null);
                             }}
                         >
-                            <FontAwesome name="arrow-down" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                            <FontAwesome name="arrow-down" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                             <Text style={styles.menuItemText}>Move Down</Text>
                         </TouchableOpacity>
                     </View>
 
                     <TouchableOpacity style={styles.menuItem} onPress={() => { if (menuExerciseIdx !== null) handleReplaceExercise(menuExerciseIdx); setMenuExerciseIdx(null); }}>
-                        <FontAwesome name="exchange" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="exchange" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Replace Exercise</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.menuItem, { borderBottomWidth: 0 }]}>
-                        <FontAwesome name="bars" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="bars" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Create Superset</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.menuItem, { borderBottomWidth: 0 }]}>
-                        <FontAwesome name="sliders" size={18} color="#F5E1A4" style={styles.menuItemIcon} />
+                        <FontAwesome name="sliders" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
                         <Text style={styles.menuItemText}>Preferences</Text>
                         <FontAwesome name="chevron-right" size={14} color={LOG.textTertiary} style={{ marginLeft: 'auto' }} />
                     </TouchableOpacity>
@@ -4129,7 +4129,7 @@ export default function GymScreen() {
             onRequestClose={() => setConfirmCancelVisible(false)}
         >
             <View style={styles.modalOverlay}>
-                <View style={[styles.modalContent, { borderColor: '#FF4444' }]}>
+                <View style={[styles.modalContent, { borderColor: VisualSystem.colors.danger }]}>
                     <View style={{ alignItems: 'center', marginBottom: 20 }}>
                         <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: 'rgba(255, 68, 68, 0.1)', justifyContent: 'center', alignItems: 'center', marginBottom: 15 }}>
                             <FontAwesome name="exclamation-triangle" size={24} color="#FF4444" />
@@ -4141,17 +4141,17 @@ export default function GymScreen() {
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.restSubmitBtn, { backgroundColor: '#FF4444' }]}
+                        style={[styles.restSubmitBtn, { backgroundColor: VisualSystem.colors.dangerSoft }]}
                         onPress={confirmCancel}
                     >
-                        <Text style={[styles.restSubmitText, { color: 'white' }]}>Yes, Cancel Workout</Text>
+                        <Text style={[styles.restSubmitText, { color: VisualSystem.colors.textPrimary }]}>Yes, Cancel Workout</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={{ marginTop: 15, alignItems: 'center', padding: 10 }}
                         onPress={() => setConfirmCancelVisible(false)}
                     >
-                        <SecondaryText style={{ color: '#D4AF37', fontWeight: 'bold' }}>No, Go Back</SecondaryText>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>No, Go Back</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -4207,11 +4207,11 @@ export default function GymScreen() {
                 <View style={[styles.modalFullContainer, { paddingTop: insets.top }]}>
                     <View style={styles.modalHeader}>
                         <Pressable onPress={() => setAddExerciseVisible(false)} hitSlop={12}>
-                            <FontAwesome name="times" size={24} color="#D4AF37" />
+                            <FontAwesome name="times" size={24} color={VisualSystem.colors.gold} />
                         </Pressable>
                         <Text style={styles.modalTitle}>Add Exercise</Text>
                         <Pressable onPress={() => setCreateExerciseVisible(true)} hitSlop={8}>
-                            <Text style={{ color: '#D4AF37', fontWeight: 'bold' }}>NEW</Text>
+                            <Text style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>NEW</Text>
                         </Pressable>
                     </View>
 
@@ -4228,7 +4228,7 @@ export default function GymScreen() {
 
                     {addingExercise ? (
                         <View style={styles.addExerciseLoading}>
-                            <ActivityIndicator size="large" color="#D4AF37" />
+                            <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
                             <Text style={styles.addExerciseLoadingText}>Adding exercise…</Text>
                         </View>
                     ) : null}
@@ -4336,7 +4336,7 @@ export default function GymScreen() {
                     <View style={[styles.modalContent, { height: '80%', padding: 0 }]}>
                         <View style={[styles.modalHeader, { backgroundColor: 'transparent', paddingTop: 20 }]}>
                             <TouchableOpacity onPress={() => setCreateExerciseVisible(false)}>
-                                <FontAwesome name="times" size={24} color="#FFF" />
+                                <FontAwesome name="times" size={24} color={VisualSystem.colors.textPrimary} />
                             </TouchableOpacity>
                             <Text style={styles.modalTitle}>Create New Exercise</Text>
                             <TouchableOpacity 
@@ -4377,21 +4377,21 @@ export default function GymScreen() {
                                     onPress={() => setShowExTypeDropdown(!showExTypeDropdown)}
                                 >
                                     <Text style={styles.newExDropdownText}>{newExType || 'Select an Option'}</Text>
-                                    <FontAwesome name={showExTypeDropdown ? "chevron-up" : "chevron-down"} size={14} color="#D4AF37" />
+                                    <FontAwesome name={showExTypeDropdown ? "chevron-up" : "chevron-down"} size={14} color={VisualSystem.colors.gold} />
                                 </TouchableOpacity>
 
                                 {showExTypeDropdown && (
-                                    <View style={{ backgroundColor: 'rgba(21, 45, 85, 0.8)', marginHorizontal: 20, borderRadius: 12, overflow: 'hidden', marginBottom: 20 }}>
+                                    <View style={{ backgroundColor: VisualSystem.colors.bgDeep, marginHorizontal: 20, borderRadius: 12, overflow: 'hidden', marginBottom: 20 }}>
                                         {exTypes.map(type => (
                                             <TouchableOpacity 
                                                 key={type}
-                                                style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' }}
+                                                style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: VisualSystem.colors.borderSubtle }}
                                                 onPress={() => {
                                                     setNewExType(type);
                                                     setShowExTypeDropdown(false);
                                                 }}
                                             >
-                                                <Text style={{ color: 'white', fontWeight: newExType === type ? 'bold' : 'normal' }}>{type}</Text>
+                                                <Text style={{ color: VisualSystem.colors.textPrimary, fontWeight: newExType === type ? 'bold' : 'normal' }}>{type}</Text>
                                             </TouchableOpacity>
                                         ))}
                                     </View>
@@ -4476,7 +4476,7 @@ export default function GymScreen() {
 
             {isPreparingWorkout && viewMode === 'Dashboard' && (
                 <View style={styles.workoutPreparingOverlay}>
-                    <ActivityIndicator size="large" color="#D4AF37" />
+                    <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
                     <Text style={styles.workoutPreparingText}>Loading your workout…</Text>
                 </View>
             )}
@@ -4571,7 +4571,7 @@ function RestTimerModal({
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ marginTop: 15, alignItems: 'center' }} onPress={onClose}>
-                        <SecondaryText style={{ color: '#C99700', fontSize: 16 }}>Cancel</SecondaryText>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontSize: 16 }}>Cancel</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -4600,23 +4600,23 @@ function PlateCalculator({ targetWeight, onClose }: { targetWeight: number, onCl
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
                     <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                        <FontAwesome name="calculator" size={32} color="#D4AF37" style={{ marginBottom: 15 }} />
+                        <FontAwesome name="calculator" size={32} color={VisualSystem.colors.gold} style={{ marginBottom: 15 }} />
                         <Text style={styles.modalTitle}>Plate Calculator</Text>
-                        <SecondaryText style={{ color: '#D4AF37', fontWeight: 'bold' }}>{targetWeight} LBS TOTAL</SecondaryText>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>{targetWeight} LBS TOTAL</SecondaryText>
                     </View>
 
                     <View style={{ backgroundColor: 'rgba(12, 35, 64, 0.4)', borderRadius: 12, padding: 15, marginBottom: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 10, textTransform: 'uppercase' }}>Plates Per Side</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 12, color: VisualSystem.colors.textTertiary, marginBottom: 10, textTransform: 'uppercase' }}>Plates Per Side</Text>
                         {Object.keys(result).length > 0 ? (
                             Object.entries(result).sort((a,b) => Number(b[0]) - Number(a[0])).map(([weight, count]) => (
                                 <View key={weight} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' }}>
-                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800' }}>{weight} LB</Text>
-                                    <Text style={{ color: '#D4AF37', fontSize: 18, fontWeight: '900' }}>x {count}</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{weight} LB</Text>
+                                    <Text style={{ color: VisualSystem.colors.goldText, fontSize: 18, fontWeight: '900' }}>x {count}</Text>
                                 </View>
                             ))
                         ) : (
                             <View style={{ paddingVertical: 20, alignItems: 'center' }}>
-                                <Text style={{ color: '#A0B4CB', fontWeight: '600' }}>45 LB BAR ONLY</Text>
+                                <Text style={{ color: VisualSystem.colors.textSecondary, fontWeight: '600' }}>45 LB BAR ONLY</Text>
                             </View>
                         )}
                     </View>
@@ -4697,11 +4697,11 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
                             <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' }}>
                                 <View>
                                     <Text style={{ color: '#E67E22', fontSize: 12, fontWeight: 'bold' }}>WARM-UP {i+1}</Text>
-                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800' }}>{s.weight} LBS</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{s.weight} LBS</Text>
                                 </View>
                                 <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, fontWeight: 'bold' }}>REPS</Text>
-                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800' }}>{s.reps}</Text>
+                                    <Text style={{ color: VisualSystem.colors.textTertiary, fontSize: 12, fontWeight: 'bold' }}>REPS</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{s.reps}</Text>
                                 </View>
                             </View>
                         ))}

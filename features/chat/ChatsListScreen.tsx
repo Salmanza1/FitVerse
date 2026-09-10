@@ -25,6 +25,7 @@ import {
     WORKOUT_STATUS_LABELS,
     WorkoutDayStatus,
 } from '@/features/workout/WorkoutPresenceStore';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface Props {
     visible: boolean;
@@ -360,7 +361,7 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                     <View style={styles.listScreen}>
                         <View style={styles.header}>
                             <Pressable onPress={handleCloseAll} style={styles.backBtn} hitSlop={12}>
-                                <FontAwesome name="chevron-down" size={18} color="#D4AF37" />
+                                <FontAwesome name="chevron-down" size={18} color={VisualSystem.colors.gold} />
                             </Pressable>
                             <Text style={styles.headerTitle}>Messages</Text>
                             <Pressable
@@ -368,12 +369,12 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                                 style={styles.newBtn}
                                 hitSlop={8}
                             >
-                                <FontAwesome name="edit" size={20} color="#D4AF37" />
+                                <FontAwesome name="edit" size={20} color={VisualSystem.colors.gold} />
                             </Pressable>
                         </View>
 
                         <View style={styles.subHeader}>
-                            <FontAwesome name="bolt" size={12} color="#D4AF37" />
+                            <FontAwesome name="bolt" size={12} color={VisualSystem.colors.gold} />
                             <Text style={styles.subHeaderText}>
                                 {' '}
                                 <Text style={{ color: WORKOUT_STATUS_COLORS.completed }}>Green</Text>
@@ -389,17 +390,17 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
 
                         {sentBanner && (
                             <View style={styles.sentBanner}>
-                                <FontAwesome name="check-circle" size={16} color="#D4AF37" />
+                                <FontAwesome name="check-circle" size={16} color={VisualSystem.colors.gold} />
                                 <Text style={styles.sentBannerText} numberOfLines={2}>{sentBanner}</Text>
                                 <Pressable onPress={() => setSentBanner(null)} hitSlop={8}>
-                                    <FontAwesome name="times" size={14} color="rgba(255,255,255,0.5)" />
+                                    <FontAwesome name="times" size={14} color={VisualSystem.colors.textSecondary} />
                                 </Pressable>
                             </View>
                         )}
 
                         {loading ? (
                             <View style={styles.loadingWrap}>
-                                <ActivityIndicator size="large" color="#D4AF37" />
+                                <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
                             </View>
                         ) : chats.length === 0 && invites.length === 0 ? (
                             <View style={styles.emptyWrap}>
@@ -431,7 +432,7 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                                                         <FontAwesome
                                                             name={invite.type === 'group' ? 'users' : 'comment'}
                                                             size={16}
-                                                            color="#D4AF37"
+                                                            color={VisualSystem.colors.gold}
                                                         />
                                                     </View>
                                                     <View style={styles.requestBody}>
@@ -634,7 +635,7 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     listScreen: {
         flex: 1,
@@ -656,7 +657,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 18,
         fontWeight: '800',
         letterSpacing: 0.3,
@@ -675,7 +676,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgba(212,175,55,0.1)',
     },
     subHeaderText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '600',
     },
@@ -695,7 +696,7 @@ const styles = StyleSheet.create({
     },
     sentBannerText: {
         flex: 1,
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         fontWeight: '600',
         lineHeight: 18,
@@ -705,18 +706,18 @@ const styles = StyleSheet.create({
         flex: 1, alignItems: 'center',
         paddingTop: 80, gap: 14, paddingHorizontal: 40,
     },
-    emptyTitle: { color: '#F5F5F5', fontSize: 20, fontWeight: '800' },
+    emptyTitle: { color: VisualSystem.colors.textPrimary, fontSize: 20, fontWeight: '800' },
     emptySubText: {
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 14, textAlign: 'center', lineHeight: 20,
     },
     startBtn: {
         flexDirection: 'row', alignItems: 'center',
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingHorizontal: 24, paddingVertical: 12,
         borderRadius: 24, marginTop: 8,
     },
-    startBtnText: { color: '#0C2340', fontWeight: '800', fontSize: 15 },
+    startBtnText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 15 },
     chatsList: { flex: 1 },
     requestsSection: {
         paddingHorizontal: 16,
@@ -730,12 +731,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     requestsTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         fontWeight: '800',
     },
     requestsBadge: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderRadius: 10,
         minWidth: 20,
         height: 20,
@@ -744,7 +745,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     requestsBadgeText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 11,
         fontWeight: '800',
     },
@@ -768,13 +769,13 @@ const styles = StyleSheet.create({
     },
     requestBody: { flex: 1, minWidth: 0 },
     requestDesc: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontWeight: '600',
         lineHeight: 20,
     },
     requestTime: {
-        color: 'rgba(255,255,255,0.35)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         marginTop: 4,
         marginBottom: 10,
@@ -785,7 +786,7 @@ const styles = StyleSheet.create({
     },
     acceptBtn: {
         flex: 1,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderRadius: 10,
         paddingVertical: 9,
         alignItems: 'center',
@@ -793,7 +794,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     acceptBtnText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 13,
     },
@@ -803,18 +804,18 @@ const styles = StyleSheet.create({
         paddingVertical: 9,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.15)',
+        borderColor: VisualSystem.colors.borderSubtle,
         minHeight: 36,
         justifyContent: 'center',
     },
     declineBtnText: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontWeight: '700',
         fontSize: 13,
     },
     btnDisabled: { opacity: 0.6 },
     chatsSectionTitle: {
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 12,
         fontWeight: '700',
         letterSpacing: 0.8,
@@ -830,7 +831,7 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         gap: 12,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.05)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     avatar: {
         width: 52, height: 52,
@@ -847,13 +848,13 @@ const styles = StyleSheet.create({
     },
     unreadDot: {
         position: 'absolute', top: -2, right: -2,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderRadius: 10, minWidth: 18, height: 18,
         justifyContent: 'center', alignItems: 'center',
         paddingHorizontal: 3,
-        borderWidth: 1.5, borderColor: '#0C2340',
+        borderWidth: 1.5, borderColor: VisualSystem.colors.borderStrong,
     },
-    unreadDotText: { color: '#0C2340', fontSize: 10, fontWeight: '800' },
+    unreadDotText: { color: VisualSystem.colors.textPrimary, fontSize: 10, fontWeight: '800' },
     statusDot: {
         position: 'absolute',
         bottom: 0,
@@ -862,7 +863,7 @@ const styles = StyleSheet.create({
         height: 12,
         borderRadius: 6,
         borderWidth: 2,
-        borderColor: '#0C2340',
+        borderColor: VisualSystem.colors.borderStrong,
     },
     chatInfo: { flex: 1, gap: 3 },
     memberStatusRow: {
@@ -883,12 +884,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    chatName: { color: 'rgba(255,255,255,0.7)', fontSize: 15, fontWeight: '600', flex: 1 },
+    chatName: { color: VisualSystem.colors.textPrimary, fontSize: 15, fontWeight: '600', flex: 1 },
     chatNameUnread: { fontWeight: '800' },
-    chatTime: { color: 'rgba(255,255,255,0.35)', fontSize: 11 },
-    lastMsg: { color: 'rgba(255,255,255,0.4)', fontSize: 13 },
-    lastMsgUnread: { color: 'rgba(255,255,255,0.7)', fontWeight: '600' },
-    lastMsgEmpty: { color: 'rgba(255,255,255,0.25)', fontSize: 13, fontStyle: 'italic' },
+    chatTime: { color: VisualSystem.colors.textTertiary, fontSize: 11 },
+    lastMsg: { color: VisualSystem.colors.textTertiary, fontSize: 13 },
+    lastMsgUnread: { color: VisualSystem.colors.textPrimary, fontWeight: '600' },
+    lastMsgEmpty: { color: VisualSystem.colors.textTertiary, fontSize: 13, fontStyle: 'italic' },
     lastMsgPending: { color: 'rgba(212,175,55,0.65)', fontSize: 13, fontStyle: 'italic' },
     goalBadge: { color: 'rgba(212,175,55,0.7)', fontSize: 11, marginTop: 2 },
     comingSoonBadge: {
@@ -901,7 +902,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     comingSoonBadgeText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 10,
         fontWeight: '900',
         letterSpacing: 2,
@@ -909,7 +910,7 @@ const styles = StyleSheet.create({
     comingSoonPlaceholderCard: {
         marginTop: 30,
         width: '100%',
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 20,
         padding: 30,
         alignItems: 'center',

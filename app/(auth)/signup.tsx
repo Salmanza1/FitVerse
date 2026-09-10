@@ -39,6 +39,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Tokens } from '../../constants/Tokens';
 import { WebShell } from '@/components/ui/WebShell';
 import { webRoot } from '@/constants/webLayout';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
@@ -136,19 +137,19 @@ function PlanTargetsSummary({
 
             <View style={styles.planBullets}>
                 <View style={styles.planBulletRow}>
-                    <FontAwesome name="check-circle" size={14} color="#D4AF37" />
+                    <FontAwesome name="check-circle" size={14} color={VisualSystem.colors.gold} />
                     <RNText style={styles.planBulletText}>Nutrition tab tracks meals against these targets</RNText>
                 </View>
                 <View style={styles.planBulletRow}>
-                    <FontAwesome name="check-circle" size={14} color="#D4AF37" />
+                    <FontAwesome name="check-circle" size={14} color={VisualSystem.colors.gold} />
                     <RNText style={styles.planBulletText}>Leprechaun AI uses them for workout & fuel guidance</RNText>
                 </View>
                 <View style={styles.planBulletRow}>
-                    <FontAwesome name="check-circle" size={14} color="#D4AF37" />
+                    <FontAwesome name="check-circle" size={14} color={VisualSystem.colors.gold} />
                     <RNText style={styles.planBulletText}>Weekly weigh-in on Profile tracks goal progress</RNText>
                 </View>
                 <View style={styles.planBulletRow}>
-                    <FontAwesome name="check-circle" size={14} color="#D4AF37" />
+                    <FontAwesome name="check-circle" size={14} color={VisualSystem.colors.gold} />
                     <RNText style={styles.planBulletText}>Change goals anytime in Profile — no pressure</RNText>
                 </View>
             </View>
@@ -184,7 +185,7 @@ function PasswordField({
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={placeholder ?? '••••••••'}
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    placeholderTextColor={VisualSystem.colors.textTertiary}
                     secureTextEntry={!visible}
                     textContentType={textContentType}
                     autoComplete="off"
@@ -196,7 +197,7 @@ function PasswordField({
                     onPress={onToggleVisible}
                     hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                 >
-                    <FontAwesome name={visible ? 'eye' : 'eye-slash'} size={20} color="rgba(255,255,255,0.5)" />
+                    <FontAwesome name={visible ? 'eye' : 'eye-slash'} size={20} color={VisualSystem.colors.textSecondary} />
                 </TouchableOpacity>
             </View>
             {!!error && <RNText style={styles.fieldError}>{error}</RNText>}
@@ -470,7 +471,7 @@ export default function SignupScreen() {
             />
 
             <TouchableOpacity style={styles.generateBtn} onPress={generatePassword} activeOpacity={0.7}>
-                <FontAwesome name="magic" size={12} color="#D4AF37" />
+                <FontAwesome name="magic" size={12} color={VisualSystem.colors.gold} />
                 <RNText style={styles.generateText}>Generate secure password</RNText>
             </TouchableOpacity>
 
@@ -674,7 +675,7 @@ const styles = StyleSheet.create({
     webHint: {
         marginTop: 16,
         textAlign: 'center',
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         lineHeight: 18,
         paddingHorizontal: 8,
@@ -688,7 +689,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 4,
         borderRadius: 12,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 10,
         fontWeight: '900',
         letterSpacing: 2,
@@ -697,27 +698,27 @@ const styles = StyleSheet.create({
     logoText: {
         fontSize: 32,
         fontWeight: '900',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: -1,
     },
     progressBar: {
         height: 6,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 3,
         marginBottom: Tokens.spacing.lg,
         overflow: 'hidden',
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderRadius: 3,
     },
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.xl,
         padding: Tokens.spacing.xl,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     stepBody: {
         width: '100%',
@@ -729,24 +730,24 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: '700',
         marginBottom: 6,
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         lineHeight: 30,
     },
     stepSub: {
         fontSize: 15,
         lineHeight: 22,
-        color: '#E2E8F0',
+        color: VisualSystem.colors.textPrimary,
     },
     hint: {
         fontSize: 12,
         lineHeight: 18,
-        color: '#A0AEC0',
+        color: VisualSystem.colors.textSecondary,
         marginTop: -12,
         marginBottom: Tokens.spacing.md,
         paddingHorizontal: Tokens.spacing.xs,
     },
     hintAccent: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
     },
     fieldRow: {
         flexDirection: 'row',
@@ -758,7 +759,7 @@ const styles = StyleSheet.create({
         minWidth: 0,
     },
     planCard: {
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.lg,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -779,7 +780,7 @@ const styles = StyleSheet.create({
         maxWidth: '100%',
     },
     planChipText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '700',
     },
@@ -788,17 +789,17 @@ const styles = StyleSheet.create({
         paddingVertical: Tokens.spacing.lg,
         marginBottom: Tokens.spacing.md,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255, 255, 255, 0.08)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     planCalorieValue: {
         fontSize: 44,
         fontWeight: '800',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: -1,
     },
     planCalorieUnit: {
         fontSize: 14,
-        color: '#A0AEC0',
+        color: VisualSystem.colors.textSecondary,
         marginTop: 4,
         fontWeight: '600',
         letterSpacing: 0.5,
@@ -809,7 +810,7 @@ const styles = StyleSheet.create({
     planMacroSectionTitle: {
         fontSize: Tokens.typography.xs,
         fontWeight: '900',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
         marginBottom: Tokens.spacing.md,
         marginLeft: 2,
@@ -835,19 +836,19 @@ const styles = StyleSheet.create({
     planMacroLabel: {
         flex: 1,
         fontSize: Tokens.typography.md,
-        color: '#E2E8F0',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '600',
     },
     planMacroGrams: {
         fontSize: Tokens.typography.lg,
         fontWeight: '700',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         minWidth: 56,
         textAlign: 'right',
     },
     planMacroDivider: {
         height: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginVertical: 2,
         marginLeft: 40,
     },
@@ -855,7 +856,7 @@ const styles = StyleSheet.create({
         gap: Tokens.spacing.md,
         paddingTop: Tokens.spacing.sm,
         borderTopWidth: 1,
-        borderTopColor: 'rgba(255, 255, 255, 0.08)',
+        borderTopColor: VisualSystem.colors.borderSubtle,
     },
     planBulletRow: {
         flexDirection: 'row',
@@ -866,18 +867,18 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 13,
         lineHeight: 20,
-        color: '#A0AEC0',
+        color: VisualSystem.colors.textSecondary,
     },
     sectionDivider: {
         height: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginVertical: Tokens.spacing.lg,
     },
     sectionTitle: {
         fontSize: 13,
         fontWeight: '700',
         letterSpacing: 1,
-        color: '#E2E8F0',
+        color: VisualSystem.colors.textPrimary,
         marginBottom: Tokens.spacing.md,
         textTransform: 'uppercase',
     },
@@ -886,7 +887,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
     },
     passwordField: {
@@ -895,27 +896,27 @@ const styles = StyleSheet.create({
     passwordRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.md,
         borderWidth: 1.5,
-        borderColor: 'rgba(255, 255, 255, 0.15)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     passwordRowError: {
-        borderColor: '#ff6b6b',
+        borderColor: VisualSystem.colors.danger,
     },
     passwordTextInput: {
         flex: 1,
         paddingHorizontal: Tokens.spacing.lg,
         paddingVertical: 14,
         fontSize: Tokens.typography.md,
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     eyeBtn: {
         paddingHorizontal: Tokens.spacing.lg,
         paddingVertical: 14,
     },
     fieldError: {
-        color: '#ff6b6b',
+        color: VisualSystem.colors.danger,
         fontSize: Tokens.typography.xs,
         marginTop: Tokens.spacing.xs,
         marginLeft: Tokens.spacing.xs,
@@ -934,14 +935,14 @@ const styles = StyleSheet.create({
     generateText: {
         fontSize: 12,
         fontWeight: '700',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
     },
     actions: {
         flexDirection: 'row',
         marginTop: Tokens.spacing.xl,
         paddingTop: Tokens.spacing.lg,
         borderTopWidth: 1,
-        borderTopColor: 'rgba(255, 255, 255, 0.08)',
+        borderTopColor: VisualSystem.colors.borderSubtle,
         gap: Tokens.spacing.md,
     },
     backBtnWrap: {

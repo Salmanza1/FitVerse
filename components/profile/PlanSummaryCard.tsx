@@ -8,6 +8,7 @@ import { DailyLog } from '@/types/nutrition';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { Tokens } from '@/constants/Tokens';
 import { getNutritionBudgetView } from '@/lib/nutrition';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type Props = {
     user: UserProfile;
@@ -60,7 +61,7 @@ export function PlanSummaryCard({ user, log, greeting }: Props) {
                         </Text>
                     </Text>
                 </View>
-                {effectiveGoal > 0 && <ProgressBar progress={calProgress} color="#D4AF37" />}
+                {effectiveGoal > 0 && <ProgressBar progress={calProgress} color={VisualSystem.colors.gold} />}
                 {effectiveGoal > 0 && (
                     <Text style={[styles.remainingLine, isOver && styles.remainingLineOver]}>
                         {isOver
@@ -90,8 +91,8 @@ export function PlanSummaryCard({ user, log, greeting }: Props) {
                     onPress={() => router.push('/profile/personal-info')}
                     activeOpacity={0.8}
                 >
-                    <FontAwesome name="sliders" size={14} color="#D4AF37" />
-                    <Text style={[styles.actionBtnText, { color: '#D4AF37' }]}>Edit targets</Text>
+                    <FontAwesome name="sliders" size={14} color={VisualSystem.colors.gold} />
+                    <Text style={[styles.actionBtnText, { color: VisualSystem.colors.goldText }]}>Edit targets</Text>
                 </TouchableOpacity>
             </View>
         </LinearGradient>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     greeting: {
         fontSize: 20,
         fontWeight: '800',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         marginBottom: 6,
     },
     sub: {
@@ -155,14 +156,14 @@ const styles = StyleSheet.create({
     calorieLabel: {
         fontSize: 12,
         fontWeight: '800',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     calorieNums: {
         fontSize: 14,
     },
     calorieEaten: {
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
     },
     calorieGoal: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     progressTrack: {
         height: 8,
         borderRadius: 4,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         overflow: 'hidden',
     },
     progressFill: {
@@ -195,12 +196,12 @@ const styles = StyleSheet.create({
     },
     macroPill: {
         flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 12,
         paddingVertical: 10,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     macroLetter: {
         fontSize: 11,
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     macroValue: {
         fontSize: 16,
         fontWeight: '800',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     macroGoal: {
         fontSize: 10,
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     },
     goalLine: {
         fontSize: 12,
-        color: 'rgba(255, 255, 255, 0.45)',
+        color: VisualSystem.colors.textSecondary,
         marginBottom: Tokens.spacing.md,
     },
     actions: {
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 12,
         borderRadius: 12,
     },
@@ -244,6 +245,6 @@ const styles = StyleSheet.create({
     actionBtnText: {
         fontSize: 13,
         fontWeight: '800',
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
     },
 });

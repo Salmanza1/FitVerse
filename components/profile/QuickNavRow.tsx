@@ -4,6 +4,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 const TABS = [
     { icon: 'users' as const, label: 'Feed', route: '/(tabs)' },
@@ -46,9 +47,9 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 4,
         borderRadius: 14,
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     chipPressed: {
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 10,
         fontWeight: '700',
-        color: '#E2E8F0',
+        color: VisualSystem.colors.textPrimary,
         marginTop: 6,
     },
 });

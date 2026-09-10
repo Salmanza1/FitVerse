@@ -9,6 +9,7 @@ import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { Tokens } from '@/constants/Tokens';
 import { useAuth } from '@/features/auth/AuthContext';
 import { RestDayToggle } from '@/components/workout/RestDayToggle';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function SettingsScreen() {
     const insets = useSafeAreaInsets();
@@ -93,7 +94,7 @@ export default function SettingsScreen() {
                     <FontAwesome name={icon} size={16} color={danger ? '#ff6b6b' : FitVerseTheme.colors.accentGold} />
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={[styles.settingTitle, danger && { color: '#ff6b6b' }]}>{title}</Text>
+                    <Text style={[styles.settingTitle, danger && { color: VisualSystem.colors.danger }]}>{title}</Text>
                     <Text style={styles.settingSubtitle}>{subtitle}</Text>
                 </View>
             </View>
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 10,
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: Tokens.spacing.md,

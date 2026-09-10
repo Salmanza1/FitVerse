@@ -3,6 +3,7 @@ import { Image, View, StyleSheet, ImageStyle, StyleProp } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Dorm } from '@/types/user';
 import { getDormLogoSource, resolveDormFromName } from '@/lib/dormLogo';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type Props = {
     dorm: Dorm | string;
@@ -18,7 +19,7 @@ export function DormLogo({ dorm, size = 44, style }: Props) {
     if (failed) {
         return (
             <View style={[styles.fallback, { width: size, height: size, borderRadius: size / 2 }, style]}>
-                <FontAwesome name="shield" size={size * 0.45} color="#D4AF37" />
+                <FontAwesome name="shield" size={size * 0.45} color={VisualSystem.colors.gold} />
             </View>
         );
     }

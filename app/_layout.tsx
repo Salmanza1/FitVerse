@@ -31,6 +31,7 @@ const queryClient = new QueryClient();
 export {
   ErrorBoundary,
 } from 'expo-router';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export const unstable_settings = {
   initialRouteName: '(auth)',
@@ -57,7 +58,7 @@ export default function RootLayout() {
   if (!loaded) {
     return (
       <View style={[webRoot, { justifyContent: 'center', alignItems: 'center' }]}>
-        <ActivityIndicator size="large" color="#D4AF37" />
+        <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
       </View>
     );
   }

@@ -23,6 +23,7 @@ import { formatPhoneNumber } from '@/features/utils/FormattingUtils';
 import { uploadProfileAvatar } from '@/features/profile/uploadProfileAvatar';
 import { ProfileAvatar } from '@/components/profile/ProfileAvatar';
 import type { ImagePickerAsset } from 'expo-image-picker';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 const WEEKLY_GOAL_LABELS: Record<string, string> = {
     "lose_1_5_lb_per_week": "Lose 1.5 lbs / week",
@@ -281,7 +282,7 @@ export default function PersonalInfoScreen() {
                         <ProfileAvatar uri={avatar} name={name} size={100} />
                         {avatarUploading && (
                             <View style={styles.avatarUploadingOverlay}>
-                                <ActivityIndicator color="#D4AF37" />
+                                <ActivityIndicator color={VisualSystem.colors.gold} />
                             </View>
                         )}
                         <View style={styles.avatarEditBadge}>
@@ -687,7 +688,7 @@ export default function PersonalInfoScreen() {
                                 style={styles.dobPicker}
                                 itemStyle={styles.pickerItem}
                             >
-                                {years.map(y => <Picker.Item key={y} label={y} value={y} color="#fff" />)}
+                                {years.map(y => <Picker.Item key={y} label={y} value={y} color={VisualSystem.colors.textPrimary} />)}
                             </Picker>
                             <Picker
                                 selectedValue={dobMonth}
@@ -695,7 +696,7 @@ export default function PersonalInfoScreen() {
                                 style={styles.dobPicker}
                                 itemStyle={styles.pickerItem}
                             >
-                                {months.map(m => <Picker.Item key={m} label={m} value={m} color="#fff" />)}
+                                {months.map(m => <Picker.Item key={m} label={m} value={m} color={VisualSystem.colors.textPrimary} />)}
                             </Picker>
                             <Picker
                                 selectedValue={dobDay}
@@ -703,7 +704,7 @@ export default function PersonalInfoScreen() {
                                 style={styles.dobPicker}
                                 itemStyle={styles.pickerItem}
                             >
-                                {days.map(d => <Picker.Item key={d} label={d} value={d} color="#fff" />)}
+                                {days.map(d => <Picker.Item key={d} label={d} value={d} color={VisualSystem.colors.textPrimary} />)}
                             </Picker>
                         </View>
                         <TouchableOpacity style={styles.dobConfirmBtn} onPress={handleDobConfirm}>
@@ -734,28 +735,28 @@ export default function PersonalInfoScreen() {
                         <View style={{ height: 180, justifyContent: 'center' }}>
                             {editingPicker === 'gender' && (
                                 <Picker selectedValue={gender} onValueChange={setGender} itemStyle={styles.pickerItem}>
-                                    <Picker.Item label="Male" value={Gender.MALE} color="#fff" />
-                                    <Picker.Item label="Female" value={Gender.FEMALE} color="#fff" />
+                                    <Picker.Item label="Male" value={Gender.MALE} color={VisualSystem.colors.textPrimary} />
+                                    <Picker.Item label="Female" value={Gender.FEMALE} color={VisualSystem.colors.textPrimary} />
                                 </Picker>
                             )}
                             {editingPicker === 'goal' && (
                                 <Picker selectedValue={goal} onValueChange={setGoal} itemStyle={styles.pickerItem}>
-                                    {Object.values(Goal).map(g => <Picker.Item key={g} label={g} value={g} color="#fff" />)}
+                                    {Object.values(Goal).map(g => <Picker.Item key={g} label={g} value={g} color={VisualSystem.colors.textPrimary} />)}
                                 </Picker>
                             )}
                             {editingPicker === 'activityLevel' && (
                                 <Picker selectedValue={activityLevel} onValueChange={setActivityLevel} itemStyle={styles.pickerItem}>
-                                    {Object.values(ActivityLevel).map(a => <Picker.Item key={a} label={a} value={a} color="#fff" />)}
+                                    {Object.values(ActivityLevel).map(a => <Picker.Item key={a} label={a} value={a} color={VisualSystem.colors.textPrimary} />)}
                                 </Picker>
                             )}
                             {editingPicker === 'weeklyGoalRate' && (
                                 <Picker selectedValue={weeklyGoalRate} onValueChange={setWeeklyGoalRate} itemStyle={styles.pickerItem}>
-                                    {Object.entries(WEEKLY_GOAL_LABELS).map(([val, label]) => <Picker.Item key={val} label={label} value={val} color="#fff" />)}
+                                    {Object.entries(WEEKLY_GOAL_LABELS).map(([val, label]) => <Picker.Item key={val} label={label} value={val} color={VisualSystem.colors.textPrimary} />)}
                                 </Picker>
                             )}
                             {editingPicker === 'trainingSplit' && (
                                 <Picker selectedValue={trainingSplit} onValueChange={setTrainingSplit} itemStyle={styles.pickerItem}>
-                                    {Object.values(TrainingSplit).map(s => <Picker.Item key={s} label={s} value={s} color="#fff" />)}
+                                    {Object.values(TrainingSplit).map(s => <Picker.Item key={s} label={s} value={s} color={VisualSystem.colors.textPrimary} />)}
                                 </Picker>
                             )}
                              {editingPicker === 'dorm' && (
@@ -768,14 +769,14 @@ export default function PersonalInfoScreen() {
                                     itemStyle={styles.pickerItem}
                                 >
                                     {Object.values(Dorm).map((d) => (
-                                        <Picker.Item key={d} label={d} value={d} color="#fff" />
+                                        <Picker.Item key={d} label={d} value={d} color={VisualSystem.colors.textPrimary} />
                                     ))}
                                 </Picker>
                             )}
                             {editingPicker === 'gym' && (
                                 <Picker selectedValue={defaultGym} onValueChange={setDefaultGym} itemStyle={styles.pickerItem}>
                                     {getAllTrainingLocationNames().map((g) => (
-                                        <Picker.Item key={g} label={g} value={g} color="#fff" />
+                                        <Picker.Item key={g} label={g} value={g} color={VisualSystem.colors.textPrimary} />
                                     ))}
                                 </Picker>
                             )}
@@ -795,7 +796,7 @@ export default function PersonalInfoScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     header: {
         flexDirection: 'row',
@@ -805,7 +806,7 @@ const styles = StyleSheet.create({
         paddingBottom: Tokens.spacing.lg,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(212, 175, 55, 0.1)',
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     backButton: {
         width: 44,
@@ -920,7 +921,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 12,
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: Tokens.spacing.lg,
@@ -949,7 +950,7 @@ const styles = StyleSheet.create({
     },
     pickerItem: {
         fontSize: Tokens.typography.md,
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
     },
     divider: {
         height: 1,
@@ -1055,7 +1056,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContent: {
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: Tokens.radius.lg,
         borderTopRightRadius: Tokens.radius.lg,
         padding: Tokens.spacing.xl,
@@ -1066,7 +1067,7 @@ const styles = StyleSheet.create({
     modalHeaderLine: {
         width: 40,
         height: 4,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 2,
         alignSelf: 'center',
         marginBottom: Tokens.spacing.xl,

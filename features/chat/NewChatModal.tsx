@@ -19,6 +19,7 @@ import { UserProfile } from '../../types/user';
 import { Chat } from '../../types/chat';
 import { SocialStore } from '../social/SocialStore';
 import { ChatStore } from './ChatStore';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type SentConfirmation = {
     mode: 'dm' | 'group';
@@ -223,13 +224,13 @@ export function NewChatModal({
             {mode === 'group' && (
                 <>
                     <View style={styles.groupNameWrap}>
-                        <FontAwesome name="pencil" size={14} color="rgba(255,255,255,0.4)" style={{ marginRight: 8 }} />
+                        <FontAwesome name="pencil" size={14} color={VisualSystem.colors.textTertiary} style={{ marginRight: 8 }} />
                         <TextInput
                             style={styles.groupNameInput}
                             value={groupName}
                             onChangeText={setGroupName}
                             placeholder="Name your group"
-                            placeholderTextColor="rgba(255,255,255,0.3)"
+                            placeholderTextColor={VisualSystem.colors.textTertiary}
                             maxLength={40}
                             returnKeyType="done"
                             blurOnSubmit
@@ -350,7 +351,7 @@ export function NewChatModal({
 
                     {loading ? (
                         <View style={styles.centerWrap}>
-                            <ActivityIndicator color="#D4AF37" size="large" />
+                            <ActivityIndicator color={VisualSystem.colors.gold} size="large" />
                         </View>
                     ) : friends.length === 0 ? (
                         <View style={styles.centerWrap}>
@@ -392,11 +393,11 @@ export function NewChatModal({
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     root: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     header: {
         flexDirection: 'row',
@@ -410,17 +411,17 @@ const styles = StyleSheet.create({
         width: 72,
         paddingVertical: 8,
     },
-    cancelText: { color: 'rgba(255,255,255,0.6)', fontSize: 15 },
+    cancelText: { color: VisualSystem.colors.textSecondary, fontSize: 15 },
     headerTitle: {
         flex: 1,
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 17,
         fontWeight: '700',
         textAlign: 'center',
     },
     createBtn: {
         width: 88,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 9,
         borderRadius: 18,
         alignItems: 'center',
@@ -432,19 +433,19 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     sendingText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '700',
         fontSize: 12,
     },
     createBtnDisabled: { backgroundColor: 'rgba(212,175,55,0.2)' },
     createHint: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         textAlign: 'center',
         marginHorizontal: 20,
         marginBottom: 4,
     },
-    createText: { color: '#0C2340', fontWeight: '700', fontSize: 14 },
+    createText: { color: VisualSystem.colors.textPrimary, fontWeight: '700', fontSize: 14 },
     createTextDisabled: { color: 'rgba(12,35,64,0.4)' },
     controls: {
         paddingBottom: 4,
@@ -469,15 +470,15 @@ const styles = StyleSheet.create({
         gap: 6,
     },
     modeBtnActive: {
-        backgroundColor: '#D4AF37',
-        borderColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
+        borderColor: VisualSystem.colors.borderGold,
     },
     modeBtnText: {
-        color: 'rgba(255,255,255,0.5)',
+        color: VisualSystem.colors.textSecondary,
         fontWeight: '600',
         fontSize: 14,
     },
-    modeBtnTextActive: { color: '#0C2340' },
+    modeBtnTextActive: { color: VisualSystem.colors.textPrimary },
     groupNameWrap: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -486,13 +487,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         height: 48,
         borderRadius: 14,
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.25)',
     },
     groupNameInput: {
         flex: 1,
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         paddingVertical: Platform.OS === 'android' ? 0 : 8,
     },
@@ -507,25 +508,25 @@ const styles = StyleSheet.create({
         borderRadius: 14,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.25)',
-        backgroundColor: 'rgba(255,255,255,0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     suggestionChipActive: {
         backgroundColor: 'rgba(212,175,55,0.15)',
         borderColor: 'rgba(212,175,55,0.45)',
     },
     suggestionChipText: {
-        color: 'rgba(255,255,255,0.55)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         fontWeight: '600',
     },
     suggestionChipTextActive: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '700',
     },
     groupHint: {
         marginHorizontal: 16,
         marginBottom: 8,
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 12,
         lineHeight: 17,
     },
@@ -537,14 +538,14 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     sectionLabel: {
-        color: 'rgba(255,255,255,0.4)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 12,
         fontWeight: '700',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
     },
     selectedCount: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '700',
     },
@@ -562,8 +563,8 @@ const styles = StyleSheet.create({
         gap: 12,
         paddingHorizontal: 32,
     },
-    emptyText: { color: 'rgba(255,255,255,0.6)', fontSize: 16, fontWeight: '600' },
-    emptySubText: { color: 'rgba(255,255,255,0.35)', fontSize: 13, textAlign: 'center' },
+    emptyText: { color: VisualSystem.colors.textSecondary, fontSize: 16, fontWeight: '600' },
+    emptySubText: { color: VisualSystem.colors.textTertiary, fontSize: 13, textAlign: 'center' },
     friendRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -571,7 +572,7 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         gap: 12,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: 'rgba(255,255,255,0.08)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     friendInfo: { flex: 1, minWidth: 0 },
     friendRowSelected: {
@@ -587,21 +588,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    friendAvatarText: { color: '#D4AF37', fontSize: 18, fontWeight: 'bold' },
-    friendName: { color: '#F5F5F5', fontSize: 15, fontWeight: '600' },
-    friendGoal: { color: 'rgba(255,255,255,0.4)', fontSize: 12, marginTop: 2 },
+    friendAvatarText: { color: VisualSystem.colors.goldText, fontSize: 18, fontWeight: 'bold' },
+    friendName: { color: VisualSystem.colors.textPrimary, fontSize: 15, fontWeight: '600' },
+    friendGoal: { color: VisualSystem.colors.textTertiary, fontSize: 12, marginTop: 2 },
     checkCircle: {
         width: 28,
         height: 28,
         borderRadius: 14,
         borderWidth: 2,
-        borderColor: 'rgba(255,255,255,0.2)',
+        borderColor: VisualSystem.colors.borderSubtle,
         justifyContent: 'center',
         alignItems: 'center',
     },
     checkCircleSelected: {
-        backgroundColor: '#D4AF37',
-        borderColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
+        borderColor: VisualSystem.colors.borderGold,
     },
     successWrap: {
         flex: 1,
@@ -613,37 +614,37 @@ const styles = StyleSheet.create({
         width: 64,
         height: 64,
         borderRadius: 32,
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 20,
     },
     successTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 22,
         fontWeight: '800',
         marginBottom: 12,
     },
     successRecipients: {
-        color: 'rgba(255,255,255,0.85)',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         textAlign: 'center',
         lineHeight: 24,
         marginBottom: 12,
     },
     successHighlight: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontWeight: '800',
     },
     successSub: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 14,
         textAlign: 'center',
         lineHeight: 20,
         marginBottom: 28,
     },
     doneBtn: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         paddingHorizontal: 48,
         paddingVertical: 14,
         borderRadius: 24,
@@ -651,7 +652,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     doneBtnText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 16,
     },

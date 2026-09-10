@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ModernAppBackground } from './ModernAppBackground';
 import type { PersonalizationSnapshot } from '@/features/auth/personalization';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type Props = {
     snapshot: PersonalizationSnapshot;
@@ -105,7 +106,7 @@ export function PersonalizingAccountLoading({ snapshot, onComplete }: Props) {
                 {!isDone ? (
                     <View style={styles.stepCard}>
                         <View style={styles.stepIconWrap}>
-                            <FontAwesome name="magic" size={18} color="#D4AF37" />
+                            <FontAwesome name="magic" size={18} color={VisualSystem.colors.gold} />
                         </View>
                         <View style={styles.stepTextWrap}>
                             <Text style={styles.stepLabel}>{steps[step]?.label}</Text>
@@ -131,7 +132,7 @@ export function PersonalizingAccountLoading({ snapshot, onComplete }: Props) {
                             </View>
                             <View style={styles.macroRow}>
                                 <View style={styles.macroItem}>
-                                    <Text style={[styles.macroVal, { color: '#51cf66' }]}>{proteinDisplay}g</Text>
+                                    <Text style={[styles.macroVal, { color: VisualSystem.colors.success }]}>{proteinDisplay}g</Text>
                                     <Text style={styles.macroLbl}>Protein</Text>
                                 </View>
                                 <View style={styles.macroItem}>
@@ -139,7 +140,7 @@ export function PersonalizingAccountLoading({ snapshot, onComplete }: Props) {
                                     <Text style={styles.macroLbl}>Carbs</Text>
                                 </View>
                                 <View style={styles.macroItem}>
-                                    <Text style={[styles.macroVal, { color: '#ff6b6b' }]}>{fatDisplay}g</Text>
+                                    <Text style={[styles.macroVal, { color: VisualSystem.colors.danger }]}>{fatDisplay}g</Text>
                                     <Text style={styles.macroLbl}>Fat</Text>
                                 </View>
                             </View>
@@ -157,7 +158,7 @@ export function PersonalizingAccountLoading({ snapshot, onComplete }: Props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     inner: {
         flex: 1,
@@ -169,19 +170,19 @@ const styles = StyleSheet.create({
     brand: {
         fontSize: 34,
         fontWeight: '900',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         marginBottom: 8,
     },
     headline: {
         fontSize: 20,
         fontWeight: '700',
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
         marginBottom: 8,
     },
     subhead: {
         fontSize: 14,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         lineHeight: 20,
         marginBottom: 28,
@@ -192,13 +193,13 @@ const styles = StyleSheet.create({
         maxWidth: 340,
         height: 6,
         borderRadius: 3,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         overflow: 'hidden',
         marginBottom: 24,
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderRadius: 3,
     },
     stepCard: {
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         maxWidth: 340,
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.25)',
@@ -227,13 +228,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     stepLabel: {
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 16,
         fontWeight: '700',
         marginBottom: 4,
     },
     stepDetail: {
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 13,
         lineHeight: 18,
     },
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: '900',
         letterSpacing: 2,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         textAlign: 'center',
         marginBottom: 14,
     },
@@ -266,11 +267,11 @@ const styles = StyleSheet.create({
     calorieValue: {
         fontSize: 40,
         fontWeight: '800',
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
     },
     calorieUnit: {
         fontSize: 16,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontWeight: '600',
     },
     macroRow: {
@@ -288,13 +289,13 @@ const styles = StyleSheet.create({
     },
     macroLbl: {
         fontSize: 11,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         marginTop: 4,
         fontWeight: '600',
     },
     targetsFoot: {
         fontSize: 12,
-        color: 'rgba(255, 255, 255, 0.45)',
+        color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         lineHeight: 18,
     },

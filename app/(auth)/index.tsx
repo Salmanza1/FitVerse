@@ -13,6 +13,7 @@ import { router } from 'expo-router';
 
 import { storage } from '../../lib/storage';
 import { supabase } from '../../lib/supabase';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function LoginScreen() {
     const [identifier, setIdentifier] = useState(''); // email or username
@@ -142,7 +143,7 @@ export default function LoginScreen() {
                 </View>
 
                 <View style={styles.formCard}>
-                    <Text style={[styles.title, { color: 'white' }]}>Student Login</Text>
+                    <Text style={[styles.title, { color: VisualSystem.colors.textPrimary }]}>Student Login</Text>
 
                     <StyledInput
                         label="Email or Username"
@@ -256,7 +257,7 @@ export default function LoginScreen() {
                                     disabled={forgotLoading}
                                 />
                                 <TouchableOpacity style={{ marginTop: 15 }} onPress={() => setForgotStep(2)}>
-                                    <Text style={{ color: '#D4AF37', textAlign: 'center', fontWeight: 'bold' }}>Already have a code?</Text>
+                                    <Text style={{ color: VisualSystem.colors.goldText, textAlign: 'center', fontWeight: 'bold' }}>Already have a code?</Text>
                                 </TouchableOpacity>
                             </View>
                         ) : (
@@ -286,7 +287,7 @@ export default function LoginScreen() {
                                     disabled={forgotLoading}
                                 />
                                 <TouchableOpacity style={{ marginTop: 15 }} onPress={() => setForgotStep(1)}>
-                                    <Text style={{ color: '#E2E8F0', textAlign: 'center' }}>Didn't get the code? Try again.</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, textAlign: 'center' }}>Didn't get the code? Try again.</Text>
                                 </TouchableOpacity>
                             </View>
                         )}
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     welcomePill: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: 'bold',
         letterSpacing: 2,
@@ -326,30 +327,30 @@ const styles = StyleSheet.create({
     logoText: {
         fontSize: 48,
         fontWeight: '900',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: -1,
         marginBottom: 5,
     },
     logoSubText: {
         fontSize: 14,
-        color: '#D4AF37', // ND Gold
+        color: VisualSystem.colors.goldText, // ND Gold
         fontWeight: '800',
         letterSpacing: 3,
         marginBottom: 20,
     },
     heroDescription: {
         fontSize: 16,
-        color: '#E2E8F0', // Softer secondary text
+        color: VisualSystem.colors.textPrimary, // Softer secondary text
         textAlign: 'center',
         lineHeight: 24,
         maxWidth: '85%',
     },
     formCard: {
-        backgroundColor: 'rgba(255, 255, 255, 0.05)', // Translucent card
+        backgroundColor: VisualSystem.colors.bgMid, // Translucent card
         borderRadius: 24,
         padding: 24,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.5,
@@ -364,7 +365,7 @@ const styles = StyleSheet.create({
     },
     divider: {
         height: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
         marginVertical: 20,
         width: '100%',
     },
@@ -379,13 +380,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rememberText: {
-        color: '#E2E8F0', // Match secondary text
+        color: VisualSystem.colors.textPrimary, // Match secondary text
         marginLeft: 10,
         fontSize: 14,
         fontWeight: '500',
     },
     forgotText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 14,
         fontWeight: '600',
     },
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     recoverLinkText: {
-        color: '#A0AEC0',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 13,
         textAlign: 'center',
         lineHeight: 20,
@@ -408,13 +409,13 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.22)',
     },
     webTipTitle: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '800',
         marginBottom: 6,
     },
     webTipText: {
-        color: 'rgba(255,255,255,0.65)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         lineHeight: 18,
     },
@@ -425,7 +426,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     modalCard: {
-        backgroundColor: '#152B4D',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 24,
         padding: 24,
         borderWidth: 1,
@@ -444,10 +445,10 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 22,
         fontWeight: 'bold',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
     },
     modalSubtitle: {
-        color: '#E2E8F0',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         lineHeight: 20,
         marginBottom: 20,
@@ -460,7 +461,7 @@ const styles = StyleSheet.create({
         zIndex: 999,
     },
     loadingText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         marginTop: 20,
         fontWeight: 'bold',
         letterSpacing: 2,

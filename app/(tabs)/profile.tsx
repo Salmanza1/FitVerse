@@ -14,6 +14,7 @@ import { SocialDashboardModal } from '@/features/social/SocialDashboardModal';
 import { ChatsListScreen } from '@/features/chat/ChatsListScreen';
 import * as Haptics from 'expo-haptics';
 import { safeImpact } from '@/lib/safeHaptics';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function ProfileScreen() {
     const insets = useSafeAreaInsets();
@@ -208,7 +209,7 @@ export default function ProfileScreen() {
                     <RNText style={styles.userName} numberOfLines={1}>
                         {user.displayName || user.name || 'Athlete'}
                     </RNText>
-                    <FontAwesome name="pencil" size={12} color="rgba(255,255,255,0.35)" />
+                    <FontAwesome name="pencil" size={12} color={VisualSystem.colors.textTertiary} />
                 </Pressable>
 
                 <View style={styles.chipRow}>
@@ -409,7 +410,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '800',
         letterSpacing: -0.3,
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     avatarRing: {
         marginTop: 12,
@@ -434,7 +435,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: '#0A1B33',
+        borderColor: VisualSystem.colors.borderStrong,
     },
     nameRow: {
         flexDirection: 'row',
@@ -446,7 +447,7 @@ const styles = StyleSheet.create({
     userName: {
         fontSize: 24,
         fontWeight: '800',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: -0.4,
     },
     chipRow: {
@@ -463,22 +464,22 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 7,
         borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     chipText: {
         fontSize: 12,
         fontWeight: '600',
-        color: 'rgba(255, 255, 255, 0.72)',
+        color: VisualSystem.colors.textPrimary,
     },
     headerIconBtn: {
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: VisualSystem.colors.borderSubtle,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -495,9 +496,9 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         paddingVertical: 18,
         paddingHorizontal: 16,
-        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.07)',
+        borderColor: VisualSystem.colors.borderSubtle,
         justifyContent: 'center',
     },
     actionTileIconWrap: {
@@ -513,7 +514,7 @@ const styles = StyleSheet.create({
     actionTileLabel: {
         fontSize: 15,
         fontWeight: '700',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
     },
     tileBadge: {
         position: 'absolute',
@@ -524,7 +525,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#ef4444',
         borderWidth: 1.5,
-        borderColor: '#0A1B33',
+        borderColor: VisualSystem.colors.borderStrong,
     },
     footerBlock: {
         marginTop: 4,
@@ -540,7 +541,7 @@ const styles = StyleSheet.create({
     signOutText: {
         fontSize: 14,
         fontWeight: '600',
-        color: '#ff8a8a',
+        color: VisualSystem.colors.danger,
     },
     debugBtn: {
         flexDirection: 'row',
@@ -550,8 +551,8 @@ const styles = StyleSheet.create({
         marginTop: 8,
         borderRadius: 14,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        borderColor: VisualSystem.colors.borderSubtle,
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     debugBtnText: {
         fontSize: 14,
@@ -566,7 +567,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: '85%',
-        backgroundColor: '#0A1B33',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.lg,
         padding: Tokens.spacing.xl,
         borderWidth: 1,
@@ -586,7 +587,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     input: {
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         color: FitVerseTheme.colors.textPrimary,
         padding: Tokens.spacing.md,
         borderRadius: Tokens.radius.sm,

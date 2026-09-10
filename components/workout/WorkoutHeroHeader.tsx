@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     heroSubtitle: {
         fontSize: 13,
         fontWeight: '700',
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         marginTop: -2,
     },
     headerActions: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     actionText: {
-        color: '#fff',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 11,
         fontWeight: '800',
     },

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Tokens } from '@/constants/Tokens';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 interface StyledSelectProps {
     label: string;
@@ -52,7 +53,7 @@ export function StyledSelect({
                     <FontAwesome
                         name="chevron-down"
                         size={14}
-                        color="rgba(255, 255, 255, 0.45)"
+                        color={VisualSystem.colors.textSecondary}
                         style={styles.chevron}
                     />
                 </Pressable>
@@ -91,7 +92,7 @@ export function StyledSelect({
                                             {option}
                                         </Text>
                                         {selected && (
-                                            <FontAwesome name="check" size={16} color="#FFFFFF" />
+                                            <FontAwesome name="check" size={16} color={VisualSystem.colors.textPrimary} />
                                         )}
                                     </TouchableOpacity>
                                 );
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
     },
     trigger: {
@@ -126,22 +127,22 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         borderRadius: Tokens.radius.md,
         borderWidth: 1.5,
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
-        borderColor: 'rgba(255, 255, 255, 0.15)',
+        backgroundColor: VisualSystem.colors.bgMid,
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     triggerPressed: {
-        backgroundColor: 'rgba(255, 255, 255, 0.12)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     valueText: {
         flex: 1,
         fontSize: Tokens.typography.md,
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         paddingRight: Tokens.spacing.sm,
         lineHeight: 22,
     },
     placeholderText: {
-        color: 'rgba(255, 255, 255, 0.4)',
+        color: VisualSystem.colors.textTertiary,
     },
     chevron: {
         marginLeft: Tokens.spacing.xs,
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: Tokens.typography.lg,
         fontWeight: '700',
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
     },
     optionList: {
         maxHeight: 360,
@@ -182,23 +183,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: Tokens.spacing.md,
         borderRadius: Tokens.radius.sm,
         marginBottom: Tokens.spacing.sm,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: '#E2E8F0',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     optionSelected: {
-        backgroundColor: '#C99700',
-        borderColor: '#C99700',
+        backgroundColor: VisualSystem.colors.gold,
+        borderColor: VisualSystem.colors.borderGold,
     },
     optionText: {
         flex: 1,
         fontSize: Tokens.typography.md,
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '500',
         paddingRight: Tokens.spacing.sm,
     },
     optionTextSelected: {
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '700',
     },
 });

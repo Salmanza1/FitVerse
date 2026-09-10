@@ -11,6 +11,7 @@ import {
     REACTION_EMOJIS,
     showGymTogetherChip,
 } from './chatSocial';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export function FriendStreakBanner({ days }: { days: number }) {
     if (days < 1) return null;
@@ -98,7 +99,7 @@ export function GymTimePicker({
             <View style={extrasStyles.gymPickerHeader}>
                 <Text style={extrasStyles.gymPickerTitle}>When?</Text>
                 <Pressable onPress={onClose} hitSlop={8}>
-                    <FontAwesome name="times" size={12} color="rgba(255,255,255,0.45)" />
+                    <FontAwesome name="times" size={12} color={VisualSystem.colors.textSecondary} />
                 </Pressable>
             </View>
             <ScrollView
@@ -185,7 +186,7 @@ export function MessageReactionBar({
                     <FontAwesome
                         name={showPicker ? 'times' : grouped.length > 0 ? 'smile-o' : 'plus'}
                         size={showPicker || grouped.length > 0 ? 12 : 10}
-                        color="rgba(255,255,255,0.45)"
+                        color={VisualSystem.colors.textSecondary}
                     />
                 </Pressable>
             </View>
@@ -294,12 +295,12 @@ const extrasStyles = StyleSheet.create({
     },
     streakEmoji: { fontSize: 22 },
     streakTitle: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '800',
     },
     streakSub: {
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         marginTop: 2,
     },
@@ -321,7 +322,7 @@ const extrasStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 14,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.18)',
     },
@@ -346,7 +347,7 @@ const extrasStyles = StyleSheet.create({
         marginBottom: 6,
     },
     gymPickerTitle: {
-        color: 'rgba(255,255,255,0.55)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.3,
@@ -396,9 +397,9 @@ const extrasStyles = StyleSheet.create({
         paddingHorizontal: 7,
         paddingVertical: 3,
         borderRadius: 12,
-        backgroundColor: 'rgba(255,255,255,0.08)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     reactionPillMine: {
         borderColor: 'rgba(212,175,55,0.45)',
@@ -406,7 +407,7 @@ const extrasStyles = StyleSheet.create({
     },
     reactionEmoji: { fontSize: 13 },
     reactionCount: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 10,
         fontWeight: '700',
     },
@@ -414,7 +415,7 @@ const extrasStyles = StyleSheet.create({
         width: 22,
         height: 22,
         borderRadius: 11,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -426,24 +427,24 @@ const extrasStyles = StyleSheet.create({
         maxWidth: 220,
     },
     inviteCardMine: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderBottomRightRadius: 4,
     },
     inviteCardTheirs: {
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderBottomLeftRadius: 4,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.2)',
     },
     inviteIcon: { fontSize: 18, marginBottom: 2 },
     inviteTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         fontWeight: '800',
     },
-    inviteTitleMine: { color: '#0C2340' },
+    inviteTitleMine: { color: VisualSystem.colors.textPrimary },
     inviteTime: {
-        color: 'rgba(255,255,255,0.65)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         marginTop: 2,
         fontWeight: '600',
@@ -459,10 +460,10 @@ const extrasStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 12,
-        backgroundColor: '#51cf66',
+        backgroundColor: VisualSystem.colors.successSoft,
     },
     inviteAcceptText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 11,
         fontWeight: '800',
     },
@@ -470,22 +471,22 @@ const extrasStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 12,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     inviteDeclineText: {
-        color: 'rgba(255,255,255,0.65)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '600',
     },
     inviteStatusAccepted: {
         marginTop: 10,
-        color: '#51cf66',
+        color: VisualSystem.colors.success,
         fontSize: 12,
         fontWeight: '700',
     },
     inviteStatusDeclined: {
         marginTop: 10,
-        color: 'rgba(255,255,255,0.45)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         fontStyle: 'italic',
     },
@@ -495,21 +496,21 @@ const extrasStyles = StyleSheet.create({
         borderRadius: 16,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.35)',
-        backgroundColor: '#1A3A5C',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     milestoneCardMine: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         borderBottomRightRadius: 4,
     },
     milestoneIcon: { fontSize: 22, marginBottom: 4 },
     milestoneTitle: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         fontWeight: '800',
     },
-    milestoneTitleMine: { color: '#0C2340' },
+    milestoneTitleMine: { color: VisualSystem.colors.textPrimary },
     milestoneSub: {
-        color: 'rgba(255,255,255,0.6)',
+        color: VisualSystem.colors.textSecondary,
         fontSize: 12,
         marginTop: 4,
     },

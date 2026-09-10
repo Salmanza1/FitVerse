@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         marginBottom: 14,
     },
     iconCirclePr: {
-        backgroundColor: '#2ecc71',
+        backgroundColor: VisualSystem.colors.successSoft,
     },
     eyebrow: {
         color: C.gold,
@@ -429,14 +429,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
-        backgroundColor: '#2ecc71',
+        backgroundColor: VisualSystem.colors.successSoft,
         paddingVertical: 14,
         borderRadius: 14,
         marginBottom: 6,
         minHeight: 48,
     },
     primaryBtnText: {
-        color: '#0C2340',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
         fontSize: 15,
     },

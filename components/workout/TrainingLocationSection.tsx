@@ -65,7 +65,7 @@ function LocationRow({ name, subtitle, badge, selected, highlighted, onPress }: 
                     <FontAwesome name="check" size={12} color="#0C2340" />
                 </View>
             ) : (
-                <FontAwesome name="circle-o" size={18} color="rgba(255,255,255,0.2)" />
+                <FontAwesome name="circle-o" size={18} color={VisualSystem.colors.textTertiary} />
             )}
         </TouchableOpacity>
     );
@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
     },
     cardEmbedded: {
         marginBottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.03)',
-        borderColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     cardRow: {
         flexDirection: 'row',
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 20,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 16,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: VisualSystem.colors.bgMid,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 4,
         borderRadius: 2,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         marginTop: 10,
         marginBottom: 8,
     },
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: 'rgba(255,255,255,0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         borderRadius: 14,
         marginBottom: 8,
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: 'transparent',
     },

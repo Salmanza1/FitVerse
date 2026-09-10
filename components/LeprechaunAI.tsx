@@ -15,6 +15,7 @@ import { View, Text, Card, SecondaryText } from './Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { getLeprechaunResponse, getLeprechaunResponseWithTools, Message } from '@/lib/openai';
 import { useAuth } from '@/features/auth/AuthContext';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => void) => React.ReactNode }) {
     const pan = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
         bottom: 100,
         right: 25,
         zIndex: 9999,
-        shadowColor: "#C99700",
+        shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.5,
         shadowRadius: 10,
@@ -267,11 +268,11 @@ const styles = StyleSheet.create({
         width: 64,
         height: 64,
         borderRadius: 32,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: '#C99700',
+        borderColor: VisualSystem.colors.borderGold,
     },
     modalOverlay: {
         flex: 1,
@@ -294,12 +295,12 @@ const styles = StyleSheet.create({
         padding: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#161616',
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     chatTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
     },
     miniLeaf: {
         width: 32,
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#C99700',
+        borderColor: VisualSystem.colors.borderGold,
     },
     closeBtn: {
         padding: 5,
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
     },
     userBubble: {
         alignSelf: 'flex-end',
-        backgroundColor: '#C99700',
+        backgroundColor: VisualSystem.colors.gold,
         borderBottomRightRadius: 4,
     },
     messageText: {
@@ -339,7 +340,7 @@ const styles = StyleSheet.create({
         lineHeight: 22,
     },
     assistantText: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
     },
     userText: {
         color: '#000',
@@ -358,7 +359,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 10,
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         maxHeight: 100,
         fontSize: 15,
     },
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: '#C99700',
+        backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -381,7 +382,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
         borderWidth: 1,
-        borderColor: '#C99700',
+        borderColor: VisualSystem.colors.borderGold,
         alignSelf: 'stretch',
     },
     actionCardHeader: {
@@ -390,14 +391,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     actionCardTitle: {
-        color: '#C99700',
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '900',
         letterSpacing: 1,
         marginLeft: 8,
     },
     actionCardDesc: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 14,
         marginBottom: 10,
     },
@@ -408,7 +409,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     actionParamText: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     },
@@ -428,15 +429,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#2A3B4D',
     },
     actionBtnConfirm: {
-        backgroundColor: '#C99700',
+        backgroundColor: VisualSystem.colors.gold,
     },
     actionBtnTextCancel: {
-        color: 'white',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: 'bold',
         fontSize: 14,
     },
     actionBtnTextConfirm: {
-        color: 'black',
+        color: VisualSystem.colors.textPrimary,
         fontWeight: 'bold',
         fontSize: 14,
     }

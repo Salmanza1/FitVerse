@@ -268,7 +268,7 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
                                             setImage(null);
                                         }}
                                     >
-                                        <FontAwesome name="trash" size={16} color="#fff" />
+                                        <FontAwesome name="trash" size={16} color={VisualSystem.colors.textPrimary} />
                                     </Pressable>
                                 </View>
                             ) : (

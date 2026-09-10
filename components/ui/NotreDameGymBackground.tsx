@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 const { width, height } = Dimensions.get('window');
 
@@ -105,7 +106,7 @@ const FloatingShamrock = () => {
                 animatedStyle,
             ]}
         >
-            <FontAwesome name="leaf" size={size} color="#D4AF37" />
+            <FontAwesome name="leaf" size={size} color={VisualSystem.colors.gold} />
         </Animated.View>
     );
 };
@@ -221,7 +222,7 @@ export const NotreDameGymBackground = () => {
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={['#0D2847', '#0C2340', '#0D2847']}
+                colors={['#FFFFFF', '#F7F9FC', '#EEF2F7']}
                 style={StyleSheet.absoluteFill}
             />
 
@@ -246,12 +247,12 @@ export const NotreDameGymBackground = () => {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
     },
     dust: {
         position: 'absolute',
-        backgroundColor: '#D4AF37',
-        shadowColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
+        shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.8,
         shadowRadius: 3,

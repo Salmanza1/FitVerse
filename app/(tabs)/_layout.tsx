@@ -42,7 +42,7 @@ export default function TabLayout() {
   if (isInitialCheck || isAuthLoading) {
     return (
       <View style={[webScreen, { justifyContent: 'center', alignItems: 'center' }]}>
-        <ActivityIndicator size="large" color="#D4AF37" />
+        <ActivityIndicator size="large" color={VisualSystem.colors.gold} />
       </View>
     );
   }

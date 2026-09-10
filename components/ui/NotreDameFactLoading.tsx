@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated, Easing, ActivityIndicator } from 'rea
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ModernAppBackground } from './ModernAppBackground';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type LoadingVariant = 'fullscreen' | 'overlay';
 
@@ -97,7 +98,7 @@ export function NotreDameFactLoading({
                         style={styles.logoGradient}
                     >
                         <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-                            <FontAwesome name="heart" size={28} color="#D4AF37" />
+                            <FontAwesome name="heart" size={28} color={VisualSystem.colors.gold} />
                         </Animated.View>
                     </LinearGradient>
                 </Animated.View>
@@ -106,7 +107,7 @@ export function NotreDameFactLoading({
                 <Text style={styles.headline}>{headline}</Text>
 
                 <View style={styles.statusRow}>
-                    <ActivityIndicator size="small" color="#D4AF37" />
+                    <ActivityIndicator size="small" color={VisualSystem.colors.gold} />
                     <Text style={styles.statusText}>{STATUS_LABELS[statusIndex]}…</Text>
                 </View>
 
@@ -136,7 +137,7 @@ export function NotreDameFactLoading({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0C2340',
+        backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -173,13 +174,13 @@ const styles = StyleSheet.create({
     brand: {
         fontSize: 36,
         fontWeight: '900',
-        color: '#FFFFFF',
+        color: VisualSystem.colors.textPrimary,
         letterSpacing: -0.5,
         marginBottom: 6,
     },
     headline: {
         fontSize: 15,
-        color: '#A0B4CB',
+        color: VisualSystem.colors.textSecondary,
         fontWeight: '600',
         marginBottom: 20,
         textAlign: 'center',
@@ -191,14 +192,14 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     statusText: {
-        color: '#D4AF37',
+        color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '700',
         letterSpacing: 0.3,
     },
     messageCard: {
         width: '100%',
-        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 20,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     messageText: {
-        color: '#F5F5F5',
+        color: VisualSystem.colors.textPrimary,
         fontSize: 17,
         lineHeight: 26,
         textAlign: 'center',
@@ -231,10 +232,10 @@ const styles = StyleSheet.create({
         width: 6,
         height: 6,
         borderRadius: 3,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: VisualSystem.colors.bgDeep,
     },
     dotActive: {
-        backgroundColor: '#D4AF37',
+        backgroundColor: VisualSystem.colors.gold,
         width: 18,
     },
 });
