@@ -1,8 +1,8 @@
 import { Platform, ViewStyle } from 'react-native';
 import { VisualSystem } from '@/constants/VisualSystem';
 
-/** Notre Dame navy — use anywhere web would otherwise show transparent/black. */
-export const WEB_BG = VisualSystem.colors.bgMid;
+/** Page background — use anywhere web would otherwise show transparent/black. */
+export const WEB_BG = VisualSystem.colors.bgBase;
 
 export const webRoot: ViewStyle =
     Platform.OS === 'web'

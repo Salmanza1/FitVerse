@@ -24,7 +24,7 @@ import { safeImpact } from '@/lib/safeHaptics';
 /**
  * Floating "liquid glass" tab bar.
  *
- * Built from layered translucency rather than a solid fill: a blur base, a navy
+ * Built from layered translucency rather than a solid fill: a blur base, a white
  * tint, and a specular highlight along the top edge, with a gold pill that
  * springs between tabs. Geometry matches the previous bar (68pt tall, 18pt
  * inset, 22pt off the bottom) so screens keep their existing ~100-120pt of
@@ -164,8 +164,8 @@ export function LiquidGlassTabBar({
             <View style={styles.bar} onLayout={onLayout}>
                 {/* Layer 1 — the refraction base. */}
                 <BlurView
-                    intensity={Platform.select({ ios: 70, android: 40, default: 30 })}
-                    tint="dark"
+                    intensity={Platform.select({ ios: 60, android: 40, default: 30 })}
+                    tint="light"
                     // Without this Android renders a flat semi-transparent box.
                     experimentalBlurMethod={
                         Platform.OS === 'android' ? 'dimezisBlurView' : undefined
@@ -173,14 +173,14 @@ export function LiquidGlassTabBar({
                     style={StyleSheet.absoluteFill}
                 />
 
-                {/* Layer 2 — navy tint. Heavier off-iOS, where blur is weaker. */}
+                {/* Layer 2 — white tint. Heavier off-iOS, where blur is weaker. */}
                 <View style={[StyleSheet.absoluteFill, styles.tint]} />
 
                 {/* Layer 3 — specular highlight along the top edge. */}
                 <LinearGradient
                     colors={[
-                        'rgba(255, 255, 255, 0.16)',
-                        'rgba(255, 255, 255, 0.04)',
+                        'rgba(255, 255, 255, 0.85)',
+                        'rgba(255, 255, 255, 0.30)',
                         'transparent',
                     ]}
                     locations={[0, 0.35, 1]}
@@ -202,8 +202,8 @@ export function LiquidGlassTabBar({
                         ]}>
                         <LinearGradient
                             colors={[
-                                'rgba(212, 175, 55, 0.26)',
-                                'rgba(212, 175, 55, 0.10)',
+                                'rgba(201, 151, 0, 0.26)',
+                                'rgba(201, 151, 0, 0.13)',
                             ]}
                             style={StyleSheet.absoluteFill}
                         />
@@ -214,9 +214,11 @@ export function LiquidGlassTabBar({
                     {routes.map((route, index) => {
                         const { options } = descriptors[route.key];
                         const focused = index === activeIndex;
+                        // Plain gold fails contrast on a light bar, so the active
+                        // tab uses the darker gold that passes on this background.
                         const color = focused
-                            ? VisualSystem.colors.gold
-                            : VisualSystem.colors.textTertiary;
+                            ? VisualSystem.colors.goldText
+                            : VisualSystem.colors.textSecondary;
 
                         const label =
                             typeof options.tabBarLabel === 'string'
@@ -277,19 +279,20 @@ const styles = StyleSheet.create({
         borderRadius: VisualSystem.radius.pill,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: VisualSystem.colors.borderGold,
+        borderColor: VisualSystem.colors.borderSubtle,
         // Lifts the bar off the content so the blur reads as depth, not haze.
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.35,
-        shadowRadius: 24,
-        elevation: 12,
+        // Navy-tinted and soft: a black shadow on a light page reads as grime.
+        shadowColor: VisualSystem.colors.navy,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.16,
+        shadowRadius: 22,
+        elevation: 10,
     },
     tint: {
         backgroundColor: Platform.select({
-            ios: 'rgba(10, 28, 52, 0.42)',
-            android: 'rgba(10, 28, 52, 0.62)',
-            default: 'rgba(10, 28, 52, 0.48)',
+            ios: 'rgba(255, 255, 255, 0.58)',
+            android: 'rgba(255, 255, 255, 0.82)',
+            default: 'rgba(255, 255, 255, 0.72)',
         }),
     },
     specular: {
@@ -306,7 +309,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.30)',
+        borderColor: 'rgba(201, 151, 0, 0.38)',
     },
     row: {
         flex: 1,

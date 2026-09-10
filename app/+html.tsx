@@ -18,7 +18,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         */}
         <ScrollViewStyleReset />
 
-        {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
+        {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers on first paint. */}
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
         {/* Add any additional <head> elements that you want globally available on web... */}
       </head>
@@ -29,18 +29,19 @@ export default function Root({ children }: { children: React.ReactNode }) {
 
 const responsiveBackground = `
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --fitverse-bg: #F7F9FC;
+  --fitverse-surface: #FFFFFF;
   --fitverse-navy: #0C2340;
-  --fitverse-navy-deep: #0A1F38;
-  --fitverse-gold: #D4AF37;
+  --fitverse-gold: #C99700;
 }
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--fitverse-navy-deep);
-  color: #F4F7FB;
+  background-color: var(--fitverse-bg);
+  color: var(--fitverse-navy);
   -webkit-font-smoothing: antialiased;
 }
 body {
@@ -55,7 +56,7 @@ body {
   flex-direction: column;
   width: 100%;
   min-height: 100%;
-  background-color: var(--fitverse-navy);
+  background-color: var(--fitverse-bg);
 }
 /* Prevent transparent RN views from showing browser black */
 div[class*="css-view"] {
@@ -69,6 +70,6 @@ input:focus, textarea:focus {
 }
 @media (min-width: 900px) {
   body {
-    background: linear-gradient(180deg, #081A30 0%, #0C2340 40%, #0C2340 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F7F9FC 40%, #EEF2F7 100%);
   }
 }`;

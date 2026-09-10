@@ -1,11 +1,17 @@
+import { VisualSystem } from './VisualSystem';
+
+/**
+ * Legacy token shape. Kept so existing imports keep working; values now come
+ * from VisualSystem so there is one place to change the theme.
+ */
 export const Tokens = {
     colors: {
-        background: '#0C2340',
-        surface: '#152B4D',
-        surface2: '#1C3866',
-        textPrimary: '#FFFFFF',
-        textMuted: '#AFB5BB',
-        accentGold: '#D4AF37',
+        background: VisualSystem.colors.bgBase,
+        surface: VisualSystem.colors.bgMid,
+        surface2: VisualSystem.colors.bgDeep,
+        textPrimary: VisualSystem.colors.textPrimary,
+        textMuted: VisualSystem.colors.textSecondary,
+        accentGold: VisualSystem.colors.gold,
     },
     spacing: {
         xs: 4,
@@ -31,5 +37,5 @@ export const Tokens = {
         xl: 24,
         xxl: 32,
         xxxl: 40,
-    }
+    },
 };
