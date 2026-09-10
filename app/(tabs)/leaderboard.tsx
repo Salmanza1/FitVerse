@@ -206,9 +206,9 @@ export default function LeaderboardScreen() {
 
     const rankFooter = (
         <View style={[styles.stickyFooter, isWeb ? styles.stickyFooterWeb : styles.stickyFooterNative, { bottom: footerBottom }]}>
-            <BlurView intensity={Platform.OS === 'ios' ? 30 : 50} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={Platform.OS === 'ios' ? 30 : 50} tint="light" style={StyleSheet.absoluteFill} />
             <LinearGradient
-                colors={['rgba(12, 35, 64, 0.06)', 'rgba(12, 35, 64, 0.02)']}
+                colors={['rgba(255, 255, 255, 0.94)', 'rgba(255, 255, 255, 0.88)']}
                 style={styles.footerGradient}
             >
                 <View style={styles.footerInner}>

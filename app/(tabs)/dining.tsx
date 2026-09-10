@@ -448,7 +448,7 @@ export default function NutritionDashboard() {
                                     <FontAwesome
                                         name={budget.isOverBudget ? 'exclamation-circle' : 'leaf'}
                                         size={10}
-                                        color={budget.isOverBudget ? '#ff6b6b' : FitVerseTheme.colors.ndGold}
+                                        color={budget.isOverBudget ? VisualSystem.colors.danger : VisualSystem.colors.gold}
                                     />
                                 </View>
                                 {budget.workoutBurn > 0 && (
@@ -595,7 +595,7 @@ export default function NutritionDashboard() {
                             </View>
                             <View style={styles.headerActions}>
                                 <TouchableOpacity style={styles.scanBtn} onPress={focusQuickAiLog}>
-                                    <FontAwesome name="magic" size={13} color={FitVerseTheme.colors.ndGold} />
+                                    <FontAwesome name="magic" size={13} color={VisualSystem.colors.goldBright} />
                                     <Text style={styles.scanText}>AI</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.scanBtn} onPress={() => setIsScannerVisible(true)}>
@@ -980,7 +980,7 @@ const MealSection = ({
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#0B1F3A' },
+    container: { flex: 1, backgroundColor: VisualSystem.colors.bgBase },
     heroContainer: { 
         position: 'absolute',
         top: 0,
@@ -993,11 +993,11 @@ const styles = StyleSheet.create({
     heroImage: { width: '100%', height: '100%' },
     heroContent: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 25, paddingBottom: 15 },
     headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 25 },
-    heroTitle: { fontSize: 32, fontWeight: '900', color: VisualSystem.colors.goldText, letterSpacing: 1 },
-    heroSubtitle: { fontSize: 13, fontWeight: '700', color: VisualSystem.colors.textSecondary, marginTop: -2 },
+    heroTitle: { fontSize: 32, fontWeight: '900', color: VisualSystem.colors.goldBright, letterSpacing: 1 },
+    heroSubtitle: { fontSize: 13, fontWeight: '700', color: VisualSystem.colors.textOnNavy, marginTop: -2, opacity: 0.9 },
     headerActions: { flexDirection: 'row', gap: 8 },
-    scanBtn: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: VisualSystem.colors.borderGold, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6, gap: 5 },
-    scanText: { color: VisualSystem.colors.textPrimary, fontSize: 11, fontWeight: '800' },
+    scanBtn: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: VisualSystem.colors.goldBright, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6, gap: 5 },
+    scanText: { color: VisualSystem.colors.textOnNavy, fontSize: 11, fontWeight: '800' },
     aiLogBar: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -1061,11 +1061,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     glowCircleContainer: { width: 150, height: 150, justifyContent: 'center', alignItems: 'center', flexShrink: 0 },
-    glowCircleInner: { width: 118, height: 118, borderRadius: 59, backgroundColor: 'rgba(12,35,64,0.6)', justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.gold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.2, shadowRadius: 10 },
+    glowCircleInner: { width: 118, height: 118, borderRadius: 59, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.gold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.18, shadowRadius: 10 },
     remainingVal: { fontSize: 38, fontWeight: '900', color: VisualSystem.colors.textPrimary },
     remainingValOver: { color: VisualSystem.colors.danger },
     remainingLabel: { fontSize: 10, fontWeight: '900', color: VisualSystem.colors.textSecondary, letterSpacing: 1.5 },
-    remainingLabelOver: { color: 'rgba(255,107,107,0.85)' },
+    remainingLabelOver: { color: VisualSystem.colors.danger },
     exerciseNoteGreen: { fontSize: 9, color: 'rgba(64,192,87,0.8)', fontWeight: '900', marginTop: 2, letterSpacing: 0.5 },
     workoutBurnNote: { fontSize: 8, color: 'rgba(64,192,87,0.65)', fontWeight: '800', marginTop: 3, letterSpacing: 0.3 },
     dashStatsCol: { gap: 12, flex: 1, marginLeft: 16, minWidth: 0 },

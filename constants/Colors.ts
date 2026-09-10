@@ -9,7 +9,9 @@ import { VisualSystem } from './VisualSystem';
 const palette = {
   text: VisualSystem.colors.textPrimary,
   textSecondary: VisualSystem.colors.textSecondary,
-  background: VisualSystem.colors.bgBase,
+  // Transparent on purpose: Themed.View applies this to every view that
+  // uses it, so a real color paints rectangles over page content.
+  background: 'transparent',
   surface: VisualSystem.colors.bgMid,
   surfaceAccent: VisualSystem.colors.bgDeep,
   tint: VisualSystem.colors.gold,

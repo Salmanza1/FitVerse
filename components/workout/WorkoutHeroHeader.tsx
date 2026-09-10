@@ -107,11 +107,11 @@ export function WorkoutHeroHeader({
                         </View>
                         <View style={styles.headerActions}>
                             <TouchableOpacity style={styles.actionBtn} onPress={onCoachPress} activeOpacity={0.85}>
-                                <FontAwesome name="magic" size={13} color={VisualSystem.colors.gold} />
+                                <FontAwesome name="magic" size={13} color={VisualSystem.colors.goldBright} />
                                 <Text style={styles.actionText}>COACH</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.actionBtn} onPress={onLibraryPress} activeOpacity={0.85}>
-                                <FontAwesome name="list" size={13} color={VisualSystem.colors.gold} />
+                                <FontAwesome name="list" size={13} color={VisualSystem.colors.goldBright} />
                                 <Text style={styles.actionText}>LIBRARY</Text>
                             </TouchableOpacity>
                         </View>
@@ -146,16 +146,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 25,
     },
+    // The hero sits on a dark photo, so its type uses the on-dark tokens
+    // rather than the page tokens.
     heroTitle: {
         fontSize: 32,
         fontWeight: '900',
-        color: VisualSystem.colors.gold,
+        color: VisualSystem.colors.goldBright,
         letterSpacing: 1,
     },
     heroSubtitle: {
         fontSize: 13,
         fontWeight: '700',
-        color: VisualSystem.colors.textSecondary,
+        color: VisualSystem.colors.textOnNavy,
+        opacity: 0.9,
         marginTop: -2,
     },
     headerActions: {
@@ -166,14 +169,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1.5,
-        borderColor: VisualSystem.colors.gold,
+        borderColor: VisualSystem.colors.goldBright,
         borderRadius: 20,
         paddingHorizontal: 12,
         paddingVertical: 6,
         gap: 5,
     },
     actionText: {
-        color: VisualSystem.colors.textPrimary,
+        color: VisualSystem.colors.textOnNavy,
         fontSize: 11,
         fontWeight: '800',
     },

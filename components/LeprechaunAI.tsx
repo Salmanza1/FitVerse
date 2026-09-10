@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 0,
         overflow: 'hidden',
-        backgroundColor: '#08121D',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderWidth: 1,
         borderColor: '#161616',
     },
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 16,
-        backgroundColor: '#08121D',
+        backgroundColor: VisualSystem.colors.bgBase,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     },
     assistantBubble: {
         alignSelf: 'flex-start',
-        backgroundColor: '#161616',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderBottomLeftRadius: 4,
     },
     userBubble: {
@@ -350,12 +350,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 15,
         paddingBottom: Platform.OS === 'ios' ? 30 : 15,
-        backgroundColor: '#161616',
+        backgroundColor: VisualSystem.colors.bgBase,
         alignItems: 'center',
     },
     input: {
         flex: 1,
-        backgroundColor: '#08121D',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 10,
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
         opacity: 0.5,
     },
     actionCard: {
-        backgroundColor: '#1E2D40',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderRadius: 12,
         padding: 15,
         marginTop: 10,
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     actionParamsBox: {
-        backgroundColor: '#08121D',
+        backgroundColor: VisualSystem.colors.bgBase,
         padding: 10,
         borderRadius: 8,
         marginBottom: 15,
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     actionBtnCancel: {
-        backgroundColor: '#2A3B4D',
+        backgroundColor: VisualSystem.colors.bgBase,
     },
     actionBtnConfirm: {
         backgroundColor: VisualSystem.colors.gold,

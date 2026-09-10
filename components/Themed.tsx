@@ -61,7 +61,7 @@ export function Card(props: ViewProps) {
   return (
     <BlurView
       intensity={Platform.OS === 'ios' ? 28 : 48}
-      tint="dark"
+      tint="light"
       style={[
         {
           backgroundColor: glassColor,
@@ -70,12 +70,12 @@ export function Card(props: ViewProps) {
           borderWidth: 1,
           borderColor: borderColor,
           overflow: 'hidden',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 12 },
-          shadowOpacity: 0.2,
+          shadowColor: '#0C2340',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.10,
           shadowRadius: 20,
           elevation: 6,
-          ...({ boxShadow: '0 12px 32px rgba(0,0,0,0.18)' } as any),
+          ...({ boxShadow: '0 8px 24px rgba(12, 35, 64, 0.10)' } as any),
         },
         style
       ]}

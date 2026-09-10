@@ -980,8 +980,9 @@ const styles = StyleSheet.create({
     },
     userSubline: {
         fontSize: Tokens.typography.md,
-        color: VisualSystem.colors.textPrimary,
-        opacity: 0.8,
+        // Sits on the dark photo scrim, not on the page.
+        color: VisualSystem.colors.textOnNavy,
+        opacity: 0.9,
         marginTop: 4,
         fontWeight: '500',
     },
@@ -1374,7 +1375,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     menuContainer: {
-        backgroundColor: '#1A2130',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         padding: 20,
@@ -1404,7 +1405,7 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgMid,
     },
     editModalContent: {
-        backgroundColor: '#1A2130',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderRadius: 20,
         padding: 20,
         width: '90%',

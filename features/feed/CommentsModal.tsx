@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 15,
         paddingBottom: 30, // Safe area
-        backgroundColor: '#071626',
+        backgroundColor: VisualSystem.colors.bgBase,
         borderTopWidth: 1,
         borderTopColor: VisualSystem.colors.borderSubtle,
         alignItems: 'center'

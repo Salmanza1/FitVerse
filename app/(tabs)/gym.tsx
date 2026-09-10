@@ -1663,7 +1663,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     startWorkoutTitle: {
-        color: LOG.bgMid,
+        color: LOG.textOnGold,
         fontSize: 17,
         fontWeight: '900',
         letterSpacing: 0.2,
