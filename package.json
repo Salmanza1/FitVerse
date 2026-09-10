@@ -3,13 +3,14 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "bash scripts/dev.sh",
-    "start:lan": "bash scripts/dev-lan.sh",
-    "start:local": "bash scripts/dev-lan.sh --localhost",
-    "start:tunnel": "bash scripts/dev.sh",
-    "android": "bash scripts/dev.sh --android",
-    "ios": "bash scripts/dev.sh --ios",
-    "web": "bash scripts/dev-lan.sh --web"
+    "start": "node scripts/dev.js tunnel",
+    "start:lan": "node scripts/dev.js lan",
+    "start:local": "node scripts/dev.js lan --localhost",
+    "start:tunnel": "node scripts/dev.js tunnel",
+    "android": "node scripts/dev.js tunnel --android",
+    "ios": "node scripts/dev.js tunnel --ios",
+    "web": "node scripts/dev.js lan --web",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",

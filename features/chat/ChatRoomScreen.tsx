@@ -46,6 +46,13 @@ import {
 } from '@/features/workout/WorkoutPresenceStore';
 import { isRestDayMessage } from './chatSocial';
 
+/** Shape of a `message_reactions` row as delivered by Supabase realtime. */
+type MessageReactionRow = {
+    message_id: string;
+    user_id: string;
+    emoji: string | null;
+};
+
 interface Props {
     visible: boolean;
     chat: Chat | null;
@@ -372,12 +379,12 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                         table: 'message_reactions',
                     },
                     (payload) => {
-                        const row = payload.new ?? payload.old;
-                        if (!row?.message_id) return;
+                        const row = (payload.new ?? payload.old) as Partial<MessageReactionRow>;
+                        if (!row?.message_id || !row.user_id) return;
                         if (payload.eventType === 'DELETE') {
                             applyReactionUpdate(row.message_id, row.user_id, null);
                         } else {
-                            applyReactionUpdate(row.message_id, row.user_id, row.emoji);
+                            applyReactionUpdate(row.message_id, row.user_id, row.emoji ?? null);
                         }
                     }
                 )

@@ -584,7 +584,7 @@ export const ChatStore = {
         text: string,
         isNudge = false,
         messageType: MessageType = 'text',
-        metadata?: Record<string, unknown>
+        metadata?: Message['metadata']
     ): Promise<Message> {
         try {
             const { data, error } = await supabase
