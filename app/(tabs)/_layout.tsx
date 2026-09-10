@@ -13,16 +13,11 @@ import { LiquidGlassTabBar } from '@/components/ui/LiquidGlassTabBar';
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
-  focused?: boolean;
+  size?: number;
 }) {
-  return (
-    <FontAwesome
-      size={props.focused ? 22 : 20}
-      style={{ marginBottom: -2 }}
-      name={props.name}
-      color={props.color}
-    />
-  );
+  // One size for every tab: growing the active icon fights the color change
+  // that already signals selection, and makes the row sit unevenly.
+  return <FontAwesome size={props.size ?? 23} name={props.name} color={props.color} />;
 }
 
 function TabRouteTracker() {
@@ -67,8 +62,8 @@ export default function TabLayout() {
           name="index"
           options={{
             title: 'Feed',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="users" color={color} focused={focused} />
+            tabBarIcon: ({ color, size }) => (
+              <TabBarIcon name="users" color={color} size={size} />
             ),
           }}
         />
@@ -76,8 +71,8 @@ export default function TabLayout() {
           name="dining"
           options={{
             title: 'Nutrition',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="cutlery" color={color} focused={focused} />
+            tabBarIcon: ({ color, size }) => (
+              <TabBarIcon name="cutlery" color={color} size={size} />
             ),
           }}
         />
@@ -85,8 +80,8 @@ export default function TabLayout() {
           name="gym"
           options={{
             title: 'Workout',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="bolt" color={color} focused={focused} />
+            tabBarIcon: ({ color, size }) => (
+              <TabBarIcon name="bolt" color={color} size={size} />
             ),
           }}
         />
@@ -94,8 +89,8 @@ export default function TabLayout() {
           name="leaderboard"
           options={{
             title: 'Leaderboard',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="trophy" color={color} focused={focused} />
+            tabBarIcon: ({ color, size }) => (
+              <TabBarIcon name="trophy" color={color} size={size} />
             ),
           }}
         />
@@ -103,8 +98,8 @@ export default function TabLayout() {
           name="profile"
           options={{
             title: 'Profile',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="user" color={color} focused={focused} />
+            tabBarIcon: ({ color, size }) => (
+              <TabBarIcon name="user" color={color} size={size} />
             ),
           }}
         />

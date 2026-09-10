@@ -27,6 +27,11 @@ export const VisualSystem = {
         gold: ND_GOLD, // 2.6:1 — fills, icons, borders. Not small text.
         goldText: '#8A6D00', // 4.9:1 — gold-flavored text on light
         goldBright: '#D4AF37', // decorative fills, gradients, large shapes
+        // Saturated gold for standalone accents that carry state by color alone
+        // (the tab bar's active item). 3.6:1 — same order as Strava's orange,
+        // which is likewise below AA for small text; acceptable because the
+        // label is always paired with an icon and a selected state.
+        goldAccent: '#AF7F00',
         goldSoft: 'rgba(201, 151, 0, 0.28)',
         goldMuted: 'rgba(201, 151, 0, 0.10)',
 

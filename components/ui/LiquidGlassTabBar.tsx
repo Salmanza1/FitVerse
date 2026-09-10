@@ -1,48 +1,32 @@
-import React, { useCallback, useState } from 'react';
-import {
-    LayoutChangeEvent,
-    Platform,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import React, { useCallback } from 'react';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
-    withSpring,
     withTiming,
     Easing,
 } from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { safeImpact } from '@/lib/safeHaptics';
 
 /**
- * Floating "liquid glass" tab bar.
+ * Floating tab bar, modelled on Strava's.
  *
- * Built from layered translucency rather than a solid fill: a blur base, a white
- * tint, and a specular highlight along the top edge, with a gold pill that
- * springs between tabs. Geometry matches the previous bar (68pt tall, 18pt
- * inset, 22pt off the bottom) so screens keep their existing ~100-120pt of
- * scroll padding.
+ * The defining choice is that selection is carried by color alone — the active
+ * item turns gold and everything else stays navy. There is no pill, no
+ * highlight and no border behind the active tab; adding those is what made the
+ * earlier version read as a different component. The bar is a near-solid white
+ * slab floating on a soft shadow, with just enough translucency to suggest the
+ * content passing underneath.
  */
 
-const BAR_HEIGHT = 68;
-const BAR_INSET = 18;
-const BAR_BOTTOM = 22;
+const BAR_HEIGHT = 64;
+const BAR_INSET = 14;
+const BAR_BOTTOM = 14;
 const WEB_MAX_WIDTH = 520;
-const INDICATOR_INSET = 6;
-
-/** Spring tuned to glide and settle without overshooting into a bounce. */
-const INDICATOR_SPRING = {
-    damping: 18,
-    stiffness: 180,
-    mass: 0.9,
-} as const;
 
 const isWeb = Platform.OS === 'web';
 
@@ -66,17 +50,10 @@ function TabItem({
     testID?: string;
 }) {
     const pressed = useSharedValue(0);
-    const focus = useSharedValue(focused ? 1 : 0);
 
-    React.useEffect(() => {
-        focus.value = withSpring(focused ? 1 : 0, INDICATOR_SPRING);
-    }, [focused]);
-
-    const iconStyle = useAnimatedStyle(() => ({
-        transform: [
-            { scale: 1 + focus.value * 0.08 - pressed.value * 0.12 },
-            { translateY: -focus.value * 1.5 },
-        ],
+    const pressStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: 1 - pressed.value * 0.1 }],
+        opacity: 1 - pressed.value * 0.25,
     }));
 
     return (
@@ -88,15 +65,17 @@ function TabItem({
             onPress={onPress}
             onLongPress={onLongPress}
             onPressIn={() => {
-                pressed.value = withTiming(1, { duration: 90, easing: Easing.out(Easing.quad) });
+                pressed.value = withTiming(1, { duration: 80, easing: Easing.out(Easing.quad) });
             }}
             onPressOut={() => {
-                pressed.value = withTiming(0, { duration: 160, easing: Easing.out(Easing.quad) });
+                pressed.value = withTiming(0, { duration: 150, easing: Easing.out(Easing.quad) });
             }}
             style={styles.tabItem}>
-            <Animated.View style={[styles.tabItemInner, iconStyle]}>
+            <Animated.View style={[styles.tabItemInner, pressStyle]}>
                 {icon}
-                <Text numberOfLines={1} style={[styles.label, { color }]}>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.label, { color }, focused && styles.labelFocused]}>
                     {label}
                 </Text>
             </Animated.View>
@@ -104,142 +83,60 @@ function TabItem({
     );
 }
 
-export function LiquidGlassTabBar({
-    state,
-    descriptors,
-    navigation,
-}: BottomTabBarProps) {
+export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     const insets = useSafeAreaInsets();
-    const [barWidth, setBarWidth] = useState(0);
 
-    // Routes react-navigation has told us to hide are dropped before we measure,
-    // so the indicator maths stays in step with what's actually rendered.
     const routes = state.routes.filter((route) => {
         // `href: null` is expo-router's way of hiding a route from the tab bar;
         // it isn't part of the base react-navigation options type.
-        const options = descriptors[route.key]?.options as
-            | { href?: string | null }
-            | undefined;
+        const options = descriptors[route.key]?.options as { href?: string | null } | undefined;
         return options?.href !== null;
     });
-    const activeIndex = Math.max(
-        0,
-        routes.findIndex((route) => route.key === state.routes[state.index]?.key)
+
+    const activeKey = state.routes[state.index]?.key;
+
+    const handlePress = useCallback(
+        (routeKey: string, routeName: string, params: object | undefined, focused: boolean) =>
+            () => {
+                const event = navigation.emit({
+                    type: 'tabPress',
+                    target: routeKey,
+                    canPreventDefault: true,
+                });
+                if (!focused && !event.defaultPrevented) {
+                    safeImpact();
+                    navigation.navigate(routeName, params);
+                }
+            },
+        [navigation]
     );
-
-    const slotWidth = routes.length > 0 ? barWidth / routes.length : 0;
-    const indicatorX = useSharedValue(0);
-    const hasPositioned = React.useRef(false);
-
-    React.useEffect(() => {
-        if (slotWidth === 0) return; // nothing measured yet
-        const target = activeIndex * slotWidth;
-
-        // The app restores your last tab on launch, so the first paint can land on
-        // any index. Place the pill instantly that first time (and whenever the bar
-        // is re-measured, e.g. rotation) rather than sliding it in from the far left.
-        if (!hasPositioned.current) {
-            hasPositioned.current = true;
-            indicatorX.value = target;
-        } else {
-            indicatorX.value = withSpring(target, INDICATOR_SPRING);
-        }
-    }, [activeIndex, slotWidth]);
-
-    const indicatorStyle = useAnimatedStyle(() => ({
-        transform: [{ translateX: indicatorX.value }],
-    }));
-
-    const onLayout = useCallback((e: LayoutChangeEvent) => {
-        setBarWidth(e.nativeEvent.layout.width);
-    }, []);
 
     return (
         <View
             pointerEvents="box-none"
-            style={[
-                styles.container,
-                { bottom: BAR_BOTTOM + (isWeb ? 0 : insets.bottom * 0.35) },
-            ]}>
-            <View style={styles.bar} onLayout={onLayout}>
-                {/* Layer 1 — the refraction base. */}
+            style={[styles.container, { bottom: BAR_BOTTOM + (isWeb ? 0 : insets.bottom * 0.4) }]}>
+            <View style={styles.bar}>
                 <BlurView
-                    intensity={Platform.select({ ios: 60, android: 40, default: 30 })}
+                    intensity={Platform.select({ ios: 24, android: 16, default: 12 })}
                     tint="light"
-                    // Without this Android renders a flat semi-transparent box.
-                    experimentalBlurMethod={
-                        Platform.OS === 'android' ? 'dimezisBlurView' : undefined
-                    }
+                    experimentalBlurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
                     style={StyleSheet.absoluteFill}
                 />
-
-                {/* Layer 2 — white tint. Heavier off-iOS, where blur is weaker. */}
-                <View style={[StyleSheet.absoluteFill, styles.tint]} />
-
-                {/* Layer 3 — specular highlight along the top edge. */}
-                <LinearGradient
-                    colors={[
-                        'rgba(255, 255, 255, 0.85)',
-                        'rgba(255, 255, 255, 0.30)',
-                        'transparent',
-                    ]}
-                    locations={[0, 0.35, 1]}
-                    style={styles.specular}
-                    pointerEvents="none"
-                />
-
-                {/* Layer 4 — the gold pill that tracks the active tab. */}
-                {slotWidth > 0 && (
-                    <Animated.View
-                        pointerEvents="none"
-                        style={[
-                            styles.indicator,
-                            {
-                                width: slotWidth - INDICATOR_INSET * 2,
-                                left: INDICATOR_INSET,
-                            },
-                            indicatorStyle,
-                        ]}>
-                        <LinearGradient
-                            colors={[
-                                'rgba(201, 151, 0, 0.26)',
-                                'rgba(201, 151, 0, 0.13)',
-                            ]}
-                            style={StyleSheet.absoluteFill}
-                        />
-                    </Animated.View>
-                )}
+                {/* Near-solid white — the bar reads as a surface, not a scrim. */}
+                <View style={[StyleSheet.absoluteFill, styles.fill]} />
 
                 <View style={styles.row}>
-                    {routes.map((route, index) => {
+                    {routes.map((route) => {
                         const { options } = descriptors[route.key];
-                        const focused = index === activeIndex;
-                        // Plain gold fails contrast on a light bar, so the active
-                        // tab uses the darker gold that passes on this background.
+                        const focused = route.key === activeKey;
                         const color = focused
-                            ? VisualSystem.colors.goldText
-                            : VisualSystem.colors.textSecondary;
+                            ? VisualSystem.colors.goldAccent
+                            : VisualSystem.colors.textPrimary;
 
                         const label =
                             typeof options.tabBarLabel === 'string'
                                 ? options.tabBarLabel
                                 : options.title ?? route.name;
-
-                        const onPress = () => {
-                            const event = navigation.emit({
-                                type: 'tabPress',
-                                target: route.key,
-                                canPreventDefault: true,
-                            });
-                            if (!focused && !event.defaultPrevented) {
-                                safeImpact();
-                                navigation.navigate(route.name, route.params);
-                            }
-                        };
-
-                        const onLongPress = () => {
-                            navigation.emit({ type: 'tabLongPress', target: route.key });
-                        };
 
                         return (
                             <TabItem
@@ -249,13 +146,11 @@ export function LiquidGlassTabBar({
                                 label={label}
                                 accessibilityLabel={options.tabBarAccessibilityLabel}
                                 testID={options.tabBarButtonTestID}
-                                onPress={onPress}
-                                onLongPress={onLongPress}
-                                icon={options.tabBarIcon?.({
-                                    focused,
-                                    color,
-                                    size: focused ? 22 : 20,
-                                })}
+                                onPress={handlePress(route.key, route.name, route.params, focused)}
+                                onLongPress={() =>
+                                    navigation.emit({ type: 'tabLongPress', target: route.key })
+                                }
+                                icon={options.tabBarIcon?.({ focused, color, size: 23 })}
                             />
                         );
                     })}
@@ -276,40 +171,22 @@ const styles = StyleSheet.create({
         width: '100%',
         maxWidth: isWeb ? WEB_MAX_WIDTH : undefined,
         height: BAR_HEIGHT,
-        borderRadius: VisualSystem.radius.pill,
+        borderRadius: BAR_HEIGHT / 2,
         overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: VisualSystem.colors.borderSubtle,
-        // Lifts the bar off the content so the blur reads as depth, not haze.
-        // Navy-tinted and soft: a black shadow on a light page reads as grime.
+        // No border: Strava's bar is defined by its shadow alone, and an
+        // outline — gold especially — is what made this read as something else.
         shadowColor: VisualSystem.colors.navy,
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.16,
-        shadowRadius: 22,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.14,
+        shadowRadius: 18,
         elevation: 10,
     },
-    tint: {
+    fill: {
         backgroundColor: Platform.select({
-            ios: 'rgba(255, 255, 255, 0.58)',
-            android: 'rgba(255, 255, 255, 0.82)',
-            default: 'rgba(255, 255, 255, 0.72)',
+            ios: 'rgba(255, 255, 255, 0.90)',
+            android: 'rgba(255, 255, 255, 0.97)',
+            default: 'rgba(255, 255, 255, 0.94)',
         }),
-    },
-    specular: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: BAR_HEIGHT * 0.55,
-    },
-    indicator: {
-        position: 'absolute',
-        top: INDICATOR_INSET,
-        bottom: INDICATOR_INSET,
-        borderRadius: 20,
-        overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: 'rgba(201, 151, 0, 0.38)',
     },
     row: {
         flex: 1,
@@ -318,9 +195,8 @@ const styles = StyleSheet.create({
     },
     tabItem: {
         flex: 1,
-        // Without this, a long label ("Leaderboard") sets a min-content floor on
-        // web and pushes the row wider than the bar we measured, which throws the
-        // indicator out of alignment.
+        // Keeps a long label ("Leaderboard") from setting a min-content floor on
+        // web and pushing the row wider than the bar.
         minWidth: 0,
         height: '100%',
         alignItems: 'center',
@@ -333,9 +209,11 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     label: {
-        fontSize: 10,
-        fontWeight: '700',
-        letterSpacing: 0.3,
+        fontSize: 11,
+        fontWeight: '600',
         maxWidth: '100%',
+    },
+    labelFocused: {
+        fontWeight: '700',
     },
 });
