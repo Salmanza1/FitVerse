@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Tokens } from '@/constants/Tokens';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 export default function PlaceholderScreen({ title }: { title: string }) {
     return (
@@ -10,7 +11,7 @@ export default function PlaceholderScreen({ title }: { title: string }) {
             <Stack.Screen
                 options={{
                     title: title,
-                    headerStyle: { backgroundColor: 'rgba(12, 35, 64, 0.4)' },
+                    headerStyle: { backgroundColor: VisualSystem.colors.bgMid },
                     headerTintColor: Tokens.colors.textPrimary,
                     headerLeft: () => (
                         <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>

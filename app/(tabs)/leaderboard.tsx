@@ -256,7 +256,7 @@ export default function LeaderboardScreen() {
             {/* Paged Rankings */}
             {isLoading ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <RNText style={{ color: FitVerseTheme.colors.accentGold, fontWeight: 'bold' }}>
+                    <RNText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>
                         Loading community stats...
                     </RNText>
                 </View>
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 32,
         fontWeight: '900',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
     },
     headerTitleWeb: {
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
         fontSize: Tokens.typography.sm,
     },
     filterTextActive: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
     },
     flatList: {
         flex: 1,
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         letterSpacing: 2,
         marginBottom: Tokens.spacing.md,
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         opacity: 0.85,
     },
     sectionHeaderWeb: {
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.accentGold,
     },
     userAvatarText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         fontSize: 16,
     },
@@ -581,7 +581,7 @@ const styles = StyleSheet.create({
     rankValue: {
         fontSize: 22,
         fontWeight: '900',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontStyle: 'italic',
     },
 });

@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
         gap: 6,
     },
     templateStartText: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 12,
         fontWeight: '800',
         letterSpacing: 0.4,
@@ -780,7 +780,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logTimerLabel: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 9,
         fontWeight: '900',
         letterSpacing: 1,
@@ -908,7 +908,7 @@ const styles = StyleSheet.create({
         padding: 4,
     },
     logStickyNoteLabel: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.4,
@@ -964,7 +964,7 @@ const styles = StyleSheet.create({
         borderColor: LOG.borderSubtle,
     },
     logSetIndexText: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '800',
         fontSize: 11,
     },
@@ -1033,7 +1033,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     logAddSetText: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 12,
         fontWeight: '700',
         letterSpacing: 0.3,
@@ -1049,7 +1049,7 @@ const styles = StyleSheet.create({
         borderColor: LOG.borderGold,
     },
     logAddExText: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '800',
         fontSize: 14,
         letterSpacing: 1,
@@ -1114,7 +1114,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     historyTabTextActive: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '800',
     },
     historyGroupHeader: {
@@ -1159,7 +1159,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     historyVolumeInline: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '800',
     },
     historyRepeatBtn: {
@@ -1299,7 +1299,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: VisualSystem.colors.bgMid,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(212, 175, 55, 0.2)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     coachChatClose: {
         width: 40,
@@ -1482,7 +1482,7 @@ const styles = StyleSheet.create({
         zIndex: 20,
     },
     coachPreparingText: {
-        color: LOG.gold,
+        color: LOG.goldBright,
         fontSize: 14,
         fontWeight: '600',
         marginTop: 12,
@@ -1495,7 +1495,7 @@ const styles = StyleSheet.create({
         zIndex: 100,
     },
     workoutPreparingText: {
-        color: LOG.textPrimary,
+        color: LOG.textOnNavy,
         fontSize: 15,
         fontWeight: '600',
         marginTop: 14,
@@ -1537,7 +1537,7 @@ const styles = StyleSheet.create({
     missionEyebrow: {
         fontSize: 10,
         fontWeight: '900',
-        color: LOG.gold,
+        color: LOG.goldText,
         letterSpacing: 2,
         opacity: 0.85,
     },
@@ -1753,12 +1753,12 @@ const styles = StyleSheet.create({
         marginLeft: 2,
     },
     activityLogHintSuccess: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '600',
     },
     choiceModalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(12, 35, 64, 0.9)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 30,
@@ -1929,7 +1929,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     historyCardMiniWeight: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontWeight: '900',
         fontSize: 18,
     },
@@ -2095,7 +2095,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     progressStatValue: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 18,
         fontWeight: '900',
     },
@@ -2129,7 +2129,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.8,
     },
     graphVal: {
-        color: LOG.gold,
+        color: LOG.goldText,
         fontSize: 11,
         fontWeight: '900',
         letterSpacing: 0.3,
@@ -2231,7 +2231,7 @@ const styles = StyleSheet.create({
         width: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(12, 35, 64, 0.5)',
+        backgroundColor: VisualSystem.colors.bgMid,
         paddingVertical: 10,
         borderLeftWidth: 1,
         borderLeftColor: 'rgba(212, 175, 55, 0.1)',
@@ -4605,7 +4605,7 @@ function PlateCalculator({ targetWeight, onClose }: { targetWeight: number, onCl
                         <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>{targetWeight} LBS TOTAL</SecondaryText>
                     </View>
 
-                    <View style={{ backgroundColor: 'rgba(12, 35, 64, 0.4)', borderRadius: 12, padding: 15, marginBottom: 20 }}>
+                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 12, padding: 15, marginBottom: 20 }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 12, color: VisualSystem.colors.textTertiary, marginBottom: 10, textTransform: 'uppercase' }}>Plates Per Side</Text>
                         {Object.keys(result).length > 0 ? (
                             Object.entries(result).sort((a,b) => Number(b[0]) - Number(a[0])).map(([weight, count]) => (
@@ -4692,7 +4692,7 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
                         <SecondaryText style={{ textAlign: 'center', marginTop: 10 }}>Generate warm-up progression for {targetWeight} LBS</SecondaryText>
                     </View>
 
-                    <View style={{ backgroundColor: 'rgba(12, 35, 64, 0.4)', borderRadius: 12, padding: 15, marginBottom: 20 }}>
+                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 12, padding: 15, marginBottom: 20 }}>
                         {warmupSets.map((s, i) => (
                             <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' }}>
                                 <View>
@@ -4754,7 +4754,7 @@ function ProgressView({
     const renderGraph = () => {
         if (progressData.length < 2) return (
             <View style={styles.emptyGraph}>
-                <FontAwesome name="line-chart" size={32} color={LOG.goldMuted} style={{ marginBottom: 10 }} />
+                <FontAwesome name="line-chart" size={32} color={LOG.gold} style={{ marginBottom: 10 }} />
                 <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                     Log a few more sessions for {selectedEx} to see your strength trend.
                 </SecondaryText>
@@ -4915,7 +4915,7 @@ function ProgressView({
                         </View>
                     ) : !selectedEx ? (
                         <View style={styles.historyEmpty}>
-                            <FontAwesome name="line-chart" size={24} color={LOG.goldMuted} style={{ marginBottom: 10 }} />
+                            <FontAwesome name="line-chart" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
                             <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                                 Select an exercise above to view your strength trend and session history.
                             </SecondaryText>
@@ -5083,14 +5083,14 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
             {!search.trim() ? (
                 history.length === 0 ? (
                     <View style={styles.historyEmpty}>
-                        <FontAwesome name="history" size={24} color={LOG.goldMuted} style={{ marginBottom: 10 }} />
+                        <FontAwesome name="history" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
                         <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                             No history yet. Finish a session to see it here.
                         </SecondaryText>
                     </View>
                 ) : (
                     <View style={styles.historyCollapsedHint}>
-                        <FontAwesome name="history" size={22} color={LOG.goldMuted} style={{ marginBottom: 10 }} />
+                        <FontAwesome name="history" size={22} color={LOG.gold} style={{ marginBottom: 10 }} />
                         <Text style={styles.historyCollapsedCount}>
                             {history.length} workout{history.length === 1 ? '' : 's'} logged
                         </Text>
@@ -5101,7 +5101,7 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
                 )
             ) : filtered.length === 0 ? (
                 <View style={styles.historyEmpty}>
-                    <FontAwesome name="search" size={24} color={LOG.goldMuted} style={{ marginBottom: 10 }} />
+                    <FontAwesome name="search" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
                     <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                         No workouts match your search.
                     </SecondaryText>

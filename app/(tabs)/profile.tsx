@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: Tokens.typography.xl,
         fontWeight: 'bold',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         textAlign: 'center',
         marginBottom: Tokens.spacing.xl,
     },

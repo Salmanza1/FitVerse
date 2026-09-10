@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: Tokens.spacing.md,
         paddingBottom: Tokens.spacing.md,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(212, 175, 55, 0.2)',
-        backgroundColor: 'rgba(12, 35, 64, 0.4)',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
+        backgroundColor: VisualSystem.colors.bgMid,
         zIndex: 10,
     },
     backButton: {

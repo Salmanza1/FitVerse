@@ -198,7 +198,7 @@ export default function WorkoutProgressScreen() {
                             </>
                         ) : (
                             <View style={styles.emptyProgress}>
-                                <FontAwesome name="line-chart" size={36} color={C.goldMuted} />
+                                <FontAwesome name="line-chart" size={36} color={C.gold} />
                                 <Text style={styles.emptyProgressText}>
                                     Start logging sessions for this exercise to generate insights.
                                 </Text>
@@ -207,7 +207,7 @@ export default function WorkoutProgressScreen() {
                     </View>
                 ) : (
                     <View style={styles.noExSelected}>
-                        <FontAwesome name="search" size={40} color={C.goldMuted} />
+                        <FontAwesome name="search" size={40} color={C.gold} />
                         <Text style={styles.noExSelectedText}>
                             Search or pick an exercise above to analyze your performance.
                         </Text>
@@ -390,11 +390,11 @@ const styles = StyleSheet.create({
         borderColor: C.borderGold,
     },
     chipText: { color: C.textSecondary, fontSize: 12, fontWeight: '600' },
-    chipTextActive: { color: C.gold, fontWeight: '800' },
+    chipTextActive: { color: C.goldText, fontWeight: '800' },
     mainView: { flex: 1 },
     selectedExHeader: { marginBottom: 16 },
     selectedExLabel: {
-        color: C.gold,
+        color: C.goldText,
         fontSize: 10,
         fontWeight: '800',
         letterSpacing: 1.2,
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         marginBottom: 4,
     },
-    statValue: { color: C.gold, fontSize: 18, fontWeight: '900' },
+    statValue: { color: C.goldText, fontSize: 18, fontWeight: '900' },
     statUnit: { color: C.textTertiary, fontSize: 9, fontWeight: '700', marginTop: 2, textTransform: 'uppercase' },
     chartWrapper: {
         backgroundColor: C.glassFill,
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
     logValBox: { alignItems: 'center', minWidth: 44 },
     logValDivider: { width: 1, height: 28, backgroundColor: C.borderSubtle },
     logValLab: { color: C.textTertiary, fontSize: 9, fontWeight: '800', marginBottom: 2, letterSpacing: 0.5 },
-    logVal: { color: C.gold, fontSize: 15, fontWeight: '900' },
+    logVal: { color: C.goldText, fontSize: 15, fontWeight: '900' },
     emptyProgress: {
         alignItems: 'center',
         padding: 40,

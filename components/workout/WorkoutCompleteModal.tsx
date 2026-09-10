@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.successSoft,
     },
     eyebrow: {
-        color: C.gold,
+        color: C.goldText,
         fontSize: 12,
         fontWeight: '800',
         letterSpacing: 1.2,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         marginBottom: 14,
     },
     milestonesTitle: {
-        color: C.gold,
+        color: C.goldText,
         fontSize: 10,
         fontWeight: '800',
         letterSpacing: 1,
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
         backgroundColor: C.goldMuted,
     },
     secondaryBtnText: {
-        color: C.gold,
+        color: C.goldText,
         fontWeight: '700',
         fontSize: 14,
     },

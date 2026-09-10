@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '900',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     closeBtn: {
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.accentGold,
     },
     avatarText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: 'bold',
         fontSize: 18,
     },
@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
     },
     badgeText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: 'bold',
     },

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     letter: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: '800',
     },
 });

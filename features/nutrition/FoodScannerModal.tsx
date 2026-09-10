@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     secondaryBtnText: {
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: '700',
         fontSize: 12,
         letterSpacing: 1,
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     locTabTextOn: {
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
     },
     content: {
         padding: 20,
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     scanLabel: {
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         letterSpacing: 1,
         marginTop: 16,
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
     resultLabel: {
         fontSize: 9,
         fontWeight: '900',
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
         marginBottom: 8,
     },
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     retryText: {
         fontSize: 11,
         fontWeight: '900',
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     descriptionSection: {
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
     aiInsightTitle: {
         fontSize: 10,
         fontWeight: '900',
-        color: FitVerseTheme.colors.ndGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     aiInsightText: {

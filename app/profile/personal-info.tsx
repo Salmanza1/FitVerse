@@ -824,7 +824,7 @@ const styles = StyleSheet.create({
         paddingVertical: Tokens.spacing.xs,
     },
     headerSaveText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontWeight: '900',
         fontSize: Tokens.typography.md,
         letterSpacing: 1,
@@ -859,7 +859,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     avatarTextLarge: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 40,
         fontWeight: 'bold',
     },
@@ -893,7 +893,7 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
         marginBottom: Tokens.spacing.md,
         marginHorizontal: Tokens.spacing.xl,
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         opacity: 0.6,
         marginTop: Tokens.spacing.xl,
     },

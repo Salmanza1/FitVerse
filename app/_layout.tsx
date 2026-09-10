@@ -1,5 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -18,9 +18,9 @@ import { sanitizeStoredRoute, resetAppHomeRoute, LAST_TAB_STORAGE_KEY } from '@/
 import { WEB_BG, webRoot, webStackContent } from '@/constants/webLayout';
 
 const AppTheme = {
-  ...DarkTheme,
+  ...DefaultTheme,
   colors: {
-    ...DarkTheme.colors,
+    ...DefaultTheme.colors,
     background: Platform.OS === 'web' ? WEB_BG : 'transparent',
     card: WEB_BG,
   },

@@ -435,10 +435,12 @@ export default function FeedScreen() {
                     style={[
                         StyleSheet.absoluteFill,
                         {
-                            backgroundColor: 'rgba(12, 35, 64, 0.6)',
+                            // Fades in over the hero photo behind light type, so it
+                            // stays dark even though the page is light.
+                            backgroundColor: 'rgba(12, 35, 64, 0.88)',
                             opacity: headerBgOpacity,
                             borderBottomWidth: 1,
-                            borderBottomColor: 'rgba(212, 175, 55, 0.2)',
+                            borderBottomColor: VisualSystem.colors.borderSubtle,
                         }
                     ]}
                 />
@@ -975,7 +977,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 32,
         fontWeight: '900',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         letterSpacing: 2,
     },
     userSubline: {
@@ -1053,14 +1055,14 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     communityBadgeText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 9,
         fontWeight: '800',
         letterSpacing: 0.5,
         textTransform: 'uppercase',
     },
     filterTextActive: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
     },
     feedHint: {
         color: FitVerseTheme.colors.textMuted,
@@ -1145,7 +1147,7 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgMid,
     },
     addFriendBtnText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '800',
         letterSpacing: 0.3,
@@ -1165,7 +1167,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     friendsPillText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '700',
     },
@@ -1185,7 +1187,7 @@ const styles = StyleSheet.create({
         borderRadius: 22,
     },
     avatarText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -1242,7 +1244,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     fizzTimeText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 12,
         fontWeight: '900',
     },
@@ -1266,7 +1268,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     workoutCardBadgeText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 10,
         fontWeight: '800',
         letterSpacing: 0.8,
@@ -1482,7 +1484,7 @@ const styles = StyleSheet.create({
     searchSectionTitle: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         textTransform: 'uppercase',
         letterSpacing: 1,
         marginBottom: 10,
@@ -1544,7 +1546,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     statusText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: 'bold',
         marginLeft: 4,

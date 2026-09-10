@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     postButton: {
         fontSize: 16,
         fontWeight: '900',
-        color: C.gold,
+        color: C.goldText,
     },
     workoutCard: {
         backgroundColor: C.goldMuted,
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     workoutCardBadgeText: {
-        color: C.gold,
+        color: C.goldText,
         fontSize: 10,
         fontWeight: '800',
         letterSpacing: 0.8,

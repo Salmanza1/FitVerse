@@ -578,10 +578,12 @@ export default function NutritionDashboard() {
                     style={[
                         StyleSheet.absoluteFill,
                         {
-                            backgroundColor: 'rgba(12, 35, 64, 0.8)',
+                            // Fades in over the hero photo behind light type, so it
+                            // stays dark even though the page is light.
+                            backgroundColor: 'rgba(12, 35, 64, 0.88)',
                             opacity: headerBgOpacity,
                             borderBottomWidth: 1,
-                            borderBottomColor: 'rgba(212, 175, 55, 0.2)',
+                            borderBottomColor: VisualSystem.colors.borderSubtle,
                         }
                     ]}
                 />

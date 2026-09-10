@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatarText: {
-        color: FitVerseTheme.colors.accentGold,
+        color: VisualSystem.colors.goldText,
         fontSize: 40,
         fontWeight: '900',
     },
