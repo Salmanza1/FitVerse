@@ -1,23 +1,32 @@
-import React from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Tabs, usePathname, Redirect } from 'expo-router';
-import { View, ActivityIndicator, type ColorValue } from 'react-native';
-import { useAuth } from '@/features/auth/AuthContext';
+import React, { useEffect } from 'react';
+import { usePathname, Redirect } from 'expo-router';
+import { View, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
+import { useAuth } from '@/features/auth/AuthContext';
 import { LAST_TAB_STORAGE_KEY } from '@/lib/navigation';
 import { VisualSystem } from '@/constants/VisualSystem';
-import { WEB_BG, webScreen } from '@/constants/webLayout';
-import { LiquidGlassTabBar } from '@/components/ui/LiquidGlassTabBar';
+import { webScreen } from '@/constants/webLayout';
+import { Tabs } from '@/components/bottom-tabs';
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>['name'];
-  color: ColorValue;
-  size?: number;
-}) {
-  // One size for every tab: growing the active icon fights the color change
-  // that already signals selection, and makes the row sit unevenly.
-  return <Ionicons size={props.size ?? 25} name={props.name} color={props.color as string} />;
+/**
+ * Tab icons.
+ *
+ * The native tab bar takes an SF Symbol or an image — not a React component —
+ * so the vector-icon set used elsewhere can't be reused here. iOS gets
+ * symbols; Android needs PNG assets, which the project doesn't ship yet.
+ */
+const ICONS = {
+    index: 'person.2.fill',
+    dining: 'fork.knife',
+    gym: 'figure.strengthtraining.traditional',
+    leaderboard: 'trophy.fill',
+    profile: 'person.crop.circle.fill',
+} as const;
+
+function icon(name: keyof typeof ICONS) {
+    // Always returns the symbol: the native side ignores sfSymbol off Apple
+    // platforms, and the type requires an icon rather than undefined.
+    return () => ({ sfSymbol: ICONS[name] });
 }
 
 function TabRouteTracker() {
@@ -51,58 +60,18 @@ export default function TabLayout() {
       <TabRouteTracker />
 
       <Tabs
-        tabBar={(props) => <LiquidGlassTabBar {...props} />}
-        screenOptions={{
-          tabBarActiveTintColor: VisualSystem.colors.gold,
-          tabBarInactiveTintColor: VisualSystem.colors.textTertiary,
-          sceneStyle: { backgroundColor: WEB_BG },
-          headerShown: false,
-        }}>
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: 'Feed',
-            tabBarIcon: ({ color, size, focused }) => (
-              <TabBarIcon name={focused ? 'people' : 'people-outline'} color={color} size={size} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="dining"
-          options={{
-            title: 'Nutrition',
-            tabBarIcon: ({ color, size, focused }) => (
-              <TabBarIcon name={focused ? 'restaurant' : 'restaurant-outline'} color={color} size={size} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="gym"
-          options={{
-            title: 'Workout',
-            tabBarIcon: ({ color, size, focused }) => (
-              <TabBarIcon name={focused ? 'barbell' : 'barbell-outline'} color={color} size={size} />
-            ),
-          }}
-        />
+        // The system draws the bar; these tint its contents.
+        tabBarActiveTintColor={VisualSystem.colors.goldText}
+        tabBarInactiveTintColor={VisualSystem.colors.textSecondary}
+      >
+        <Tabs.Screen name="index" options={{ title: 'Feed', tabBarIcon: icon('index') }} />
+        <Tabs.Screen name="dining" options={{ title: 'Nutrition', tabBarIcon: icon('dining') }} />
+        <Tabs.Screen name="gym" options={{ title: 'Workout', tabBarIcon: icon('gym') }} />
         <Tabs.Screen
           name="leaderboard"
-          options={{
-            title: 'Leaderboard',
-            tabBarIcon: ({ color, size, focused }) => (
-              <TabBarIcon name={focused ? 'trophy' : 'trophy-outline'} color={color} size={size} />
-            ),
-          }}
+          options={{ title: 'Leaderboard', tabBarIcon: icon('leaderboard') }}
         />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: 'Profile',
-            tabBarIcon: ({ color, size, focused }) => (
-              <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} size={size} />
-            ),
-          }}
-        />
+        <Tabs.Screen name="profile" options={{ title: 'Profile', tabBarIcon: icon('profile') }} />
       </Tabs>
     </View>
   );
