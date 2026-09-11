@@ -233,14 +233,14 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
                 <View key={otherUser.id} style={styles.userCard}>
                     {cardBody}
                     <View style={styles.actionRow}>
-                        <Pressable
+                        <Pressable accessibilityLabel="Close" hitSlop={6}
                             style={[styles.miniBtn, styles.declineBtn]}
                             onPress={() => handleDecline(otherUser.id)}
                             disabled={isBusy}
                         >
                             <FontAwesome name="times" size={14} color={VisualSystem.colors.textPrimary} />
                         </Pressable>
-                        <Pressable
+                        <Pressable accessibilityLabel="Confirm" hitSlop={6}
                             style={[styles.miniBtn, styles.acceptBtn]}
                             onPress={() => handleAccept(otherUser.id)}
                             disabled={isBusy}
@@ -310,7 +310,7 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
                     <View style={styles.container}>
                         <View style={styles.header}>
                             <Text style={styles.title}>Friends</Text>
-                            <Pressable onPress={onClose} style={styles.closeBtn}>
+                            <Pressable accessibilityLabel="Close" onPress={onClose} style={styles.closeBtn}>
                                 <FontAwesome name="times" size={20} color={FitVerseTheme.colors.textMuted} />
                             </Pressable>
                         </View>

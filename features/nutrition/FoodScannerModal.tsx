@@ -134,7 +134,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>AI Vision Scanner</Text>
-                    <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+                    <TouchableOpacity accessibilityLabel="Close" hitSlop={4} onPress={onClose} style={styles.closeBtn}>
                         <FontAwesome name="times" size={20} color={VisualSystem.colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
@@ -213,7 +213,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                             <Text style={styles.itemName}>{identifiedItem.name}</Text>
                                             <Text style={styles.itemLoc}>{identifiedItem.category || 'General'} @ {selectedLocation} Hall</Text>
                                         </View>
-                                        <TouchableOpacity onPress={handleReset} style={styles.resetBtn}>
+                                        <TouchableOpacity accessibilityLabel="Refresh" hitSlop={6} onPress={handleReset} style={styles.resetBtn}>
                                             <FontAwesome name="refresh" size={12} color={FitVerseTheme.colors.ndGold} />
                                         </TouchableOpacity>
                                     </View>

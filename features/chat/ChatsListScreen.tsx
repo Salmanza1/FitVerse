@@ -360,11 +360,11 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                 {screen === 'list' && (
                     <View style={styles.listScreen}>
                         <View style={styles.header}>
-                            <Pressable onPress={handleCloseAll} style={styles.backBtn} hitSlop={12}>
+                            <Pressable accessibilityLabel="Collapse" onPress={handleCloseAll} style={styles.backBtn} hitSlop={12}>
                                 <FontAwesome name="chevron-down" size={18} color={VisualSystem.colors.gold} />
                             </Pressable>
                             <Text style={styles.headerTitle}>Messages</Text>
-                            <Pressable
+                            <Pressable accessibilityLabel="Edit"
                                 onPress={() => setScreen('new')}
                                 style={styles.newBtn}
                                 hitSlop={8}
@@ -392,7 +392,7 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                             <View style={styles.sentBanner}>
                                 <FontAwesome name="check-circle" size={16} color={VisualSystem.colors.gold} />
                                 <Text style={styles.sentBannerText} numberOfLines={2}>{sentBanner}</Text>
-                                <Pressable onPress={() => setSentBanner(null)} hitSlop={8}>
+                                <Pressable accessibilityLabel="Close" onPress={() => setSentBanner(null)} hitSlop={8}>
                                     <FontAwesome name="times" size={14} color={VisualSystem.colors.textSecondary} />
                                 </Pressable>
                             </View>

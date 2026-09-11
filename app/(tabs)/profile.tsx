@@ -169,7 +169,7 @@ export default function ProfileScreen() {
             <View style={[styles.heroSection, { paddingTop: insets.top + 12 }]}>
                 <View style={styles.heroTopBar}>
                     <RNText style={styles.headerEyebrow}>Profile</RNText>
-                    <TouchableOpacity
+                    <TouchableOpacity accessibilityLabel="Settings" hitSlop={4}
                         style={styles.headerIconBtn}
                         onPress={() => {
                             triggerHaptic();
@@ -186,7 +186,7 @@ export default function ProfileScreen() {
                     style={styles.heroGlow}
                 />
 
-                <TouchableOpacity
+                <TouchableOpacity accessibilityLabel="Take photo"
                     style={styles.avatarRing}
                     onPress={() => {
                         triggerHaptic();

@@ -14,7 +14,7 @@ export default function PlaceholderScreen({ title }: { title: string }) {
                     headerStyle: { backgroundColor: VisualSystem.colors.bgMid },
                     headerTintColor: Tokens.colors.textPrimary,
                     headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 8 }}>
+                        <TouchableOpacity accessibilityLabel="Back" onPress={() => router.back()} style={{ marginLeft: 8 }}>
                             <FontAwesome name="chevron-left" size={20} color={Tokens.colors.textPrimary} />
                         </TouchableOpacity>
                     )

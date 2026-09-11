@@ -455,7 +455,7 @@ export default function FeedScreen() {
                             <RNText style={styles.userSubline}>{user!.displayName || user!.name}</RNText>
                         </View>
                         <View style={styles.headerActionsSpace}>
-                            <Pressable
+                            <Pressable accessibilityLabel="Add"
                                 style={({ pressed }) => [styles.iconButton, { opacity: pressed ? 0.7 : 1 }]}
                                 onPress={() => {
                                     triggerHaptic(Haptics.ImpactFeedbackStyle.Medium);
@@ -648,11 +648,11 @@ export default function FeedScreen() {
                 animationType="fade"
                 onRequestClose={() => setIsPreviewVisible(false)}
             >
-                <Pressable
+                <Pressable accessibilityLabel="Close"
                     style={styles.previewModalOverlay}
                     onPress={() => setIsPreviewVisible(false)}
                 >
-                    <Pressable
+                    <Pressable accessibilityLabel="Close"
                         style={styles.closePreviewBtn}
                         onPress={() => setIsPreviewVisible(false)}
                     >
@@ -1286,7 +1286,7 @@ const styles = StyleSheet.create({
     },
     workoutStatsRow: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(0, 0, 0, 0.18)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 10,
         paddingVertical: 12,
         borderWidth: 1,

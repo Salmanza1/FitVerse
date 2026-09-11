@@ -631,7 +631,7 @@ export default function NutritionDashboard() {
                              <Text style={styles.modalTitle}>Add {selectedMeal}</Text>
                              <Text style={styles.modalSubtitle}>Today's Fresh Selection</Text>
                          </View>
-                         <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.modalCloseBtn}>
+                         <TouchableOpacity accessibilityLabel="Close" hitSlop={6} onPress={() => setModalVisible(false)} style={styles.modalCloseBtn}>
                              <FontAwesome name="times" size={16} color={VisualSystem.colors.textPrimary} />
                          </TouchableOpacity>
                      </View>
@@ -945,7 +945,7 @@ const MealSection = ({
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onAdd} style={styles.mealAddBtn} activeOpacity={0.8} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                <TouchableOpacity accessibilityLabel="Add" onPress={onAdd} style={styles.mealAddBtn} activeOpacity={0.8} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                     <FontAwesome name="plus" size={13} color="#0C2340" />
                 </TouchableOpacity>
             </View>

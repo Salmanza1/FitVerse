@@ -152,7 +152,7 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
                                     Equipment plans match where you train
                                 </Text>
                             </View>
-                            <TouchableOpacity
+                            <TouchableOpacity accessibilityLabel="Close"
                                 onPress={() => setModalVisible(false)}
                                 hitSlop={12}
                                 style={styles.closeBtn}

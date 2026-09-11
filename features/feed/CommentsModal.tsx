@@ -196,7 +196,7 @@ export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: Co
                 <View style={styles.modalContent}>
                     <View style={styles.header}>
                         <Text style={styles.title}>Comments</Text>
-                        <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+                        <TouchableOpacity accessibilityLabel="Close" onPress={onClose} style={styles.closeBtn}>
                             <FontAwesome name="times" size={20} color="#B0B0B0" />
                         </TouchableOpacity>
                     </View>
@@ -223,7 +223,7 @@ export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: Co
                             onChangeText={setNewComment}
                             multiline
                         />
-                        <TouchableOpacity
+                        <TouchableOpacity hitSlop={4}
                             style={[styles.sendBtn, !newComment.trim() && styles.sendBtnDisabled]}
                             onPress={handleAddComment}
                             disabled={!newComment.trim() || loading}

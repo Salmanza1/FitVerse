@@ -64,7 +64,7 @@ export default function WorkoutProgressScreen() {
     return (
         <View style={[styles.container, { paddingTop: insets.top }]}>
             <View style={styles.header}>
-                <Pressable onPress={() => router.back()} style={styles.backBtn}>
+                <Pressable accessibilityLabel="Back" hitSlop={4} onPress={() => router.back()} style={styles.backBtn}>
                     <FontAwesome name="chevron-left" size={18} color={C.gold} />
                 </Pressable>
                 <Text style={styles.headerTitle}>Progress Lab</Text>
@@ -83,7 +83,7 @@ export default function WorkoutProgressScreen() {
                             onChangeText={setSearchText}
                         />
                         {searchText.length > 0 && (
-                            <Pressable onPress={() => setSearchText('')} hitSlop={8}>
+                            <Pressable accessibilityLabel="Close" onPress={() => setSearchText('')} hitSlop={8}>
                                 <FontAwesome name="times-circle" size={16} color={C.textTertiary} />
                             </Pressable>
                         )}

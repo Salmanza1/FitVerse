@@ -160,7 +160,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                     <SecondaryText style={{ fontSize: 11 }}>ELITE MENTOR</SecondaryText>
                                 </View>
                             </View>
-                            <TouchableOpacity onPress={() => setIsChatOpen(false)} style={styles.closeBtn}>
+                            <TouchableOpacity accessibilityLabel="Close" onPress={() => setIsChatOpen(false)} style={styles.closeBtn}>
                                 <FontAwesome name="times" size={20} color="#666" />
                             </TouchableOpacity>
                         </View>

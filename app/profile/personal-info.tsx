@@ -251,7 +251,7 @@ export default function PersonalInfoScreen() {
 
     const renderHeader = () => (
         <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <TouchableOpacity accessibilityLabel="Back" onPress={() => router.back()} style={styles.backButton}>
                 <FontAwesome name="chevron-left" size={18} color={FitVerseTheme.colors.textPrimary} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>PERSONAL INFO</Text>

@@ -64,7 +64,7 @@ export function StyledSelect({
                     <Pressable style={styles.modalSheet} onPress={(e) => e.stopPropagation()}>
                         <View style={styles.modalHeader}>
                             <Text style={styles.modalTitle}>Select {label}</Text>
-                            <TouchableOpacity onPress={() => setVisible(false)} hitSlop={12}>
+                            <TouchableOpacity accessibilityLabel="Close" onPress={() => setVisible(false)} hitSlop={12}>
                                 <FontAwesome name="close" size={22} color="#0C2340" />
                             </TouchableOpacity>
                         </View>

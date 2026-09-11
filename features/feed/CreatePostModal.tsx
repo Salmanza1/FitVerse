@@ -182,7 +182,7 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
             >
                 <View style={[styles.modalContent, { paddingBottom: Math.max(insets.bottom, 20) }]}>
                     <View style={styles.header}>
-                        <Pressable
+                        <Pressable accessibilityLabel="Close"
                             onPress={handleClose}
                             style={({ pressed }) => [{ padding: 8, opacity: pressed ? 0.6 : 1 }]}
                         >
@@ -261,7 +261,7 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
                             {image ? (
                                 <View style={styles.previewWrapper}>
                                     <Image source={{ uri: image }} style={styles.previewImage} resizeMode="cover" />
-                                    <Pressable
+                                    <Pressable accessibilityLabel="Delete" hitSlop={6}
                                         style={({ pressed }) => [styles.removeImageBtn, { opacity: pressed ? 0.8 : 1 }]}
                                         onPress={() => {
                                             triggerHaptic();

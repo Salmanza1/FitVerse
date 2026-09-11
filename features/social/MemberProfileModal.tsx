@@ -63,7 +63,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                                         colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.8)']}
                                         style={StyleSheet.absoluteFill}
                                     />
-                                    <Pressable style={styles.closeBtn} onPress={onClose}>
+                                    <Pressable accessibilityLabel="Collapse" hitSlop={4} style={styles.closeBtn} onPress={onClose}>
                                         <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.textPrimary} />
                                     </Pressable>
                                 </ImageBackground>

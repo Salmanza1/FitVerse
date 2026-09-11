@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         paddingTop: 32,
         paddingHorizontal: 16,
         paddingBottom: 16,
-        backgroundColor: 'rgba(10, 30, 52, 0.85)',
+        backgroundColor: VisualSystem.colors.bgMid,
         alignItems: 'center'
     },
     headerTag: {
@@ -733,7 +733,7 @@ const styles = StyleSheet.create({
     },
     emptyTemplates: {
         padding: 16,
-        backgroundColor: 'rgba(30, 58, 95, 0.4)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 16,
         alignItems: 'center',
         borderWidth: 1,
@@ -1000,7 +1000,7 @@ const styles = StyleSheet.create({
     },
     logRestTimerBar: {
         height: 20,
-        backgroundColor: 'rgba(5, 11, 24, 0.4)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 6,
         marginTop: 4,
         marginBottom: 8,
@@ -1719,7 +1719,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: 'rgba(12, 35, 64, 0.18)',
+        backgroundColor: VisualSystem.colors.goldMuted,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -3137,7 +3137,7 @@ export default function GymScreen() {
                     keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
                 >
                     <View style={styles.coachChatHeader}>
-                        <Pressable
+                        <Pressable accessibilityLabel="Collapse"
                             onPress={() => setCoachModalVisible(false)}
                             disabled={isPreparingWorkout}
                             style={({ pressed }) => [styles.coachChatClose, pressed && { opacity: 0.6 }]}
@@ -3515,7 +3515,7 @@ export default function GymScreen() {
             >
                 <Animated.View entering={SlideInUp.duration(360).easing(Easing.out(Easing.cubic))}>
                 <View style={styles.logHeader}>
-                    <Pressable
+                    <Pressable accessibilityLabel="Close" hitSlop={4}
                         onPress={cancelWorkout}
                         style={({ pressed }) => [styles.headerIconButton, pressed && { opacity: 0.65 }]}
                     >
@@ -3629,7 +3629,7 @@ export default function GymScreen() {
                                         </View>
                                         <Text style={styles.logExCategory}>{ex.category}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.logExMenuBtn} onPress={() => setMenuExerciseIdx(exIdx)}>
+                                    <TouchableOpacity hitSlop={6} style={styles.logExMenuBtn} onPress={() => setMenuExerciseIdx(exIdx)}>
                                         <FontAwesome name="ellipsis-h" size={18} color="#5C7A99" />
                                     </TouchableOpacity>
                                 </View>
@@ -3640,7 +3640,7 @@ export default function GymScreen() {
                                             <FontAwesome name="sticky-note-o" size={12} color={VisualSystem.colors.gold} />
                                             <Text style={styles.logStickyNoteLabel}>Exercise note</Text>
                                             <View style={styles.logStickyNoteHeaderSpacer} />
-                                            <Pressable
+                                            <Pressable accessibilityLabel="Close"
                                                 onPress={() => closeExerciseNote(ex.id)}
                                                 hitSlop={8}
                                                 style={styles.logStickyNoteClose}
@@ -3747,7 +3747,7 @@ export default function GymScreen() {
                                                     selectTextOnFocus
                                                 />
 
-                                                <Pressable
+                                                <Pressable accessibilityLabel="Confirm" hitSlop={7}
                                                     style={({ pressed }) => [
                                                         styles.logCheckBtn,
                                                         set.completed && styles.logCheckBtnActive,
@@ -4247,7 +4247,7 @@ export default function GymScreen() {
             >
                 <View style={[styles.modalFullContainer, { paddingTop: insets.top }]}>
                     <View style={styles.modalHeader}>
-                        <Pressable onPress={() => setAddExerciseVisible(false)} hitSlop={12}>
+                        <Pressable accessibilityLabel="Close" onPress={() => setAddExerciseVisible(false)} hitSlop={12}>
                             <FontAwesome name="times" size={24} color={VisualSystem.colors.gold} />
                         </Pressable>
                         <Text style={styles.modalTitle}>Add Exercise</Text>
@@ -4376,7 +4376,7 @@ export default function GymScreen() {
                 <View style={styles.modalOverlay}>
                     <View style={[styles.modalContent, { height: '80%', padding: 0 }]}>
                         <View style={[styles.modalHeader, { backgroundColor: 'transparent', paddingTop: 16 }]}>
-                            <TouchableOpacity onPress={() => setCreateExerciseVisible(false)}>
+                            <TouchableOpacity accessibilityLabel="Close" onPress={() => setCreateExerciseVisible(false)}>
                                 <FontAwesome name="times" size={24} color={VisualSystem.colors.textPrimary} />
                             </TouchableOpacity>
                             <Text style={styles.modalTitle}>Create New Exercise</Text>
@@ -5115,7 +5115,7 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
                     onChangeText={setSearch}
                 />
                 {search.length > 0 && (
-                    <TouchableOpacity onPress={() => setSearch('')} hitSlop={8}>
+                    <TouchableOpacity accessibilityLabel="Close" onPress={() => setSearch('')} hitSlop={8}>
                         <FontAwesome name="times-circle" size={16} color={LOG.textTertiary} />
                     </TouchableOpacity>
                 )}

@@ -235,7 +235,7 @@ export default function LoginScreen() {
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.modalCard}>
                         <View style={styles.modalHeaderRow}>
                             <Text style={styles.modalTitle}>Reset Password</Text>
-                            <TouchableOpacity onPress={() => setShowForgotModal(false)} hitSlop={10}>
+                            <TouchableOpacity accessibilityLabel="Close" onPress={() => setShowForgotModal(false)} hitSlop={10}>
                                 <FontAwesome name="times" size={24} color="#666" />
                             </TouchableOpacity>
                         </View>

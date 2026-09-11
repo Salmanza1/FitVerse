@@ -98,7 +98,7 @@ export function GymTimePicker({
         <View style={extrasStyles.gymPicker}>
             <View style={extrasStyles.gymPickerHeader}>
                 <Text style={extrasStyles.gymPickerTitle}>When?</Text>
-                <Pressable onPress={onClose} hitSlop={8}>
+                <Pressable accessibilityLabel="Close" onPress={onClose} hitSlop={8}>
                     <FontAwesome name="times" size={12} color={VisualSystem.colors.textSecondary} />
                 </Pressable>
             </View>
@@ -336,9 +336,9 @@ const extrasStyles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 8,
         borderRadius: 10,
-        backgroundColor: 'rgba(26,58,92,0.85)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderWidth: 1,
-        borderColor: 'rgba(212,175,55,0.2)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     gymPickerHeader: {
         flexDirection: 'row',
@@ -382,7 +382,7 @@ const extrasStyles = StyleSheet.create({
         marginTop: 4,
         padding: 4,
         borderRadius: 10,
-        backgroundColor: 'rgba(0,0,0,0.25)',
+        backgroundColor: VisualSystem.colors.bgDeep,
     },
     reactionPickerMine: {
         alignSelf: 'flex-end',

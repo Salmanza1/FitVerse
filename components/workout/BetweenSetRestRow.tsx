@@ -6,8 +6,8 @@ import { formatRestSeconds, getRestAfterSetSeconds, parseRestInput } from '@/fea
 import { VisualSystem } from '@/constants/VisualSystem';
 
 const C = VisualSystem.colors;
-const REST_GREEN = '#2ecc71';
-const REST_GREEN_MUTED = '#5C9E6F';
+const REST_GREEN = VisualSystem.colors.success;
+const REST_GREEN_MUTED = VisualSystem.colors.textSecondary;
 
 type Props = {
     exercise: Exercise;
@@ -117,7 +117,7 @@ export function BetweenSetRestRow({
 const styles = StyleSheet.create({
     bar: {
         height: 24,
-        backgroundColor: 'rgba(5, 11, 24, 0.45)',
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 6,
         marginTop: 4,
         marginBottom: 4,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3,
     },
     barTextMuted: {
-        color: 'rgba(212, 175, 55, 0.45)',
+        color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         fontWeight: '600',
     },

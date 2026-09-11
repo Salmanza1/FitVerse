@@ -672,7 +672,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
             <View style={[styles.root, embedded ? styles.rootEmbedded : { paddingTop: insets.top }]}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <Pressable onPress={onClose} style={styles.backBtn} hitSlop={12}>
+                    <Pressable accessibilityLabel="Back" onPress={onClose} style={styles.backBtn} hitSlop={12}>
                         <FontAwesome name="chevron-left" size={18} color={VisualSystem.colors.gold} />
                     </Pressable>
                     <View style={styles.headerCenter}>
@@ -866,7 +866,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                             returnKeyType="send"
                             onSubmitEditing={() => handleSend(inputText)}
                         />
-                        <Pressable
+                        <Pressable accessibilityLabel="Send"
                             onPress={() => handleSend(inputText)}
                             disabled={!inputText.trim()}
                             style={({ pressed }) => [

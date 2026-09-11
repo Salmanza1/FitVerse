@@ -53,7 +53,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
         <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={onClose} hitSlop={12}>
+                    <TouchableOpacity accessibilityLabel="Close" onPress={onClose} hitSlop={12}>
                         <FontAwesome name="times" size={22} color={VisualSystem.colors.gold} />
                     </TouchableOpacity>
                     <View style={styles.headerCenter}>
@@ -74,7 +74,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
                         autoCorrect={false}
                     />
                     {query.length > 0 && (
-                        <TouchableOpacity onPress={() => setQuery('')}>
+                        <TouchableOpacity accessibilityLabel="Close" onPress={() => setQuery('')}>
                             <FontAwesome name="times-circle" size={18} color={VisualSystem.colors.textTertiary} />
                         </TouchableOpacity>
                     )}
