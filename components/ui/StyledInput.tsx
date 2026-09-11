@@ -1,8 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet, TextInputProps, View, Text, Platform } from 'react-native';
-import Colors from '@/constants/Colors';
+import { palette } from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
-import { useColorScheme } from 'react-native';
 import { VisualSystem } from '@/constants/VisualSystem';
 
 interface StyledInputProps extends TextInputProps {
@@ -12,8 +11,7 @@ interface StyledInputProps extends TextInputProps {
 }
 
 export function StyledInput({ label, error, style, containerStyle, ...props }: StyledInputProps) {
-    const colorScheme = useColorScheme();
-    const themeColors = Colors[colorScheme ?? 'light'];
+    const themeColors = palette;
 
     return (
         <View style={[styles.container, containerStyle]}>

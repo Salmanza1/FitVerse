@@ -1,6 +1,5 @@
-import { Stack, Redirect } from 'expo-router';
+import { Stack, Redirect, ThemeProvider, DefaultTheme } from 'expo-router';
 import { View, ActivityIndicator } from 'react-native';
-import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
 import { useAuth } from '@/features/auth/AuthContext';
 import { webScreen } from '@/constants/webLayout';
 import { VisualSystem } from '@/constants/VisualSystem';

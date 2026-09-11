@@ -90,7 +90,11 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     deleteBg: {
-        ...StyleSheet.absoluteFillObject,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         backgroundColor: 'rgba(140, 55, 55, 0.92)',
         flexDirection: 'row',
         alignItems: 'center',

@@ -6,7 +6,7 @@ import { VisualSystem } from './VisualSystem';
  * the app ships a single theme, and returning a dark set here would mismatch
  * every screen.
  */
-const palette = {
+export const palette = {
   text: VisualSystem.colors.textPrimary,
   textSecondary: VisualSystem.colors.textSecondary,
   // Transparent on purpose: Themed.View applies this to every view that

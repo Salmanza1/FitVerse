@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from './Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from './useColorScheme';
+import { palette } from '@/constants/Colors';
 
 interface LockedOverlayProps {
     title: string;
@@ -13,8 +12,7 @@ interface LockedOverlayProps {
 }
 
 export function LockedOverlay({ title, availableIn = "Phase 3", icon = "lock" }: LockedOverlayProps) {
-    const colorScheme = useColorScheme();
-    const color = Colors[colorScheme ?? 'light'].tint;
+    const color = palette.tint;
 
     return (
         <View style={styles.container}>

@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import type { BottomTabBarProps } from 'expo-router/tabs';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { safeImpact } from '@/lib/safeHaptics';
 

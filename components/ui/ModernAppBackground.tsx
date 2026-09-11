@@ -58,7 +58,11 @@ export function GymStarOverlay() {
 
 const styles = StyleSheet.create({
     fullContainer: {
-        ...StyleSheet.absoluteFillObject,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
     webAccentBar: {
         position: 'absolute',

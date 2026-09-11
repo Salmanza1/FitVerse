@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import { Pressable, StyleSheet, Text, ViewStyle, ActivityIndicator, Animated } from 'react-native';
-import Colors from '@/constants/Colors';
+import { palette } from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
 import { VisualSystem } from '@/constants/VisualSystem';
-import { useColorScheme } from 'react-native';
 
 interface StyledButtonProps {
     title: string;
@@ -15,8 +14,7 @@ interface StyledButtonProps {
 }
 
 export function StyledButton({ title, onPress, variant = 'primary', loading = false, disabled = false, style }: StyledButtonProps) {
-    const colorScheme = useColorScheme();
-    const themeColors = Colors[colorScheme ?? 'light'];
+    const themeColors = palette;
     const scaleAnim = useRef(new Animated.Value(1)).current;
 
     const handlePressIn = () => {

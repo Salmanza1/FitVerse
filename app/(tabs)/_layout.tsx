@@ -1,7 +1,7 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs, usePathname, Redirect } from 'expo-router';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, type ColorValue } from 'react-native';
 import { useAuth } from '@/features/auth/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
@@ -12,12 +12,12 @@ import { LiquidGlassTabBar } from '@/components/ui/LiquidGlassTabBar';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+  color: ColorValue;
   size?: number;
 }) {
   // One size for every tab: growing the active icon fights the color change
   // that already signals selection, and makes the row sit unevenly.
-  return <FontAwesome size={props.size ?? 23} name={props.name} color={props.color} />;
+  return <FontAwesome size={props.size ?? 23} name={props.name} color={props.color as string} />;
 }
 
 function TabRouteTracker() {

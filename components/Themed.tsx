@@ -6,9 +6,8 @@
 import { Text as DefaultText, View as DefaultView, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 
-import Colors from '@/constants/Colors';
+import { palette } from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
-import { useColorScheme } from './useColorScheme';
 
 type ThemeProps = {
   lightColor?: string;
@@ -18,18 +17,16 @@ type ThemeProps = {
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 
+/**
+ * The app ships a single light theme, so this no longer branches on the device
+ * color scheme — it just lets a caller override a token. The `dark` prop is
+ * kept in the signature because existing callers pass it.
+ */
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof typeof palette
 ) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
-
-  if (colorFromProps) {
-    return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
-  }
+  return props.light ?? palette[colorName];
 }
 
 export function Text(props: TextProps) {
