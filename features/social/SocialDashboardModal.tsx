@@ -440,7 +440,7 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.85)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'flex-end',
     },
     container: {

@@ -121,7 +121,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.9)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'flex-end',
     },
     container: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
         alignItems: 'center',
     },

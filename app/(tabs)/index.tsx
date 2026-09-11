@@ -1229,7 +1229,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 15,
         right: 15,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: VisualSystem.colors.overlay,
         paddingVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 12,
@@ -1376,7 +1376,7 @@ const styles = StyleSheet.create({
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.7)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'flex-end',
     },
     menuContainer: {
@@ -1460,7 +1460,7 @@ const styles = StyleSheet.create({
     },
     previewModalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.95)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
         alignItems: 'center',
     },

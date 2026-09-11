@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     },
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'flex-end',
     },
     modalSheet: {
