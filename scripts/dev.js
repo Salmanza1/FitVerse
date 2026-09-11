@@ -60,23 +60,84 @@ function run(command, args) {
   });
 }
 
-if (!isWindows) {
-  const script = mode === 'tunnel' ? 'scripts/dev.sh' : 'scripts/dev-lan.sh';
-  run('bash', [script, ...passthrough]);
-} else {
+/**
+ * Open a cloudflared quick tunnel and return its public URL.
+ *
+ * Expo's own --tunnel uses ngrok, which doesn't work here: the lockfile only
+ * carries the darwin-arm64 ngrok binary, so on Windows it tries to spawn a
+ * macOS executable. cloudflared needs no account and is the same thing
+ * scripts/dev.sh already uses on macOS.
+ */
+function startCloudflared() {
+  return new Promise((resolve, reject) => {
+    const child = spawn('npx', ['--yes', 'cloudflared@latest', 'tunnel', '--url', `http://127.0.0.1:${PORT}`], {
+      cwd: projectRoot,
+      shell: isWindows,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+
+    let settled = false;
+    const done = (err, url) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      err ? reject(err) : resolve({ url, child });
+    };
+
+    // cloudflared prints the URL on stderr.
+    const scan = (buf) => {
+      const m = String(buf).match(/https:\/\/[a-z0-9-]+\.trycloudflare\.com/);
+      if (m) done(null, m[0]);
+    };
+    child.stdout.on('data', scan);
+    child.stderr.on('data', scan);
+    child.on('error', (e) => done(new Error(`cloudflared failed to start: ${e.message}`)));
+    child.on('exit', (code) => done(new Error(`cloudflared exited early (code ${code})`)));
+
+    const timer = setTimeout(() => done(new Error('timed out waiting for a tunnel URL')), 60000);
+
+    const stop = () => { try { child.kill(); } catch {} };
+    process.on('exit', stop);
+    process.on('SIGINT', () => { stop(); process.exit(0); });
+    process.on('SIGTERM', () => { stop(); process.exit(0); });
+  });
+}
+
+async function main() {
+  if (!isWindows) {
+    const script = mode === 'tunnel' ? 'scripts/dev.sh' : 'scripts/dev-lan.sh';
+    run('bash', [script, ...passthrough]);
+    return;
+  }
+
   freePort();
 
-  // --localhost sets its own host mode, so don't also pass --lan/--tunnel.
+  // --localhost sets its own host mode, so don't also pass --lan.
   const args = ['expo', 'start', '--port', PORT];
-  if (!passthrough.includes('--localhost')) {
-    args.push(mode === 'tunnel' ? '--tunnel' : '--lan');
-  }
-  args.push(...passthrough);
+  const hostFlag = !passthrough.includes('--localhost');
 
   if (mode === 'tunnel') {
-    console.log('\nFitVerse dev server (Expo tunnel) — shareable QR.\n');
+    console.log('\nFitVerse dev server — starting public tunnel...\n');
+    try {
+      const { url } = await startCloudflared();
+      const host = url.replace(/^https?:\/\//, '');
+      console.log(`Public link: ${url}`);
+      console.log(`Expo Go URL: exp://${host}`);
+      console.log('\nWorks on any network — useful on Wi-Fi that blocks device-to-device traffic.\n');
+      // Tells Metro to hand out the tunnel host instead of the LAN IP.
+      process.env.EXPO_PACKAGER_PROXY_URL = url;
+    } catch (err) {
+      console.error(`\nCould not start the tunnel: ${err.message}`);
+      console.error('Falling back to LAN — this only works if your phone can reach this machine.\n');
+    }
+    if (hostFlag) args.push('--lan');
   } else {
     console.log('\nFitVerse dev server (LAN) — phone must be on the same Wi-Fi.\n');
+    if (hostFlag) args.push('--lan');
   }
+
+  args.push(...passthrough);
   run('npx', args);
 }
+
+main();
