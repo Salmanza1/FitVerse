@@ -236,13 +236,12 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingRight: 8,
     },
+    /** A quiet label, not a shouted one — the value below it is the content. */
     eyebrow: {
-        fontSize: 11,
+        fontSize: 13,
         fontWeight: '600',
-        color: VisualSystem.colors.textTertiary,
-        letterSpacing: 0.6,
-        textTransform: 'uppercase',
-        marginBottom: 4,
+        color: VisualSystem.colors.textSecondary,
+        marginBottom: 2,
     },
     locationTitle: {
         fontSize: 17,

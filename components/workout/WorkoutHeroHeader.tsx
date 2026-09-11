@@ -1,183 +1,135 @@
 import React from 'react';
-import {
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    ImageBackground,
-    Animated,
-} from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text } from '@/components/Themed';
 import { VisualSystem } from '@/constants/VisualSystem';
 
-export const WORKOUT_HEADER_MAX_HEIGHT = 280;
+/**
+ * Screen header for the Workout tab.
+ *
+ * This used to be a 220pt photo hero with "LIFT & LOG / WORKOUT DASHBOARD" set
+ * in all caps — a landing-page device that ate a third of the screen before any
+ * content appeared. Apps people use every day put a compact title bar here and
+ * let the content lead, so that's what this is now: a title, today's date, and
+ * the two actions as icon buttons.
+ *
+ * The export name and props are unchanged so the screen doesn't have to care.
+ */
 
-type WorkoutHeroHeaderProps = {
-    scrollY: Animated.Value;
-    onCoachPress: () => void;
-    onLibraryPress: () => void;
-};
+const BAR_HEIGHT = 56;
+
+export const WORKOUT_HEADER_MAX_HEIGHT = BAR_HEIGHT;
+
+function todayLabel() {
+    return new Date().toLocaleDateString(undefined, {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+    });
+}
+
+function HeaderAction({
+    name,
+    label,
+    onPress,
+}: {
+    name: React.ComponentProps<typeof Ionicons>['name'];
+    label: string;
+    onPress?: () => void;
+}) {
+    return (
+        <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={label}
+            onPress={onPress}
+            hitSlop={8}
+            style={({ pressed }) => [styles.action, pressed && { opacity: 0.55 }]}>
+            <Ionicons name={name} size={22} color={VisualSystem.colors.textPrimary} />
+        </Pressable>
+    );
+}
 
 export function WorkoutHeroHeader({
     scrollY,
     onCoachPress,
     onLibraryPress,
-}: WorkoutHeroHeaderProps) {
+}: {
+    scrollY?: Animated.Value;
+    onCoachPress?: () => void;
+    onLibraryPress?: () => void;
+}) {
     const insets = useSafeAreaInsets();
-    const HEADER_MIN_HEIGHT = insets.top + 70;
-    const HEADER_SCROLL_DISTANCE = WORKOUT_HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-    const headerHeight = scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [WORKOUT_HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-        extrapolate: 'clamp',
-    });
-
-    const imageOpacity = scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-        outputRange: [1, 1, 0.4],
-        extrapolate: 'clamp',
-    });
-
-    const imageTranslateY = scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, -50],
-        extrapolate: 'clamp',
-    });
-
-    const headerBgOpacity = scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-    });
-
-    const titleScale = scrollY.interpolate({
-        inputRange: [-100, 0, HEADER_SCROLL_DISTANCE],
-        outputRange: [1.1, 1, 0.85],
-        extrapolate: 'clamp',
-    });
+    // A hairline appears only once content has scrolled under the bar, so a
+    // resting screen has no line across it.
+    const borderOpacity =
+        scrollY?.interpolate({
+            inputRange: [0, 12],
+            outputRange: [0, 1],
+            extrapolate: 'clamp',
+        }) ?? 1;
 
     return (
-        <Animated.View
-            style={[
-                styles.heroContainer,
-                {
-                    height: headerHeight,
-                    zIndex: 10,
-                },
-            ]}
-        >
-            <Animated.View
-                style={[
-                    StyleSheet.absoluteFill,
-                    { transform: [{ translateY: imageTranslateY }], opacity: imageOpacity },
-                ]}
-            >
-                <ImageBackground
-                    source={require('@/assets/images/workout_hero_fitverse.png')}
-                    style={styles.heroImage}
-                >
-                    <LinearGradient
-                        colors={['rgba(12,35,64,0.15)', 'rgba(12,35,64,0.92)']}
-                        style={StyleSheet.absoluteFill}
-                    />
-                </ImageBackground>
-            </Animated.View>
-
-            <Animated.View
-                style={[
-                    StyleSheet.absoluteFill,
-                    {
-                        backgroundColor: 'rgba(12, 35, 64, 0.85)',
-                        opacity: headerBgOpacity,
-                        borderBottomWidth: 1,
-                        borderBottomColor: VisualSystem.colors.borderGold,
-                    },
-                ]}
-            />
-
-            <View style={[styles.heroContent, { paddingTop: insets.top + 10 }]}>
-                <Animated.View style={{ transform: [{ scale: titleScale }] }}>
-                    <View style={styles.headerRow}>
-                        <View>
-                            <Text style={styles.heroTitle}>LIFT & LOG</Text>
-                            <Text style={styles.heroSubtitle}>WORKOUT DASHBOARD</Text>
-                        </View>
-                        <View style={styles.headerActions}>
-                            <TouchableOpacity style={styles.actionBtn} onPress={onCoachPress} activeOpacity={0.85}>
-                                <FontAwesome name="magic" size={13} color={VisualSystem.colors.goldBright} />
-                                <Text style={styles.actionText}>COACH</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.actionBtn} onPress={onLibraryPress} activeOpacity={0.85}>
-                                <FontAwesome name="list" size={13} color={VisualSystem.colors.goldBright} />
-                                <Text style={styles.actionText}>LIBRARY</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Animated.View>
+        <View style={[styles.wrap, { paddingTop: insets.top }]}>
+            <View style={styles.bar}>
+                <View style={styles.titleBlock}>
+                    <Text style={styles.title}>Workout</Text>
+                    <Text style={styles.subtitle}>{todayLabel()}</Text>
+                </View>
+                <View style={styles.actions}>
+                    <HeaderAction name="sparkles-outline" label="AI coach" onPress={onCoachPress} />
+                    <HeaderAction name="list-outline" label="Exercise library" onPress={onLibraryPress} />
+                </View>
             </View>
-        </Animated.View>
+            <Animated.View style={[styles.hairline, { opacity: borderOpacity }]} />
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    heroContainer: {
+    wrap: {
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        overflow: 'hidden',
+        zIndex: 10,
+        backgroundColor: VisualSystem.colors.bgBase,
     },
-    heroImage: {
-        width: '100%',
-        height: '100%',
-    },
-    heroContent: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        paddingHorizontal: 24,
-        paddingBottom: 16,
-    },
-    headerRow: {
+    bar: {
+        height: BAR_HEIGHT,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 24,
+        paddingHorizontal: VisualSystem.spacing.lg,
     },
-    // The hero sits on a dark photo, so its type uses the on-dark tokens
-    // rather than the page tokens.
-    heroTitle: {
-        fontSize: 32,
+    titleBlock: {
+        flex: 1,
+        minWidth: 0,
+    },
+    title: {
+        fontSize: VisualSystem.text.heading,
         fontWeight: '800',
-        color: VisualSystem.colors.goldBright,
-        letterSpacing: 1,
+        color: VisualSystem.colors.textPrimary,
+        letterSpacing: -0.4,
     },
-    heroSubtitle: {
-        fontSize: 13,
-        fontWeight: '700',
-        color: VisualSystem.colors.textOnNavy,
-        opacity: 0.9,
-        marginTop: -2,
+    subtitle: {
+        fontSize: VisualSystem.text.small,
+        color: VisualSystem.colors.textSecondary,
+        marginTop: 1,
     },
-    headerActions: {
-        flexDirection: 'row',
-        gap: 8,
-    },
-    actionBtn: {
+    actions: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1.5,
-        borderColor: VisualSystem.colors.goldBright,
-        borderRadius: 22,
-        paddingHorizontal: 12,
-        paddingVertical: 4,
-        gap: 4,
+        gap: VisualSystem.spacing.xs,
     },
-    actionText: {
-        color: VisualSystem.colors.textOnNavy,
-        fontSize: 11,
-        fontWeight: '800',
+    action: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    hairline: {
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: VisualSystem.colors.borderSubtle,
     },
 });

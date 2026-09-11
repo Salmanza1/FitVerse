@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, Pressable, KeyboardAvoidingView, Platform, ScrollView, TextInput, Alert, Modal, FlatList, LayoutAnimation, UIManager, Image, PanResponder, ActivityIndicator, InteractionManager, Dimensions, Animated as RNAnimated } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as Notifications from 'expo-notifications';
 import { Exercise, Set as WorkoutSet, Workout, SetType, ExerciseType } from '@/types/workout';
 import { getTemplates, saveWorkout, getWorkoutHistory, saveTemplate, deleteTemplate, getLastWorkoutByName, getRecentWorkouts, getWorkoutHistoryCount, getLatestSetsForExercise, getExerciseProgress, getPerformedExercises } from '@/features/workout/WorkoutStore';
@@ -1521,13 +1521,18 @@ const styles = StyleSheet.create({
     dashboardSection: {
         gap: 8,
     },
+    /**
+     * Section headers read as headers, not as shouted labels. The tiny
+     * letter-spaced uppercase treatment was on every group in the app and is
+     * what made screens feel like forms.
+     */
     dashboardSectionTitle: {
-        fontSize: 11,
-        fontWeight: '800',
-        color: LOG.textTertiary,
-        letterSpacing: 1.3,
-        textTransform: 'uppercase',
+        fontSize: 15,
+        fontWeight: '700',
+        color: LOG.textPrimary,
+        letterSpacing: -0.2,
         marginLeft: 4,
+        marginBottom: 4,
     },
     missionPanel: {
         ...glassSurface,
@@ -1650,6 +1655,54 @@ const styles = StyleSheet.create({
     },
     startActions: {
         gap: 8,
+    },
+    /** Primary action: solid, full-width, unmistakable. */
+    startCta: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        backgroundColor: LOG.gold,
+        height: 52,
+        borderRadius: 16,
+        marginBottom: 24,
+    },
+    startCtaText: {
+        color: LOG.textOnGold,
+        fontSize: 17,
+        fontWeight: '800',
+        letterSpacing: -0.2,
+    },
+    /** One container, hairline-separated rows — not a card per item. */
+    group: {
+        backgroundColor: LOG.bgMid,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: LOG.borderSubtle,
+        overflow: 'hidden',
+    },
+    groupDivider: {
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: LOG.borderSubtle,
+        marginLeft: 16,
+    },
+    groupRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 16,
+    },
+    groupRowText: { flex: 1, minWidth: 0 },
+    groupRowTitle: {
+        fontSize: 15,
+        fontWeight: '700',
+        color: LOG.textPrimary,
+    },
+    groupRowSub: {
+        fontSize: 13,
+        color: LOG.textSecondary,
+        marginTop: 1,
     },
     startWorkoutCard: {
         flexDirection: 'row',
@@ -3908,47 +3961,30 @@ export default function GymScreen() {
 
     const renderStartSessionSection = () => (
         <View style={styles.missionPanel}>
-            <TrainingLocationSection embedded />
+            {/* The one thing you came here to do: a real button, not a card. */}
+            <Pressable
+                onPress={startQuickWorkout}
+                style={({ pressed }) => [styles.startCta, pressed && { opacity: 0.9 }]}
+            >
+                <FontAwesome name="play" size={15} color={LOG.textOnGold} />
+                <Text style={styles.startCtaText}>Start workout</Text>
+            </Pressable>
 
-            <View style={styles.startActions}>
+            {/* One grouped list with dividers, rather than a box per row. */}
+            <View style={styles.group}>
+                <TrainingLocationSection embedded />
+                <View style={styles.groupDivider} />
                 <TouchableOpacity
-                    onPress={startQuickWorkout}
-                    activeOpacity={0.88}
-                >
-                    <LinearGradient
-                        colors={['#C4A032', '#D4AF37', '#E0C56A']}
-                        start={[0, 0]}
-                        end={[1, 1]}
-                        style={styles.startWorkoutCard}
-                    >
-                        <View style={styles.startWorkoutIcon}>
-                            <FontAwesome name="play" size={20} color={LOG.bgMid} />
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.startWorkoutTitle}>Start Workout</Text>
-                            <SecondaryText style={styles.startWorkoutSub}>
-                                Add exercises anytime during your session
-                            </SecondaryText>
-                        </View>
-                        <FontAwesome name="chevron-right" size={13} color="rgba(12,35,64,0.45)" />
-                    </LinearGradient>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.aiCoachCard}
+                    style={styles.groupRow}
                     onPress={openCoachChat}
-                    activeOpacity={0.88}
+                    activeOpacity={0.7}
                 >
-                    <View style={[styles.startWorkoutIcon, styles.aiCoachIcon]}>
-                        <FontAwesome name="magic" size={17} color={LOG.gold} />
+                    <Ionicons name="sparkles-outline" size={20} color={LOG.textSecondary} />
+                    <View style={styles.groupRowText}>
+                        <Text style={styles.groupRowTitle}>Leprechaun AI coach</Text>
+                        <Text style={styles.groupRowSub}>Build a plan for today's session</Text>
                     </View>
-                    <View style={{ flex: 1 }}>
-                        <Text style={styles.aiCoachTitle}>Leprechaun AI Coach</Text>
-                        <SecondaryText style={styles.aiCoachSub}>
-                            Build a plan for today's session
-                        </SecondaryText>
-                    </View>
-                    <FontAwesome name="chevron-right" size={13} color={LOG.textTertiary} />
+                    <Ionicons name="chevron-forward" size={17} color={LOG.textTertiary} />
                 </TouchableOpacity>
             </View>
 
