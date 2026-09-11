@@ -17,26 +17,24 @@ import Animated, {
     Easing,
 } from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
-import { GlassContainer, GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from 'expo-router/tabs';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { safeImpact } from '@/lib/safeHaptics';
 
 /**
- * Floating tab bar with Apple's Liquid Glass behaviour.
+ * Floating tab bar.
  *
- * The selection is a glass capsule that travels between tabs. On iOS 26 the
- * capsule and the bar are sibling GlassViews inside a GlassContainer, so as the
- * capsule moves the two glass surfaces merge and deform into each other — the
- * morph you see in Apple's own tab bars. `spacing` sets how close they have to
- * be before they start affecting one another.
+ * On iOS 26 the bar is a single native GlassView — Apple's real Liquid Glass,
+ * which refracts and specularly highlights whatever scrolls under it.
  *
- * Dragging along the bar carries the capsule with your finger and commits the
- * tab you release on, rather than only responding to discrete taps.
+ * Do not wrap this in a GlassContainer. That renders as an opaque slab and the
+ * glass is lost; the material has to come from the GlassView being the surface
+ * itself. Everywhere else the bar falls back to a blurred, near-opaque surface.
  *
- * Off iOS 26 the same capsule renders as a plain tinted pill over a blurred
- * bar, and the motion is identical.
+ * A selection lozenge sits on top and travels between tabs — springing on tap,
+ * and following your finger if you drag along the bar.
  */
 
 const BAR_HEIGHT = 72;
@@ -44,9 +42,8 @@ const BAR_INSET = 12;
 const BAR_BOTTOM = 10;
 const WEB_MAX_WIDTH = 540;
 const ICON_SIZE = 25;
-const CAPSULE_INSET = 6;
-/** How near the capsule must be before the bar's glass starts merging with it. */
-const GLASS_MERGE_SPACING = 18;
+const LOZENGE_INSET_Y = 8;
+const LOZENGE_GAP_X = 8;
 
 /** Follows the finger closely, then settles without a rubbery overshoot. */
 const SETTLE_SPRING = { damping: 20, stiffness: 210, mass: 0.85 } as const;
@@ -96,7 +93,7 @@ function TabItem({
 
 export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     const insets = useSafeAreaInsets();
-    const [barWidth, setBarWidth] = useState(0);
+    const [rowWidth, setRowWidth] = useState(0);
     const [reduceTransparency, setReduceTransparency] = useState(false);
 
     React.useEffect(() => {
@@ -123,10 +120,10 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
 
     const activeKey = state.routes[state.index]?.key;
     const activeIndex = Math.max(0, routes.findIndex((r) => r.key === activeKey));
-    const slot = routes.length ? barWidth / routes.length : 0;
+    const slot = routes.length ? rowWidth / routes.length : 0;
 
-    const capsuleX = useSharedValue(0);
-    const capsuleScale = useSharedValue(1);
+    const lozengeX = useSharedValue(0);
+    const lozengeScale = useSharedValue(1);
     const placed = useRef(false);
     // Read by the pan handlers, which run on the JS thread.
     const geom = useRef({ slot: 0, count: 0 });
@@ -137,11 +134,11 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
         const target = activeIndex * slot;
         if (!placed.current) {
             // The app restores your last tab on launch, so the first paint can be
-            // any index — place it instantly instead of flying in from the left.
+            // any index — place it instantly rather than flying in from the left.
             placed.current = true;
-            capsuleX.value = target;
+            lozengeX.value = target;
         } else {
-            capsuleX.value = withSpring(target, SETTLE_SPRING);
+            lozengeX.value = withSpring(target, SETTLE_SPRING);
         }
     }, [activeIndex, slot]);
 
@@ -163,7 +160,6 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
         [routes, activeKey, navigation]
     );
 
-    /** Index under an x offset within the bar. */
     const indexAt = useCallback((x: number) => {
         const { slot: s, count } = geom.current;
         if (!s) return 0;
@@ -174,108 +170,97 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
         () =>
             PanResponder.create({
                 // Never claim on touch-down: that would swallow the tap before the
-                // tab button under the finger ever sees it. Only take over once
-                // the gesture is clearly a horizontal drag.
+                // tab button under the finger ever saw it. Take over only once the
+                // gesture is clearly a horizontal drag.
                 onStartShouldSetPanResponder: () => false,
                 onMoveShouldSetPanResponder: (_e, g) =>
                     Math.abs(g.dx) > 6 && Math.abs(g.dx) > Math.abs(g.dy),
-                onPanResponderGrant: (e) => {
-                    capsuleScale.value = withTiming(0.94, { duration: 110, easing: Easing.out(Easing.quad) });
-                    const x = e.nativeEvent.locationX;
-                    const { slot: s } = geom.current;
-                    if (s) capsuleX.value = withSpring(indexAt(x) * s, SETTLE_SPRING);
+                onPanResponderGrant: () => {
+                    lozengeScale.value = withTiming(0.93, {
+                        duration: 110,
+                        easing: Easing.out(Easing.quad),
+                    });
                 },
                 onPanResponderMove: (e) => {
                     const { slot: s, count } = geom.current;
                     if (!s) return;
-                    // Track the finger continuously — this is what makes the glass
-                    // stretch between tabs rather than hop.
+                    // Track the finger continuously so the lozenge glides rather
+                    // than hopping slot to slot.
                     const raw = e.nativeEvent.locationX - s / 2;
-                    capsuleX.value = Math.min(Math.max(raw, 0), (count - 1) * s);
+                    lozengeX.value = Math.min(Math.max(raw, 0), (count - 1) * s);
                 },
                 onPanResponderRelease: (e) => {
-                    capsuleScale.value = withTiming(1, { duration: 160, easing: Easing.out(Easing.quad) });
+                    lozengeScale.value = withTiming(1, {
+                        duration: 160,
+                        easing: Easing.out(Easing.quad),
+                    });
                     const { slot: s } = geom.current;
                     if (!s) return;
                     const idx = indexAt(e.nativeEvent.locationX);
-                    capsuleX.value = withSpring(idx * s, SETTLE_SPRING);
+                    lozengeX.value = withSpring(idx * s, SETTLE_SPRING);
                     go(idx);
                 },
                 onPanResponderTerminate: () => {
-                    capsuleScale.value = withTiming(1, { duration: 160 });
+                    lozengeScale.value = withTiming(1, { duration: 160 });
                     const { slot: s } = geom.current;
-                    if (s) capsuleX.value = withSpring(activeIndex * s, SETTLE_SPRING);
+                    if (s) lozengeX.value = withSpring(activeIndex * s, SETTLE_SPRING);
                 },
             }),
         [go, indexAt, activeIndex]
     );
 
-    const capsuleStyle = useAnimatedStyle(() => ({
-        transform: [{ translateX: capsuleX.value }, { scale: capsuleScale.value }],
+    const lozengeStyle = useAnimatedStyle(() => ({
+        transform: [{ translateX: lozengeX.value }, { scale: lozengeScale.value }],
     }));
 
-    const onLayout = useCallback((e: LayoutChangeEvent) => {
-        setBarWidth(e.nativeEvent.layout.width);
+    // Measured on the row, not the glass surface: GlassView/GlassContainer do not
+    // report a usable layout width, which previously made the lozenge a circle.
+    const onRowLayout = useCallback((e: LayoutChangeEvent) => {
+        setRowWidth(e.nativeEvent.layout.width);
     }, []);
 
-    const capsule =
-        slot > 0 ? (
-            <Animated.View
-                pointerEvents="none"
-                style={[
-                    styles.capsuleWrap,
-                    { width: slot - CAPSULE_INSET * 2, left: CAPSULE_INSET },
-                    capsuleStyle,
-                ]}>
-                {useGlass ? (
-                    <GlassView
-                        glassEffectStyle="clear"
-                        colorScheme="light"
-                        isInteractive
-                        style={styles.capsule}
-                    />
-                ) : (
-                    <View style={[styles.capsule, styles.capsuleFallback]} />
-                )}
-            </Animated.View>
-        ) : null;
-
-    const row = (
-        <View style={styles.row} {...pan.panHandlers}>
-            {routes.map((route, index) => {
-                const { options } = descriptors[route.key];
-                const focused = route.key === activeKey;
-                const color = focused
-                    ? VisualSystem.colors.goldAccent
-                    : VisualSystem.colors.textPrimary;
-                const label =
-                    typeof options.tabBarLabel === 'string'
-                        ? options.tabBarLabel
-                        : options.title ?? route.name;
-
-                return (
-                    <TabItem
-                        key={route.key}
-                        focused={focused}
-                        color={color}
-                        label={label}
-                        accessibilityLabel={options.tabBarAccessibilityLabel}
-                        testID={options.tabBarButtonTestID}
-                        onPress={() => go(index)}
-                        onLongPress={() =>
-                            navigation.emit({ type: 'tabLongPress', target: route.key })
-                        }
-                        icon={options.tabBarIcon?.({ focused, color, size: ICON_SIZE })}
-                    />
-                );
-            })}
-        </View>
-    );
-
-    const body = (
+    const content = (
         <>
-            {capsule}
-            {row}
+            {slot > 0 && (
+                <Animated.View
+                    pointerEvents="none"
+                    style={[
+                        styles.lozenge,
+                        useGlass ? styles.lozengeOnGlass : styles.lozengeFallback,
+                        { width: slot - LOZENGE_GAP_X * 2, left: LOZENGE_GAP_X },
+                        lozengeStyle,
+                    ]}
+                />
+            )}
+            <View style={styles.row} onLayout={onRowLayout} {...pan.panHandlers}>
+                {routes.map((route, index) => {
+                    const { options } = descriptors[route.key];
+                    const focused = route.key === activeKey;
+                    const color = focused
+                        ? VisualSystem.colors.goldAccent
+                        : VisualSystem.colors.textPrimary;
+                    const label =
+                        typeof options.tabBarLabel === 'string'
+                            ? options.tabBarLabel
+                            : options.title ?? route.name;
+
+                    return (
+                        <TabItem
+                            key={route.key}
+                            focused={focused}
+                            color={color}
+                            label={label}
+                            accessibilityLabel={options.tabBarAccessibilityLabel}
+                            testID={options.tabBarButtonTestID}
+                            onPress={() => go(index)}
+                            onLongPress={() =>
+                                navigation.emit({ type: 'tabLongPress', target: route.key })
+                            }
+                            icon={options.tabBarIcon?.({ focused, color, size: ICON_SIZE })}
+                        />
+                    );
+                })}
+            </View>
         </>
     );
 
@@ -284,18 +269,15 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
             pointerEvents="box-none"
             style={[styles.container, { bottom: BAR_BOTTOM + (isWeb ? 0 : insets.bottom * 0.35) }]}>
             {useGlass ? (
-                // Siblings inside the container merge as they approach — the capsule
-                // deforms into the bar instead of sliding over it.
-                <GlassContainer spacing={GLASS_MERGE_SPACING} style={styles.bar} onLayout={onLayout}>
-                    <GlassView
-                        glassEffectStyle="regular"
-                        colorScheme="light"
-                        style={StyleSheet.absoluteFill}
-                    />
-                    {body}
-                </GlassContainer>
+                <GlassView
+                    glassEffectStyle="regular"
+                    colorScheme="light"
+                    isInteractive
+                    style={styles.bar}>
+                    {content}
+                </GlassView>
             ) : (
-                <View style={[styles.bar, styles.barFallback]} onLayout={onLayout}>
+                <View style={[styles.bar, styles.barFallback]}>
                     <BlurView
                         intensity={Platform.select({ ios: 40, android: 20, default: 16 })}
                         tint="light"
@@ -305,7 +287,7 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
                         style={StyleSheet.absoluteFill}
                     />
                     <View style={[StyleSheet.absoluteFill, styles.fill]} />
-                    {body}
+                    {content}
                 </View>
             )}
         </View>
@@ -341,18 +323,17 @@ const styles = StyleSheet.create({
             default: 'rgba(255, 255, 255, 0.9)',
         }),
     },
-    capsuleWrap: {
+    lozenge: {
         position: 'absolute',
-        top: CAPSULE_INSET,
-        bottom: CAPSULE_INSET,
+        top: LOZENGE_INSET_Y,
+        bottom: LOZENGE_INSET_Y,
+        borderRadius: (BAR_HEIGHT - LOZENGE_INSET_Y * 2) / 2,
     },
-    capsule: {
-        flex: 1,
-        borderRadius: (BAR_HEIGHT - CAPSULE_INSET * 2) / 2,
-        overflow: 'hidden',
+    /** On real glass, a brighter lift reads as the selected pane of the material. */
+    lozengeOnGlass: {
+        backgroundColor: 'rgba(255, 255, 255, 0.45)',
     },
-    /** Off-glass platforms get a soft gold wash so the selection still reads. */
-    capsuleFallback: {
+    lozengeFallback: {
         backgroundColor: 'rgba(201, 151, 0, 0.14)',
         borderWidth: 1,
         borderColor: 'rgba(201, 151, 0, 0.26)',
