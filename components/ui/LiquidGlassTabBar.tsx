@@ -226,11 +226,24 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
                     pointerEvents="none"
                     style={[
                         styles.lozenge,
-                        useGlass ? styles.lozengeOnGlass : styles.lozengeFallback,
                         { width: slot - LOZENGE_GAP_X * 2, left: LOZENGE_GAP_X },
                         lozengeStyle,
-                    ]}
-                />
+                    ]}>
+                    {useGlass ? (
+                        // Glass in its own right, so it refracts rather than
+                        // sitting on the bar as a flat wash. `clear` is the
+                        // lighter of the two materials, which is what reads as
+                        // a raised pane against the `regular` bar beneath it.
+                        <GlassView
+                            glassEffectStyle="clear"
+                            colorScheme="light"
+                            isInteractive
+                            style={styles.lozengeFill}
+                        />
+                    ) : (
+                        <View style={[styles.lozengeFill, styles.lozengeFallback]} />
+                    )}
+                </Animated.View>
             )}
             <View style={styles.row} onLayout={onRowLayout} {...pan.panHandlers}>
                 {routes.map((route, index) => {
@@ -328,10 +341,11 @@ const styles = StyleSheet.create({
         top: LOZENGE_INSET_Y,
         bottom: LOZENGE_INSET_Y,
         borderRadius: (BAR_HEIGHT - LOZENGE_INSET_Y * 2) / 2,
+        overflow: 'hidden',
     },
-    /** On real glass, a brighter lift reads as the selected pane of the material. */
-    lozengeOnGlass: {
-        backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    lozengeFill: {
+        flex: 1,
+        borderRadius: (BAR_HEIGHT - LOZENGE_INSET_Y * 2) / 2,
     },
     lozengeFallback: {
         backgroundColor: 'rgba(201, 151, 0, 0.14)',
