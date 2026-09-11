@@ -147,7 +147,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                             
                             <TouchableOpacity style={styles.mainActionBtn} onPress={handleTakePhoto}>
                                 <LinearGradient colors={[FitVerseTheme.colors.ndGold, '#B8860B']} style={styles.gradientBtn}>
-                                    <FontAwesome name="camera" size={18} color="#000" style={{marginRight: 10}} />
+                                    <FontAwesome name="camera" size={18} color="#000" style={{marginRight: 8}} />
                                     <Text style={styles.btnText}>TAKE PHOTO</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -247,7 +247,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                             </View>
                                         </View>
                                         
-                                        <Text style={[styles.qtyLabel, { marginTop: 22, marginBottom: 12 }]}>SELECT SERVING UNIT</Text>
+                                        <Text style={[styles.qtyLabel, { marginTop: 24, marginBottom: 12 }]}>SELECT SERVING UNIT</Text>
                                         <SmartSegmentedControl 
                                             options={getAvailableUnits(identifiedItem.baseUnit)}
                                             value={logUnit}
@@ -264,7 +264,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                             )}
 
                             {!identifiedItem && !scanning && (
-                                <View style={{ gap: 20 }}>
+                                <View style={{ gap: 16 }}>
                                     <View style={styles.descriptionSection}>
                                         <Text style={styles.resultLabel}>OPTIONAL: DESCRIBE THE PORTIONS</Text>
                                         <View style={styles.descriptionInputBox}>
@@ -281,7 +281,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
 
                                     <TouchableOpacity style={styles.confirmBtn} onPress={analyzeImage}>
                                         <LinearGradient colors={[FitVerseTheme.colors.ndGold, '#B8860B']} style={styles.gradientBtn}>
-                                            <FontAwesome name="magic" size={16} color="#000" style={{ marginRight: 10 }} />
+                                            <FontAwesome name="magic" size={16} color="#000" style={{ marginRight: 8 }} />
                                             <Text style={styles.btnText}>ANALYZE PLATE</Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
@@ -313,31 +313,31 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
     },
     closeBtn: {
         width: 36,
         height: 36,
-        borderRadius: 18,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
     scroll: {
-        paddingBottom: 40,
+        paddingBottom: 32,
     },
     emptyState: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 60,
-        paddingHorizontal: 30,
+        paddingTop: 32,
+        paddingHorizontal: 32,
     },
     emptyText: {
         color: VisualSystem.colors.textTertiary,
-        marginTop: 20,
-        marginBottom: 40,
+        marginTop: 16,
+        marginBottom: 32,
         textAlign: 'center',
         fontStyle: 'italic',
     },
@@ -355,9 +355,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btnText: {
-        fontWeight: '900',
+        fontWeight: '800',
         color: '#000',
-        fontSize: 14,
+        fontSize: 13,
         letterSpacing: 1,
     },
     secondaryActionBtn: {
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     secondaryBtnText: {
         color: VisualSystem.colors.goldText,
         fontWeight: '700',
-        fontSize: 12,
+        fontSize: 11,
         letterSpacing: 1,
     },
     optionRow: {
@@ -374,21 +374,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: VisualSystem.colors.bgMid,
         width: '100%',
-        padding: 20,
-        borderRadius: 20,
-        marginTop: 40,
+        padding: 16,
+        borderRadius: 22,
+        marginTop: 32,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
     optionLabel: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
         marginBottom: 4,
     },
     optionSub: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textTertiary,
     },
     locTabs: {
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     locTab: {
         paddingHorizontal: 16,
         paddingVertical: 8,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -409,8 +409,8 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.ndGold,
     },
     locTabText: {
-        fontSize: 10,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
         color: VisualSystem.colors.textTertiary,
         letterSpacing: 1,
     },
@@ -418,12 +418,12 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
     },
     content: {
-        padding: 20,
+        padding: 16,
     },
     imageCard: {
         width: '100%',
         aspectRatio: 1,
-        borderRadius: 30,
+        borderRadius: 28,
         overflow: 'hidden',
         backgroundColor: '#000',
         marginBottom: 24,
@@ -444,13 +444,13 @@ const styles = StyleSheet.create({
     },
     scanLabel: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 1,
         marginTop: 16,
     },
     resultCard: {
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 24,
+        borderRadius: 22,
         padding: 24,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -459,22 +459,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     resultLabel: {
-        fontSize: 9,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1,
         marginBottom: 8,
     },
     itemName: {
-        fontSize: 22,
-        fontWeight: '900',
+        fontSize: 20,
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
     },
     itemLoc: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textTertiary,
         marginTop: 4,
     },
@@ -500,18 +500,18 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
     },
     statVal: {
-        fontSize: 18,
-        fontWeight: '900',
+        fontSize: 17,
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
     },
     statLabel: {
-        fontSize: 8,
+        fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.textTertiary,
         marginTop: 4,
     },
     quantitySection: {
-        marginBottom: 30,
+        marginBottom: 32,
     },
     qtyLabelRow: {
         flexDirection: 'row',
@@ -519,8 +519,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     qtyLabel: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.textSecondary,
         letterSpacing: 1,
     },
@@ -540,13 +540,13 @@ const styles = StyleSheet.create({
     },
     textInputNative: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
     },
     unitText: {
         marginLeft: 16,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     confirmBtn: {
@@ -557,18 +557,18 @@ const styles = StyleSheet.create({
     },
     retryBtn: {
         alignItems: 'center',
-        padding: 20,
+        padding: 16,
     },
     retryText: {
         fontSize: 11,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     descriptionSection: {
         backgroundColor: VisualSystem.colors.bgMid,
-        padding: 20,
-        borderRadius: 20,
+        padding: 16,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
@@ -578,22 +578,22 @@ const styles = StyleSheet.create({
     },
     descriptionInput: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
-        fontWeight: '500',
+        fontSize: 13,
+        fontWeight: '600',
         lineHeight: 20,
         textAlignVertical: 'top',
     },
     aiInsightBox: {
         backgroundColor: 'rgba(212, 175, 55, 0.08)',
-        borderRadius: 20,
+        borderRadius: 22,
         padding: 16,
         marginBottom: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     aiInsightTitle: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
         fontSize: 13,
         lineHeight: 18,
-        fontWeight: '500',
+        fontWeight: '600',
         opacity: 0.8,
     }
 });

@@ -144,24 +144,24 @@ const styles = StyleSheet.create({
     },
     barText: {
         color: REST_GREEN_MUTED,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.3,
     },
     barTextMuted: {
         color: 'rgba(212, 175, 55, 0.45)',
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '600',
     },
     barTextActive: {
         color: REST_GREEN,
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 0.4,
         zIndex: 1,
     },
     iconInline: {
-        marginRight: 6,
+        marginRight: 4,
     },
     editRow: {
         flexDirection: 'row',
@@ -181,25 +181,25 @@ const styles = StyleSheet.create({
     editInput: {
         flex: 1,
         color: C.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
         paddingVertical: 4,
     },
     doneBtn: {
         backgroundColor: REST_GREEN,
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
         marginLeft: 8,
     },
     doneBtnText: {
         color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
-        fontSize: 12,
+        fontSize: 11,
     },
     cancelText: {
         color: C.textTertiary,
-        fontSize: 12,
-        marginLeft: 10,
+        fontSize: 11,
+        marginLeft: 8,
     },
 });

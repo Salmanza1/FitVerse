@@ -132,14 +132,14 @@ function RankingPage({ currentFilter, bottomPad, data, userName, userDorm, pageW
             </RNText>
 
             {/* ── Top 3 Rankings ── */}
-            <View style={[styles.rankList, { marginBottom: 20 }]}>
+            <View style={[styles.rankList, { marginBottom: 16 }]}>
                 {data.slice(0, 3).map((item: any) => {
                     const color = item.rank === 1 ? VisualSystem.colors.goldBright : item.rank === 2 ? '#9AA3AD' : '#A9662A';
                     return (
                         <View key={item.name} style={[styles.rankCard, { borderColor: color, backgroundColor: VisualSystem.colors.bgMid }, resolveDormFromName(item.name || '') === userDorm && styles.userRankCard]}>
                             <View style={styles.rankInfo}>
                                 <RNText style={[styles.rankNumberSmall, { color, opacity: 1 }]}>#{item.rank}</RNText>
-                                <View style={{ marginLeft: 14 }}>
+                                <View style={{ marginLeft: 12 }}>
                                     <RNText style={[styles.dormName, { color }]}>{item.name}</RNText>
                                     <RNText style={styles.xpText}>{item.points.toLocaleString()} XP</RNText>
                                 </View>
@@ -256,7 +256,7 @@ export default function LeaderboardScreen() {
             {/* Paged Rankings */}
             {isLoading ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <RNText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>
+                    <RNText style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>
                         Loading community stats...
                     </RNText>
                 </View>
@@ -310,19 +310,19 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         paddingHorizontal: Tokens.spacing.xl,
-        paddingBottom: 14,
+        paddingBottom: 12,
     },
     headerContainerWeb: {
         alignItems: 'center',
     },
     headerTitle: {
         fontSize: 32,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
     },
     headerTitleWeb: {
-        fontSize: 26,
+        fontSize: 24,
         letterSpacing: 1.2,
         textAlign: 'center',
     },
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '600',
         color: VisualSystem.colors.textTertiary,
-        marginTop: 2,
+        marginTop: 4,
         textTransform: 'uppercase',
         letterSpacing: 1,
     },
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     },
     filterBtn: {
         flex: 1,
-        paddingVertical: 13,
+        paddingVertical: 12,
         alignItems: 'center',
         borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     },
     filterText: {
         color: FitVerseTheme.colors.textMuted,
-        fontWeight: 'bold',
+        fontWeight: '700',
         fontSize: Tokens.typography.sm,
     },
     filterTextActive: {
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     emptyStateNative: {
-        marginTop: 60,
+        marginTop: 32,
         alignItems: 'center',
         paddingHorizontal: 24,
     },
@@ -395,15 +395,15 @@ const styles = StyleSheet.create({
     },
     emptyStateText: {
         color: FitVerseTheme.colors.textMuted,
-        marginTop: 20,
+        marginTop: 16,
         textAlign: 'center',
         fontSize: 15,
         lineHeight: 22,
         maxWidth: 320,
     },
     sectionHeader: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 2,
         marginBottom: Tokens.spacing.md,
         color: VisualSystem.colors.goldText,
@@ -417,11 +417,11 @@ const styles = StyleSheet.create({
 
     // ── MVP Card ──
     mvpCard: {
-        borderRadius: 18,
-        padding: 14,
+        borderRadius: 16,
+        padding: 12,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,
-        marginBottom: 20,
+        marginBottom: 16,
     },
     mvpBadgeRow: {
         flexDirection: 'row',
@@ -429,14 +429,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(201, 151, 0, 0.16)',
         paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 8,
+        borderRadius: 6,
         alignSelf: 'flex-start',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     mvpBadgeText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 9,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 1,
     },
     mvpContent: {
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     mvpAvatar: {
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.bgDeep,
         justifyContent: 'center',
         alignItems: 'center',
@@ -456,33 +456,33 @@ const styles = StyleSheet.create({
     },
     mvpAvatarText: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 18,
+        fontWeight: '700',
+        fontSize: 17,
     },
     mvpName: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     },
     mvpStats: {
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '600',
-        marginTop: 1,
+        marginTop: 4,
     },
 
     // ── Rank list (4+) ──
     rankList: {
-        gap: 10,
+        gap: 8,
     },
     rankCard: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 18,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
@@ -496,32 +496,32 @@ const styles = StyleSheet.create({
     },
     rankNumberSmall: {
         fontSize: 17,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.textTertiary,
         width: 36,
         fontStyle: 'italic',
     },
     dormName: {
         fontSize: Tokens.typography.md,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: FitVerseTheme.colors.textPrimary,
     },
     xpText: {
         fontSize: Tokens.typography.xs,
         color: FitVerseTheme.colors.textMuted,
-        marginTop: 2,
+        marginTop: 4,
     },
 
     // ── Sticky Footer ──
     stickyFooter: {
         position: 'absolute',
-        borderRadius: 20,
+        borderRadius: 22,
         overflow: 'hidden',
         borderWidth: 1.5,
         borderColor: 'rgba(201, 151, 0, 0.55)',
         shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.12,
         shadowRadius: 12,
         elevation: 8,
         zIndex: 100,
@@ -537,18 +537,18 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     footerGradient: {
-        borderRadius: 20,
+        borderRadius: 22,
     },
     footerInner: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 16,
-        paddingVertical: 14,
+        paddingVertical: 12,
     },
     userIconBadge: {
         width: 42,
         height: 42,
-        borderRadius: 21,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.goldMuted,
         justifyContent: 'center',
         alignItems: 'center',
@@ -557,31 +557,31 @@ const styles = StyleSheet.create({
     },
     userAvatarText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
-        fontSize: 16,
+        fontWeight: '800',
+        fontSize: 15,
     },
     footerName: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     },
     footerSub: {
         color: VisualSystem.colors.textSecondary,
         fontSize: 11,
-        marginTop: 2,
+        marginTop: 4,
     },
     rankBadgeContainer: {
         alignItems: 'flex-end',
     },
     rankLabel: {
-        fontSize: 8,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 0.8,
     },
     rankValue: {
-        fontSize: 22,
-        fontWeight: '900',
+        fontSize: 20,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         fontStyle: 'italic',
     },

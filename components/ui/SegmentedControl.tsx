@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 14,
+        borderRadius: 16,
         padding: 4,
         flexDirection: 'row',
         borderWidth: 1,
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
         backgroundColor: FitVerseTheme.colors.ndGold,
         borderRadius: 10,
         // Elevation/Shadow
-        shadowColor: '#000',
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.12,
         shadowRadius: 4,
     },
     tab: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontSize: 11,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.textTertiary,
         letterSpacing: 1,
     },
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     },
     pill: {
         paddingHorizontal: 16,
-        paddingVertical: 10,
-        borderRadius: 12,
+        paddingVertical: 8,
+        borderRadius: 10,
         backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         borderColor: FitVerseTheme.colors.ndGold,
     },
     pillText: {
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.textSecondary,
         letterSpacing: 0.5,

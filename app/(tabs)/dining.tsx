@@ -376,7 +376,7 @@ export default function NutritionDashboard() {
 
         return (
             <>
-                <View style={[styles.dashboardCard, { paddingBottom: 15 }]}>
+                <View style={[styles.dashboardCard, { paddingBottom: 16 }]}>
                     {budget.burned > 0 && (
                         <View style={styles.budgetBreakdown}>
                             <View style={styles.budgetRow}>
@@ -385,7 +385,7 @@ export default function NutritionDashboard() {
                             </View>
                             {budget.workoutBurn > 0 && (
                                 <View style={styles.budgetRow}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                                         <FontAwesome name="heartbeat" size={10} color="#40c057" />
                                         <Text style={styles.budgetLabelGreen}>From gym</Text>
                                     </View>
@@ -495,7 +495,7 @@ export default function NutritionDashboard() {
                     </View>
 
                     <View style={styles.aiLogBar}>
-                        <FontAwesome name="magic" size={14} color={VisualSystem.colors.gold} style={{ marginRight: 10 }} />
+                        <FontAwesome name="magic" size={14} color={VisualSystem.colors.gold} style={{ marginRight: 8 }} />
                         <TextInput
                             ref={aiLogInputRef}
                             style={styles.aiLogInput}
@@ -611,7 +611,7 @@ export default function NutritionDashboard() {
             </Animated.View>
 
             <Animated.ScrollView 
-                contentContainerStyle={{ paddingBottom: 120, paddingTop: HEADER_MAX_HEIGHT }} 
+                contentContainerStyle={{ paddingBottom: 32, paddingTop: HEADER_MAX_HEIGHT }} 
                 showsVerticalScrollIndicator={false}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -619,7 +619,7 @@ export default function NutritionDashboard() {
                 )}
                 scrollEventThrottle={16}
             >
-                <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+                <View style={{ paddingHorizontal: 16, paddingTop: 8 }}>
                     {renderTodayView()}
                 </View>
             </Animated.ScrollView>
@@ -859,7 +859,7 @@ const LoggedFoodRow = ({
                         <Text style={[styles.logRowName, isEditing && styles.logRowNameEditing]} numberOfLines={1}>
                             {item.name}
                         </Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 2 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
                             <Text style={styles.logRowMeta} numberOfLines={1}>
                                 {formatAmount(item.amount)} {item.unit}
                             </Text>
@@ -993,22 +993,22 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     heroImage: { width: '100%', height: '100%' },
-    heroContent: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 25, paddingBottom: 15 },
-    headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 25 },
-    heroTitle: { fontSize: 32, fontWeight: '900', color: VisualSystem.colors.goldBright, letterSpacing: 1 },
+    heroContent: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 24, paddingBottom: 16 },
+    headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
+    heroTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.goldBright, letterSpacing: 1 },
     heroSubtitle: { fontSize: 13, fontWeight: '700', color: VisualSystem.colors.textOnNavy, marginTop: -2, opacity: 0.9 },
     headerActions: { flexDirection: 'row', gap: 8 },
-    scanBtn: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: VisualSystem.colors.goldBright, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6, gap: 5 },
+    scanBtn: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: VisualSystem.colors.goldBright, borderRadius: 22, paddingHorizontal: 12, paddingVertical: 4, gap: 4 },
     scanText: { color: VisualSystem.colors.textOnNavy, fontSize: 11, fontWeight: '800' },
     aiLogBar: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(212,175,55,0.08)',
         borderRadius: 16,
-        paddingLeft: 14,
-        paddingRight: 6,
-        paddingVertical: 6,
-        marginBottom: 6,
+        paddingLeft: 12,
+        paddingRight: 4,
+        paddingVertical: 4,
+        marginBottom: 4,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.25)',
     },
@@ -1017,82 +1017,82 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         fontWeight: '600',
-        paddingVertical: 10,
+        paddingVertical: 8,
         paddingRight: 8,
     },
     aiLogBtn: {
         backgroundColor: VisualSystem.colors.gold,
-        borderRadius: 12,
+        borderRadius: 10,
         paddingHorizontal: 16,
-        paddingVertical: 10,
+        paddingVertical: 8,
         minWidth: 52,
         alignItems: 'center',
         justifyContent: 'center',
     },
     aiLogBtnDisabled: { opacity: 0.45 },
-    aiLogBtnText: { color: VisualSystem.colors.textPrimary, fontWeight: '900', fontSize: 13 },
+    aiLogBtnText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 13 },
     aiLogHint: {
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,
-        marginBottom: 14,
+        marginBottom: 12,
         lineHeight: 15,
     },
     aiLogHintSuccess: { color: 'rgba(64, 192, 87, 0.9)', fontWeight: '700' },
-    dashboardCard: { backgroundColor: VisualSystem.colors.bgMid, borderRadius: 32, padding: 22, paddingBottom: 25, marginBottom: 20, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
+    dashboardCard: { backgroundColor: VisualSystem.colors.bgMid, borderRadius: 28, padding: 24, paddingBottom: 24, marginBottom: 16, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
     budgetBreakdown: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
-        padding: 14,
-        marginBottom: 18,
+        padding: 12,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: 'rgba(64,192,87,0.15)',
-        gap: 6,
+        gap: 4,
     },
     budgetRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     budgetRowTotal: { marginTop: 4, paddingTop: 8, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderSubtle },
     budgetLabel: { fontSize: 11, fontWeight: '700', color: VisualSystem.colors.textSecondary },
     budgetLabelGreen: { fontSize: 11, fontWeight: '700', color: 'rgba(64,192,87,0.8)' },
-    budgetLabelTotal: { fontSize: 11, fontWeight: '900', color: VisualSystem.colors.textPrimary, letterSpacing: 0.5 },
+    budgetLabelTotal: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textPrimary, letterSpacing: 0.5 },
     budgetValue: { fontSize: 13, fontWeight: '800', color: VisualSystem.colors.textSecondary },
     budgetValueGreen: { fontSize: 13, fontWeight: '800', color: VisualSystem.colors.success },
-    budgetValueTotal: { fontSize: 15, fontWeight: '900', color: VisualSystem.colors.goldText },
+    budgetValueTotal: { fontSize: 15, fontWeight: '800', color: VisualSystem.colors.goldText },
     topDashboard: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     glowCircleContainer: { width: 150, height: 150, justifyContent: 'center', alignItems: 'center', flexShrink: 0 },
-    glowCircleInner: { width: 118, height: 118, borderRadius: 59, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.gold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.18, shadowRadius: 10 },
-    remainingVal: { fontSize: 38, fontWeight: '900', color: VisualSystem.colors.textPrimary },
+    glowCircleInner: { width: 118, height: 118, borderRadius: 59, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.gold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.12, shadowRadius: 10 },
+    remainingVal: { fontSize: 40, fontWeight: '800', color: VisualSystem.colors.textPrimary },
     remainingValOver: { color: VisualSystem.colors.danger },
-    remainingLabel: { fontSize: 10, fontWeight: '900', color: VisualSystem.colors.textSecondary, letterSpacing: 1.5 },
+    remainingLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textSecondary, letterSpacing: 1.5 },
     remainingLabelOver: { color: VisualSystem.colors.danger },
-    exerciseNoteGreen: { fontSize: 9, color: 'rgba(64,192,87,0.8)', fontWeight: '900', marginTop: 2, letterSpacing: 0.5 },
-    workoutBurnNote: { fontSize: 8, color: 'rgba(64,192,87,0.65)', fontWeight: '800', marginTop: 3, letterSpacing: 0.3 },
+    exerciseNoteGreen: { fontSize: 11, color: 'rgba(64,192,87,0.8)', fontWeight: '800', marginTop: 4, letterSpacing: 0.5 },
+    workoutBurnNote: { fontSize: 11, color: 'rgba(64,192,87,0.65)', fontWeight: '800', marginTop: 4, letterSpacing: 0.3 },
     dashStatsCol: { gap: 12, flex: 1, marginLeft: 16, minWidth: 0 },
-    miniStatBox: { backgroundColor: VisualSystem.colors.bgMid, paddingVertical: 12, paddingHorizontal: 16, borderRadius: 20, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, position: 'relative' },
-    miniLabel: { fontSize: 8, color: VisualSystem.colors.textTertiary, fontWeight: '900', marginBottom: 2, letterSpacing: 0.5 },
-    miniValueGold: { fontSize: 18, fontWeight: '900', color: VisualSystem.colors.goldText },
-    miniValueGreen: { fontSize: 18, fontWeight: '900', color: VisualSystem.colors.success },
-    macroList: { gap: 15 },
-    macroRow: { marginBottom: 5 },
-    macroIconCircle: { width: 22, height: 22, borderRadius: 11, justifyContent: 'center', alignItems: 'center' },
-    macroRowLabel: { color: VisualSystem.colors.textPrimary, fontWeight: '900', fontSize: 13, marginLeft: 10 },
+    miniStatBox: { backgroundColor: VisualSystem.colors.bgMid, paddingVertical: 12, paddingHorizontal: 16, borderRadius: 22, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, position: 'relative' },
+    miniLabel: { fontSize: 11, color: VisualSystem.colors.textTertiary, fontWeight: '800', marginBottom: 4, letterSpacing: 0.5 },
+    miniValueGold: { fontSize: 17, fontWeight: '800', color: VisualSystem.colors.goldText },
+    miniValueGreen: { fontSize: 17, fontWeight: '800', color: VisualSystem.colors.success },
+    macroList: { gap: 16 },
+    macroRow: { marginBottom: 4 },
+    macroIconCircle: { width: 22, height: 22, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
+    macroRowLabel: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 13, marginLeft: 8 },
     macroRowStats: { color: VisualSystem.colors.textTertiary, fontWeight: '700', fontSize: 13 },
-    macroBarContainer: { height: 6, backgroundColor: VisualSystem.colors.bgMid, borderRadius: 3, overflow: 'hidden' },
-    macroBarFill: { height: '100%', borderRadius: 3 },
-    aiCard: { backgroundColor: VisualSystem.colors.bgMid, borderRadius: 24, padding: 22, marginBottom: 25, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
-    aiTitle: { fontSize: 12, fontWeight: '900', color: VisualSystem.colors.goldText, letterSpacing: 1 },
-    aiMessage: { color: VisualSystem.colors.textPrimary, fontSize: 14, lineHeight: 22, fontWeight: '500' },
+    macroBarContainer: { height: 6, backgroundColor: VisualSystem.colors.bgMid, borderRadius: 6, overflow: 'hidden' },
+    macroBarFill: { height: '100%', borderRadius: 6 },
+    aiCard: { backgroundColor: VisualSystem.colors.bgMid, borderRadius: 22, padding: 24, marginBottom: 24, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
+    aiTitle: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.goldText, letterSpacing: 1 },
+    aiMessage: { color: VisualSystem.colors.textPrimary, fontSize: 13, lineHeight: 22, fontWeight: '600' },
     logSection: { marginBottom: 8 },
-    logSectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 },
+    logSectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 },
     logSectionTitle: { fontSize: 15, fontWeight: '800', color: VisualSystem.colors.textPrimary, letterSpacing: 0.3 },
-    logSectionMeta: { fontSize: 12, fontWeight: '600', color: VisualSystem.colors.textTertiary },
+    logSectionMeta: { fontSize: 11, fontWeight: '600', color: VisualSystem.colors.textTertiary },
     mealList: { gap: 8 },
     mealSectionCard: {
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 18,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         overflow: 'hidden',
@@ -1102,52 +1102,52 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(212,175,55,0.04)',
     },
     mealHeaderRow: { flexDirection: 'row', alignItems: 'stretch', paddingRight: 12, minHeight: 56 },
-    mealHeaderTap: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12, paddingLeft: 14, paddingRight: 8 },
-    mealHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1 },
-    mealHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    mealHeaderTap: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12, paddingLeft: 12, paddingRight: 8 },
+    mealHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 },
+    mealHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     mealIconCircle: {
         width: 28,
         height: 28,
-        borderRadius: 14,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
     mealIconCircleActive: { backgroundColor: 'rgba(212,175,55,0.12)' },
-    mealSectionTitle: { color: VisualSystem.colors.textPrimary, fontWeight: '700', fontSize: 14 },
+    mealSectionTitle: { color: VisualSystem.colors.textPrimary, fontWeight: '700', fontSize: 13 },
     mealSectionTitleActive: { color: VisualSystem.colors.textPrimary },
-    mealCollapsedHint: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '600', marginTop: 1 },
+    mealCollapsedHint: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '600', marginTop: 4 },
     mealKcalPill: {
         backgroundColor: 'rgba(212,175,55,0.12)',
         paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 8,
+        borderRadius: 6,
         minWidth: 36,
         alignItems: 'center',
     },
     mealKcalPillText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
     },
     mealAddBtn: {
         width: 34,
         height: 34,
-        borderRadius: 17,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
         marginLeft: 4,
     },
-    mealBody: { paddingHorizontal: 10, paddingBottom: 12, gap: 6 },
+    mealBody: { paddingHorizontal: 8, paddingBottom: 12, gap: 4 },
     mealEmptyTap: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
         paddingVertical: 16,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         borderStyle: 'dashed',
@@ -1155,43 +1155,43 @@ const styles = StyleSheet.create({
     },
     mealEmptyText: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: '600' },
     logRowWrap: {
-        borderRadius: 12,
+        borderRadius: 10,
         overflow: 'hidden',
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
     logRowWrapEditing: { borderColor: 'rgba(212,175,55,0.25)', backgroundColor: 'rgba(212,175,55,0.04)' },
     logRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, minHeight: 52 },
-    logRowMain: { flex: 1, paddingRight: 10 },
-    logRowName: { color: VisualSystem.colors.textPrimary, fontSize: 14, fontWeight: '600' },
+    logRowMain: { flex: 1, paddingRight: 8 },
+    logRowName: { color: VisualSystem.colors.textPrimary, fontSize: 13, fontWeight: '600' },
     logRowNameEditing: { color: VisualSystem.colors.goldText },
     logRowMeta: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '600' },
     aiEstBadge: {
         backgroundColor: 'rgba(212,175,55,0.15)',
-        paddingHorizontal: 5,
-        paddingVertical: 1,
-        borderRadius: 4,
+        paddingHorizontal: 4,
+        paddingVertical: 4,
+        borderRadius: 6,
     },
-    aiEstBadgeText: { color: VisualSystem.colors.goldText, fontSize: 8, fontWeight: '900', letterSpacing: 0.5 },
+    aiEstBadgeText: { color: VisualSystem.colors.goldText, fontSize: 11, fontWeight: '800', letterSpacing: 0.5 },
     logRowRight: { alignItems: 'flex-end' },
     logRowKcal: { color: VisualSystem.colors.textPrimary, fontSize: 15, fontWeight: '800' },
-    logRowKcalUnit: { color: VisualSystem.colors.textTertiary, fontSize: 9, fontWeight: '700', marginTop: 1 },
+    logRowKcalUnit: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700', marginTop: 4 },
     portionEditor: { paddingHorizontal: 12, paddingBottom: 12, paddingTop: 4, gap: 8 },
-    portionLabel: { fontSize: 10, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 0.8, marginTop: 2 },
+    portionLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 0.8, marginTop: 4 },
     portionAmountField: {
         height: 42,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         backgroundColor: VisualSystem.colors.bgMid,
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
-        paddingHorizontal: 14,
+        paddingHorizontal: 12,
     },
-    unitChipRow: { gap: 8, paddingVertical: 2 },
+    unitChipRow: { gap: 8, paddingVertical: 4 },
     unitChip: {
-        paddingHorizontal: 14,
+        paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 10,
         backgroundColor: VisualSystem.colors.bgMid,
@@ -1207,42 +1207,42 @@ const styles = StyleSheet.create({
     portionEditorFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 },
     portionPreview: { color: VisualSystem.colors.goldText, fontSize: 13, fontWeight: '800' },
     portionSaveBtn: { backgroundColor: VisualSystem.colors.gold, borderRadius: 10, paddingHorizontal: 16, paddingVertical: 8 },
-    portionSaveText: { color: VisualSystem.colors.textPrimary, fontWeight: '900', fontSize: 12 },
-    modalBg: { flex: 1, backgroundColor: VisualSystem.colors.bgMid, paddingTop: 20 },
-    modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: VisualSystem.colors.borderSubtle },
-    modalTitle: { color: VisualSystem.colors.textPrimary, fontSize: 24, fontWeight: '900', letterSpacing: 1 },
-    modalSubtitle: { color: VisualSystem.colors.textTertiary, fontSize: 12, fontWeight: '700', marginTop: 2 },
+    portionSaveText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 11 },
+    modalBg: { flex: 1, backgroundColor: VisualSystem.colors.bgMid, paddingTop: 16 },
+    modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingBottom: 16, borderBottomWidth: 1, borderBottomColor: VisualSystem.colors.borderSubtle },
+    modalTitle: { color: VisualSystem.colors.textPrimary, fontSize: 24, fontWeight: '800', letterSpacing: 1 },
+    modalSubtitle: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700', marginTop: 4 },
     modalCloseBtn: { width: 32, height: 32, borderRadius: 16, backgroundColor: VisualSystem.colors.bgMid, justifyContent: 'center', alignItems: 'center' },
-    modalSearchContainer: { padding: 20, backgroundColor: VisualSystem.colors.bgMid },
-    locTabs: { flexDirection: 'row', paddingHorizontal: 24, gap: 10, marginBottom: 20 },
-    locTab: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: VisualSystem.colors.bgMid, alignItems: 'center', borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
+    modalSearchContainer: { padding: 16, backgroundColor: VisualSystem.colors.bgMid },
+    locTabs: { flexDirection: 'row', paddingHorizontal: 24, gap: 8, marginBottom: 16 },
+    locTab: { flex: 1, paddingVertical: 8, borderRadius: 10, backgroundColor: VisualSystem.colors.bgMid, alignItems: 'center', borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
     locTabOn: { backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: VisualSystem.colors.borderGold },
-    locTabText: { fontSize: 11, fontWeight: '900', color: VisualSystem.colors.textTertiary, letterSpacing: 1 },
+    locTabText: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 1 },
     locTabTextOn: { color: VisualSystem.colors.goldText },
     stationAccordion: { marginBottom: 4 },
-    stationHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingVertical: 18, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderSubtle },
-    stationName: { color: VisualSystem.colors.textPrimary, fontSize: 13, fontWeight: '900', letterSpacing: 1.5 },
+    stationHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingVertical: 16, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderSubtle },
+    stationName: { color: VisualSystem.colors.textPrimary, fontSize: 13, fontWeight: '800', letterSpacing: 1.5 },
     stationContent: { backgroundColor: VisualSystem.colors.bgMid, paddingHorizontal: 12, paddingVertical: 8 },
     menuItemWrap: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 16,
-        marginBottom: 10,
+        marginBottom: 8,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         overflow: 'hidden',
     },
     menuItemWrapExpanded: { borderColor: 'rgba(212,175,55,0.2)', backgroundColor: 'rgba(212,175,55,0.05)' },
-    menuItem: { padding: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    menuItem: { padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     menuSelected: { borderColor: VisualSystem.colors.borderGold, backgroundColor: 'rgba(212,175,55,0.08)' },
     menuName: { color: VisualSystem.colors.textPrimary, fontSize: 15, fontWeight: '700' },
-    menuSub: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '600', marginTop: 2 },
+    menuSub: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '600', marginTop: 4 },
     loadingCard: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 48,
+        paddingVertical: 32,
         gap: 12,
     },
-    loadingText: { color: VisualSystem.colors.textSecondary, textAlign: 'center', fontWeight: '700', fontSize: 14 },
-    stationTitle: { color: VisualSystem.colors.textSecondary, fontSize: 12, fontWeight: '800', letterSpacing: 1 },
-    stationCount: { color: VisualSystem.colors.textTertiary, fontSize: 10, fontWeight: '700' }
+    loadingText: { color: VisualSystem.colors.textSecondary, textAlign: 'center', fontWeight: '700', fontSize: 13 },
+    stationTitle: { color: VisualSystem.colors.textSecondary, fontSize: 11, fontWeight: '800', letterSpacing: 1 },
+    stationCount: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700' }
 });

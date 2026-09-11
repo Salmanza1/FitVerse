@@ -546,7 +546,7 @@ export default function SignupScreen() {
                 options={getAllTrainingLocationNames()}
                 onSelect={setGym}
             />
-            <SecondaryText style={{ fontSize: 12, marginTop: -8, marginBottom: 8, lineHeight: 18 }}>
+            <SecondaryText style={{ fontSize: 11, marginTop: -8, marginBottom: 8, lineHeight: 18 }}>
                 Defaults to {dormToGymProfileName(dorm)} when you pick your dorm. Choose a campus center if you
                 usually train elsewhere.
             </SecondaryText>
@@ -676,7 +676,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
         textAlign: 'center',
         color: VisualSystem.colors.textSecondary,
-        fontSize: 12,
+        fontSize: 11,
         lineHeight: 18,
         paddingHorizontal: 8,
     },
@@ -688,30 +688,30 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(212, 175, 55, 0.15)',
         paddingHorizontal: 12,
         paddingVertical: 4,
-        borderRadius: 12,
+        borderRadius: 10,
         color: VisualSystem.colors.goldText,
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 2,
         marginBottom: 8,
     },
     logoText: {
         fontSize: 32,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: -1,
     },
     progressBar: {
         height: 6,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 3,
+        borderRadius: 6,
         marginBottom: Tokens.spacing.lg,
         overflow: 'hidden',
     },
     progressFill: {
         height: '100%',
         backgroundColor: VisualSystem.colors.gold,
-        borderRadius: 3,
+        borderRadius: 6,
     },
     card: {
         backgroundColor: VisualSystem.colors.bgMid,
@@ -729,7 +729,7 @@ const styles = StyleSheet.create({
     stepTitle: {
         fontSize: 24,
         fontWeight: '700',
-        marginBottom: 6,
+        marginBottom: 4,
         color: VisualSystem.colors.textPrimary,
         lineHeight: 30,
     },
@@ -739,7 +739,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
     },
     hint: {
-        fontSize: 12,
+        fontSize: 11,
         lineHeight: 18,
         color: VisualSystem.colors.textSecondary,
         marginTop: -12,
@@ -774,14 +774,14 @@ const styles = StyleSheet.create({
     },
     planChip: {
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
-        borderRadius: 20,
+        borderRadius: 22,
         paddingHorizontal: 12,
-        paddingVertical: 6,
+        paddingVertical: 4,
         maxWidth: '100%',
     },
     planChipText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
     },
     planCalorieHero: {
@@ -792,13 +792,13 @@ const styles = StyleSheet.create({
         borderBottomColor: VisualSystem.colors.borderSubtle,
     },
     planCalorieValue: {
-        fontSize: 44,
+        fontSize: 40,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: -1,
     },
     planCalorieUnit: {
-        fontSize: 14,
+        fontSize: 13,
         color: VisualSystem.colors.textSecondary,
         marginTop: 4,
         fontWeight: '600',
@@ -809,21 +809,21 @@ const styles = StyleSheet.create({
     },
     planMacroSectionTitle: {
         fontSize: Tokens.typography.xs,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1.5,
         marginBottom: Tokens.spacing.md,
-        marginLeft: 2,
+        marginLeft: 4,
     },
     planMacroRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 6,
+        paddingVertical: 4,
     },
     planMacroBadge: {
         width: 28,
         height: 28,
-        borderRadius: 8,
+        borderRadius: 6,
         borderWidth: 1.5,
         alignItems: 'center',
         justifyContent: 'center',
@@ -849,8 +849,8 @@ const styles = StyleSheet.create({
     planMacroDivider: {
         height: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        marginVertical: 2,
-        marginLeft: 40,
+        marginVertical: 4,
+        marginLeft: 32,
     },
     planBullets: {
         gap: Tokens.spacing.md,
@@ -884,7 +884,7 @@ const styles = StyleSheet.create({
     },
     inputLabel: {
         fontSize: Tokens.typography.xs,
-        fontWeight: '900',
+        fontWeight: '800',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
         color: VisualSystem.colors.goldText,
@@ -907,13 +907,13 @@ const styles = StyleSheet.create({
     passwordTextInput: {
         flex: 1,
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
         fontSize: Tokens.typography.md,
         color: VisualSystem.colors.textPrimary,
     },
     eyeBtn: {
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
     },
     fieldError: {
         color: VisualSystem.colors.danger,
@@ -929,11 +929,11 @@ const styles = StyleSheet.create({
         marginTop: -8,
         marginBottom: Tokens.spacing.md,
         marginLeft: Tokens.spacing.xs,
-        gap: 6,
+        gap: 4,
         paddingVertical: 4,
     },
     generateText: {
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.goldText,
     },

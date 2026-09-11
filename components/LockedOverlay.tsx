@@ -29,23 +29,23 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
+        padding: 16,
     },
     icon: {
-        marginBottom: 20,
+        marginBottom: 16,
         opacity: 0.8,
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     separator: {
-        marginVertical: 30,
+        marginVertical: 32,
         height: 1,
         width: '80%',
     },
     subtitle: {
-        fontSize: 18,
+        fontSize: 17,
         opacity: 0.6,
     },
 });

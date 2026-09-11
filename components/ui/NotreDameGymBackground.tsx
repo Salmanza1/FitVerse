@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.gold,
         shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.8,
+        shadowOpacity: 0.12,
         shadowRadius: 3,
     },
     shamrock: {
@@ -274,6 +274,6 @@ const styles = StyleSheet.create({
     },
     boltGradient: {
         flex: 1,
-        borderRadius: 2,
+        borderRadius: 6,
     },
 });

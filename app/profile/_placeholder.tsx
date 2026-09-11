@@ -14,14 +14,14 @@ export default function PlaceholderScreen({ title }: { title: string }) {
                     headerStyle: { backgroundColor: VisualSystem.colors.bgMid },
                     headerTintColor: Tokens.colors.textPrimary,
                     headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>
+                        <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 8 }}>
                             <FontAwesome name="chevron-left" size={20} color={Tokens.colors.textPrimary} />
                         </TouchableOpacity>
                     )
                 }}
             />
             <View style={styles.content}>
-                <FontAwesome name="info-circle" size={64} color={Tokens.colors.accentGold} style={{ marginBottom: 20 }} />
+                <FontAwesome name="info-circle" size={64} color={Tokens.colors.accentGold} style={{ marginBottom: 16 }} />
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.subtitle}>This is a placeholder for the {title} screen.</Text>
             </View>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: Tokens.typography.xl,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: Tokens.colors.textPrimary,
         marginBottom: Tokens.spacing.md,
     },

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     wrapper: {
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: 8,
+        borderRadius: 6,
     },
     deleteBg: {
         position: 'absolute',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        borderRadius: 8,
+        borderRadius: 6,
     },
     deleteText: {
         color: C.textPrimary,

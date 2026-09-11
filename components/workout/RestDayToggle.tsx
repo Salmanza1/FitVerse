@@ -128,7 +128,7 @@ export function RestDayToggle({ userId, compact = false, embedded = false }: Pro
 const styles = StyleSheet.create({
     card: {
         backgroundColor: VisualSystem.colors.glassFill,
-        borderRadius: 18,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: 'rgba(177, 151, 252, 0.25)',
         padding: 16,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     iconWrap: {
         width: 42,
         height: 42,
-        borderRadius: 14,
+        borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -164,12 +164,12 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     title: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     hint: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textSecondary,
         marginTop: 4,
         lineHeight: 16,
@@ -186,10 +186,10 @@ const styles = StyleSheet.create({
     activeDot: {
         width: 8,
         height: 8,
-        borderRadius: 4,
+        borderRadius: 6,
     },
     activeText: {
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
         flex: 1,
     },
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
     },
     compactSub: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textSecondary,
-        marginTop: 2,
+        marginTop: 4,
     },
 });

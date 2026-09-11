@@ -256,8 +256,8 @@ export default function LoginScreen() {
                                     onPress={handleForgotPasswordSend}
                                     disabled={forgotLoading}
                                 />
-                                <TouchableOpacity style={{ marginTop: 15 }} onPress={() => setForgotStep(2)}>
-                                    <Text style={{ color: VisualSystem.colors.goldText, textAlign: 'center', fontWeight: 'bold' }}>Already have a code?</Text>
+                                <TouchableOpacity style={{ marginTop: 16 }} onPress={() => setForgotStep(2)}>
+                                    <Text style={{ color: VisualSystem.colors.goldText, textAlign: 'center', fontWeight: '700' }}>Already have a code?</Text>
                                 </TouchableOpacity>
                             </View>
                         ) : (
@@ -286,7 +286,7 @@ export default function LoginScreen() {
                                     onPress={handleForgotPasswordVerify}
                                     disabled={forgotLoading}
                                 />
-                                <TouchableOpacity style={{ marginTop: 15 }} onPress={() => setForgotStep(1)}>
+                                <TouchableOpacity style={{ marginTop: 16 }} onPress={() => setForgotStep(1)}>
                                     <Text style={{ color: VisualSystem.colors.textPrimary, textAlign: 'center' }}>Didn't get the code? Try again.</Text>
                                 </TouchableOpacity>
                             </View>
@@ -304,42 +304,42 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         padding: 24,
         justifyContent: 'center',
-        paddingTop: 60,
+        paddingTop: 32,
         backgroundColor: 'transparent',
         ...(Platform.OS === 'web' ? { minHeight: '100vh' as unknown as number } : {}),
     },
     header: {
         alignItems: 'center',
-        marginBottom: 40,
+        marginBottom: 32,
     },
     welcomePill: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
         letterSpacing: 2,
-        marginBottom: 10,
+        marginBottom: 8,
         backgroundColor: 'rgba(201, 151, 0, 0.15)',
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 20,
+        paddingVertical: 4,
+        borderRadius: 22,
         overflow: 'hidden',
     },
     logoText: {
-        fontSize: 48,
-        fontWeight: '900',
+        fontSize: 40,
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: -1,
-        marginBottom: 5,
+        marginBottom: 4,
     },
     logoSubText: {
-        fontSize: 14,
+        fontSize: 13,
         color: VisualSystem.colors.goldText, // ND Gold
         fontWeight: '800',
         letterSpacing: 3,
-        marginBottom: 20,
+        marginBottom: 16,
     },
     heroDescription: {
-        fontSize: 16,
+        fontSize: 15,
         color: VisualSystem.colors.textPrimary, // Softer secondary text
         textAlign: 'center',
         lineHeight: 24,
@@ -347,33 +347,33 @@ const styles = StyleSheet.create({
     },
     formCard: {
         backgroundColor: VisualSystem.colors.bgMid, // Translucent card
-        borderRadius: 24,
+        borderRadius: 22,
         padding: 24,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
-        shadowColor: "#000",
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.12,
         shadowRadius: 20,
         elevation: 10,
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         marginBottom: 24,
         textAlign: 'center',
     },
     divider: {
         height: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        marginVertical: 20,
+        marginVertical: 16,
         width: '100%',
     },
     optionsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     rememberRow: {
         flexDirection: 'row',
@@ -381,17 +381,17 @@ const styles = StyleSheet.create({
     },
     rememberText: {
         color: VisualSystem.colors.textPrimary, // Match secondary text
-        marginLeft: 10,
-        fontSize: 14,
-        fontWeight: '500',
+        marginLeft: 8,
+        fontSize: 13,
+        fontWeight: '600',
     },
     forgotText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '600',
     },
     recoverLink: {
-        marginTop: 20,
+        marginTop: 16,
         paddingVertical: 8,
     },
     recoverLinkText: {
@@ -401,9 +401,9 @@ const styles = StyleSheet.create({
         lineHeight: 20,
     },
     webTipBox: {
-        marginTop: 20,
-        padding: 14,
-        borderRadius: 14,
+        marginTop: 16,
+        padding: 12,
+        borderRadius: 16,
         backgroundColor: 'rgba(212, 175, 55, 0.08)',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.22)',
@@ -412,46 +412,46 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '800',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     webTipText: {
         color: VisualSystem.colors.textSecondary,
-        fontSize: 12,
+        fontSize: 11,
         lineHeight: 18,
     },
     modalOverlay: {
         flex: 1,
         backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
-        padding: 20,
+        padding: 16,
     },
     modalCard: {
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 24,
+        borderRadius: 22,
         padding: 24,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.2)',
-        shadowColor: "#000",
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.12,
         shadowRadius: 20,
     },
     modalHeaderRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: 16,
     },
     modalTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
+        fontSize: 20,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     modalSubtitle: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         lineHeight: 20,
-        marginBottom: 20,
+        marginBottom: 16,
     },
     loadingOverlay: {
         position: 'absolute',
@@ -466,8 +466,8 @@ const styles = StyleSheet.create({
     },
     loadingText: {
         color: VisualSystem.colors.goldText,
-        marginTop: 20,
-        fontWeight: 'bold',
+        marginTop: 16,
+        fontWeight: '700',
         letterSpacing: 2,
     },
 });

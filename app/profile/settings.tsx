@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: Tokens.typography.lg,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: FitVerseTheme.colors.textPrimary,
     },
     scrollContent: {
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: Tokens.typography.xs,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 1.5,
         marginBottom: Tokens.spacing.md,
         marginLeft: Tokens.spacing.xs,
@@ -241,11 +241,11 @@ const styles = StyleSheet.create({
     settingSubtitle: {
         fontSize: Tokens.typography.xs,
         color: FitVerseTheme.colors.textMuted,
-        marginTop: 2,
+        marginTop: 4,
     },
     divider: {
         height: 1,
         backgroundColor: FitVerseTheme.colors.border,
-        marginLeft: 68,
+        marginLeft: 32,
     }
 });

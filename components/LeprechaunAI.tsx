@@ -157,7 +157,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                 </View>
                                 <View style={{ marginLeft: 12 }}>
                                     <Text style={styles.chatTitle}>Leprechaun AI</Text>
-                                    <SecondaryText style={{ fontSize: 10 }}>ELITE MENTOR</SecondaryText>
+                                    <SecondaryText style={{ fontSize: 11 }}>ELITE MENTOR</SecondaryText>
                                 </View>
                             </View>
                             <TouchableOpacity onPress={() => setIsChatOpen(false)} style={styles.closeBtn}>
@@ -260,14 +260,14 @@ const styles = StyleSheet.create({
         zIndex: 9999,
         shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.12,
         shadowRadius: 10,
         elevation: 10,
     },
     button: {
         width: 64,
         height: 64,
-        borderRadius: 32,
+        borderRadius: 28,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     },
     chatContainer: {
         height: '80%',
-        margin: 10,
+        margin: 8,
         padding: 0,
         overflow: 'hidden',
         backgroundColor: VisualSystem.colors.bgBase,
@@ -292,14 +292,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
+        padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#161616',
         backgroundColor: VisualSystem.colors.bgMid,
     },
     chatTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     miniLeaf: {
@@ -313,17 +313,17 @@ const styles = StyleSheet.create({
         borderColor: VisualSystem.colors.borderGold,
     },
     closeBtn: {
-        padding: 5,
+        padding: 4,
     },
     messageList: {
-        padding: 20,
-        paddingBottom: 40,
+        padding: 16,
+        paddingBottom: 32,
     },
     messageBubble: {
         maxWidth: '85%',
         padding: 12,
         borderRadius: 16,
-        marginBottom: 15,
+        marginBottom: 16,
     },
     assistantBubble: {
         alignSelf: 'flex-start',
@@ -344,11 +344,11 @@ const styles = StyleSheet.create({
     },
     userText: {
         color: '#000',
-        fontWeight: '500',
+        fontWeight: '600',
     },
     inputArea: {
         flexDirection: 'row',
-        padding: 15,
+        padding: 16,
         paddingBottom: Platform.OS === 'ios' ? 30 : 15,
         backgroundColor: VisualSystem.colors.bgBase,
         alignItems: 'center',
@@ -356,9 +356,9 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgBase,
-        borderRadius: 20,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        borderRadius: 22,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         color: VisualSystem.colors.textPrimary,
         maxHeight: 100,
         fontSize: 15,
@@ -370,17 +370,17 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 10,
+        marginLeft: 8,
     },
     sendBtnDisabled: {
         opacity: 0.5,
     },
     actionCard: {
         backgroundColor: VisualSystem.colors.bgBase,
-        borderRadius: 12,
-        padding: 15,
-        marginTop: 10,
-        marginBottom: 20,
+        borderRadius: 10,
+        padding: 16,
+        marginTop: 8,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,
         alignSelf: 'stretch',
@@ -388,25 +388,25 @@ const styles = StyleSheet.create({
     actionCardHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     actionCardTitle: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 1,
         marginLeft: 8,
     },
     actionCardDesc: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
-        marginBottom: 10,
+        fontSize: 13,
+        marginBottom: 8,
     },
     actionParamsBox: {
         backgroundColor: VisualSystem.colors.bgBase,
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 15,
+        padding: 8,
+        borderRadius: 6,
+        marginBottom: 16,
     },
     actionParamText: {
         color: VisualSystem.colors.textPrimary,
@@ -416,12 +416,12 @@ const styles = StyleSheet.create({
     actionButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        gap: 10,
+        gap: 8,
     },
     actionBtn: {
         flex: 1,
-        paddingVertical: 10,
-        borderRadius: 8,
+        paddingVertical: 8,
+        borderRadius: 6,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -433,12 +433,12 @@ const styles = StyleSheet.create({
     },
     actionBtnTextCancel: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     },
     actionBtnTextConfirm: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     }
 });

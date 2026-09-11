@@ -8,6 +8,7 @@ import { BlurView } from 'expo-blur';
 
 import { palette } from '@/constants/Colors';
 import { Tokens } from '@/constants/Tokens';
+import { VisualSystem } from '@/constants/VisualSystem';
 
 type ThemeProps = {
   lightColor?: string;
@@ -40,7 +41,7 @@ export function SecondaryText(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'textSecondary');
 
-  return <DefaultText style={[{ color, fontSize: 14, fontFamily: 'System' }, style]} {...otherProps} />;
+  return <DefaultText style={[{ color, fontSize: 13, fontFamily: 'System' }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
@@ -69,7 +70,7 @@ export function Card(props: ViewProps) {
           overflow: 'hidden',
           shadowColor: '#0C2340',
           shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: 0.10,
+          shadowOpacity: 0.1,
           shadowRadius: 20,
           elevation: 6,
           ...({ boxShadow: '0 8px 24px rgba(12, 35, 64, 0.10)' } as any),
@@ -92,7 +93,7 @@ export function GlowView(props: ViewProps) {
           borderRadius: Tokens.radius.md,
           shadowColor: glowColor,
           shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.3,
+          shadowOpacity: 0.12,
           shadowRadius: 18,
           elevation: 10,
           // Web compatibility

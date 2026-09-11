@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     letter: {
-        fontWeight: '500',
+        fontWeight: '600',
         color: VisualSystem.colors.textTertiary,
         includeFontPadding: false,
         textAlignVertical: 'center',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         top: '42%',
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: 'rgba(19, 45, 82, 0.92)',
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     },
     tooltipText: {
         color: VisualSystem.colors.gold,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '700',
     },
 });

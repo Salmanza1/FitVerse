@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     barFallback: {
         shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.15,
+        shadowOpacity: 0.12,
         shadowRadius: 20,
         elevation: 10,
     },
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         maxWidth: '100%',
-        gap: 5,
+        gap: 4,
     },
     label: {
         fontSize: 11,

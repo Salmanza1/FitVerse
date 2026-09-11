@@ -94,16 +94,16 @@ export const PlayLikeAChampion = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingHorizontal: 20,
-        marginVertical: 15,
+        paddingHorizontal: 16,
+        marginVertical: 16,
         shadowColor: VisualSystem.colors.gold,
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.12,
         shadowRadius: 15,
         elevation: 12,
     },
     board: {
-        borderRadius: 8,
+        borderRadius: 6,
         padding: 4,
         overflow: 'hidden',
         position: 'relative',
@@ -118,18 +118,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: '#000',
         letterSpacing: 3,
         opacity: 0.8,
     },
     textMain: {
-        fontSize: 22,
-        fontWeight: '900',
+        fontSize: 20,
+        fontWeight: '800',
         color: '#000',
         letterSpacing: 1.5,
-        marginVertical: 2,
+        marginVertical: 4,
     },
     glintContainer: {
         position: 'absolute',
@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
         bottom: 4,
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,0.1)',
-        borderRadius: 4,
+        borderRadius: 6,
     }
 });

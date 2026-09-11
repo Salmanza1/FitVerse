@@ -667,7 +667,7 @@ export default function PersonalInfoScreen() {
 
                 <View style={styles.infoBoxPremium}>
                     <LinearGradient colors={['rgba(212, 175, 55, 0.15)', 'rgba(0,0,0,0)']} style={styles.infoGradient}>
-                        <FontAwesome name="info-circle" size={16} color={FitVerseTheme.colors.accentGold} style={{ marginRight: 12, marginTop: 2 }} />
+                        <FontAwesome name="info-circle" size={16} color={FitVerseTheme.colors.accentGold} style={{ marginRight: 12, marginTop: 4 }} />
                         <Text style={styles.infoTextPremium}>
                             Your biometrics are used to calibrate your performance targets. Keep them updated for the most accurate training insights.
                         </Text>
@@ -815,7 +815,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: Tokens.typography.md,
-        fontWeight: '900',
+        fontWeight: '800',
         color: FitVerseTheme.colors.textPrimary,
         letterSpacing: 2,
     },
@@ -825,7 +825,7 @@ const styles = StyleSheet.create({
     },
     headerSaveText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
+        fontWeight: '800',
         fontSize: Tokens.typography.md,
         letterSpacing: 1,
     },
@@ -865,7 +865,7 @@ const styles = StyleSheet.create({
     avatarTextLarge: {
         color: VisualSystem.colors.goldText,
         fontSize: 40,
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     avatarEditBadge: {
         position: 'absolute',
@@ -882,7 +882,7 @@ const styles = StyleSheet.create({
     },
     heroName: {
         fontSize: Tokens.typography.xl,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: FitVerseTheme.colors.textPrimary,
     },
     heroSubline: {
@@ -892,8 +892,8 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
     },
     sectionTitle: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 2,
         marginBottom: Tokens.spacing.md,
         marginHorizontal: Tokens.spacing.xl,
@@ -924,18 +924,18 @@ const styles = StyleSheet.create({
     iconContainer: {
         width: 40,
         height: 40,
-        borderRadius: 12,
+        borderRadius: 10,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: Tokens.spacing.lg,
     },
     rowLabelSmall: {
-        fontSize: 9,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: FitVerseTheme.colors.textMuted,
         letterSpacing: 1,
-        marginBottom: 2,
+        marginBottom: 4,
     },
     textInput: {
         color: FitVerseTheme.colors.textPrimary,
@@ -959,7 +959,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 1,
         backgroundColor: FitVerseTheme.colors.border,
-        marginLeft: 76,
+        marginLeft: 32,
     },
     biometricsGrid: {
         flexDirection: 'row',
@@ -982,15 +982,15 @@ const styles = StyleSheet.create({
     bioIconCircle: {
         width: 24,
         height: 24,
-        borderRadius: 8,
+        borderRadius: 6,
         backgroundColor: 'rgba(124, 255, 107, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 8,
     },
     bioLabel: {
-        fontSize: 9,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: FitVerseTheme.colors.textMuted,
         letterSpacing: 1,
     },
@@ -1001,14 +1001,14 @@ const styles = StyleSheet.create({
     },
     bioValue: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: FitVerseTheme.colors.textPrimary,
         padding: 0,
         minWidth: 30,
     },
     bioValueLarge: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: FitVerseTheme.colors.textPrimary,
         padding: 0,
         minWidth: 50,
@@ -1027,11 +1027,11 @@ const styles = StyleSheet.create({
     bioStatusDot: {
         width: 6,
         height: 6,
-        borderRadius: 3,
-        marginRight: 6,
+        borderRadius: 6,
+        marginRight: 4,
     },
     bioStatusText: {
-        fontSize: 9,
+        fontSize: 11,
         color: FitVerseTheme.colors.textMuted,
         fontWeight: '600',
     },
@@ -1064,7 +1064,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: Tokens.radius.lg,
         borderTopRightRadius: Tokens.radius.lg,
         padding: Tokens.spacing.xl,
-        paddingBottom: 40,
+        paddingBottom: 32,
         borderTopWidth: 1,
         borderTopColor: 'rgba(212, 175, 55, 0.3)',
     },
@@ -1072,13 +1072,13 @@ const styles = StyleSheet.create({
         width: 40,
         height: 4,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 2,
+        borderRadius: 6,
         alignSelf: 'center',
         marginBottom: Tokens.spacing.xl,
     },
     modalTitle: {
         fontSize: Tokens.typography.lg,
-        fontWeight: '900',
+        fontWeight: '800',
         color: FitVerseTheme.colors.textPrimary,
         textAlign: 'center',
         letterSpacing: 2,
@@ -1103,7 +1103,7 @@ const styles = StyleSheet.create({
     },
     dobConfirmText: {
         color: FitVerseTheme.colors.ndNavy,
-        fontWeight: '900',
+        fontWeight: '800',
         fontSize: Tokens.typography.md,
         letterSpacing: 1,
     },
@@ -1114,7 +1114,7 @@ const styles = StyleSheet.create({
     dobCancelText: {
         color: FitVerseTheme.colors.textMuted,
         fontSize: Tokens.typography.sm,
-        fontWeight: 'bold',
+        fontWeight: '700',
         letterSpacing: 1,
     }
 });

@@ -44,12 +44,12 @@ export function StyledInput({ label, error, style, containerStyle, ...props }: S
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+        marginBottom: 16,
         width: '100%',
     },
     label: {
         fontSize: Tokens.typography.xs,
-        fontWeight: '900',
+        fontWeight: '800',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
         color: VisualSystem.colors.goldText,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
         borderRadius: Tokens.radius.md,
         fontSize: Tokens.typography.md,
         borderWidth: 1.5,
@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
         fontSize: Tokens.typography.xs,
         marginTop: Tokens.spacing.xs,
         marginLeft: Tokens.spacing.xs,
-        fontWeight: 'bold',
+        fontWeight: '700',
     }
 });

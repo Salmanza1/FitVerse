@@ -71,16 +71,16 @@ export function ExercisePickerSectionHeader({
 
 export const exercisePickerListStyles = StyleSheet.create({
     listContent: {
-        paddingBottom: 48,
+        paddingBottom: 32,
         paddingRight: 4,
     },
 });
 
 const styles = StyleSheet.create({
     sectionHeader: {
-        paddingHorizontal: 20,
-        paddingTop: 14,
-        paddingBottom: 6,
+        paddingHorizontal: 16,
+        paddingTop: 12,
+        paddingBottom: 4,
         backgroundColor: 'transparent',
     },
     sectionLetter: {
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 13,
-        paddingHorizontal: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: VisualSystem.colors.borderSubtle,
         minHeight: 52,
@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
     name: {
         color: VisualSystem.colors.textPrimary,
         fontSize: 15,
-        fontWeight: '500',
+        fontWeight: '600',
         lineHeight: 20,
         letterSpacing: -0.2,
     },
     category: {
-        marginTop: 3,
-        fontSize: 12,
+        marginTop: 4,
+        fontSize: 11,
         fontWeight: '400',
         color: VisualSystem.colors.textTertiary,
         letterSpacing: 0.1,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     addCircle: {
         width: 30,
         height: 30,
-        borderRadius: 15,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.goldMuted,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,

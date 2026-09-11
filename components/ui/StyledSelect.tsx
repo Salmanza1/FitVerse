@@ -107,12 +107,12 @@ export function StyledSelect({
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+        marginBottom: 16,
         width: '100%',
     },
     label: {
         fontSize: Tokens.typography.xs,
-        fontWeight: '900',
+        fontWeight: '800',
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
         color: VisualSystem.colors.goldText,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         width: '100%',
         minHeight: 48,
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
         borderRadius: Tokens.radius.md,
         borderWidth: 1.5,
         backgroundColor: VisualSystem.colors.bgMid,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: Tokens.typography.md,
         color: VisualSystem.colors.textPrimary,
-        fontWeight: '500',
+        fontWeight: '600',
         paddingRight: Tokens.spacing.sm,
     },
     optionTextSelected: {

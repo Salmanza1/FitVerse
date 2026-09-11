@@ -104,7 +104,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
                     sections={sections}
                     keyExtractor={(item) => item.id}
                     stickySectionHeadersEnabled
-                    contentContainerStyle={{ paddingBottom: 40 }}
+                    contentContainerStyle={{ paddingBottom: 32 }}
                     ListEmptyComponent={
                         <Text style={styles.empty}>No exercises match your search.</Text>
                     }
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        paddingTop: 56,
+        paddingTop: 32,
     },
     header: {
         flexDirection: 'row',
@@ -153,31 +153,31 @@ const styles = StyleSheet.create({
     headerCenter: { flex: 1, alignItems: 'center' },
     title: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '800',
     },
     subtitle: {
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,
-        marginTop: 2,
+        marginTop: 4,
     },
     searchRow: {
         flexDirection: 'row',
         alignItems: 'center',
         marginHorizontal: Tokens.spacing.lg,
         marginBottom: Tokens.spacing.sm,
-        paddingHorizontal: 14,
-        paddingVertical: 10,
-        borderRadius: 14,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
-        gap: 10,
+        gap: 8,
     },
     searchInput: {
         flex: 1,
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
     },
     chipScroll: {
         flexDirection: 'row',
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     },
     chip: {
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 20,
+        paddingVertical: 4,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     },
     chipText: {
         color: VisualSystem.colors.textSecondary,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '600',
     },
     chipTextActive: {
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         color: VisualSystem.colors.gold,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 1,
         textTransform: 'uppercase',
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: Tokens.spacing.lg,
-        paddingVertical: 14,
+        paddingVertical: 12,
         borderBottomWidth: 1,
         borderBottomColor: VisualSystem.colors.borderSubtle,
     },
@@ -237,13 +237,13 @@ const styles = StyleSheet.create({
     exMeta: {
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,
-        marginTop: 3,
+        marginTop: 4,
         textTransform: 'capitalize',
     },
     empty: {
         color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
-        marginTop: 40,
+        marginTop: 32,
         paddingHorizontal: 24,
     },
 });

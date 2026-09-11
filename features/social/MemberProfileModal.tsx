@@ -74,7 +74,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                                 </View>
                             </View>
 
-                            <ScrollView style={styles.content} contentContainerStyle={{ paddingBottom: 40 }}>
+                            <ScrollView style={styles.content} contentContainerStyle={{ paddingBottom: 32 }}>
                                 <View style={styles.infoCenter}>
                                     <Text style={styles.name}>{profile.displayName}</Text>
                                     <Text style={styles.sub}>{profile.email}</Text>
@@ -107,7 +107,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                     ) : (
                         <View style={styles.center}>
                             <Text style={{ color: VisualSystem.colors.textPrimary }}>Profile not found.</Text>
-                            <Pressable onPress={onClose} style={{ marginTop: 20 }}>
+                            <Pressable onPress={onClose} style={{ marginTop: 16 }}>
                                 <Text style={{ color: FitVerseTheme.colors.accentGold }}>Close</Text>
                             </Pressable>
                         </View>
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     closeBtn: {
-        marginTop: 20,
-        marginLeft: 20,
+        marginTop: 16,
+        marginLeft: 16,
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
         alignItems: 'center',
@@ -175,48 +175,48 @@ const styles = StyleSheet.create({
     avatarText: {
         color: VisualSystem.colors.goldText,
         fontSize: 40,
-        fontWeight: '900',
+        fontWeight: '800',
     },
     content: {
         flex: 1,
-        marginTop: 50,
-        paddingHorizontal: 25,
+        marginTop: 32,
+        paddingHorizontal: 24,
     },
     infoCenter: {
         alignItems: 'center',
-        marginBottom: 25,
+        marginBottom: 24,
     },
     name: {
         color: VisualSystem.colors.textPrimary,
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         marginBottom: 4,
     },
     sub: {
         color: FitVerseTheme.colors.textMuted,
-        fontSize: 14,
-        marginBottom: 15,
+        fontSize: 13,
+        marginBottom: 16,
     },
     badge: {
         backgroundColor: 'rgba(212, 175, 55, 0.15)',
         paddingHorizontal: 12,
         paddingVertical: 4,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.4)',
     },
     badgeText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 1,
     },
     statsRow: {
         flexDirection: 'row',
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 20,
-        padding: 20,
-        marginBottom: 30,
+        borderRadius: 22,
+        padding: 16,
+        marginBottom: 32,
         alignItems: 'center',
     },
     statItem: {
@@ -230,21 +230,21 @@ const styles = StyleSheet.create({
     },
     statValue: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
     },
     statLabel: {
         color: FitVerseTheme.colors.textMuted,
-        fontSize: 12,
+        fontSize: 11,
         marginTop: 4,
     },
     section: {
-        marginBottom: 25,
+        marginBottom: 24,
     },
     sectionTitle: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
         marginBottom: 12,
         letterSpacing: 0.5,
     },
@@ -252,27 +252,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: VisualSystem.colors.bgMid,
-        padding: 15,
-        borderRadius: 15,
+        padding: 16,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.15)',
     },
     goalText: {
         color: VisualSystem.colors.textPrimary,
-        marginLeft: 15,
-        fontSize: 14,
-        fontWeight: '500',
+        marginLeft: 16,
+        fontSize: 13,
+        fontWeight: '600',
     },
     prefsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 10,
+        gap: 8,
     },
     prefTag: {
         backgroundColor: VisualSystem.colors.bgMid,
-        paddingHorizontal: 15,
+        paddingHorizontal: 16,
         paddingVertical: 8,
-        borderRadius: 20,
+        borderRadius: 22,
     },
     prefText: {
         color: VisualSystem.colors.textPrimary,

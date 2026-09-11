@@ -354,7 +354,7 @@ export default function FeedScreen() {
                                 setMenuVisible(false);
                             }}
                         >
-                            <RNText style={{ color: FitVerseTheme.colors.textMuted, fontWeight: 'bold' }}>Cancel</RNText>
+                            <RNText style={{ color: FitVerseTheme.colors.textMuted, fontWeight: '700' }}>Cancel</RNText>
                         </Pressable>
                     </View>
                 </Pressable>
@@ -512,7 +512,7 @@ export default function FeedScreen() {
                 }
                 ListHeaderComponent={
                     <View style={[styles.scrollContent, webFeedColumn]}>
-                        <View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 16 }}>
                             <View style={styles.filterContainer}>
                                 <Pressable
                                     style={({ pressed }) => [
@@ -753,8 +753,8 @@ function PostCard({
                             <RNText style={styles.avatarText}>{post.userName.charAt(0)}</RNText>
                         )}
                     </View>
-                    <View style={{ marginLeft: 10, flex: 1 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+                    <View style={{ marginLeft: 8, flex: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 4 }}>
                             <RNText style={styles.userName}>{post.userName}</RNText>
                             {showCommunityBadge && (
                                 <View style={styles.communityBadge}>
@@ -763,9 +763,9 @@ function PostCard({
                             )}
                         </View>
                         {post.userDorm && (
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
                                 <DormLogo dorm={post.userDorm as Dorm} size={14} style={{ marginRight: 4 }} />
-                                <RNText style={{ fontSize: 12, color: FitVerseTheme.colors.accentGold }}>
+                                <RNText style={{ fontSize: 11, color: FitVerseTheme.colors.accentGold }}>
                                     {post.userDorm.charAt(0).toUpperCase() + post.userDorm.slice(1).toLowerCase().replace('_', ' ')} Hall
                                 </RNText>
                             </View>
@@ -795,7 +795,7 @@ function PostCard({
                                         name={friendStatus === 'pending_received' ? 'check' : friendStatus === 'pending_sent' ? 'clock-o' : 'user-plus'}
                                         size={12}
                                         color={friendStatus === 'pending_received' ? '#7dcea0' : FitVerseTheme.colors.accentGold}
-                                        style={{ marginRight: 5 }}
+                                        style={{ marginRight: 4 }}
                                     />
                                     <RNText
                                         style={[
@@ -821,7 +821,7 @@ function PostCard({
                         </View>
                     )}
                     {showMenu && (
-                        <Pressable onPress={onMenuPress} style={({ pressed }) => [{ padding: 10, opacity: pressed ? 0.6 : 1 }]}>
+                        <Pressable onPress={onMenuPress} style={({ pressed }) => [{ padding: 8, opacity: pressed ? 0.6 : 1 }]}>
                             <FontAwesome name="bars" size={18} color={FitVerseTheme.colors.accentGold} />
                         </Pressable>
                     )}
@@ -958,7 +958,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20,
     },
     headerTitleWeb: {
-        fontSize: 26,
+        fontSize: 24,
         letterSpacing: 1.5,
     },
     heroImage: {
@@ -969,7 +969,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: Tokens.spacing.xl,
         height: '100%',
         justifyContent: 'flex-end',
-        paddingBottom: 15,
+        paddingBottom: 16,
     },
     headerRow: {
         flexDirection: 'row',
@@ -979,7 +979,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 32,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 2,
     },
@@ -989,7 +989,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textOnNavy,
         opacity: 0.9,
         marginTop: 4,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     headerActionsSpace: {
         flexDirection: 'row',
@@ -1020,18 +1020,18 @@ const styles = StyleSheet.create({
     },
     chatBadgeText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 10,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
     },
     filterContainer: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 8,
         gap: 8,
     },
     filterBtn: {
         paddingVertical: 8,
         paddingHorizontal: 12,
-        borderRadius: 24,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
         backgroundColor: VisualSystem.colors.bgMid,
@@ -1052,14 +1052,14 @@ const styles = StyleSheet.create({
     communityBadge: {
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
         borderRadius: 6,
-        paddingHorizontal: 6,
-        paddingVertical: 2,
+        paddingHorizontal: 4,
+        paddingVertical: 4,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     communityBadgeText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 9,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.5,
         textTransform: 'uppercase',
@@ -1093,7 +1093,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: FitVerseTheme.colors.surface,
         borderRadius: Tokens.radius.md,
-        paddingHorizontal: 15,
+        paddingHorizontal: 16,
         height: 48,
         borderWidth: 1,
         borderColor: FitVerseTheme.colors.border,
@@ -1134,8 +1134,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 12,
-        paddingVertical: 7,
-        borderRadius: 20,
+        paddingVertical: 8,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.45)',
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
@@ -1151,7 +1151,7 @@ const styles = StyleSheet.create({
     },
     addFriendBtnText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.3,
     },
@@ -1161,10 +1161,10 @@ const styles = StyleSheet.create({
     friendsPill: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        borderRadius: 20,
+        gap: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 22,
         backgroundColor: 'rgba(212, 175, 55, 0.08)',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -1191,18 +1191,18 @@ const styles = StyleSheet.create({
     },
     avatarText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
     },
     userName: {
         color: FitVerseTheme.colors.textPrimary,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
     },
     timestamp: {
         color: FitVerseTheme.colors.textMuted,
-        fontSize: 12,
-        marginTop: 2,
+        fontSize: 11,
+        marginTop: 4,
     },
     postDescription: {
         color: VisualSystem.colors.textPrimary,
@@ -1214,7 +1214,7 @@ const styles = StyleSheet.create({
     imageWrapper: {
         width: '100%',
         height: Platform.OS === 'web' ? 280 : 320,
-        borderRadius: 20,
+        borderRadius: 22,
         overflow: 'hidden',
         marginBottom: Tokens.spacing.lg,
         backgroundColor: VisualSystem.colors.bgMid,
@@ -1231,25 +1231,25 @@ const styles = StyleSheet.create({
         right: 15,
         backgroundColor: VisualSystem.colors.overlay,
         paddingVertical: 4,
-        paddingHorizontal: 10,
-        borderRadius: 12,
+        paddingHorizontal: 8,
+        borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
     fizzDateText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 10,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
         textTransform: 'uppercase',
     },
     fizzTimeContainer: {
-        marginTop: 2,
+        marginTop: 4,
     },
     fizzTimeText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
     },
     workoutCard: {
         backgroundColor: 'rgba(212, 175, 55, 0.06)',
@@ -1263,31 +1263,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'flex-start',
-        gap: 6,
+        gap: 4,
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 10,
-        marginBottom: 10,
+        marginBottom: 8,
     },
     workoutCardBadgeText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
     },
     workoutCardTitle: {
         color: FitVerseTheme.colors.textPrimary,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '800',
-        marginBottom: 14,
+        marginBottom: 12,
         lineHeight: 24,
     },
     workoutStatsRow: {
         flexDirection: 'row',
         backgroundColor: 'rgba(0, 0, 0, 0.18)',
-        borderRadius: 12,
+        borderRadius: 10,
         paddingVertical: 12,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -1299,7 +1299,7 @@ const styles = StyleSheet.create({
     workoutStatDivider: {
         width: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        marginVertical: 2,
+        marginVertical: 4,
     },
     workoutStatNum: {
         color: FitVerseTheme.colors.textPrimary,
@@ -1308,10 +1308,10 @@ const styles = StyleSheet.create({
     },
     workoutStatLbl: {
         color: FitVerseTheme.colors.textMuted,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.6,
-        marginTop: 3,
+        marginTop: 4,
     },
     postActions: {
         flexDirection: 'row',
@@ -1330,48 +1330,48 @@ const styles = StyleSheet.create({
     },
     actionText: {
         color: FitVerseTheme.colors.textPrimary,
-        marginLeft: 6,
-        fontSize: 14,
+        marginLeft: 4,
+        fontSize: 13,
         fontWeight: '600',
     },
     emptyContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 80,
-        paddingHorizontal: 30,
+        paddingVertical: 32,
+        paddingHorizontal: 32,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 24,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
-        marginTop: 20,
+        marginTop: 16,
     },
     emptyText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 22,
-        fontWeight: '900',
-        marginTop: 20,
+        fontSize: 20,
+        fontWeight: '800',
+        marginTop: 16,
         letterSpacing: 0.5,
     },
     emptySubText: {
         color: VisualSystem.colors.textSecondary,
         fontSize: 15,
         textAlign: 'center',
-        marginTop: 10,
-        marginBottom: 30,
+        marginTop: 8,
+        marginBottom: 32,
         lineHeight: 22,
     },
     ctaButton: {
         backgroundColor: 'rgba(212, 175, 55, 0.15)',
-        paddingVertical: 14,
-        paddingHorizontal: 28,
-        borderRadius: 25,
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,
     },
     ctaText: {
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
-        fontSize: 16,
+        fontSize: 15,
         letterSpacing: 1,
     },
     modalOverlay: {
@@ -1383,27 +1383,27 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgBase,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
-        padding: 20,
-        paddingBottom: 40,
+        padding: 16,
+        paddingBottom: 32,
     },
     menuHeader: {
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     menuTitle: {
         color: FitVerseTheme.colors.textPrimary,
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
     },
     menuOption: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 15,
+        paddingVertical: 16,
     },
     menuText: {
         color: FitVerseTheme.colors.textPrimary,
-        fontSize: 16,
-        marginLeft: 10,
+        fontSize: 15,
+        marginLeft: 8,
     },
     menuDivider: {
         height: 1,
@@ -1411,8 +1411,8 @@ const styles = StyleSheet.create({
     },
     editModalContent: {
         backgroundColor: VisualSystem.colors.bgBase,
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 22,
+        padding: 16,
         width: '90%',
         alignSelf: 'center',
         marginBottom: '50%',
@@ -1420,43 +1420,43 @@ const styles = StyleSheet.create({
     editModalTitle: {
         color: FitVerseTheme.colors.textPrimary,
         fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 15,
+        fontWeight: '700',
+        marginBottom: 16,
     },
     editInput: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
-        padding: 15,
+        padding: 16,
         color: VisualSystem.colors.textPrimary,
         height: 120,
         textAlignVertical: 'top',
-        fontSize: 16,
+        fontSize: 15,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
     },
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 20,
+        marginTop: 16,
     },
     modalBtnCancel: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        marginRight: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        marginRight: 8,
     },
     modalBtnSave: {
         backgroundColor: FitVerseTheme.colors.accentGold,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
         borderRadius: 10,
     },
     modalBtnTextCancel: {
         color: FitVerseTheme.colors.textMuted,
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     modalBtnTextSave: {
         color: '#000',
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     previewModalOverlay: {
         flex: 1,
@@ -1469,7 +1469,7 @@ const styles = StyleSheet.create({
         top: 50,
         right: 25,
         zIndex: 10,
-        padding: 10,
+        padding: 8,
     },
     fullPreviewImage: {
         width: '100%',
@@ -1477,7 +1477,7 @@ const styles = StyleSheet.create({
     },
     // Social Styles
     searchResultsWrapper: {
-        marginTop: 15,
+        marginTop: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: Tokens.radius.md,
         padding: 12,
@@ -1485,12 +1485,12 @@ const styles = StyleSheet.create({
         borderColor: VisualSystem.colors.borderSubtle,
     },
     searchSectionTitle: {
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
         color: VisualSystem.colors.goldText,
         textTransform: 'uppercase',
         letterSpacing: 1,
-        marginBottom: 10,
+        marginBottom: 8,
     },
     userResultCard: {
         flexDirection: 'row',
@@ -1502,7 +1502,7 @@ const styles = StyleSheet.create({
     resultAvatar: {
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: 'rgba(124, 255, 107, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
@@ -1511,8 +1511,8 @@ const styles = StyleSheet.create({
     },
     resultName: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
-        fontWeight: 'bold',
+        fontSize: 13,
+        fontWeight: '700',
     },
     resultSub: {
         color: FitVerseTheme.colors.textMuted,
@@ -1523,25 +1523,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: FitVerseTheme.colors.accentGold,
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 15,
+        paddingVertical: 4,
+        borderRadius: 16,
     },
     addBtnText: {
         color: '#000',
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
         marginLeft: 4,
     },
     acceptBtn: {
         backgroundColor: Tokens.colors.accentGold,
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 15,
+        paddingVertical: 4,
+        borderRadius: 16,
     },
     acceptBtnText: {
         color: '#000',
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
     },
     statusBadge: {
         flexDirection: 'row',
@@ -1551,19 +1551,19 @@ const styles = StyleSheet.create({
     statusText: {
         color: VisualSystem.colors.goldText,
         fontSize: 11,
-        fontWeight: 'bold',
+        fontWeight: '700',
         marginLeft: 4,
     },
     pendingBadge: {
         backgroundColor: VisualSystem.colors.bgMid,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 10,
     },
     pendingText: {
         color: FitVerseTheme.colors.textMuted,
         fontSize: 11,
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     requestsGrid: {
         // Placeholder for future expanded requests view

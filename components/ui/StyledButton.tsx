@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     text: {
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
         letterSpacing: 0.5,
     }
 });

@@ -256,33 +256,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 15,
+        padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: VisualSystem.colors.borderSubtle,
         position: 'relative'
     },
     title: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     closeBtn: {
         position: 'absolute',
         right: 20,
-        padding: 5
+        padding: 4
     },
     listContent: {
-        padding: 20,
-        paddingBottom: 80
+        padding: 16,
+        paddingBottom: 32
     },
     commentItem: {
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     avatar: {
         width: 36,
         height: 36,
-        borderRadius: 18,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
@@ -292,14 +292,14 @@ const styles = StyleSheet.create({
     },
     avatarText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: 'bold',
-        fontSize: 16
+        fontWeight: '700',
+        fontSize: 15
     },
     commentContent: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        padding: 10,
-        borderRadius: 12,
+        padding: 8,
+        borderRadius: 10,
         borderTopLeftRadius: 0,
     },
     commentHeader: {
@@ -310,38 +310,38 @@ const styles = StyleSheet.create({
     },
     commentUser: {
         color: VisualSystem.colors.goldText,
-        fontWeight: 'bold',
-        fontSize: 14
+        fontWeight: '700',
+        fontSize: 13
     },
     commentTime: {
-        fontSize: 10,
+        fontSize: 11,
         color: '#888'
     },
     commentText: {
         color: '#E0E0E0',
-        fontSize: 14,
-        marginTop: 2,
+        fontSize: 13,
+        marginTop: 4,
         lineHeight: 20
     },
     moreBtn: {
-        marginLeft: 10,
-        padding: 5,
+        marginLeft: 8,
+        padding: 4,
         justifyContent: 'center'
     },
     emptyContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 32
     },
     emptyText: {
         color: '#666',
-        marginBottom: 5
+        marginBottom: 4
     },
     inputContainer: {
         flexDirection: 'row',
-        padding: 15,
-        paddingBottom: 30, // Safe area
+        padding: 16,
+        paddingBottom: 32, // Safe area
         backgroundColor: VisualSystem.colors.bgBase,
         borderTopWidth: 1,
         borderTopColor: VisualSystem.colors.borderSubtle,
@@ -350,19 +350,19 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 20,
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        borderRadius: 22,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         color: VisualSystem.colors.textPrimary,
         maxHeight: 100,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     sendBtn: {
-        marginLeft: 10,
+        marginLeft: 8,
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center'

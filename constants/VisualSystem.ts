@@ -70,12 +70,39 @@ export const VisualSystem = {
         gold: ['#D4AF37', '#C99700'] as const,
         navy: ['#0C2340', '#173A63'] as const,
     },
-    radius: {
-        card: 20,
-        pill: 28,
-        button: 14,
-        sm: 10,
+    /**
+     * Type scale. Every font size in the app should be one of these — the app
+     * previously used 23 different sizes, which is why no two screens lined up.
+     */
+    text: {
+        caption: 11, // labels, eyebrows, metadata
+        small: 13, // secondary body, hints
+        body: 15, // default reading size
+        emphasis: 17, // lead body, list titles
+        title: 20, // card and section titles
+        heading: 24, // screen headings
+        display: 32, // hero numerals
+        hero: 40, // the one-per-screen statement
     },
+    /** Four weights. `bold` and `700` were both in use and are the same thing. */
+    weight: {
+        regular: '400',
+        medium: '600',
+        semibold: '700',
+        bold: '800',
+    },
+    radius: {
+        xs: 6, // chips, tiny badges
+        sm: 10, // inputs, small controls
+        md: 16, // default card
+        lg: 22, // sheets, large cards
+        xl: 28,
+        pill: 999,
+        // Legacy aliases — existing imports keep working.
+        card: 16,
+        button: 10,
+    },
+    /** Spacing steps. Anything between snaps to the nearest. */
     spacing: {
         xs: 4,
         sm: 8,

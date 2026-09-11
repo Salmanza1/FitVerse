@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 8,
-        marginBottom: 20,
+        marginBottom: 16,
     },
     chip: {
         flex: 1,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 12,
         paddingHorizontal: 4,
-        borderRadius: 14,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderSubtle,
@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     label: {
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
-        marginTop: 6,
+        marginTop: 4,
     },
 });

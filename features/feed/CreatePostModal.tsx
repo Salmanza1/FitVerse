@@ -184,7 +184,7 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
                     <View style={styles.header}>
                         <Pressable
                             onPress={handleClose}
-                            style={({ pressed }) => [{ padding: 10, opacity: pressed ? 0.6 : 1 }]}
+                            style={({ pressed }) => [{ padding: 8, opacity: pressed ? 0.6 : 1 }]}
                         >
                             <FontAwesome name="times" size={22} color={C.textTertiary} />
                         </Pressable>
@@ -341,8 +341,8 @@ const styles = StyleSheet.create({
         backgroundColor: C.bgMid,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingHorizontal: 16,
+        paddingTop: 16,
         maxHeight: '92%',
         borderWidth: 1,
         borderColor: C.borderSubtle,
@@ -363,12 +363,12 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3,
     },
     postBtnWrap: {
-        paddingHorizontal: 10,
-        paddingVertical: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
     },
     postButton: {
-        fontSize: 16,
-        fontWeight: '900',
+        fontSize: 15,
+        fontWeight: '800',
         color: C.goldText,
     },
     workoutCard: {
@@ -383,18 +383,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'flex-start',
-        gap: 6,
-        marginBottom: 10,
+        gap: 4,
+        marginBottom: 8,
     },
     workoutCardBadgeText: {
         color: C.goldText,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
     },
     workoutCardTitle: {
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '800',
         color: C.textPrimary,
         marginBottom: 12,
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     workoutStatsGrid: {
         flexDirection: 'row',
         backgroundColor: C.bgElevated,
-        borderRadius: 12,
+        borderRadius: 10,
         paddingVertical: 12,
         borderWidth: 1,
         borderColor: C.borderSubtle,
@@ -415,29 +415,29 @@ const styles = StyleSheet.create({
     workoutStatDivider: {
         width: 1,
         backgroundColor: C.borderSubtle,
-        marginVertical: 2,
+        marginVertical: 4,
     },
     workoutStatNum: {
         color: C.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '800',
     },
     workoutStatLbl: {
         color: C.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.6,
-        marginTop: 3,
+        marginTop: 4,
     },
     milestoneChips: {
-        gap: 6,
+        gap: 4,
         marginTop: 12,
     },
     milestoneChip: {
         backgroundColor: C.goldMuted,
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: 6,
+        borderRadius: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
         borderWidth: 1,
         borderColor: C.borderGold,
     },
@@ -448,11 +448,11 @@ const styles = StyleSheet.create({
         lineHeight: 15,
     },
     photoSection: {
-        marginBottom: 14,
+        marginBottom: 12,
     },
     photoSectionLabel: {
         color: C.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
     },
     photoActions: {
         flexDirection: 'row',
-        gap: 10,
+        gap: 8,
     },
     photoActionBtn: {
         flex: 1,
@@ -468,8 +468,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        paddingVertical: 14,
-        borderRadius: 12,
+        paddingVertical: 12,
+        borderRadius: 10,
         backgroundColor: C.glassFill,
         borderWidth: 1,
         borderColor: C.borderSubtle,
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     },
     previewWrapper: {
         height: 200,
-        borderRadius: 14,
+        borderRadius: 16,
         overflow: 'hidden',
         borderWidth: 1,
         borderColor: C.borderSubtle,
@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
     },
     captionLabel: {
         color: C.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
@@ -514,9 +514,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         minHeight: 100,
         textAlignVertical: 'top',
-        padding: 14,
+        padding: 12,
         backgroundColor: C.glassFill,
-        borderRadius: 14,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: C.borderSubtle,
         marginBottom: 16,
@@ -526,9 +526,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 12,
-        padding: 14,
+        padding: 12,
         backgroundColor: C.glassFill,
-        borderRadius: 14,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: C.borderSubtle,
         marginBottom: 24,
@@ -538,13 +538,13 @@ const styles = StyleSheet.create({
     },
     shareRowTitle: {
         color: C.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '700',
         marginBottom: 4,
     },
     shareRowHint: {
         color: C.textTertiary,
-        fontSize: 12,
+        fontSize: 11,
         lineHeight: 16,
     },
 });

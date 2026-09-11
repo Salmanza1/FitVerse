@@ -136,16 +136,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     header: {
-        paddingTop: 60,
-        paddingHorizontal: 20,
-        paddingBottom: 15,
+        paddingTop: 32,
+        paddingHorizontal: 16,
+        paddingBottom: 16,
         backgroundColor: 'rgba(10, 30, 52, 0.85)',
         alignItems: 'center'
     },
     headerTag: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
-        fontSize: 12,
+        fontWeight: '800',
+        fontSize: 11,
         textTransform: 'uppercase',
         marginBottom: 8,
         letterSpacing: 2,
@@ -153,13 +153,13 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: 10
     },
-    headerTitle: { fontSize: 34, fontWeight: '900', color: VisualSystem.colors.textPrimary, letterSpacing: 1 },
-    scroll: { padding: 20, paddingBottom: 120 },
+    headerTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.textPrimary, letterSpacing: 1 },
+    scroll: { padding: 16, paddingBottom: 32 },
     circleStartContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 40,
-        marginBottom: 60,
+        marginTop: 32,
+        marginBottom: 32,
     },
     circleStartBtn: {
         width: 220,
@@ -181,30 +181,30 @@ const styles = StyleSheet.create({
     },
     circleStartText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 18,
-        fontWeight: '900',
-        marginTop: 20,
+        fontSize: 17,
+        fontWeight: '800',
+        marginTop: 16,
         letterSpacing: 1,
     },
     circleStartSub: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textTertiary,
-        marginTop: 6,
-        fontWeight: 'bold',
+        marginTop: 4,
+        fontWeight: '700',
         textTransform: 'uppercase',
     },
-    sectionHeader: { fontSize: 12, fontWeight: '800', marginBottom: 14, color: LOG.textTertiary, letterSpacing: 1.2, textTransform: 'uppercase' },
+    sectionHeader: { fontSize: 11, fontWeight: '800', marginBottom: 12, color: LOG.textTertiary, letterSpacing: 1.2, textTransform: 'uppercase' },
 
     // Templates
-    blockTitle: { fontSize: 22, fontWeight: 'bold', color: VisualSystem.colors.textPrimary },
+    blockTitle: { fontSize: 20, fontWeight: '700', color: VisualSystem.colors.textPrimary },
     iconBtn: { flexDirection: 'row', alignItems: 'center', padding: 8, backgroundColor: VisualSystem.colors.bgMid, borderRadius: 6, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
-    subHeader: { fontSize: 14, fontWeight: 'bold', color: '#999', marginTop: 10, marginBottom: 10 },
+    subHeader: { fontSize: 13, fontWeight: '700', color: '#999', marginTop: 8, marginBottom: 8 },
     templateCard: {
         width: '100%',
         height: 150,
-        marginRight: 15,
-        padding: 18,
-        borderRadius: 18,
+        marginRight: 16,
+        padding: 16,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
         backgroundColor: LOG.glassFill,
@@ -215,10 +215,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: LOG.textPrimary,
         lineHeight: 20,
-        marginBottom: 6,
+        marginBottom: 4,
     },
     templateDetail: {
-        fontSize: 12,
+        fontSize: 11,
         color: LOG.textSecondary,
         lineHeight: 17,
         flex: 1,
@@ -227,19 +227,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 10,
-        paddingTop: 10,
+        marginTop: 8,
+        paddingTop: 8,
         borderTopWidth: StyleSheet.hairlineWidth,
         borderTopColor: LOG.borderSubtle,
     },
     templateStartBtn: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
+        gap: 4,
     },
     templateStartText: {
         color: LOG.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.4,
         textTransform: 'uppercase',
@@ -251,28 +251,28 @@ const styles = StyleSheet.create({
     },
 
     // Modal
-    modalOverlay: { flex: 1, backgroundColor: LOG.overlay, justifyContent: 'center', padding: 20 },
+    modalOverlay: { flex: 1, backgroundColor: LOG.overlay, justifyContent: 'center', padding: 16 },
     modalContent: { 
         backgroundColor: LOG.bgMid, 
-        borderRadius: 24, 
-        padding: 20, 
+        borderRadius: 22, 
+        padding: 16, 
         borderWidth: 1, 
         borderColor: LOG.borderGold,
-        shadowColor: '#000',
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.12,
         shadowRadius: 20,
     },
-    modalTitle: { fontSize: 20, fontWeight: 'bold', color: LOG.textPrimary },
-    modeBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: LOG.borderSubtle },
-    modeIcon: { width: 40, height: 40, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginRight: 15 },
-    modeTitle: { fontSize: 16, fontWeight: 'bold', color: LOG.textPrimary, marginBottom: 2 },
+    modalTitle: { fontSize: 20, fontWeight: '700', color: LOG.textPrimary },
+    modeBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: LOG.borderSubtle },
+    modeIcon: { width: 40, height: 40, borderRadius: 6, justifyContent: 'center', alignItems: 'center', marginRight: 16 },
+    modeTitle: { fontSize: 15, fontWeight: '700', color: LOG.textPrimary, marginBottom: 4 },
 
     // Active Workout
     activeHeader: {
-        paddingTop: 60,
-        paddingHorizontal: 20,
-        paddingBottom: 15,
+        paddingTop: 32,
+        paddingHorizontal: 16,
+        paddingBottom: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -281,63 +281,63 @@ const styles = StyleSheet.create({
     headerIconBtn: {
         width: 36,
         height: 36,
-        borderRadius: 8,
+        borderRadius: 6,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
     },
     headerCancelBtn: {
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
         backgroundColor: 'rgba(255, 68, 68, 0.1)',
         borderWidth: 1,
         borderColor: 'rgba(255, 68, 68, 0.3)',
     },
     headerCancelText: {
         color: VisualSystem.colors.danger,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     },
     finishBtnTheme: {
         backgroundColor: VisualSystem.colors.gold,
-        paddingHorizontal: 25,
-        paddingVertical: 10,
+        paddingHorizontal: 24,
+        paddingVertical: 8,
         borderRadius: 10,
     },
     titleEllipsisBtn: {
         width: 28,
         height: 28,
-        borderRadius: 14,
+        borderRadius: 16,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 10,
+        marginLeft: 8,
     },
     metaText: {
         color: VisualSystem.colors.textSecondary,
         fontSize: 15,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     finishText: {
-        fontWeight: 'bold', fontSize: 15, color: VisualSystem.colors.textPrimary
+        fontWeight: '700', fontSize: 15, color: VisualSystem.colors.textPrimary
     },
     activeWorkoutTitle: {
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 24,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
-        marginRight: 10,
+        marginRight: 8,
     },
     menuIconBtn: {
         backgroundColor: VisualSystem.colors.bgMid,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 12,
+        borderRadius: 10,
     },
     metaRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     metaIcon: {
         marginRight: 8,
@@ -346,16 +346,16 @@ const styles = StyleSheet.create({
     metaTextSecondary: {
         color: VisualSystem.colors.textSecondary,
         fontSize: 15,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     activeActionsRow: {
         gap: 12,
-        marginBottom: 30,
+        marginBottom: 32,
     },
     actionBtnBlue: {
         backgroundColor: VisualSystem.colors.bgMid,
         padding: 16,
-        borderRadius: 12,
+        borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: VisualSystem.colors.borderGold,
@@ -363,38 +363,38 @@ const styles = StyleSheet.create({
     actionBtnRed: {
         backgroundColor: 'rgba(255, 68, 68, 0.1)',
         padding: 16,
-        borderRadius: 12,
+        borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'rgba(255, 68, 68, 0.2)',
     },
     actionBtnText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontWeight: '700',
+        fontSize: 15,
     },
     actionBtnTextRed: {
         color: VisualSystem.colors.danger,
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontWeight: '700',
+        fontSize: 15,
     },
     stickyNoteContainer: {
         backgroundColor: '#FCF3CF',
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 15,
+        padding: 8,
+        borderRadius: 6,
+        marginBottom: 16,
         borderLeftWidth: 4,
         borderLeftColor: '#F1C40F'
     },
     stickyNoteInput: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         fontFamily: 'System',
     },
     menuContent: {
         backgroundColor: LOG.bgElevated,
-        borderRadius: 20,
-        padding: 5,
+        borderRadius: 22,
+        padding: 4,
         width: '85%',
         alignSelf: 'center',
         borderWidth: 1,
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 12,
-        paddingHorizontal: 15,
+        paddingHorizontal: 16,
         borderBottomWidth: 1,
         borderBottomColor: LOG.borderSubtle,
     },
@@ -414,50 +414,50 @@ const styles = StyleSheet.create({
     },
     menuItemText: {
         color: LOG.textPrimary,
-        fontSize: 16,
-        fontWeight: '500',
+        fontSize: 15,
+        fontWeight: '600',
     },
     restModalContent: {
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 24,
+        borderRadius: 22,
         padding: 24,
         width: '90%',
         alignSelf: 'center',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
-        shadowColor: '#000',
+        shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.12,
         shadowRadius: 20,
     },
     restModalTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
-        marginBottom: 10
+        marginBottom: 8
     },
     restModalSub: {
         textAlign: 'center',
         color: VisualSystem.colors.textSecondary,
         fontSize: 13,
-        marginBottom: 25,
+        marginBottom: 24,
         lineHeight: 18
     },
     restInputRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 15
+        marginBottom: 16
     },
     restInputLabel: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '600'
     },
     restInputBox: {
         backgroundColor: VisualSystem.colors.bgDeep,
-        borderRadius: 12,
+        borderRadius: 10,
         width: 110,
         height: 48,
         justifyContent: 'center',
@@ -467,64 +467,64 @@ const styles = StyleSheet.create({
     },
     restInputText: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 16
+        fontWeight: '700',
+        fontSize: 15
     },
     restSubmitBtn: {
         backgroundColor: VisualSystem.colors.gold,
-        paddingVertical: 14,
-        borderRadius: 12,
+        paddingVertical: 12,
+        borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 8
     },
     restSubmitText: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
-        fontSize: 16
+        fontWeight: '700',
+        fontSize: 15
     },
     notesInput: {
         backgroundColor: VisualSystem.colors.bgMid,
         color: VisualSystem.colors.textPrimary,
-        padding: 15,
+        padding: 16,
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
         height: 60,
         textAlignVertical: 'top'
     },
     exerciseContainer: {
-        marginBottom: 30,
+        marginBottom: 32,
     },
     exHeaderSimple: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: 16,
     },
     exNameBlue: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
         color: VisualSystem.colors.goldText,
     },
     actionIconBtn: {
-        marginLeft: 15,
-        padding: 5,
+        marginLeft: 16,
+        padding: 4,
     },
     setLabelsRow: {
         flexDirection: 'row',
-        paddingHorizontal: 5,
-        marginBottom: 10,
+        paddingHorizontal: 4,
+        marginBottom: 8,
         alignItems: 'center',
     },
-    labelSet: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', width: 40, textAlign: 'center' },
-    labelPrev: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', flex: 1, textAlign: 'center' },
-    labelInput: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: 'bold', width: 75, textAlign: 'center' },
+    labelSet: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: '700', width: 40, textAlign: 'center' },
+    labelPrev: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: '700', flex: 1, textAlign: 'center' },
+    labelInput: { color: VisualSystem.colors.textSecondary, fontSize: 13, fontWeight: '700', width: 75, textAlign: 'center' },
 
     setRowSimple: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 6,
+        paddingVertical: 4,
     },
     setRowCompletedSimple: {
         opacity: 1, // Keep visible
@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 30,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 8,
+        borderRadius: 6,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
@@ -541,33 +541,33 @@ const styles = StyleSheet.create({
     },
     setIndexText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: 'bold',
+        fontWeight: '700',
         fontSize: 15,
     },
     prevPerformanceText: {
         flex: 1,
         color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '500'
+        fontSize: 15,
+        fontWeight: '600'
     },
     setInlineInput: {
         width: 75,
         height: 38,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 8,
+        borderRadius: 6,
         color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontWeight: '700',
         fontSize: 17,
-        marginHorizontal: 3,
+        marginHorizontal: 4,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)'
     },
     checkCircle: {
         width: 32,
         height: 32,
-        borderRadius: 8,
+        borderRadius: 6,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
         backgroundColor: VisualSystem.colors.bgMid,
@@ -585,12 +585,12 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 6,
         overflow: 'hidden',
-        marginTop: 6,
+        marginTop: 4,
         position: 'relative',
         justifyContent: 'center',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
-        marginHorizontal: 40
+        marginHorizontal: 32
     },
     inlineRestBarFill: {
         position: 'absolute',
@@ -602,8 +602,8 @@ const styles = StyleSheet.create({
     },
     inlineRestText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 14,
-        fontWeight: 'bold',
+        fontSize: 13,
+        fontWeight: '700',
         textAlign: 'center',
         zIndex: 1,
     },
@@ -613,30 +613,30 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 8,
     },
     addSetFullText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: 'bold',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 13,
     },
-    exerciseCard: { marginBottom: 15, padding: 15, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.15)' },
-    exHeader: { marginBottom: 15, flexDirection: 'row', justifyContent: 'space-between' },
-    exName: { fontSize: 18, fontWeight: 'bold', color: VisualSystem.colors.textPrimary },
-    setRow_Header: { flexDirection: 'row', marginBottom: 10, paddingHorizontal: 5 },
-    col_Set: { width: 40, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
-    col_Prev: { flex: 1, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
-    col_Input: { width: 60, fontSize: 10, fontWeight: 'bold', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
-    setRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, backgroundColor: VisualSystem.colors.bgMid, padding: 5, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.1)' },
+    exerciseCard: { marginBottom: 16, padding: 16, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.15)' },
+    exHeader: { marginBottom: 16, flexDirection: 'row', justifyContent: 'space-between' },
+    exName: { fontSize: 17, fontWeight: '700', color: VisualSystem.colors.textPrimary },
+    setRow_Header: { flexDirection: 'row', marginBottom: 8, paddingHorizontal: 4 },
+    col_Set: { width: 40, fontSize: 11, fontWeight: '700', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    col_Prev: { flex: 1, fontSize: 11, fontWeight: '700', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    col_Input: { width: 60, fontSize: 11, fontWeight: '700', color: VisualSystem.colors.textSecondary, textAlign: 'center' },
+    setRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, backgroundColor: VisualSystem.colors.bgMid, padding: 4, borderRadius: 6, borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.1)' },
     setRowCompleted: { backgroundColor: 'rgba(212, 175, 55, 0.1)' }, // GOLD TINT
     setNumberBadge: { width: 40, alignItems: 'center' },
-    setNumberText: { color: VisualSystem.colors.goldText, fontWeight: 'bold' },
+    setNumberText: { color: VisualSystem.colors.goldText, fontWeight: '700' },
     inputContainer: { width: 60, alignItems: 'center' },
-    inputText: { color: VisualSystem.colors.textPrimary, fontWeight: 'bold', fontSize: 16 },
+    inputText: { color: VisualSystem.colors.textPrimary, fontWeight: '700', fontSize: 15 },
     checkBtn: { width: 30, height: 30, borderRadius: 6, backgroundColor: VisualSystem.colors.bgMid, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'rgba(212, 175, 55, 0.2)' },
     checkBtnActive: { backgroundColor: VisualSystem.colors.gold, borderColor: VisualSystem.colors.borderGold },
-    addSetBtn: { alignItems: 'center', padding: 10, borderTopWidth: 1, borderTopColor: 'rgba(212, 175, 55, 0.1)', marginTop: 5 },
-    addSetText: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 12 },
+    addSetBtn: { alignItems: 'center', padding: 8, borderTopWidth: 1, borderTopColor: 'rgba(212, 175, 55, 0.1)', marginTop: 4 },
+    addSetText: { color: VisualSystem.colors.goldText, fontWeight: '700', fontSize: 11 },
 
     addExerciseBtnAction: {
         flexDirection: 'row',
@@ -649,7 +649,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(212, 175, 55, 0.3)',
         marginTop: 16,
     },
-    addExerciseTextAction: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 16 },
+    addExerciseTextAction: { color: VisualSystem.colors.goldText, fontWeight: '700', fontSize: 15 },
     cancelBtnAction: {
         padding: 16,
         alignItems: 'center',
@@ -658,81 +658,81 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgba(255, 68, 68, 0.2)',
     },
-    cancelTextAction: { color: VisualSystem.colors.danger, fontWeight: 'bold', fontSize: 15 },
+    cancelTextAction: { color: VisualSystem.colors.danger, fontWeight: '700', fontSize: 15 },
     modalFullContainer: { flex: 1, backgroundColor: VisualSystem.colors.bgMid },
     addExerciseLoading: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 10,
-        paddingVertical: 10,
+        gap: 8,
+        paddingVertical: 8,
     },
     addExerciseLoadingText: {
         color: VisualSystem.colors.goldText,
         fontSize: 13,
         fontWeight: '700',
     },
-    modalHeader: { padding: 20, paddingTop: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: VisualSystem.colors.bgMid, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' },
+    modalHeader: { padding: 16, paddingTop: 32, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: VisualSystem.colors.bgMid, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' },
     searchContainer: { 
         flexDirection: 'row', 
         alignItems: 'center', 
         backgroundColor: VisualSystem.colors.bgMid, 
         paddingHorizontal: 16,
         paddingVertical: 12,
-        marginHorizontal: 20,
+        marginHorizontal: 16,
         marginBottom: 8,
-        borderRadius: 14, 
+        borderRadius: 16, 
         borderWidth: 1, 
         borderColor: VisualSystem.colors.borderSubtle,
     },
-    searchInput: { color: VisualSystem.colors.textPrimary, fontSize: 17, flex: 1, fontWeight: '500' },
+    searchInput: { color: VisualSystem.colors.textPrimary, fontSize: 17, flex: 1, fontWeight: '600' },
 
     // Rest Timer
-    restTimerOverlay: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderGold, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 },
-    restTimerText: { color: VisualSystem.colors.goldText, fontWeight: 'bold', fontSize: 18, fontFamily: 'System' },
-    timerControlBtn: { backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderGold, borderRadius: 6, paddingHorizontal: 10, paddingVertical: 5, marginLeft: 10 },
-    timerControlText: { color: VisualSystem.colors.textPrimary, fontWeight: 'bold' },
-    startRestBtn: { position: 'absolute', bottom: 30, right: 20, width: 60, height: 60, borderRadius: 30, backgroundColor: VisualSystem.colors.gold, justifyContent: 'center', alignItems: 'center', shadowColor: "#000", boxShadow: '0px 4px 4.65px rgba(0,0,0,0.3)', elevation: 8 },
+    restTimerOverlay: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderGold, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16 },
+    restTimerText: { color: VisualSystem.colors.goldText, fontWeight: '700', fontSize: 17, fontFamily: 'System' },
+    timerControlBtn: { backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderGold, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4, marginLeft: 8 },
+    timerControlText: { color: VisualSystem.colors.textPrimary, fontWeight: '700' },
+    startRestBtn: { position: 'absolute', bottom: 30, right: 20, width: 60, height: 60, borderRadius: 28, backgroundColor: VisualSystem.colors.gold, justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.navy, boxShadow: '0px 4px 4.65px rgba(0,0,0,0.3)', elevation: 8 },
 
     quickStartBtn: {
-        borderRadius: 20,
+        borderRadius: 22,
         overflow: 'hidden',
-        marginBottom: 25,
+        marginBottom: 24,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     quickStartGradient: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
+        paddingVertical: 32,
+        paddingHorizontal: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },
     quickStartText: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: '900',
-        fontSize: 18,
+        fontWeight: '800',
+        fontSize: 17,
         letterSpacing: 0.5,
     },
     quickStartSub: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '600',
-        marginTop: 5,
+        marginTop: 4,
         opacity: 0.7,
     },
     emptyAcademy: {
-        marginTop: 60,
+        marginTop: 32,
         alignItems: 'center',
-        padding: 20,
+        padding: 16,
     },
     emptyTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
-        marginBottom: 10,
+        marginBottom: 8,
     },
     emptyTemplates: {
-        padding: 20,
+        padding: 16,
         backgroundColor: 'rgba(30, 58, 95, 0.4)',
         borderRadius: 16,
         alignItems: 'center',
@@ -746,7 +746,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: Platform.OS === 'ios' ? 52 : 36,
-        paddingBottom: 10,
+        paddingBottom: 8,
         paddingHorizontal: 16,
         backgroundColor: 'rgba(10, 31, 56, 0.92)',
         borderBottomWidth: 1,
@@ -755,7 +755,7 @@ const styles = StyleSheet.create({
     headerIconButton: {
         width: 36,
         height: 36,
-        borderRadius: 18,
+        borderRadius: 16,
         backgroundColor: 'rgba(180, 70, 70, 0.12)',
         justifyContent: 'center',
         alignItems: 'center',
@@ -766,14 +766,14 @@ const styles = StyleSheet.create({
         backgroundColor: LOG.gold,
         paddingVertical: 8,
         paddingHorizontal: 16,
-        borderRadius: 20,
+        borderRadius: 22,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.45)',
     },
     headerFinishText: {
         color: LOG.bgMid,
         fontSize: 13,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 0.5,
     },
     logTimerContainer: {
@@ -781,15 +781,15 @@ const styles = StyleSheet.create({
     },
     logTimerLabel: {
         color: LOG.goldText,
-        fontSize: 9,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         letterSpacing: 1,
-        marginBottom: 2,
+        marginBottom: 4,
         opacity: 0.7,
     },
     logTimerText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '800',
         fontVariant: ['tabular-nums'],
     },
@@ -797,24 +797,24 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '800',
         color: LOG.textPrimary,
-        marginBottom: 2,
+        marginBottom: 4,
         letterSpacing: -0.3,
         paddingHorizontal: 0,
     },
     logSessionMeta: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
+        gap: 4,
         marginBottom: 12,
     },
     logSessionMetaText: {
         color: LOG.textTertiary,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '600',
     },
     logSessionMetaDot: {
         color: LOG.textTertiary,
-        fontSize: 12,
+        fontSize: 11,
         opacity: 0.5,
     },
     logNotesToggle: {
@@ -836,10 +836,10 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     logNotesInput: {
-        fontSize: 14,
+        fontSize: 13,
         color: LOG.textSecondary,
         marginBottom: 12,
-        padding: 10,
+        padding: 8,
         backgroundColor: LOG.glassFill,
         borderRadius: 10,
         borderWidth: 1,
@@ -849,9 +849,9 @@ const styles = StyleSheet.create({
     },
     logExContainer: {
         backgroundColor: LOG.glassFill,
-        borderRadius: 14,
+        borderRadius: 16,
         padding: 12,
-        marginBottom: 18,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
@@ -859,24 +859,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     logExName: {
         flex: 1,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '800',
         color: LOG.textPrimary,
     },
     logExCategory: {
-        fontSize: 9,
+        fontSize: 11,
         color: VisualSystem.colors.textSecondary,
         textTransform: 'uppercase',
         letterSpacing: 1,
         fontWeight: '700',
-        marginTop: 1,
+        marginTop: 4,
     },
     logExMenuBtn: {
-        padding: 6,
+        padding: 4,
         backgroundColor: VisualSystem.colors.bgMid,
         borderRadius: 10,
         borderWidth: 1,
@@ -889,8 +889,8 @@ const styles = StyleSheet.create({
     logStickyNote: {
         backgroundColor: LOG.goldMuted,
         paddingHorizontal: 12,
-        paddingVertical: 10,
-        borderRadius: 12,
+        paddingVertical: 8,
+        borderRadius: 10,
         marginBottom: 8,
         borderWidth: 1,
         borderColor: LOG.borderGold,
@@ -898,8 +898,8 @@ const styles = StyleSheet.create({
     logStickyNoteHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
-        marginBottom: 6,
+        gap: 4,
+        marginBottom: 4,
     },
     logStickyNoteHeaderSpacer: {
         flex: 1,
@@ -916,7 +916,7 @@ const styles = StyleSheet.create({
     },
     logStickyNoteInput: {
         color: LOG.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         lineHeight: 20,
         minHeight: 36,
         padding: 0,
@@ -924,14 +924,14 @@ const styles = StyleSheet.create({
     logTableLabels: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 6,
+        marginBottom: 4,
         paddingTop: 8,
         borderTopWidth: StyleSheet.hairlineWidth,
         borderTopColor: LOG.borderSubtle,
     },
     logLabel: {
         color: VisualSystem.colors.textSecondary,
-        fontSize: 8,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
@@ -941,7 +941,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 4,
         marginBottom: 0,
-        borderRadius: 8,
+        borderRadius: 6,
         gap: 4,
     },
     logSetRowCompleted: {
@@ -959,7 +959,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: LOG.bgElevated,
-        borderRadius: 7,
+        borderRadius: 6,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
@@ -976,7 +976,7 @@ const styles = StyleSheet.create({
     logInput: {
         height: 32,
         backgroundColor: LOG.bgElevated,
-        borderRadius: 7,
+        borderRadius: 6,
         color: LOG.textPrimary,
         textAlign: 'center',
         fontSize: 15,
@@ -990,7 +990,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: LOG.bgElevated,
-        borderRadius: 7,
+        borderRadius: 6,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
@@ -1001,7 +1001,7 @@ const styles = StyleSheet.create({
     logRestTimerBar: {
         height: 20,
         backgroundColor: 'rgba(5, 11, 24, 0.4)',
-        borderRadius: 8,
+        borderRadius: 6,
         marginTop: 4,
         marginBottom: 8,
         overflow: 'hidden',
@@ -1019,8 +1019,8 @@ const styles = StyleSheet.create({
     },
     logRestTimerText: {
         color: VisualSystem.colors.success,
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         textAlign: 'center',
         letterSpacing: 1,
     },
@@ -1030,43 +1030,43 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 8,
+        borderRadius: 6,
     },
     logAddSetText: {
         color: LOG.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.3,
     },
     logAddExBtn: {
         backgroundColor: 'transparent',
-        paddingVertical: 14,
-        borderRadius: 12,
+        paddingVertical: 12,
+        borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 15,
+        marginTop: 8,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: LOG.borderGold,
     },
     logAddExText: {
         color: LOG.goldText,
         fontWeight: '800',
-        fontSize: 14,
+        fontSize: 13,
         letterSpacing: 1,
     },
     premiumCancelWorkoutBtn: {
         paddingVertical: 16,
         alignItems: 'center',
-        marginBottom: 60,
+        marginBottom: 32,
         backgroundColor: 'rgba(255, 68, 68, 0.03)',
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: 'rgba(255, 68, 68, 0.15)',
     },
     premiumCancelWorkoutText: {
         color: VisualSystem.colors.danger,
-        fontSize: 14,
-        fontWeight: 'bold',
+        fontSize: 13,
+        fontWeight: '700',
         letterSpacing: 1,
         textTransform: 'uppercase',
     },
@@ -1074,33 +1074,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: LOG.glassFill,
-        borderRadius: 14,
-        paddingHorizontal: 14,
+        borderRadius: 16,
+        paddingHorizontal: 12,
         paddingVertical: 12,
-        marginBottom: 14,
+        marginBottom: 12,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
     historySearchInput: {
         flex: 1,
         color: LOG.textPrimary,
-        fontSize: 14,
-        fontWeight: '500',
+        fontSize: 13,
+        fontWeight: '600',
         marginLeft: 8,
     },
     historyTabRow: {
         flexDirection: 'row',
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 12,
+        borderRadius: 10,
         padding: 4,
-        marginBottom: 14,
+        marginBottom: 12,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
     historyTab: {
         flex: 1,
-        paddingVertical: 10,
-        borderRadius: 9,
+        paddingVertical: 8,
+        borderRadius: 10,
         alignItems: 'center',
     },
     historyTabActive: {
@@ -1110,7 +1110,7 @@ const styles = StyleSheet.create({
     },
     historyTabText: {
         color: LOG.textTertiary,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
     },
     historyTabTextActive: {
@@ -1119,7 +1119,7 @@ const styles = StyleSheet.create({
     },
     historyGroupHeader: {
         color: LOG.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 1,
         textTransform: 'uppercase',
@@ -1128,20 +1128,20 @@ const styles = StyleSheet.create({
     },
     historyCard: {
         backgroundColor: LOG.glassFill,
-        borderRadius: 14,
+        borderRadius: 16,
         marginBottom: 8,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
         overflow: 'hidden',
     },
     historyCardBody: {
-        paddingHorizontal: 14,
+        paddingHorizontal: 12,
         paddingVertical: 12,
     },
     historyCardTop: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
+        gap: 8,
     },
     historyCardMain: {
         flex: 1,
@@ -1150,7 +1150,7 @@ const styles = StyleSheet.create({
         color: LOG.textPrimary,
         fontSize: 15,
         fontWeight: '700',
-        marginBottom: 3,
+        marginBottom: 4,
         letterSpacing: -0.2,
     },
     historyMetaLine: {
@@ -1176,20 +1176,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 6,
+        paddingVertical: 4,
         borderTopWidth: 1,
         borderTopColor: LOG.borderSubtle,
-        gap: 6,
+        gap: 4,
     },
     historyExpandText: {
         color: LOG.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.3,
     },
     historyExercisesList: {
-        paddingHorizontal: 14,
-        paddingBottom: 10,
+        paddingHorizontal: 12,
+        paddingBottom: 8,
         gap: 4,
         borderTopWidth: 1,
         borderTopColor: LOG.borderSubtle,
@@ -1200,21 +1200,21 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         marginTop: 4,
         marginBottom: 8,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
         backgroundColor: LOG.bgElevated,
     },
     historyShowMoreText: {
         color: LOG.textSecondary,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
     },
     historyCountBadge: {
         color: LOG.textTertiary,
         fontSize: 11,
         fontWeight: '600',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     historyExChip: {
         flexDirection: 'row',
@@ -1224,26 +1224,26 @@ const styles = StyleSheet.create({
     historyExDot: {
         width: 5,
         height: 5,
-        borderRadius: 3,
+        borderRadius: 6,
         backgroundColor: LOG.gold,
         opacity: 0.7,
     },
     historyExText: {
         color: LOG.textSecondary,
-        fontSize: 12,
-        fontWeight: '500',
+        fontSize: 11,
+        fontWeight: '600',
     },
     historyExMore: {
         color: LOG.textTertiary,
         fontSize: 11,
-        marginLeft: 13,
+        marginLeft: 12,
         fontWeight: '600',
     },
     // Coach UI styles
     coachCard: {
         marginHorizontal: 0,
-        marginBottom: 25,
-        borderRadius: 20,
+        marginBottom: 24,
+        borderRadius: 22,
         overflow: 'hidden',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
@@ -1260,31 +1260,31 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 15,
+        marginRight: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     coachCardTitle: {
-        fontSize: 14,
-        fontWeight: '900',
+        fontSize: 13,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
         letterSpacing: 1,
     },
     coachCardSub: {
-        fontSize: 12,
+        fontSize: 11,
         color: VisualSystem.colors.textSecondary,
     },
     coachBadge: {
         backgroundColor: VisualSystem.colors.gold,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 8,
+        borderRadius: 6,
         marginRight: 12,
     },
     coachBadgeText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
     },
     coachChatContainer: {
         flex: 1,
@@ -1292,8 +1292,8 @@ const styles = StyleSheet.create({
     },
     coachChatHeader: {
         paddingTop: Platform.OS === 'ios' ? 60 : 40,
-        paddingBottom: 20,
-        paddingHorizontal: 20,
+        paddingBottom: 16,
+        paddingHorizontal: 16,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -1308,8 +1308,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     coachChatTitle: {
-        fontSize: 16,
-        fontWeight: '900',
+        fontSize: 15,
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: 1,
     },
@@ -1318,7 +1318,7 @@ const styles = StyleSheet.create({
     },
     msgBubble: {
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 16,
         maxWidth: '85%',
     },
     msgAI: {
@@ -1331,12 +1331,12 @@ const styles = StyleSheet.create({
     msgAIAvatar: {
         width: 24,
         height: 24,
-        borderRadius: 12,
+        borderRadius: 10,
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 5,
-        marginRight: 10,
+        marginTop: 4,
+        marginRight: 8,
     },
     msgTextContainer: {
         padding: 12,
@@ -1354,7 +1354,7 @@ const styles = StyleSheet.create({
     },
     msgText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         lineHeight: 22,
     },
     msgTextUserText: {
@@ -1363,7 +1363,7 @@ const styles = StyleSheet.create({
     },
     coachChatInputArea: {
         flexDirection: 'row',
-        padding: 15,
+        padding: 16,
         paddingBottom: Platform.OS === 'ios' ? 20 : 15,
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopWidth: 1,
@@ -1373,10 +1373,10 @@ const styles = StyleSheet.create({
     coachChatInput: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 20,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        paddingTop: 10,
+        borderRadius: 22,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        paddingTop: 8,
         color: VisualSystem.colors.textPrimary,
         fontSize: 15,
         maxHeight: 100,
@@ -1390,19 +1390,19 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 10,
+        marginLeft: 8,
     },
     planPreviewInBubble: {
-        marginTop: 10,
-        paddingTop: 10,
+        marginTop: 8,
+        paddingTop: 8,
         borderTopWidth: 1,
         borderTopColor: 'rgba(212, 175, 55, 0.2)',
     },
     planPreviewLine: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 12,
+        fontSize: 11,
         lineHeight: 18,
-        marginBottom: 2,
+        marginBottom: 4,
     },
     coachPlanActions: {
         paddingHorizontal: 16,
@@ -1413,15 +1413,15 @@ const styles = StyleSheet.create({
     },
     coachPlanActionsTitle: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.5,
-        marginBottom: 10,
+        marginBottom: 8,
         textTransform: 'uppercase',
     },
     coachPlanBtnRow: {
         flexDirection: 'row',
-        gap: 10,
+        gap: 8,
     },
     coachPlanBtnPrimary: {
         flex: 1,
@@ -1431,12 +1431,12 @@ const styles = StyleSheet.create({
         gap: 8,
         backgroundColor: VisualSystem.colors.gold,
         paddingVertical: 12,
-        borderRadius: 12,
+        borderRadius: 10,
     },
     coachPlanBtnPrimaryText: {
         color: VisualSystem.colors.textPrimary,
         fontWeight: '800',
-        fontSize: 14,
+        fontSize: 13,
     },
     coachPlanBtnSecondary: {
         flex: 1,
@@ -1446,14 +1446,14 @@ const styles = StyleSheet.create({
         gap: 8,
         backgroundColor: VisualSystem.colors.bgMid,
         paddingVertical: 12,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.35)',
     },
     coachPlanBtnSecondaryText: {
         color: VisualSystem.colors.goldText,
         fontWeight: '700',
-        fontSize: 14,
+        fontSize: 13,
     },
     coachPlanSaveLink: {
         alignItems: 'center',
@@ -1461,7 +1461,7 @@ const styles = StyleSheet.create({
     },
     coachPlanSaveLinkText: {
         color: VisualSystem.colors.textSecondary,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '600',
     },
     coachPlanHint: {
@@ -1487,7 +1487,7 @@ const styles = StyleSheet.create({
     },
     coachPreparingText: {
         color: LOG.goldBright,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '600',
         marginTop: 12,
     },
@@ -1506,20 +1506,20 @@ const styles = StyleSheet.create({
         color: LOG.textOnNavy,
         fontSize: 15,
         fontWeight: '600',
-        marginTop: 14,
+        marginTop: 12,
     },
 
     dashboardScroll: {
         flexGrow: 1,
-        paddingBottom: 120,
+        paddingBottom: 32,
     },
     dashboardContent: {
-        paddingHorizontal: 20,
-        paddingTop: 10,
-        gap: 22,
+        paddingHorizontal: 16,
+        paddingTop: 8,
+        gap: 24,
     },
     dashboardSection: {
-        gap: 10,
+        gap: 8,
     },
     dashboardSectionTitle: {
         fontSize: 11,
@@ -1527,31 +1527,31 @@ const styles = StyleSheet.create({
         color: LOG.textTertiary,
         letterSpacing: 1.3,
         textTransform: 'uppercase',
-        marginLeft: 2,
+        marginLeft: 4,
     },
     missionPanel: {
         ...glassSurface,
         borderRadius: 22,
-        padding: 18,
-        gap: 14,
+        padding: 16,
+        gap: 12,
         borderColor: LOG.borderSubtle,
         backgroundColor: LOG.glassFill,
     },
     missionHeader: {
         alignItems: 'center',
-        gap: 6,
-        paddingBottom: 2,
+        gap: 4,
+        paddingBottom: 4,
     },
     missionEyebrow: {
-        fontSize: 10,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: LOG.goldText,
         letterSpacing: 2,
         opacity: 0.85,
     },
     missionTitle: {
         fontSize: 24,
-        fontWeight: '900',
+        fontWeight: '800',
         color: LOG.textPrimary,
         letterSpacing: 0.2,
     },
@@ -1566,23 +1566,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        borderRadius: 18,
+        borderRadius: 16,
         backgroundColor: LOG.glassFill,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
-        gap: 14,
+        gap: 12,
     },
     toolCardIcon: {
         backgroundColor: LOG.goldMuted,
     },
     toolCardTitle: {
         color: LOG.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '800',
     },
     toolCardSub: {
-        fontSize: 12,
-        marginTop: 3,
+        fontSize: 11,
+        marginTop: 4,
         lineHeight: 16,
     },
     templateScroll: {
@@ -1595,7 +1595,7 @@ const styles = StyleSheet.create({
     locationCard: {
         ...glassSurfaceGold,
         padding: 16,
-        marginBottom: 20,
+        marginBottom: 16,
     },
     locationInfo: {
         flexDirection: 'row',
@@ -1605,34 +1605,34 @@ const styles = StyleSheet.create({
     locationIcon: {
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 22,
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
     },
     locationLabel: {
-        fontSize: 10,
+        fontSize: 11,
         color: VisualSystem.colors.textSecondary,
-        fontWeight: 'bold',
+        fontWeight: '700',
         letterSpacing: 1,
     },
     locationName: {
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
         color: VisualSystem.colors.textPrimary,
     },
     changeButton: {
         backgroundColor: 'rgba(212, 175, 55, 0.1)',
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
     },
     changeButtonText: {
         color: VisualSystem.colors.goldText,
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 11,
+        fontWeight: '700',
     },
     locationDivider: {
         height: 1,
@@ -1646,17 +1646,17 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         color: '#A9A9A9',
-        fontSize: 12,
+        fontSize: 11,
     },
     startActions: {
-        gap: 10,
+        gap: 8,
     },
     startWorkoutCard: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        borderRadius: 18,
-        gap: 14,
+        borderRadius: 16,
+        gap: 12,
         overflow: 'hidden',
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.35)',
@@ -1673,12 +1673,12 @@ const styles = StyleSheet.create({
     startWorkoutTitle: {
         color: LOG.textOnGold,
         fontSize: 17,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 0.2,
     },
     startWorkoutSub: {
-        fontSize: 12,
-        marginTop: 3,
+        fontSize: 11,
+        marginTop: 4,
         lineHeight: 16,
         color: 'rgba(12, 35, 64, 0.72)',
     },
@@ -1686,23 +1686,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        borderRadius: 18,
+        borderRadius: 16,
         backgroundColor: LOG.glassFill,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
-        gap: 14,
+        gap: 12,
     },
     aiCoachIcon: {
         backgroundColor: LOG.goldMuted,
     },
     aiCoachTitle: {
         color: LOG.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '800',
     },
     aiCoachSub: {
-        fontSize: 12,
-        marginTop: 3,
+        fontSize: 11,
+        marginTop: 4,
         lineHeight: 16,
     },
     activityLogBlock: {
@@ -1712,36 +1712,36 @@ const styles = StyleSheet.create({
         borderTopColor: LOG.borderSubtle,
     },
     activityLogLabel: {
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
         color: LOG.textTertiary,
         letterSpacing: 1.1,
-        marginLeft: 2,
+        marginLeft: 4,
     },
     activityLogBar: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(212,175,55,0.06)',
-        borderRadius: 14,
+        borderRadius: 16,
         paddingLeft: 12,
-        paddingRight: 5,
-        paddingVertical: 5,
+        paddingRight: 4,
+        paddingVertical: 4,
         borderWidth: 1,
         borderColor: 'rgba(212,175,55,0.2)',
     },
     activityLogInput: {
         flex: 1,
         color: LOG.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '600',
-        paddingVertical: 9,
+        paddingVertical: 8,
         paddingRight: 8,
     },
     activityLogBtn: {
         backgroundColor: LOG.gold,
         borderRadius: 10,
-        paddingHorizontal: 14,
-        paddingVertical: 9,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         minWidth: 50,
         alignItems: 'center',
         justifyContent: 'center',
@@ -1758,7 +1758,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: LOG.textTertiary,
         lineHeight: 15,
-        marginLeft: 2,
+        marginLeft: 4,
     },
     activityLogHintSuccess: {
         color: LOG.goldText,
@@ -1769,11 +1769,11 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.overlay,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 30,
+        padding: 32,
     },
     choiceModalContent: {
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 24,
+        borderRadius: 22,
         padding: 24,
         width: '100%',
         borderWidth: 1,
@@ -1781,13 +1781,13 @@ const styles = StyleSheet.create({
     },
     choiceTitle: {
         fontSize: 24,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         textAlign: 'center',
         marginBottom: 8,
     },
     choiceSubTitle: {
-        fontSize: 14,
+        fontSize: 13,
         color: VisualSystem.colors.textSecondary,
         textAlign: 'center',
         marginBottom: 24,
@@ -1796,43 +1796,43 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 16,
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         borderRadius: 16,
         marginBottom: 12,
-        gap: 15,
+        gap: 16,
     },
     choiceBtnText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
     },
     choiceClose: {
-        marginTop: 10,
-        padding: 10,
+        marginTop: 8,
+        padding: 8,
         alignItems: 'center',
     },
     choiceCloseText: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 1,
     },
     gymPickerItem: {
-        paddingVertical: 15,
+        paddingVertical: 16,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(212, 175, 55, 0.1)',
     },
     gymPickerText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '700',
     },
     historyMetricContainer: {
         flexDirection: 'row',
-        gap: 15,
-        marginTop: 10,
+        gap: 16,
+        marginTop: 8,
     },
     pillText: {
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
         letterSpacing: 0.5,
@@ -1842,37 +1842,37 @@ const styles = StyleSheet.create({
     },
     // New Exercise Modal Styles
     newExLabel: {
-        fontSize: 12,
-        fontWeight: '900',
+        fontSize: 11,
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        marginLeft: 20,
-        marginTop: 20,
-        marginBottom: 10,
+        marginLeft: 16,
+        marginTop: 16,
+        marginBottom: 8,
         letterSpacing: 1,
         textTransform: 'uppercase',
     },
     newExInput: {
         backgroundColor: VisualSystem.colors.bgDeep,
-        borderRadius: 12,
-        marginHorizontal: 20,
+        borderRadius: 10,
+        marginHorizontal: 16,
         padding: 16,
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
+        fontSize: 15,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     newExChipContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        paddingHorizontal: 15,
-        marginBottom: 10,
+        paddingHorizontal: 16,
+        marginBottom: 8,
     },
     newExChip: {
         backgroundColor: VisualSystem.colors.bgDeep,
         paddingHorizontal: 16,
-        paddingVertical: 10,
-        borderRadius: 20,
-        margin: 5,
+        paddingVertical: 8,
+        borderRadius: 22,
+        margin: 4,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.1)',
     },
@@ -1887,29 +1887,29 @@ const styles = StyleSheet.create({
     },
     newExChipTextActive: {
         color: VisualSystem.colors.textPrimary,
-        fontWeight: 'bold',
+        fontWeight: '700',
     },
     newExDropdown: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: VisualSystem.colors.bgDeep,
-        borderRadius: 12,
-        marginHorizontal: 20,
+        borderRadius: 10,
+        marginHorizontal: 16,
         padding: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
-        marginBottom: 30,
+        marginBottom: 32,
     },
     newExDropdownText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 16,
-        fontWeight: '500',
+        fontSize: 15,
+        fontWeight: '600',
     },
     newExSaveBtn: {
         color: VisualSystem.colors.goldText,
-        fontWeight: '900',
-        fontSize: 16,
+        fontWeight: '800',
+        fontSize: 15,
     },
     newExSaveBtnDisabled: {
         opacity: 0.3,
@@ -1917,8 +1917,8 @@ const styles = StyleSheet.create({
     // Alphabetical Index Styles
     historyCardMini: {
         backgroundColor: LOG.glassFill,
-        borderRadius: 14,
-        padding: 14,
+        borderRadius: 16,
+        padding: 12,
         marginBottom: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -1929,8 +1929,8 @@ const styles = StyleSheet.create({
     historyCardMiniDate: {
         color: LOG.textPrimary,
         fontWeight: '700',
-        fontSize: 14,
-        marginBottom: 3,
+        fontSize: 13,
+        marginBottom: 4,
     },
     historyCardMiniVol: {
         color: LOG.textTertiary,
@@ -1938,26 +1938,26 @@ const styles = StyleSheet.create({
     },
     historyCardMiniWeight: {
         color: LOG.goldText,
-        fontWeight: '900',
-        fontSize: 18,
+        fontWeight: '800',
+        fontSize: 17,
     },
     historyCardMiniUnit: {
         color: LOG.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '700',
     },
     progressPanel: {
         ...glassSurface,
-        borderRadius: 18,
+        borderRadius: 16,
         overflow: 'hidden',
-        padding: 14,
+        padding: 12,
         backgroundColor: LOG.glassFill,
         borderColor: LOG.borderSubtle,
     },
     logEmptyState: {
         alignItems: 'center',
-        paddingVertical: 28,
-        paddingHorizontal: 20,
+        paddingVertical: 24,
+        paddingHorizontal: 16,
         marginBottom: 12,
         borderRadius: 16,
         backgroundColor: LOG.glassFill,
@@ -1968,7 +1968,7 @@ const styles = StyleSheet.create({
     logEmptyIcon: {
         width: 48,
         height: 48,
-        borderRadius: 24,
+        borderRadius: 22,
         backgroundColor: 'rgba(212, 175, 55, 0.12)',
         alignItems: 'center',
         justifyContent: 'center',
@@ -1978,7 +1978,7 @@ const styles = StyleSheet.create({
         color: LOG.textPrimary,
         fontSize: 17,
         fontWeight: '800',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     logEmptySub: {
         textAlign: 'center',
@@ -2003,14 +2003,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 8,
         backgroundColor: LOG.gold,
-        borderRadius: 12,
+        borderRadius: 10,
         paddingVertical: 12,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.4)',
     },
     logAddExBtnPrimaryText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '800',
         letterSpacing: 0.2,
     },
@@ -2025,9 +2025,9 @@ const styles = StyleSheet.create({
     },
     progressSelector: {
         backgroundColor: LOG.bgElevated,
-        borderRadius: 14,
-        paddingHorizontal: 14,
-        paddingVertical: 14,
+        borderRadius: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 12,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -2043,13 +2043,13 @@ const styles = StyleSheet.create({
     },
     selectorPlaceholder: {
         color: LOG.textTertiary,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     selectorDropdown: {
         backgroundColor: LOG.bgElevated,
-        borderRadius: 14,
-        padding: 10,
-        marginBottom: 14,
+        borderRadius: 16,
+        padding: 8,
+        marginBottom: 12,
         borderWidth: 1,
         borderColor: LOG.borderGold,
         ...VisualSystem.shadow.card,
@@ -2062,41 +2062,41 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
-        fontSize: 14,
+        fontSize: 13,
     },
     selectorItem: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 12,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         borderBottomWidth: 1,
         borderBottomColor: LOG.borderSubtle,
     },
     selectorItemText: {
         color: LOG.textPrimary,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '600',
         flex: 1,
     },
     progressStatsRow: {
         flexDirection: 'row',
         gap: 8,
-        marginBottom: 14,
+        marginBottom: 12,
     },
     progressStatCard: {
         flex: 1,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: 12,
+        borderRadius: 10,
         paddingVertical: 12,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
     },
     progressStatLabel: {
         color: LOG.textTertiary,
-        fontSize: 9,
+        fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.8,
         textTransform: 'uppercase',
@@ -2104,14 +2104,14 @@ const styles = StyleSheet.create({
     },
     progressStatValue: {
         color: LOG.goldText,
-        fontSize: 18,
-        fontWeight: '900',
+        fontSize: 17,
+        fontWeight: '800',
     },
     progressStatUnit: {
         color: LOG.textTertiary,
-        fontSize: 9,
+        fontSize: 11,
         fontWeight: '700',
-        marginTop: 2,
+        marginTop: 4,
     },
     graphContainer: {
         backgroundColor: VisualSystem.colors.bgMid,
@@ -2139,19 +2139,19 @@ const styles = StyleSheet.create({
     graphVal: {
         color: LOG.goldText,
         fontSize: 11,
-        fontWeight: '900',
+        fontWeight: '800',
         letterSpacing: 0.3,
     },
     graphDateRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        marginTop: 6,
+        marginTop: 4,
         paddingHorizontal: 4,
     },
     graphDateText: {
         color: LOG.textTertiary,
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '600',
     },
     emptyGraph: {
@@ -2166,8 +2166,8 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     progressSubsection: {
-        marginTop: 18,
-        marginBottom: 10,
+        marginTop: 16,
+        marginBottom: 8,
     },
     progressSubsectionTitle: {
         color: LOG.textTertiary,
@@ -2175,7 +2175,7 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         letterSpacing: 1,
         textTransform: 'uppercase',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     historySectionLabel: {
         flexDirection: 'row',
@@ -2191,8 +2191,8 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     historyEmpty: {
-        paddingVertical: 36,
-        paddingHorizontal: 20,
+        paddingVertical: 32,
+        paddingHorizontal: 16,
         alignItems: 'center',
         backgroundColor: LOG.glassFill,
         borderRadius: 16,
@@ -2200,8 +2200,8 @@ const styles = StyleSheet.create({
         borderColor: LOG.borderSubtle,
     },
     historyCollapsedHint: {
-        paddingVertical: 28,
-        paddingHorizontal: 20,
+        paddingVertical: 24,
+        paddingHorizontal: 16,
         alignItems: 'center',
         backgroundColor: LOG.glassFill,
         borderRadius: 16,
@@ -2212,7 +2212,7 @@ const styles = StyleSheet.create({
         color: LOG.textPrimary,
         fontSize: 15,
         fontWeight: '800',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     progressSectionToggle: {
         flexDirection: 'row',
@@ -2223,7 +2223,7 @@ const styles = StyleSheet.create({
     },
     progressSectionHint: {
         marginTop: 4,
-        fontSize: 12,
+        fontSize: 11,
     },
     sessionsToggleRow: {
         flexDirection: 'row',
@@ -2232,7 +2232,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     sessionsCollapsedHint: {
-        fontSize: 12,
+        fontSize: 11,
         marginBottom: 8,
     },
     indexSidebar: {
@@ -2240,16 +2240,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: VisualSystem.colors.bgMid,
-        paddingVertical: 10,
+        paddingVertical: 8,
         borderLeftWidth: 1,
         borderLeftColor: 'rgba(212, 175, 55, 0.1)',
         height: '100%',
     },
     indexLetter: {
         fontSize: 11,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        paddingVertical: 3,
+        paddingVertical: 4,
         opacity: 0.8,
     },
 });
@@ -3093,7 +3093,7 @@ export default function GymScreen() {
                         </Pressable>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={styles.coachChatTitle}>LEPRECHAUN COACH</Text>
-                            <SecondaryText style={{ fontSize: 10, color: VisualSystem.colors.goldText }}>ONLINE & GAINING</SecondaryText>
+                            <SecondaryText style={{ fontSize: 11, color: VisualSystem.colors.goldText }}>ONLINE & GAINING</SecondaryText>
                         </View>
                         <View style={{ width: 40 }} />
                     </View>
@@ -3101,7 +3101,7 @@ export default function GymScreen() {
                     <ScrollView 
                         ref={chatScrollRef}
                         style={styles.coachChatScroll}
-                        contentContainerStyle={{ padding: 20 }}
+                        contentContainerStyle={{ padding: 16 }}
                         keyboardShouldPersistTaps="handled"
                     >
                         {coachMessages.map((msg, index) => (
@@ -3743,7 +3743,7 @@ export default function GymScreen() {
                                         addSet(exIdx);
                                     }}
                                 >
-                                    <FontAwesome name="plus" size={12} color={VisualSystem.colors.gold} style={{ marginRight: 6 }} />
+                                    <FontAwesome name="plus" size={12} color={VisualSystem.colors.gold} style={{ marginRight: 4 }} />
                                     <Text style={styles.logAddSetText}>Add set</Text>
                                 </TouchableOpacity>
                             </Animated.View>
@@ -4138,12 +4138,12 @@ export default function GymScreen() {
         >
             <View style={styles.modalOverlay}>
                 <View style={[styles.modalContent, { borderColor: VisualSystem.colors.danger }]}>
-                    <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                        <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: 'rgba(255, 68, 68, 0.1)', justifyContent: 'center', alignItems: 'center', marginBottom: 15 }}>
+                    <View style={{ alignItems: 'center', marginBottom: 16 }}>
+                        <View style={{ width: 50, height: 50, borderRadius: 22, backgroundColor: 'rgba(255, 68, 68, 0.1)', justifyContent: 'center', alignItems: 'center', marginBottom: 16 }}>
                             <FontAwesome name="exclamation-triangle" size={24} color="#FF4444" />
                         </View>
                         <Text style={[styles.modalTitle, { textAlign: 'center' }]}>Cancel Workout?</Text>
-                        <SecondaryText style={{ textAlign: 'center', marginTop: 10 }}>
+                        <SecondaryText style={{ textAlign: 'center', marginTop: 8 }}>
                             Are you sure you want to cancel this workout just in case it's clicked by mistake?
                         </SecondaryText>
                     </View>
@@ -4156,10 +4156,10 @@ export default function GymScreen() {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={{ marginTop: 15, alignItems: 'center', padding: 10 }}
+                        style={{ marginTop: 16, alignItems: 'center', padding: 8 }}
                         onPress={() => setConfirmCancelVisible(false)}
                     >
-                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>No, Go Back</SecondaryText>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>No, Go Back</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -4219,12 +4219,12 @@ export default function GymScreen() {
                         </Pressable>
                         <Text style={styles.modalTitle}>Add Exercise</Text>
                         <Pressable onPress={() => setCreateExerciseVisible(true)} hitSlop={8}>
-                            <Text style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>NEW</Text>
+                            <Text style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>NEW</Text>
                         </Pressable>
                     </View>
 
                     <View style={styles.searchContainer}>
-                        <FontAwesome name="search" size={18} color="rgba(212,175,55,0.4)" style={{ marginRight: 15 }} />
+                        <FontAwesome name="search" size={18} color="rgba(212,175,55,0.4)" style={{ marginRight: 16 }} />
                         <TextInput
                             style={styles.searchInput}
                             placeholder="Search exercises..."
@@ -4342,7 +4342,7 @@ export default function GymScreen() {
             >
                 <View style={styles.modalOverlay}>
                     <View style={[styles.modalContent, { height: '80%', padding: 0 }]}>
-                        <View style={[styles.modalHeader, { backgroundColor: 'transparent', paddingTop: 20 }]}>
+                        <View style={[styles.modalHeader, { backgroundColor: 'transparent', paddingTop: 16 }]}>
                             <TouchableOpacity onPress={() => setCreateExerciseVisible(false)}>
                                 <FontAwesome name="times" size={24} color={VisualSystem.colors.textPrimary} />
                             </TouchableOpacity>
@@ -4389,7 +4389,7 @@ export default function GymScreen() {
                                 </TouchableOpacity>
 
                                 {showExTypeDropdown && (
-                                    <View style={{ backgroundColor: VisualSystem.colors.bgDeep, marginHorizontal: 20, borderRadius: 12, overflow: 'hidden', marginBottom: 20 }}>
+                                    <View style={{ backgroundColor: VisualSystem.colors.bgDeep, marginHorizontal: 16, borderRadius: 10, overflow: 'hidden', marginBottom: 16 }}>
                                         {exTypes.map(type => (
                                             <TouchableOpacity 
                                                 key={type}
@@ -4578,8 +4578,8 @@ function RestTimerModal({
                         <Text style={styles.restSubmitText}>Update Rest Timers</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ marginTop: 15, alignItems: 'center' }} onPress={onClose}>
-                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontSize: 16 }}>Cancel</SecondaryText>
+                    <TouchableOpacity style={{ marginTop: 16, alignItems: 'center' }} onPress={onClose}>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontSize: 15 }}>Cancel</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -4607,23 +4607,23 @@ function PlateCalculator({ targetWeight, onClose }: { targetWeight: number, onCl
         <Modal visible={true} transparent animationType="fade">
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
-                    <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                        <FontAwesome name="calculator" size={32} color={VisualSystem.colors.gold} style={{ marginBottom: 15 }} />
+                    <View style={{ alignItems: 'center', marginBottom: 16 }}>
+                        <FontAwesome name="calculator" size={32} color={VisualSystem.colors.gold} style={{ marginBottom: 16 }} />
                         <Text style={styles.modalTitle}>Plate Calculator</Text>
-                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: 'bold' }}>{targetWeight} LBS TOTAL</SecondaryText>
+                        <SecondaryText style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>{targetWeight} LBS TOTAL</SecondaryText>
                     </View>
 
-                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 12, padding: 15, marginBottom: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 12, color: VisualSystem.colors.textTertiary, marginBottom: 10, textTransform: 'uppercase' }}>Plates Per Side</Text>
+                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 10, padding: 16, marginBottom: 16 }}>
+                        <Text style={{ fontWeight: '700', fontSize: 11, color: VisualSystem.colors.textTertiary, marginBottom: 8, textTransform: 'uppercase' }}>Plates Per Side</Text>
                         {Object.keys(result).length > 0 ? (
                             Object.entries(result).sort((a,b) => Number(b[0]) - Number(a[0])).map(([weight, count]) => (
                                 <View key={weight} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' }}>
-                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{weight} LB</Text>
-                                    <Text style={{ color: VisualSystem.colors.goldText, fontSize: 18, fontWeight: '900' }}>x {count}</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 17, fontWeight: '800' }}>{weight} LB</Text>
+                                    <Text style={{ color: VisualSystem.colors.goldText, fontSize: 17, fontWeight: '800' }}>x {count}</Text>
                                 </View>
                             ))
                         ) : (
-                            <View style={{ paddingVertical: 20, alignItems: 'center' }}>
+                            <View style={{ paddingVertical: 16, alignItems: 'center' }}>
                                 <Text style={{ color: VisualSystem.colors.textSecondary, fontWeight: '600' }}>45 LB BAR ONLY</Text>
                             </View>
                         )}
@@ -4694,22 +4694,22 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
         <Modal visible={true} transparent animationType="fade">
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
-                    <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                        <FontAwesome name="fire" size={32} color="#E67E22" style={{ marginBottom: 15 }} />
+                    <View style={{ alignItems: 'center', marginBottom: 16 }}>
+                        <FontAwesome name="fire" size={32} color="#E67E22" style={{ marginBottom: 16 }} />
                         <Text style={styles.modalTitle}>Warm-up Calculator</Text>
-                        <SecondaryText style={{ textAlign: 'center', marginTop: 10 }}>Generate warm-up progression for {targetWeight} LBS</SecondaryText>
+                        <SecondaryText style={{ textAlign: 'center', marginTop: 8 }}>Generate warm-up progression for {targetWeight} LBS</SecondaryText>
                     </View>
 
-                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 12, padding: 15, marginBottom: 20 }}>
+                    <View style={{ backgroundColor: VisualSystem.colors.bgMid, borderRadius: 10, padding: 16, marginBottom: 16 }}>
                         {warmupSets.map((s, i) => (
                             <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(212, 175, 55, 0.1)' }}>
                                 <View>
-                                    <Text style={{ color: '#E67E22', fontSize: 12, fontWeight: 'bold' }}>WARM-UP {i+1}</Text>
-                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{s.weight} LBS</Text>
+                                    <Text style={{ color: '#E67E22', fontSize: 11, fontWeight: '700' }}>WARM-UP {i+1}</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 17, fontWeight: '800' }}>{s.weight} LBS</Text>
                                 </View>
                                 <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ color: VisualSystem.colors.textTertiary, fontSize: 12, fontWeight: 'bold' }}>REPS</Text>
-                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 18, fontWeight: '800' }}>{s.reps}</Text>
+                                    <Text style={{ color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700' }}>REPS</Text>
+                                    <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 17, fontWeight: '800' }}>{s.reps}</Text>
                                 </View>
                             </View>
                         ))}
@@ -4719,8 +4719,8 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
                         <Text style={styles.restSubmitText}>ADD WARM-UP SETS</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ marginTop: 15, alignItems: 'center' }} onPress={onClose}>
-                        <SecondaryText style={{ color: '#E67E22', fontWeight: 'bold' }}>CANCEL</SecondaryText>
+                    <TouchableOpacity style={{ marginTop: 16, alignItems: 'center' }} onPress={onClose}>
+                        <SecondaryText style={{ color: '#E67E22', fontWeight: '700' }}>CANCEL</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -4762,7 +4762,7 @@ function ProgressView({
     const renderGraph = () => {
         if (progressData.length < 2) return (
             <View style={styles.emptyGraph}>
-                <FontAwesome name="line-chart" size={32} color={LOG.gold} style={{ marginBottom: 10 }} />
+                <FontAwesome name="line-chart" size={32} color={LOG.gold} style={{ marginBottom: 8 }} />
                 <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                     Log a few more sessions for {selectedEx} to see your strength trend.
                 </SecondaryText>
@@ -4875,7 +4875,7 @@ function ProgressView({
                         activeOpacity={0.85}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                            <FontAwesome name="line-chart" size={14} color={LOG.gold} style={{ marginRight: 10 }} />
+                            <FontAwesome name="line-chart" size={14} color={LOG.gold} style={{ marginRight: 8 }} />
                             <Text style={[styles.selectorText, !selectedEx && styles.selectorPlaceholder]} numberOfLines={1}>
                                 {selectedEx || 'Pick an exercise…'}
                             </Text>
@@ -4918,12 +4918,12 @@ function ProgressView({
                     )}
 
                     {isLoading ? (
-                        <View style={{ padding: 28, alignItems: 'center' }}>
+                        <View style={{ padding: 24, alignItems: 'center' }}>
                             <ActivityIndicator color={LOG.gold} />
                         </View>
                     ) : !selectedEx ? (
                         <View style={styles.historyEmpty}>
-                            <FontAwesome name="line-chart" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
+                            <FontAwesome name="line-chart" size={24} color={LOG.gold} style={{ marginBottom: 8 }} />
                             <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                                 Select an exercise above to view your strength trend and session history.
                             </SecondaryText>
@@ -5065,7 +5065,7 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
     };
 
     if (loading) return (
-        <View style={{ padding: 28, alignItems: 'center' }}>
+        <View style={{ padding: 24, alignItems: 'center' }}>
             <ActivityIndicator color={LOG.gold} />
         </View>
     );
@@ -5091,14 +5091,14 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
             {!search.trim() ? (
                 history.length === 0 ? (
                     <View style={styles.historyEmpty}>
-                        <FontAwesome name="history" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
+                        <FontAwesome name="history" size={24} color={LOG.gold} style={{ marginBottom: 8 }} />
                         <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                             No history yet. Finish a session to see it here.
                         </SecondaryText>
                     </View>
                 ) : (
                     <View style={styles.historyCollapsedHint}>
-                        <FontAwesome name="history" size={22} color={LOG.gold} style={{ marginBottom: 10 }} />
+                        <FontAwesome name="history" size={22} color={LOG.gold} style={{ marginBottom: 8 }} />
                         <Text style={styles.historyCollapsedCount}>
                             {history.length} workout{history.length === 1 ? '' : 's'} logged
                         </Text>
@@ -5109,7 +5109,7 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
                 )
             ) : filtered.length === 0 ? (
                 <View style={styles.historyEmpty}>
-                    <FontAwesome name="search" size={24} color={LOG.gold} style={{ marginBottom: 10 }} />
+                    <FontAwesome name="search" size={24} color={LOG.gold} style={{ marginBottom: 8 }} />
                     <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
                         No workouts match your search.
                     </SecondaryText>

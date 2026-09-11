@@ -137,20 +137,20 @@ const styles = StyleSheet.create({
     heroContent: {
         flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 25,
-        paddingBottom: 15,
+        paddingHorizontal: 24,
+        paddingBottom: 16,
     },
     headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 25,
+        marginBottom: 24,
     },
     // The hero sits on a dark photo, so its type uses the on-dark tokens
     // rather than the page tokens.
     heroTitle: {
         fontSize: 32,
-        fontWeight: '900',
+        fontWeight: '800',
         color: VisualSystem.colors.goldBright,
         letterSpacing: 1,
     },
@@ -170,10 +170,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1.5,
         borderColor: VisualSystem.colors.goldBright,
-        borderRadius: 20,
+        borderRadius: 22,
         paddingHorizontal: 12,
-        paddingVertical: 6,
-        gap: 5,
+        paddingVertical: 4,
+        gap: 4,
     },
     actionText: {
         color: VisualSystem.colors.textOnNavy,
