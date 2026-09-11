@@ -1,5 +1,5 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs, usePathname, Redirect } from 'expo-router';
 import { View, ActivityIndicator, type ColorValue } from 'react-native';
 import { useAuth } from '@/features/auth/AuthContext';
@@ -11,13 +11,13 @@ import { WEB_BG, webScreen } from '@/constants/webLayout';
 import { LiquidGlassTabBar } from '@/components/ui/LiquidGlassTabBar';
 
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof Ionicons>['name'];
   color: ColorValue;
   size?: number;
 }) {
   // One size for every tab: growing the active icon fights the color change
   // that already signals selection, and makes the row sit unevenly.
-  return <FontAwesome size={props.size ?? 23} name={props.name} color={props.color as string} />;
+  return <Ionicons size={props.size ?? 25} name={props.name} color={props.color as string} />;
 }
 
 function TabRouteTracker() {
@@ -62,8 +62,8 @@ export default function TabLayout() {
           name="index"
           options={{
             title: 'Feed',
-            tabBarIcon: ({ color, size }) => (
-              <TabBarIcon name="users" color={color} size={size} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <TabBarIcon name={focused ? 'people' : 'people-outline'} color={color} size={size} />
             ),
           }}
         />
@@ -71,8 +71,8 @@ export default function TabLayout() {
           name="dining"
           options={{
             title: 'Nutrition',
-            tabBarIcon: ({ color, size }) => (
-              <TabBarIcon name="cutlery" color={color} size={size} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <TabBarIcon name={focused ? 'restaurant' : 'restaurant-outline'} color={color} size={size} />
             ),
           }}
         />
@@ -80,8 +80,8 @@ export default function TabLayout() {
           name="gym"
           options={{
             title: 'Workout',
-            tabBarIcon: ({ color, size }) => (
-              <TabBarIcon name="bolt" color={color} size={size} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <TabBarIcon name={focused ? 'barbell' : 'barbell-outline'} color={color} size={size} />
             ),
           }}
         />
@@ -89,8 +89,8 @@ export default function TabLayout() {
           name="leaderboard"
           options={{
             title: 'Leaderboard',
-            tabBarIcon: ({ color, size }) => (
-              <TabBarIcon name="trophy" color={color} size={size} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <TabBarIcon name={focused ? 'trophy' : 'trophy-outline'} color={color} size={size} />
             ),
           }}
         />
@@ -98,8 +98,8 @@ export default function TabLayout() {
           name="profile"
           options={{
             title: 'Profile',
-            tabBarIcon: ({ color, size }) => (
-              <TabBarIcon name="user" color={color} size={size} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} size={size} />
             ),
           }}
         />

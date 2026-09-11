@@ -7,28 +7,35 @@ import Animated, {
     Easing,
 } from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from 'expo-router/tabs';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { safeImpact } from '@/lib/safeHaptics';
 
 /**
- * Floating tab bar, modelled on Strava's.
+ * Floating tab bar.
  *
- * The defining choice is that selection is carried by color alone — the active
- * item turns gold and everything else stays navy. There is no pill, no
- * highlight and no border behind the active tab; adding those is what made the
- * earlier version read as a different component. The bar is a near-solid white
- * slab floating on a soft shadow, with just enough translucency to suggest the
- * content passing underneath.
+ * On iOS 26 this is Apple's real Liquid Glass — a native GlassView, so the bar
+ * actually refracts and specularly highlights the content moving under it,
+ * which a blur cannot imitate. Everywhere else it falls back to a blurred,
+ * near-opaque surface that reads the same way at a glance.
+ *
+ * The layout follows Strava's: selection is carried by color alone. No pill, no
+ * highlight, no outline behind the active tab — the active item turns gold and
+ * everything else stays navy.
  */
 
-const BAR_HEIGHT = 64;
-const BAR_INSET = 14;
-const BAR_BOTTOM = 14;
-const WEB_MAX_WIDTH = 520;
+const BAR_HEIGHT = 72;
+const BAR_INSET = 12;
+const BAR_BOTTOM = 10;
+const WEB_MAX_WIDTH = 540;
+const ICON_SIZE = 25;
 
 const isWeb = Platform.OS === 'web';
+
+/** Resolved once: it's a device capability, not something that changes at runtime. */
+const HAS_NATIVE_GLASS = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
 function TabItem({
     focused,
@@ -52,8 +59,8 @@ function TabItem({
     const pressed = useSharedValue(0);
 
     const pressStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: 1 - pressed.value * 0.1 }],
-        opacity: 1 - pressed.value * 0.25,
+        transform: [{ scale: 1 - pressed.value * 0.12 }],
+        opacity: 1 - pressed.value * 0.3,
     }));
 
     return (
@@ -83,12 +90,38 @@ function TabItem({
     );
 }
 
+/** The bar's material: real glass where the OS provides it, blur everywhere else. */
+function BarSurface({ children }: { children: React.ReactNode }) {
+    if (HAS_NATIVE_GLASS) {
+        return (
+            <GlassView
+                glassEffectStyle="regular"
+                colorScheme="light"
+                isInteractive
+                style={[styles.bar, styles.barGlass]}>
+                {children}
+            </GlassView>
+        );
+    }
+    return (
+        <View style={[styles.bar, styles.barFallback]}>
+            <BlurView
+                intensity={Platform.select({ ios: 40, android: 20, default: 16 })}
+                tint="light"
+                experimentalBlurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
+                style={StyleSheet.absoluteFill}
+            />
+            <View style={[StyleSheet.absoluteFill, styles.fill]} />
+            {children}
+        </View>
+    );
+}
+
 export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     const insets = useSafeAreaInsets();
 
     const routes = state.routes.filter((route) => {
-        // `href: null` is expo-router's way of hiding a route from the tab bar;
-        // it isn't part of the base react-navigation options type.
+        // `href: null` is expo-router's way of hiding a route from the tab bar.
         const options = descriptors[route.key]?.options as { href?: string | null } | undefined;
         return options?.href !== null;
     });
@@ -114,17 +147,8 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
     return (
         <View
             pointerEvents="box-none"
-            style={[styles.container, { bottom: BAR_BOTTOM + (isWeb ? 0 : insets.bottom * 0.4) }]}>
-            <View style={styles.bar}>
-                <BlurView
-                    intensity={Platform.select({ ios: 24, android: 16, default: 12 })}
-                    tint="light"
-                    experimentalBlurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-                    style={StyleSheet.absoluteFill}
-                />
-                {/* Near-solid white — the bar reads as a surface, not a scrim. */}
-                <View style={[StyleSheet.absoluteFill, styles.fill]} />
-
+            style={[styles.container, { bottom: BAR_BOTTOM + (isWeb ? 0 : insets.bottom * 0.35) }]}>
+            <BarSurface>
                 <View style={styles.row}>
                     {routes.map((route) => {
                         const { options } = descriptors[route.key];
@@ -150,12 +174,12 @@ export function LiquidGlassTabBar({ state, descriptors, navigation }: BottomTabB
                                 onLongPress={() =>
                                     navigation.emit({ type: 'tabLongPress', target: route.key })
                                 }
-                                icon={options.tabBarIcon?.({ focused, color, size: 23 })}
+                                icon={options.tabBarIcon?.({ focused, color, size: ICON_SIZE })}
                             />
                         );
                     })}
                 </View>
-            </View>
+            </BarSurface>
         </View>
     );
 }
@@ -173,19 +197,23 @@ const styles = StyleSheet.create({
         height: BAR_HEIGHT,
         borderRadius: BAR_HEIGHT / 2,
         overflow: 'hidden',
-        // No border: Strava's bar is defined by its shadow alone, and an
-        // outline — gold especially — is what made this read as something else.
+    },
+    /** Native glass carries its own edge and shadow; adding ours muddies it. */
+    barGlass: {
+        // no fill, no border — the material is the surface
+    },
+    barFallback: {
         shadowColor: VisualSystem.colors.navy,
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.14,
-        shadowRadius: 18,
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
         elevation: 10,
     },
     fill: {
         backgroundColor: Platform.select({
-            ios: 'rgba(255, 255, 255, 0.90)',
-            android: 'rgba(255, 255, 255, 0.97)',
-            default: 'rgba(255, 255, 255, 0.94)',
+            ios: 'rgba(255, 255, 255, 0.82)',
+            android: 'rgba(255, 255, 255, 0.96)',
+            default: 'rgba(255, 255, 255, 0.9)',
         }),
     },
     row: {
@@ -206,11 +234,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         maxWidth: '100%',
-        gap: 4,
+        gap: 5,
     },
     label: {
         fontSize: 11,
         fontWeight: '600',
+        letterSpacing: 0.1,
         maxWidth: '100%',
     },
     labelFocused: {

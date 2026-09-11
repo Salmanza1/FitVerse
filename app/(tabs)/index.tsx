@@ -420,7 +420,10 @@ export default function FeedScreen() {
                     style={[StyleSheet.absoluteFill, { transform: [{ translateY: imageTranslateY }], opacity: imageOpacity }]}
                 >
                     <ImageBackground
-                        source={{ uri: 'https://images.unsplash.com/photo-1543322748-33df6d3db8bc?q=80&w=2070&auto=format&fit=crop' }}
+                        // Was a remote Unsplash URL, which left the header blank
+                        // whenever the fetch was slow or blocked. Every other hero
+                        // uses a bundled asset; this one ships with the app too.
+                        source={require('@/assets/images/community_hero_fitverse.png')}
                         style={styles.heroImage}
                     >
                         <LinearGradient

@@ -112,7 +112,7 @@ function RankingPage({ currentFilter, bottomPad, data, userName, userDorm, pageW
                     DORMS SHOWING UP — {currentFilter.toUpperCase()}
                 </RNText>
                 <View style={isWeb ? styles.emptyStateWeb : styles.emptyStateNative}>
-                    <FontAwesome name="bolt" size={40} color="rgba(201, 151, 0, 0.28)" />
+                    <FontAwesome name="bolt" size={40} color={VisualSystem.colors.gold} />
                     <RNText style={styles.emptyStateText}>
                         Be the first to log today — any session counts toward your dorm.
                     </RNText>
@@ -531,9 +531,10 @@ const styles = StyleSheet.create({
         right: 16,
     },
     stickyFooterWeb: {
-        left: 0,
-        right: 0,
-        width: '100%',
+        left: 16,
+        right: 16,
+        maxWidth: WEB_FEED_MAX_WIDTH,
+        alignSelf: 'center',
     },
     footerGradient: {
         borderRadius: 20,
