@@ -14,7 +14,7 @@ import { useColorScheme } from 'react-native';
 import { TrainingSplit, Goal, Gym } from '@/types/user';
 import { GYM_PROFILES, resolveTrainingLocation } from '@/lib/gymContext';
 import { TrainingLocationSection } from '@/components/workout/TrainingLocationSection';
-import { WorkoutHeroHeader, WORKOUT_HEADER_MAX_HEIGHT } from '@/components/workout/WorkoutHeroHeader';
+import { WorkoutHeroHeader } from '@/components/workout/WorkoutHeroHeader';
 import { Text, SecondaryText, Card, View, GlowView } from '@/components/Themed';
 import { FeedStore } from '@/features/feed/FeedStore';
 import { CreatePostModal } from '@/features/feed/CreatePostModal';
@@ -3829,10 +3829,7 @@ export default function GymScreen() {
             />
             <RNAnimated.ScrollView
                 style={{ flex: 1 }}
-                contentContainerStyle={[
-                    styles.dashboardScroll,
-                    { paddingTop: WORKOUT_HEADER_MAX_HEIGHT },
-                ]}
+                contentContainerStyle={styles.dashboardScroll}
                 showsVerticalScrollIndicator={false}
                 onScroll={RNAnimated.event(
                     [{ nativeEvent: { contentOffset: { y: dashboardScrollY } } }],

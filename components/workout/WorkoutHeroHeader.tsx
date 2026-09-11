@@ -18,7 +18,8 @@ import { VisualSystem } from '@/constants/VisualSystem';
 
 const BAR_HEIGHT = 56;
 
-export const WORKOUT_HEADER_MAX_HEIGHT = BAR_HEIGHT;
+/** @deprecated The header is in-flow now; screens need no top padding. */
+export const WORKOUT_HEADER_MAX_HEIGHT = 0;
 
 function todayLabel() {
     return new Date().toLocaleDateString(undefined, {
@@ -87,13 +88,15 @@ export function WorkoutHeroHeader({
 }
 
 const styles = StyleSheet.create({
+    /**
+     * In-flow, not absolute. As an absolute bar its real height was
+     * insets.top + BAR_HEIGHT while the scroll view only padded by BAR_HEIGHT,
+     * so on a notched phone the first card sat underneath it. Letting it take
+     * part in layout removes that coordination entirely.
+     */
     wrap: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
         backgroundColor: VisualSystem.colors.bgBase,
+        zIndex: 10,
     },
     bar: {
         height: BAR_HEIGHT,
