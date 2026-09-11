@@ -125,7 +125,7 @@ export function PersonalizingAccountLoading({ snapshot, onComplete }: Props) {
                             colors={['rgba(212, 175, 55, 0.12)', 'rgba(255, 255, 255, 0.04)']}
                             style={styles.targetsCard}
                         >
-                            <Text style={styles.targetsTitle}>YOUR STARTING TARGETS</Text>
+                            <Text style={styles.targetsTitle}>Your starting targets</Text>
                             <View style={styles.calorieRow}>
                                 <Text style={styles.calorieValue}>{calDisplay.toLocaleString()}</Text>
                                 <Text style={styles.calorieUnit}> kcal / day</Text>
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     targetsTitle: {
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         color: VisualSystem.colors.goldText,
         textAlign: 'center',
         marginBottom: 12,

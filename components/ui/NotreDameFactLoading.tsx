@@ -112,7 +112,7 @@ export function NotreDameFactLoading({
                 </View>
 
                 <View style={styles.messageCard}>
-                    <Text style={styles.messageLabel}>WHILE YOU WAIT</Text>
+                    <Text style={styles.messageLabel}>While you wait</Text>
                     <Animated.Text style={[styles.messageText, { opacity: fade }]}>
                         {lines[lineIndex]}
                     </Animated.Text>
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: 'rgba(212, 175, 55, 0.7)',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: 12,
         textAlign: 'center',
     },

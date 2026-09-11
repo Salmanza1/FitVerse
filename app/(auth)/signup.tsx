@@ -127,7 +127,7 @@ function PlanTargetsSummary({
             </View>
 
             <View style={styles.planMacroSection}>
-                <RNText style={styles.planMacroSectionTitle}>DAILY MACROS</RNText>
+                <RNText style={styles.planMacroSectionTitle}>Daily macros</RNText>
                 <PlanMacroRow label="Protein" letter="P" grams={protein} color={MACRO_COLORS.protein} />
                 <View style={styles.planMacroDivider} />
                 <PlanMacroRow label="Carbs" letter="C" grams={carbs} color={MACRO_COLORS.carbs} />
@@ -692,7 +692,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     logoText: {
@@ -811,7 +811,7 @@ const styles = StyleSheet.create({
         fontSize: Tokens.typography.xs,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
         marginBottom: Tokens.spacing.md,
         marginLeft: 4,
     },
@@ -877,10 +877,9 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 13,
         fontWeight: '700',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         color: VisualSystem.colors.textPrimary,
         marginBottom: Tokens.spacing.md,
-        textTransform: 'uppercase',
     },
     inputLabel: {
         fontSize: Tokens.typography.xs,
@@ -888,7 +887,7 @@ const styles = StyleSheet.create({
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
     },
     passwordField: {
         marginBottom: Tokens.spacing.lg,

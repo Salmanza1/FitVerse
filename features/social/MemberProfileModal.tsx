@@ -79,7 +79,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                                     <Text style={styles.name}>{profile.displayName}</Text>
                                     <Text style={styles.sub}>{profile.email}</Text>
                                     <View style={styles.badge}>
-                                        <Text style={styles.badgeText}>LEGEND</Text>
+                                        <Text style={styles.badgeText}>Legend</Text>
                                     </View>
                                 </View>
 
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     statsRow: {
         flexDirection: 'row',

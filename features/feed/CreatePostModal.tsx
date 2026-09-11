@@ -225,12 +225,12 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
                                         <Text style={styles.workoutStatNum}>
                                             {formatWorkoutDuration(initialWorkoutData.duration)}
                                         </Text>
-                                        <Text style={styles.workoutStatLbl}>TIME</Text>
+                                        <Text style={styles.workoutStatLbl}>Time</Text>
                                     </View>
                                     <View style={styles.workoutStatDivider} />
                                     <View style={styles.workoutStatCol}>
                                         <Text style={styles.workoutStatNum}>{initialWorkoutData.setsCompleted}</Text>
-                                        <Text style={styles.workoutStatLbl}>SETS</Text>
+                                        <Text style={styles.workoutStatLbl}>Sets</Text>
                                     </View>
                                     <View style={styles.workoutStatDivider} />
                                     <View style={styles.workoutStatCol}>
@@ -239,7 +239,7 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
                                                 ? initialWorkoutData.totalVolume.toLocaleString()
                                                 : '—'}
                                         </Text>
-                                        <Text style={styles.workoutStatLbl}>LBS</Text>
+                                        <Text style={styles.workoutStatLbl}>lbs</Text>
                                     </View>
                                 </View>
                                 {(initialWorkoutData.milestones?.length ?? 0) > 0 && (
@@ -390,8 +390,7 @@ const styles = StyleSheet.create({
         color: C.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     workoutCardTitle: {
         fontSize: 17,
@@ -454,8 +453,7 @@ const styles = StyleSheet.create({
         color: C.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     photoActions: {
@@ -505,8 +503,7 @@ const styles = StyleSheet.create({
         color: C.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     input: {

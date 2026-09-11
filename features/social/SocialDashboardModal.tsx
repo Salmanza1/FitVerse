@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     closeBtn: {
         padding: 4,
@@ -620,8 +620,7 @@ const styles = StyleSheet.create({
         color: FitVerseTheme.colors.textMuted,
         marginTop: 8,
         marginBottom: 4,
-        textTransform: 'uppercase',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     suggestionBox: {
         marginTop: 32,

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '600',
         color: VisualSystem.colors.textSecondary,
-        letterSpacing: 0.8,
+        letterSpacing: 0.2,
     },
     row: {
         flexDirection: 'row',

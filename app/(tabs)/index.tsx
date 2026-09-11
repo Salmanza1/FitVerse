@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { StyleSheet, ScrollView, View, Text as RNText, Image, RefreshControl, Alert, TextInput, Modal, Pressable, Animated, ImageBackground, TouchableOpacity, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { router } from 'expo-router';
 import { useAuth } from '@/features/auth/AuthContext';
 import { FeedStore } from '@/features/feed/FeedStore';
@@ -402,94 +403,20 @@ export default function FeedScreen() {
                 </View>
             </Modal>
 
-            {/* Animated Sticky Header */}
-            <Animated.View
-                pointerEvents="box-none"
-                style={[
-                    styles.heroContainer,
-                    isWeb && styles.heroContainerWeb,
-                    {
-                        height: headerHeight,
-                        transform: [{ translateY: headerTranslateY }],
-                        zIndex: 10,
-                    }
+            <ScreenHeader
+                title="FitVerse"
+                subtitle={user!.displayName || user!.name}
+                scrollY={scrollY}
+                actions={[
+                    { icon: 'add-outline', label: 'New post', onPress: () => setCreateModalVisible(true) },
+                    { icon: 'chatbubbles-outline', label: 'Messages', onPress: openMessages, badge: unreadCount },
                 ]}
-            >
-                <Animated.View
-                    pointerEvents="none"
-                    style={[StyleSheet.absoluteFill, { transform: [{ translateY: imageTranslateY }], opacity: imageOpacity }]}
-                >
-                    <ImageBackground
-                        // Was a remote Unsplash URL, which left the header blank
-                        // whenever the fetch was slow or blocked. Every other hero
-                        // uses a bundled asset; this one ships with the app too.
-                        source={require('@/assets/images/community_hero_fitverse.png')}
-                        style={styles.heroImage}
-                    >
-                        <LinearGradient
-                            colors={['rgba(12, 35, 64, 0.4)', 'rgba(12, 35, 64, 0.8)']}
-                            style={StyleSheet.absoluteFill}
-                        />
-                    </ImageBackground>
-                </Animated.View>
-
-                <Animated.View
-                    pointerEvents="none"
-                    style={[
-                        StyleSheet.absoluteFill,
-                        {
-                            // Fades in over the hero photo behind light type, so it
-                            // stays dark even though the page is light.
-                            backgroundColor: 'rgba(12, 35, 64, 0.88)',
-                            opacity: headerBgOpacity,
-                            borderBottomWidth: 1,
-                            borderBottomColor: VisualSystem.colors.borderSubtle,
-                        }
-                    ]}
-                />
-
-                <View style={[styles.headerContent, { paddingTop: insets.top + 10, zIndex: 20 }]}>
-                    <Animated.View style={[styles.headerRow, { transform: [{ scale: titleScale }, { translateY: titleTranslateY }] }]}>
-                        <View>
-                            <RNText style={[styles.headerTitle, isWeb && styles.headerTitleWeb]}>FITVERSE</RNText>
-                            <RNText style={styles.userSubline}>{user!.displayName || user!.name}</RNText>
-                        </View>
-                        <View style={styles.headerActionsSpace}>
-                            <Pressable accessibilityLabel="Add"
-                                style={({ pressed }) => [styles.iconButton, { opacity: pressed ? 0.7 : 1 }]}
-                                onPress={() => {
-                                    triggerHaptic(Haptics.ImpactFeedbackStyle.Medium);
-                                    setCreateModalVisible(true);
-                                }}
-                            >
-                                <FontAwesome name="plus-square" size={Tokens.typography.lg} color={FitVerseTheme.colors.accentGold} />
-                            </Pressable>
-                            <TouchableOpacity
-                                style={styles.iconButton}
-                                onPress={openMessages}
-                                activeOpacity={0.7}
-                                accessibilityRole="button"
-                                accessibilityLabel="Open messages"
-                            >
-                                <FontAwesome name="comments" size={Tokens.typography.lg} color={FitVerseTheme.colors.accentGold} />
-                                {unreadCount > 0 && (
-                                    <View style={styles.chatBadge}>
-                                        <RNText style={styles.chatBadgeText}>
-                                            {unreadCount > 9 ? '9+' : unreadCount}
-                                        </RNText>
-                                    </View>
-                                )}
-                            </TouchableOpacity>
-
-                        </View>
-                    </Animated.View>
-                </View>
-            </Animated.View>
+            />
 
             <Animated.FlatList
                 style={styles.scrollView}
                 contentContainerStyle={[
-                    { paddingTop: HEADER_MAX_HEIGHT, paddingBottom: isWeb ? 120 : 100 },
+                    { paddingTop: 8, paddingBottom: isWeb ? 120 : 100 },
                     isWeb && styles.flatListContentWeb,
                 ]}
                 onScroll={Animated.event(
@@ -842,7 +769,7 @@ function PostCard({
                             <RNText style={styles.workoutStatNum}>
                                 {Math.max(1, Math.round(post.content.workoutData.duration / 60))}
                             </RNText>
-                            <RNText style={styles.workoutStatLbl}>MIN</RNText>
+                            <RNText style={styles.workoutStatLbl}>min</RNText>
                         </View>
                         <View style={styles.workoutStatDivider} />
                         <View style={styles.workoutStatCol}>
@@ -959,7 +886,7 @@ const styles = StyleSheet.create({
     },
     headerTitleWeb: {
         fontSize: 24,
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
     },
     heroImage: {
         width: '100%',
@@ -981,7 +908,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 2,
+        letterSpacing: 0.2,
     },
     userSubline: {
         fontSize: Tokens.typography.md,
@@ -1062,7 +989,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.5,
-        textTransform: 'uppercase',
     },
     filterTextActive: {
         color: VisualSystem.colors.goldText,
@@ -1241,7 +1167,6 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
         fontSize: 11,
         fontWeight: '700',
-        textTransform: 'uppercase',
     },
     fizzTimeContainer: {
         marginTop: 4,
@@ -1274,8 +1199,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     workoutCardTitle: {
         color: FitVerseTheme.colors.textPrimary,
@@ -1372,7 +1296,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
         fontSize: 15,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     modalOverlay: {
         flex: 1,
@@ -1488,8 +1412,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.goldText,
-        textTransform: 'uppercase',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     userResultCard: {

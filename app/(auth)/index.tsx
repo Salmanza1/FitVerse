@@ -133,9 +133,9 @@ export default function LoginScreen() {
             <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
                 <WebShell maxWidth={480}>
                 <View style={styles.header}>
-                    <Text style={styles.welcomePill}>WELCOME TO</Text>
+                    <Text style={styles.welcomePill}>Welcome to</Text>
                     <Text style={styles.logoText}>FitVerse</Text>
-                    <Text style={styles.logoSubText}>NOTRE DAME EDITION</Text>
+                    <Text style={styles.logoSubText}>Notre dame edition</Text>
 
                     <Text style={styles.heroDescription}>
                         Your all-in-one platform for campus fitness, dining, and wellness.
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '700',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: 8,
         backgroundColor: 'rgba(201, 151, 0, 0.15)',
         paddingHorizontal: 12,
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: VisualSystem.colors.goldText, // ND Gold
         fontWeight: '800',
-        letterSpacing: 3,
+        letterSpacing: 0.2,
         marginBottom: 16,
     },
     heroDescription: {
@@ -468,6 +468,6 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         marginTop: 16,
         fontWeight: '700',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
     },
 });

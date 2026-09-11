@@ -818,8 +818,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         fontWeight: '700',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginHorizontal: 16,
         marginTop: 8,
         marginBottom: 4,
@@ -905,7 +904,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
     },
     comingSoonPlaceholderCard: {
         marginTop: 32,
@@ -923,6 +922,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         marginTop: 8,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
 });

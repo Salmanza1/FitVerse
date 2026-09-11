@@ -361,8 +361,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.gold,
-        letterSpacing: 1.2,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     sectionLabelSpaced: {

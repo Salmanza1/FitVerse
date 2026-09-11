@@ -541,8 +541,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         fontWeight: '700',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     selectedCount: {
         color: VisualSystem.colors.goldText,

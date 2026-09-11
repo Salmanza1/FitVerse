@@ -10,6 +10,7 @@ import { fetchLiveMenu } from '@/features/nutrition/NutrisliceService';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { Tokens } from '@/constants/Tokens';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StyledButton } from '@/components/ui/StyledButton';
 import { StyledInput } from '@/components/ui/StyledInput';
@@ -458,11 +459,11 @@ export default function NutritionDashboard() {
                         </View>
                         <View style={styles.dashStatsCol}>
                             <View style={styles.miniStatBox}>
-                                <Text style={styles.miniLabel}>FOOD LOGGED</Text>
+                                <Text style={styles.miniLabel}>Food logged</Text>
                                 <Text style={styles.miniValueGold} adjustsFontSizeToFit numberOfLines={1}>{Math.round(targets.calories)}</Text>
                             </View>
                             <View style={styles.miniStatBox}>
-                                <Text style={styles.miniLabel}>CALORIES BURNED</Text>
+                                <Text style={styles.miniLabel}>Calories burned</Text>
                                 <Text style={styles.miniValueGreen} adjustsFontSizeToFit numberOfLines={1}>{budget.burned}</Text>
                                 {budget.workoutBurn > 0 && (
                                     <Text style={styles.workoutBurnNote}>FitVerse gym</Text>
@@ -472,9 +473,9 @@ export default function NutritionDashboard() {
                     </View>
                     
                     <View style={styles.macroList}>
-                        <MacroRow label="PROTEIN" current={targets.protein} target={targets.protein_goal_g || 150} icon="bolt" color={VisualSystem.colors.gold} />
-                        <MacroRow label="CARBS" current={targets.carbs} target={targets.carb_goal_g || 200} icon="leaf" color="#4dabf7" />
-                        <MacroRow label="FAT" current={targets.fat} target={targets.fat_goal_g || 60} icon="fire" color="#ff6b6b" />
+                        <MacroRow label="Protein" current={targets.protein} target={targets.protein_goal_g || 150} icon="bolt" color={VisualSystem.colors.gold} />
+                        <MacroRow label="Carbs" current={targets.carbs} target={targets.carb_goal_g || 200} icon="leaf" color="#4dabf7" />
+                        <MacroRow label="Fat" current={targets.fat} target={targets.fat_goal_g || 60} icon="fire" color="#ff6b6b" />
                     </View>
                 </View>
 
@@ -556,62 +557,18 @@ export default function NutritionDashboard() {
 
     return (
         <View style={styles.container}>
-            {/* Animated Header */}
-            <Animated.View 
-                style={[
-                    styles.heroContainer, 
-                    { 
-                        height: headerHeight,
-                        transform: [{ translateY: headerTranslateY }],
-                        zIndex: 10,
-                    }
+            <ScreenHeader
+                title="Nutrition"
+                subtitle="Today"
+                scrollY={scrollY}
+                actions={[
+                    { icon: 'sparkles-outline', label: 'AI log', onPress: focusQuickAiLog },
+                    { icon: 'camera-outline', label: 'Scan food', onPress: () => setIsScannerVisible(true) },
                 ]}
-            >
-                <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ translateY: imageTranslateY }], opacity: imageOpacity }]}>
-                    <ImageBackground source={require('@/assets/images/nutrition_hero_fitverse.png')} style={styles.heroImage}>
-                        <LinearGradient colors={['rgba(12,35,64,0.1)', 'rgba(12,35,64,0.95)']} style={StyleSheet.absoluteFill} />
-                    </ImageBackground>
-                </Animated.View>
-
-                {/* Navbar Background (Fades in) */}
-                <Animated.View
-                    style={[
-                        StyleSheet.absoluteFill,
-                        {
-                            // Fades in over the hero photo behind light type, so it
-                            // stays dark even though the page is light.
-                            backgroundColor: 'rgba(12, 35, 64, 0.88)',
-                            opacity: headerBgOpacity,
-                            borderBottomWidth: 1,
-                            borderBottomColor: VisualSystem.colors.borderSubtle,
-                        }
-                    ]}
-                />
-
-                <View style={[styles.heroContent, { paddingTop: insets.top + 10 }]}>
-                    <Animated.View style={{ transform: [{ scale: titleScale }] }}>
-                        <View style={styles.headerRow}>
-                            <View>
-                                <Text style={styles.heroTitle}>FUEL & FLOW</Text>
-                                <Text style={styles.heroSubtitle}>NUTRITION DASHBOARD</Text>
-                            </View>
-                            <View style={styles.headerActions}>
-                                <TouchableOpacity style={styles.scanBtn} onPress={focusQuickAiLog}>
-                                    <FontAwesome name="magic" size={13} color={VisualSystem.colors.goldBright} />
-                                    <Text style={styles.scanText}>AI</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.scanBtn} onPress={() => setIsScannerVisible(true)}>
-                                    <FontAwesome name="camera" size={13} color={FitVerseTheme.colors.ndGold} />
-                                    <Text style={styles.scanText}>SCAN</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </Animated.View>
-                </View>
-            </Animated.View>
+            />
 
             <Animated.ScrollView 
-                contentContainerStyle={{ paddingBottom: 32, paddingTop: HEADER_MAX_HEIGHT }} 
+                contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }} 
                 showsVerticalScrollIndicator={false}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -995,7 +952,7 @@ const styles = StyleSheet.create({
     heroImage: { width: '100%', height: '100%' },
     heroContent: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 24, paddingBottom: 16 },
     headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
-    heroTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.goldBright, letterSpacing: 1 },
+    heroTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.goldBright, letterSpacing: 0.2 },
     heroSubtitle: { fontSize: 13, fontWeight: '700', color: VisualSystem.colors.textOnNavy, marginTop: -2, opacity: 0.9 },
     headerActions: { flexDirection: 'row', gap: 8 },
     scanBtn: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: VisualSystem.colors.goldBright, borderRadius: 22, paddingHorizontal: 12, paddingVertical: 4, gap: 4 },
@@ -1066,7 +1023,7 @@ const styles = StyleSheet.create({
     glowCircleInner: { width: 118, height: 118, borderRadius: 59, backgroundColor: VisualSystem.colors.bgMid, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle, justifyContent: 'center', alignItems: 'center', shadowColor: VisualSystem.colors.gold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.12, shadowRadius: 10 },
     remainingVal: { fontSize: 40, fontWeight: '800', color: VisualSystem.colors.textPrimary },
     remainingValOver: { color: VisualSystem.colors.danger },
-    remainingLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textSecondary, letterSpacing: 1.5 },
+    remainingLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textSecondary, letterSpacing: 0.2 },
     remainingLabelOver: { color: VisualSystem.colors.danger },
     exerciseNoteGreen: { fontSize: 11, color: 'rgba(64,192,87,0.8)', fontWeight: '800', marginTop: 4, letterSpacing: 0.5 },
     workoutBurnNote: { fontSize: 11, color: 'rgba(64,192,87,0.65)', fontWeight: '800', marginTop: 4, letterSpacing: 0.3 },
@@ -1083,7 +1040,7 @@ const styles = StyleSheet.create({
     macroBarContainer: { height: 6, backgroundColor: VisualSystem.colors.bgMid, borderRadius: 6, overflow: 'hidden' },
     macroBarFill: { height: '100%', borderRadius: 6 },
     aiCard: { backgroundColor: VisualSystem.colors.bgMid, borderRadius: 22, padding: 24, marginBottom: 24, borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
-    aiTitle: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.goldText, letterSpacing: 1 },
+    aiTitle: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.goldText, letterSpacing: 0.2 },
     aiMessage: { color: VisualSystem.colors.textPrimary, fontSize: 13, lineHeight: 22, fontWeight: '600' },
     logSection: { marginBottom: 8 },
     logSectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 },
@@ -1177,7 +1134,7 @@ const styles = StyleSheet.create({
     logRowKcal: { color: VisualSystem.colors.textPrimary, fontSize: 15, fontWeight: '800' },
     logRowKcalUnit: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700', marginTop: 4 },
     portionEditor: { paddingHorizontal: 12, paddingBottom: 12, paddingTop: 4, gap: 8 },
-    portionLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 0.8, marginTop: 4 },
+    portionLabel: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 0.2, marginTop: 4 },
     portionAmountField: {
         height: 42,
         borderRadius: 10,
@@ -1210,18 +1167,18 @@ const styles = StyleSheet.create({
     portionSaveText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 11 },
     modalBg: { flex: 1, backgroundColor: VisualSystem.colors.bgMid, paddingTop: 16 },
     modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingBottom: 16, borderBottomWidth: 1, borderBottomColor: VisualSystem.colors.borderSubtle },
-    modalTitle: { color: VisualSystem.colors.textPrimary, fontSize: 24, fontWeight: '800', letterSpacing: 1 },
+    modalTitle: { color: VisualSystem.colors.textPrimary, fontSize: 24, fontWeight: '800', letterSpacing: 0.2 },
     modalSubtitle: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700', marginTop: 4 },
     modalCloseBtn: { width: 32, height: 32, borderRadius: 16, backgroundColor: VisualSystem.colors.bgMid, justifyContent: 'center', alignItems: 'center' },
     modalSearchContainer: { padding: 16, backgroundColor: VisualSystem.colors.bgMid },
     locTabs: { flexDirection: 'row', paddingHorizontal: 24, gap: 8, marginBottom: 16 },
     locTab: { flex: 1, paddingVertical: 8, borderRadius: 10, backgroundColor: VisualSystem.colors.bgMid, alignItems: 'center', borderWidth: 1, borderColor: VisualSystem.colors.borderSubtle },
     locTabOn: { backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: VisualSystem.colors.borderGold },
-    locTabText: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 1 },
+    locTabText: { fontSize: 11, fontWeight: '800', color: VisualSystem.colors.textTertiary, letterSpacing: 0.2 },
     locTabTextOn: { color: VisualSystem.colors.goldText },
     stationAccordion: { marginBottom: 4 },
     stationHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingVertical: 16, backgroundColor: VisualSystem.colors.bgMid, borderTopWidth: 1, borderTopColor: VisualSystem.colors.borderSubtle },
-    stationName: { color: VisualSystem.colors.textPrimary, fontSize: 13, fontWeight: '800', letterSpacing: 1.5 },
+    stationName: { color: VisualSystem.colors.textPrimary, fontSize: 13, fontWeight: '800', letterSpacing: 0.2 },
     stationContent: { backgroundColor: VisualSystem.colors.bgMid, paddingHorizontal: 12, paddingVertical: 8 },
     menuItemWrap: {
         backgroundColor: VisualSystem.colors.bgMid,
@@ -1243,6 +1200,6 @@ const styles = StyleSheet.create({
         gap: 12,
     },
     loadingText: { color: VisualSystem.colors.textSecondary, textAlign: 'center', fontWeight: '700', fontSize: 13 },
-    stationTitle: { color: VisualSystem.colors.textSecondary, fontSize: 11, fontWeight: '800', letterSpacing: 1 },
+    stationTitle: { color: VisualSystem.colors.textSecondary, fontSize: 11, fontWeight: '800', letterSpacing: 0.2 },
     stationCount: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700' }
 });

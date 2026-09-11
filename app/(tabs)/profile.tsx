@@ -159,7 +159,7 @@ export default function ProfileScreen() {
                                 }}
                                 disabled={saving}
                             >
-                                {saving ? <ActivityIndicator color={FitVerseTheme.colors.ndNavy} /> : <RNText style={styles.modalBtnTextSave}>DONE</RNText>}
+                                {saving ? <ActivityIndicator color={FitVerseTheme.colors.ndNavy} /> : <RNText style={styles.modalBtnTextSave}>Done</RNText>}
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -625,7 +625,7 @@ const styles = StyleSheet.create({
     versionText: {
         fontSize: 11,
         color: FitVerseTheme.colors.textMuted,
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         fontWeight: '700',
         opacity: 0.5,
     },

@@ -68,9 +68,9 @@ export const PlayLikeAChampion = () => {
                     style={styles.board}
                 >
                     <View style={styles.textContainer}>
-                        <Text style={styles.text}>PLAY LIKE A</Text>
-                        <Text style={styles.textMain}>CHAMPION</Text>
-                        <Text style={styles.text}>TODAY</Text>
+                        <Text style={styles.text}>Play like a</Text>
+                        <Text style={styles.textMain}>Champion</Text>
+                        <Text style={styles.text}>Today</Text>
                     </View>
 
                     {/* Glint Overlay */}
@@ -121,14 +121,14 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: '#000',
-        letterSpacing: 3,
+        letterSpacing: 0.2,
         opacity: 0.8,
     },
     textMain: {
         fontSize: 20,
         fontWeight: '800',
         color: '#000',
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
         marginVertical: 4,
     },
     glintContainer: {

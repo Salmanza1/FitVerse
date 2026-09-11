@@ -215,8 +215,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.gold,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     row: {
         flexDirection: 'row',

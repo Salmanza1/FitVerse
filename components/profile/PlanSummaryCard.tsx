@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     calorieNums: {
         fontSize: 13,

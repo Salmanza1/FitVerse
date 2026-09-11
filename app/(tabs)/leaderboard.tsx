@@ -10,6 +10,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Dorm } from '@/types/user';
 import { resolveDormFromName } from '@/lib/dormLogo';
 import { DormLogo } from '@/components/DormLogo';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Tokens } from '@/constants/Tokens';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { VisualSystem } from '@/constants/VisualSystem';
@@ -220,7 +221,7 @@ export default function LeaderboardScreen() {
                         <RNText style={styles.footerSub}>{userXP.toLocaleString()} XP  •  {userDorm}</RNText>
                     </View>
                     <View style={styles.rankBadgeContainer}>
-                        <RNText style={styles.rankLabel}>YOUR DORM TODAY</RNText>
+                        <RNText style={styles.rankLabel}>Your dorm today</RNText>
                         <RNText style={styles.rankValue}>#{userRank}</RNText>
                     </View>
                 </View>
@@ -231,10 +232,7 @@ export default function LeaderboardScreen() {
     return (
         <View style={[styles.container, isWeb && styles.containerWeb]}>
             <View style={[styles.mainColumn, isWeb && styles.mainColumnWeb]}>
-            <View style={[styles.headerContainer, isWeb && styles.headerContainerWeb, { paddingTop: insets.top + 10 }]}>
-                <RNText style={[styles.headerTitle, isWeb && styles.headerTitleWeb]}>LEADERBOARD</RNText>
-                <RNText style={[styles.headerSubtitle, isWeb && styles.headerSubtitleWeb]}>Dorms showing up today</RNText>
-            </View>
+            <ScreenHeader title="Leaderboard" subtitle="Dorms showing up today" />
 
             {/* Filter Tabs */}
             <View style={styles.filterContainer}>
@@ -319,11 +317,11 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
     },
     headerTitleWeb: {
         fontSize: 24,
-        letterSpacing: 1.2,
+        letterSpacing: 0.2,
         textAlign: 'center',
     },
     headerSubtitle: {
@@ -331,8 +329,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: VisualSystem.colors.textTertiary,
         marginTop: 4,
-        textTransform: 'uppercase',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     headerSubtitleWeb: {
         textAlign: 'center',
@@ -404,7 +401,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: Tokens.spacing.md,
         color: VisualSystem.colors.goldText,
         opacity: 0.85,
@@ -437,7 +434,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     mvpContent: {
         flexDirection: 'row',
@@ -577,7 +574,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 0.8,
+        letterSpacing: 0.2,
     },
     rankValue: {
         fontSize: 20,

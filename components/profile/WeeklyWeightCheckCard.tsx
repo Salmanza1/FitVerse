@@ -264,7 +264,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '600',
         letterSpacing: 0.5,
-        textTransform: 'uppercase',
     },
     statValue: {
         color: FitVerseTheme.colors.textPrimary,

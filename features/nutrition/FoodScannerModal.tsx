@@ -148,17 +148,17 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                             <TouchableOpacity style={styles.mainActionBtn} onPress={handleTakePhoto}>
                                 <LinearGradient colors={[FitVerseTheme.colors.ndGold, '#B8860B']} style={styles.gradientBtn}>
                                     <FontAwesome name="camera" size={18} color="#000" style={{marginRight: 8}} />
-                                    <Text style={styles.btnText}>TAKE PHOTO</Text>
+                                    <Text style={styles.btnText}>Take photo</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.secondaryActionBtn} onPress={handlePickImage}>
-                                <Text style={styles.secondaryBtnText}>CHOOSE FROM GALLERY</Text>
+                                <Text style={styles.secondaryBtnText}>Choose from gallery</Text>
                             </TouchableOpacity>
 
                             <View style={styles.optionRow}>
                                 <View style={{flex: 1}}>
-                                    <Text style={styles.optionLabel}>DINING HALL MODE</Text>
+                                    <Text style={styles.optionLabel}>Dining hall mode</Text>
                                     <Text style={styles.optionSub}>Search live ND menus</Text>
                                 </View>
                                 <Switch 
@@ -221,21 +221,21 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                     <View style={styles.macroStats}>
                                         <View style={styles.statBox}>
                                             <Text style={styles.statVal}>{identifiedItem.calories}</Text>
-                                            <Text style={styles.statLabel}>CALORIES</Text>
+                                            <Text style={styles.statLabel}>Calories</Text>
                                         </View>
                                         <View style={styles.statBox}>
                                             <Text style={styles.statVal}>{identifiedItem.protein}g</Text>
-                                            <Text style={styles.statLabel}>PROTEIN</Text>
+                                            <Text style={styles.statLabel}>Protein</Text>
                                         </View>
                                         <View style={styles.statBox}>
                                             <Text style={styles.statVal}>{identifiedItem.carbs}g</Text>
-                                            <Text style={styles.statLabel}>CARBS</Text>
+                                            <Text style={styles.statLabel}>Carbs</Text>
                                         </View>
                                     </View>
 
                                     <View style={styles.quantitySection}>
                                         <View style={styles.qtyLabelRow}>
-                                            <Text style={styles.qtyLabel}>ESTIMATED QUANTITY</Text>
+                                            <Text style={styles.qtyLabel}>Estimated quantity</Text>
                                             <View style={styles.qtyInputBox}>
                                                 <TextInput 
                                                     value={amountStr} 
@@ -247,7 +247,7 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                             </View>
                                         </View>
                                         
-                                        <Text style={[styles.qtyLabel, { marginTop: 24, marginBottom: 12 }]}>SELECT SERVING UNIT</Text>
+                                        <Text style={[styles.qtyLabel, { marginTop: 24, marginBottom: 12 }]}>Select serving unit</Text>
                                         <SmartSegmentedControl 
                                             options={getAvailableUnits(identifiedItem.baseUnit)}
                                             value={logUnit}
@@ -282,12 +282,12 @@ export function FoodScannerModal({ visible, onClose, onAddItem, currentMeal }: F
                                     <TouchableOpacity style={styles.confirmBtn} onPress={analyzeImage}>
                                         <LinearGradient colors={[FitVerseTheme.colors.ndGold, '#B8860B']} style={styles.gradientBtn}>
                                             <FontAwesome name="magic" size={16} color="#000" style={{ marginRight: 8 }} />
-                                            <Text style={styles.btnText}>ANALYZE PLATE</Text>
+                                            <Text style={styles.btnText}>Analyze plate</Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
                                     
                                     <TouchableOpacity style={styles.retryBtn} onPress={handleReset}>
-                                        <Text style={styles.retryText}>PICK DIFFERENT PHOTO</Text>
+                                        <Text style={styles.retryText}>Pick different photo</Text>
                                     </TouchableOpacity>
                                 </View>
                             )}
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     closeBtn: {
         width: 36,
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         color: '#000',
         fontSize: 13,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     secondaryActionBtn: {
         paddingVertical: 12,
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontWeight: '700',
         fontSize: 11,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     optionRow: {
         flexDirection: 'row',
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginBottom: 4,
     },
     optionSub: {
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         color: VisualSystem.colors.textTertiary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     locTabTextOn: {
         color: VisualSystem.colors.goldText,
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
     scanLabel: {
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginTop: 16,
     },
     resultCard: {
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     itemName: {
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.textSecondary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     qtyRow: {
         flexDirection: 'row',
@@ -563,7 +563,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     descriptionSection: {
         backgroundColor: VisualSystem.colors.bgMid,
@@ -595,7 +595,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     aiInsightText: {
         color: VisualSystem.colors.textPrimary,

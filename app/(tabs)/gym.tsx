@@ -146,14 +146,13 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
         fontSize: 11,
-        textTransform: 'uppercase',
         marginBottom: 8,
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         textShadowColor: 'rgba(212, 175, 55, 0.5)',
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: 10
     },
-    headerTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.textPrimary, letterSpacing: 1 },
+    headerTitle: { fontSize: 32, fontWeight: '800', color: VisualSystem.colors.textPrimary, letterSpacing: 0.2 },
     scroll: { padding: 16, paddingBottom: 32 },
     circleStartContainer: {
         alignItems: 'center',
@@ -184,16 +183,15 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: '800',
         marginTop: 16,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     circleStartSub: {
         fontSize: 11,
         color: VisualSystem.colors.textTertiary,
         marginTop: 4,
         fontWeight: '700',
-        textTransform: 'uppercase',
     },
-    sectionHeader: { fontSize: 11, fontWeight: '800', marginBottom: 12, color: LOG.textTertiary, letterSpacing: 1.2, textTransform: 'uppercase' },
+    sectionHeader: { fontSize: 11, fontWeight: '800', marginBottom: 12, color: LOG.textTertiary, letterSpacing: 0.2, textTransform: 'uppercase' },
 
     // Templates
     blockTitle: { fontSize: 20, fontWeight: '700', color: VisualSystem.colors.textPrimary },
@@ -242,7 +240,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.4,
-        textTransform: 'uppercase',
     },
     templateRemoveText: {
         color: VisualSystem.colors.textTertiary,
@@ -783,7 +780,7 @@ const styles = StyleSheet.create({
         color: LOG.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginBottom: 4,
         opacity: 0.7,
     },
@@ -870,8 +867,7 @@ const styles = StyleSheet.create({
     logExCategory: {
         fontSize: 11,
         color: VisualSystem.colors.textSecondary,
-        textTransform: 'uppercase',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         fontWeight: '700',
         marginTop: 4,
     },
@@ -912,7 +908,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.4,
-        textTransform: 'uppercase',
     },
     logStickyNoteInput: {
         color: LOG.textPrimary,
@@ -933,8 +928,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textSecondary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     logSetRow: {
         flexDirection: 'row',
@@ -1022,7 +1016,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         textAlign: 'center',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     logAddSetBtn: {
         flexDirection: 'row',
@@ -1052,7 +1046,7 @@ const styles = StyleSheet.create({
         color: LOG.goldText,
         fontWeight: '800',
         fontSize: 13,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     premiumCancelWorkoutBtn: {
         paddingVertical: 16,
@@ -1067,8 +1061,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.danger,
         fontSize: 13,
         fontWeight: '700',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     historySearchContainer: {
         flexDirection: 'row',
@@ -1121,8 +1114,7 @@ const styles = StyleSheet.create({
         color: LOG.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
         marginTop: 4,
     },
@@ -1268,7 +1260,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '800',
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     coachCardSub: {
         fontSize: 11,
@@ -1311,7 +1303,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '800',
         color: VisualSystem.colors.textPrimary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     coachChatScroll: {
         flex: 1,
@@ -1417,7 +1409,6 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         letterSpacing: 0.5,
         marginBottom: 8,
-        textTransform: 'uppercase',
     },
     coachPlanBtnRow: {
         flexDirection: 'row',
@@ -1551,7 +1542,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: LOG.goldText,
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         opacity: 0.85,
     },
     missionTitle: {
@@ -1619,7 +1610,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: VisualSystem.colors.textSecondary,
         fontWeight: '700',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     locationName: {
         fontSize: 15,
@@ -1768,7 +1759,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: LOG.textTertiary,
-        letterSpacing: 1.1,
+        letterSpacing: 0.2,
         marginLeft: 4,
     },
     activityLogBar: {
@@ -1867,7 +1858,7 @@ const styles = StyleSheet.create({
     choiceCloseText: {
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     gymPickerItem: {
         paddingVertical: 16,
@@ -1901,8 +1892,7 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         marginTop: 16,
         marginBottom: 8,
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     newExInput: {
         backgroundColor: VisualSystem.colors.bgDeep,
@@ -2151,8 +2141,7 @@ const styles = StyleSheet.create({
         color: LOG.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 4,
     },
     progressStatValue: {
@@ -2186,8 +2175,7 @@ const styles = StyleSheet.create({
         color: LOG.textSecondary,
         fontSize: 11,
         fontWeight: '800',
-        textTransform: 'uppercase',
-        letterSpacing: 0.8,
+        letterSpacing: 0.2,
     },
     graphVal: {
         color: LOG.goldText,
@@ -2226,8 +2214,7 @@ const styles = StyleSheet.create({
         color: LOG.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     historySectionLabel: {
@@ -2240,8 +2227,7 @@ const styles = StyleSheet.create({
         color: LOG.textTertiary,
         fontWeight: '800',
         fontSize: 11,
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
     },
     historyEmpty: {
         paddingVertical: 32,
@@ -3145,8 +3131,8 @@ export default function GymScreen() {
                             <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.gold} />
                         </Pressable>
                         <View style={{ alignItems: 'center' }}>
-                            <Text style={styles.coachChatTitle}>LEPRECHAUN COACH</Text>
-                            <SecondaryText style={{ fontSize: 11, color: VisualSystem.colors.goldText }}>ONLINE & GAINING</SecondaryText>
+                            <Text style={styles.coachChatTitle}>Leprechaun coach</Text>
+                            <SecondaryText style={{ fontSize: 11, color: VisualSystem.colors.goldText }}>Online & gaining</SecondaryText>
                         </View>
                         <View style={{ width: 40 }} />
                     </View>
@@ -3522,7 +3508,7 @@ export default function GymScreen() {
                         <FontAwesome name="times" size={20} color="#FF6464" />
                     </Pressable>
                     <View style={styles.logTimerContainer}>
-                        <Text style={styles.logTimerLabel}>LOGGING WORKOUT</Text>
+                        <Text style={styles.logTimerLabel}>Logging workout</Text>
                         <Text style={styles.logTimerText}>{formatTime(timer)}</Text>
                     </View>
                     <Pressable
@@ -3532,7 +3518,7 @@ export default function GymScreen() {
                         }}
                         style={({ pressed }) => [styles.headerFinishButton, pressed && { opacity: 0.85, transform: [{ scale: 0.97 }] }]}
                     >
-                        <Text style={styles.headerFinishText}>FINISH</Text>
+                        <Text style={styles.headerFinishText}>Finish</Text>
                     </Pressable>
                 </View>
                 </Animated.View>
@@ -4252,7 +4238,7 @@ export default function GymScreen() {
                         </Pressable>
                         <Text style={styles.modalTitle}>Add Exercise</Text>
                         <Pressable onPress={() => setCreateExerciseVisible(true)} hitSlop={8}>
-                            <Text style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>NEW</Text>
+                            <Text style={{ color: VisualSystem.colors.goldText, fontWeight: '700' }}>New</Text>
                         </Pressable>
                     </View>
 
@@ -4663,7 +4649,7 @@ function PlateCalculator({ targetWeight, onClose }: { targetWeight: number, onCl
                     </View>
                     
                     <TouchableOpacity style={styles.restSubmitBtn} onPress={onClose}>
-                        <Text style={styles.restSubmitText}>DONE</Text>
+                        <Text style={styles.restSubmitText}>Done</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -4741,7 +4727,7 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
                                     <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 17, fontWeight: '800' }}>{s.weight} LBS</Text>
                                 </View>
                                 <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700' }}>REPS</Text>
+                                    <Text style={{ color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700' }}>Reps</Text>
                                     <Text style={{ color: VisualSystem.colors.textPrimary, fontSize: 17, fontWeight: '800' }}>{s.reps}</Text>
                                 </View>
                             </View>
@@ -4749,11 +4735,11 @@ function WarmupCalculator({ targetWeight, onSave, onClose }: { targetWeight: num
                     </View>
                     
                     <TouchableOpacity style={styles.restSubmitBtn} onPress={() => onSave(warmupSets)}>
-                        <Text style={styles.restSubmitText}>ADD WARM-UP SETS</Text>
+                        <Text style={styles.restSubmitText}>Add warm-up sets</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ marginTop: 16, alignItems: 'center' }} onPress={onClose}>
-                        <SecondaryText style={{ color: '#E67E22', fontWeight: '700' }}>CANCEL</SecondaryText>
+                        <SecondaryText style={{ color: '#E67E22', fontWeight: '700' }}>Cancel</SecondaryText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -4968,17 +4954,17 @@ function ProgressView({
                                     <View style={styles.progressStatCard}>
                                         <Text style={styles.progressStatLabel}>Peak</Text>
                                         <Text style={styles.progressStatValue}>{peakWeight}</Text>
-                                        <Text style={styles.progressStatUnit}>LBS</Text>
+                                        <Text style={styles.progressStatUnit}>lbs</Text>
                                     </View>
                                     <View style={styles.progressStatCard}>
                                         <Text style={styles.progressStatLabel}>Latest</Text>
                                         <Text style={styles.progressStatValue}>{latestWeight}</Text>
-                                        <Text style={styles.progressStatUnit}>LBS</Text>
+                                        <Text style={styles.progressStatUnit}>lbs</Text>
                                     </View>
                                     <View style={styles.progressStatCard}>
                                         <Text style={styles.progressStatLabel}>Sessions</Text>
                                         <Text style={styles.progressStatValue}>{sessionCount}</Text>
-                                        <Text style={styles.progressStatUnit}>LOGGED</Text>
+                                        <Text style={styles.progressStatUnit}>Logged</Text>
                                     </View>
                                 </View>
                             )}
@@ -5034,7 +5020,7 @@ function ProgressView({
                                             </View>
                                             <View style={{ alignItems: 'flex-end' }}>
                                                 <Text style={styles.historyCardMiniWeight}>{d.maxWeight}</Text>
-                                                <Text style={styles.historyCardMiniUnit}>LBS MAX</Text>
+                                                <Text style={styles.historyCardMiniUnit}>LBS max</Text>
                                             </View>
                                         </TouchableOpacity>
                                     ))}

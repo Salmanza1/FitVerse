@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         marginBottom: Tokens.spacing.sm,
         marginLeft: Tokens.spacing.xs,
         color: VisualSystem.colors.goldText,
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
     },
     trigger: {
         flexDirection: 'row',

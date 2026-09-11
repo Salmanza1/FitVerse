@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: VisualSystem.colors.textTertiary,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     tabTextActive: {
         color: '#000',

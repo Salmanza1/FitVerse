@@ -264,8 +264,7 @@ const styles = StyleSheet.create({
         color: C.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1.2,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 4,
     },
     title: {
@@ -294,8 +293,7 @@ const styles = StyleSheet.create({
         color: C.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     milestoneRow: {
@@ -383,8 +381,7 @@ const styles = StyleSheet.create({
         color: C.textTertiary,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
+        letterSpacing: 0.2,
         marginBottom: 8,
     },
     highlightRow: {

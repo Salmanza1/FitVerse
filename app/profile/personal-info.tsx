@@ -254,9 +254,9 @@ export default function PersonalInfoScreen() {
             <TouchableOpacity accessibilityLabel="Back" onPress={() => router.back()} style={styles.backButton}>
                 <FontAwesome name="chevron-left" size={18} color={FitVerseTheme.colors.textPrimary} />
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>PERSONAL INFO</Text>
+            <Text style={styles.headerTitle}>Personal info</Text>
             <TouchableOpacity onPress={handleSave} disabled={saving} style={styles.headerSaveBtn}>
-                <Text style={[styles.headerSaveText, saving && { opacity: 0.5 }]}>DONE</Text>
+                <Text style={[styles.headerSaveText, saving && { opacity: 0.5 }]}>Done</Text>
             </TouchableOpacity>
         </View>
     );
@@ -295,14 +295,14 @@ export default function PersonalInfoScreen() {
                     </Text>
                 </LinearGradient>
 
-                <Text style={styles.sectionTitle}>BASIC PROFILE</Text>
+                <Text style={styles.sectionTitle}>Basic profile</Text>
                 <View style={styles.sectionContainer}>
                     <View style={styles.inputRow}>
                         <View style={styles.iconContainer}>
                             <FontAwesome name="user" size={14} color={FitVerseTheme.colors.accentGold} />
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={styles.rowLabelSmall}>DISPLAY NAME</Text>
+                            <Text style={styles.rowLabelSmall}>Display name</Text>
                             <TextInput
                                 style={styles.textInput}
                                 value={name}
@@ -317,7 +317,7 @@ export default function PersonalInfoScreen() {
                             <FontAwesome name="phone" size={14} color={FitVerseTheme.colors.accentGold} />
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={styles.rowLabelSmall}>PHONE NUMBER</Text>
+                            <Text style={styles.rowLabelSmall}>Phone number</Text>
                             <TextInput
                                 style={styles.textInput}
                                 value={phone}
@@ -336,7 +336,7 @@ export default function PersonalInfoScreen() {
                             <FontAwesome name="calendar-o" size={14} color={FitVerseTheme.colors.accentGold} />
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={styles.rowLabelSmall}>AGE</Text>
+                            <Text style={styles.rowLabelSmall}>Age</Text>
                             <TextInput
                                 style={styles.textInput}
                                 value={age}
@@ -355,7 +355,7 @@ export default function PersonalInfoScreen() {
                             <FontAwesome name="birthday-cake" size={14} color={FitVerseTheme.colors.accentGold} />
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={styles.rowLabelSmall}>DATE OF BIRTH</Text>
+                            <Text style={styles.rowLabelSmall}>Date of birth</Text>
                             <Text style={styles.inputText}>{dob ? new Date(dob).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : 'Set Birthday'}</Text>
                         </View>
                         <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -368,7 +368,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="venus-mars" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>GENDER</Text>
+                                <Text style={styles.rowLabelSmall}>Gender</Text>
                                 <Text style={styles.inputText}>{gender}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -379,7 +379,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="venus-mars" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>GENDER</Text>
+                                <Text style={styles.rowLabelSmall}>Gender</Text>
                                 <Picker
                                     selectedValue={gender}
                                     onValueChange={(itemValue) => setGender(itemValue)}
@@ -400,7 +400,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="building" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>CURRENT DORM</Text>
+                                <Text style={styles.rowLabelSmall}>Current dorm</Text>
                                 <Text style={styles.inputText}>{dorm}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -411,7 +411,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="building" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>CURRENT DORM</Text>
+                                <Text style={styles.rowLabelSmall}>Current dorm</Text>
                                 <Picker
                                     selectedValue={dorm}
                                     onValueChange={(itemValue) => setDorm(itemValue)}
@@ -433,7 +433,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="flash" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>ACTIVITY LEVEL</Text>
+                                <Text style={styles.rowLabelSmall}>Activity level</Text>
                                 <Text style={styles.inputText}>{activityLevel.split(' (')[0]}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -444,7 +444,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="flash" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>ACTIVITY LEVEL</Text>
+                                <Text style={styles.rowLabelSmall}>Activity level</Text>
                                 <Picker
                                     selectedValue={activityLevel}
                                     onValueChange={(itemValue) => setActivityLevel(itemValue)}
@@ -466,7 +466,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="line-chart" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>WEEKLY RATE</Text>
+                                <Text style={styles.rowLabelSmall}>Weekly rate</Text>
                                 <Text style={styles.inputText}>{WEEKLY_GOAL_LABELS[weeklyGoalRate] || weeklyGoalRate}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -477,7 +477,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="line-chart" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>WEEKLY RATE</Text>
+                                <Text style={styles.rowLabelSmall}>Weekly rate</Text>
                                 <Picker
                                     selectedValue={weeklyGoalRate}
                                     onValueChange={(itemValue) => setWeeklyGoalRate(itemValue)}
@@ -493,7 +493,7 @@ export default function PersonalInfoScreen() {
                     )}
                 </View>
 
-                <Text style={styles.sectionTitle}>TRAINING FOCUS</Text>
+                <Text style={styles.sectionTitle}>Training focus</Text>
                 <View style={styles.sectionContainer}>
                     {Platform.OS === 'ios' ? (
                         <TouchableOpacity style={styles.inputRow} onPress={() => setEditingPicker('trainingSplit')}>
@@ -501,7 +501,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="list-alt" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>TRAINING SPLIT</Text>
+                                <Text style={styles.rowLabelSmall}>Training split</Text>
                                 <Text style={styles.inputText}>{trainingSplit}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -512,7 +512,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="list-alt" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>TRAINING SPLIT</Text>
+                                <Text style={styles.rowLabelSmall}>Training split</Text>
                                 <Picker
                                     selectedValue={trainingSplit}
                                     onValueChange={(itemValue) => setTrainingSplit(itemValue)}
@@ -534,7 +534,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="bullseye" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>FITNESS GOAL</Text>
+                                <Text style={styles.rowLabelSmall}>Fitness goal</Text>
                                 <Text style={styles.inputText}>{goal}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -545,7 +545,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="bullseye" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>FITNESS GOAL</Text>
+                                <Text style={styles.rowLabelSmall}>Fitness goal</Text>
                                 <Picker
                                     selectedValue={goal}
                                     onValueChange={(itemValue) => setGoal(itemValue)}
@@ -567,7 +567,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="building-o" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>PREFERRED GYM</Text>
+                                <Text style={styles.rowLabelSmall}>Preferred gym</Text>
                                 <Text style={styles.inputText}>{defaultGym}</Text>
                             </View>
                             <FontAwesome name="chevron-right" size={12} color={FitVerseTheme.colors.textMuted} />
@@ -578,7 +578,7 @@ export default function PersonalInfoScreen() {
                                 <FontAwesome name="building-o" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.rowLabelSmall}>PREFERRED GYM</Text>
+                                <Text style={styles.rowLabelSmall}>Preferred gym</Text>
                                 <Picker
                                     selectedValue={defaultGym}
                                     onValueChange={(itemValue) => setDefaultGym(itemValue)}
@@ -594,14 +594,14 @@ export default function PersonalInfoScreen() {
                     )}
                 </View>
 
-                <Text style={styles.sectionTitle}>ATHLETIC MEASUREMENTS</Text>
+                <Text style={styles.sectionTitle}>Athletic measurements</Text>
                 <View style={styles.biometricsGrid}>
                     <View style={styles.bioCard}>
                         <View style={styles.bioHeader}>
                             <View style={styles.bioIconCircle}>
                                 <FontAwesome name="arrows-v" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
-                            <Text style={styles.bioLabel}>HEIGHT</Text>
+                            <Text style={styles.bioLabel}>Height</Text>
                         </View>
                         <View style={styles.bioInputGroup}>
                             <TextInput
@@ -638,7 +638,7 @@ export default function PersonalInfoScreen() {
                             <View style={styles.bioIconCircle}>
                                 <FontAwesome name="balance-scale" size={14} color={FitVerseTheme.colors.accentGold} />
                             </View>
-                            <Text style={styles.bioLabel}>WEIGHT</Text>
+                            <Text style={styles.bioLabel}>Weight</Text>
                         </View>
                         <View style={styles.bioInputGroup}>
                             <TextInput
@@ -709,11 +709,11 @@ export default function PersonalInfoScreen() {
                         </View>
                         <TouchableOpacity style={styles.dobConfirmBtn} onPress={handleDobConfirm}>
                             <LinearGradient colors={['#D4AF37', '#B8860B']} style={styles.gradientBtn}>
-                                <Text style={styles.dobConfirmText}>DONE</Text>
+                                <Text style={styles.dobConfirmText}>Done</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.dobCancelBtn} onPress={() => setIsEditingDob(false)}>
-                            <Text style={styles.dobCancelText}>CANCEL</Text>
+                            <Text style={styles.dobCancelText}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -783,7 +783,7 @@ export default function PersonalInfoScreen() {
                         </View>
                         <TouchableOpacity style={styles.dobConfirmBtn} onPress={() => setEditingPicker(null)}>
                             <LinearGradient colors={['#D4AF37', '#B8860B']} style={styles.gradientBtn}>
-                                <Text style={styles.dobConfirmText}>DONE</Text>
+                                <Text style={styles.dobConfirmText}>Done</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
@@ -817,7 +817,7 @@ const styles = StyleSheet.create({
         fontSize: Tokens.typography.md,
         fontWeight: '800',
         color: FitVerseTheme.colors.textPrimary,
-        letterSpacing: 2,
+        letterSpacing: 0.2,
     },
     headerSaveBtn: {
         paddingHorizontal: Tokens.spacing.md,
@@ -827,7 +827,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontWeight: '800',
         fontSize: Tokens.typography.md,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     scrollContent: {
         // No top padding needed as hero Summary fills it
@@ -894,7 +894,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: Tokens.spacing.md,
         marginHorizontal: Tokens.spacing.xl,
         color: VisualSystem.colors.goldText,
@@ -934,7 +934,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: FitVerseTheme.colors.textMuted,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginBottom: 4,
     },
     textInput: {
@@ -992,7 +992,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         color: FitVerseTheme.colors.textMuted,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     bioInputGroup: {
         flexDirection: 'row',
@@ -1081,7 +1081,7 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         color: FitVerseTheme.colors.textPrimary,
         textAlign: 'center',
-        letterSpacing: 2,
+        letterSpacing: 0.2,
         marginBottom: Tokens.spacing.xl,
     },
     dobPickers: {
@@ -1105,7 +1105,7 @@ const styles = StyleSheet.create({
         color: FitVerseTheme.colors.ndNavy,
         fontWeight: '800',
         fontSize: Tokens.typography.md,
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     },
     dobCancelBtn: {
         paddingVertical: Tokens.spacing.lg,
@@ -1115,6 +1115,6 @@ const styles = StyleSheet.create({
         color: FitVerseTheme.colors.textMuted,
         fontSize: Tokens.typography.sm,
         fontWeight: '700',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
     }
 });

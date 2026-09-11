@@ -157,7 +157,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                 </View>
                                 <View style={{ marginLeft: 12 }}>
                                     <Text style={styles.chatTitle}>Leprechaun AI</Text>
-                                    <SecondaryText style={{ fontSize: 11 }}>ELITE MENTOR</SecondaryText>
+                                    <SecondaryText style={{ fontSize: 11 }}>Elite mentor</SecondaryText>
                                 </View>
                             </View>
                             <TouchableOpacity accessibilityLabel="Close" onPress={() => setIsChatOpen(false)} style={styles.closeBtn}>
@@ -188,7 +188,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                 <View style={styles.actionCard}>
                                     <View style={styles.actionCardHeader}>
                                         <FontAwesome name="magic" size={14} color="#C99700" />
-                                        <Text style={styles.actionCardTitle}>PROPOSED ACTION</Text>
+                                        <Text style={styles.actionCardTitle}>Proposed action</Text>
                                     </View>
                                     <Text style={styles.actionCardDesc}>
                                         Update {pendingAction.functionName.replace('update_', '').replace(/_/g, ' ')}:
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.goldText,
         fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1,
+        letterSpacing: 0.2,
         marginLeft: 8,
     },
     actionCardDesc: {

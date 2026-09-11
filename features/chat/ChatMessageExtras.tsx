@@ -351,7 +351,6 @@ const extrasStyles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '700',
         letterSpacing: 0.3,
-        textTransform: 'uppercase',
     },
     gymPickerRow: {
         flexDirection: 'row',

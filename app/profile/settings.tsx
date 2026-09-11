@@ -117,12 +117,12 @@ export default function SettingsScreen() {
             {renderHeader()}
             <ScrollView contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]} showsVerticalScrollIndicator={false}>
 
-                <Text style={styles.sectionTitle}>WORKOUT</Text>
+                <Text style={styles.sectionTitle}>Workout</Text>
                 <View style={styles.sectionContainer}>
                     {user ? <RestDayToggle userId={user.id} compact /> : null}
                 </View>
 
-                <Text style={styles.sectionTitle}>PREFERENCES</Text>
+                <Text style={styles.sectionTitle}>Preferences</Text>
                 <View style={styles.sectionContainer}>
                     {renderSettingToggle('balance-scale', 'Weight Unit', weightUnitLbs ? 'Pounds (lbs)' : 'Kilograms (kg)', weightUnitLbs, (val) => handleUpdateSetting('weightUnitLbs', val))}
                     <View style={styles.divider} />
@@ -131,21 +131,21 @@ export default function SettingsScreen() {
                     {renderSettingToggle('minus-circle', 'Negative Adjustments', 'Deduct calories if step goal not met', user?.enableNegativeAdjustments ?? false, (val) => handleUpdateSetting('enableNegativeAdjustments', val))}
                 </View>
 
-                <Text style={styles.sectionTitle}>NOTIFICATIONS</Text>
+                <Text style={styles.sectionTitle}>Notifications</Text>
                 <View style={styles.sectionContainer}>
                     {renderSettingToggle('bell', 'Push Notifications', 'Workout reminders & alerts', pushNotifications, (val) => handleUpdateSetting('pushNotifications', val))}
                     <View style={styles.divider} />
                     {renderSettingToggle('envelope', 'Email Recaps', 'Weekly progress summary', emailRecaps, (val) => handleUpdateSetting('emailRecaps', val))}
                 </View>
 
-                <Text style={styles.sectionTitle}>PRIVACY & SECURITY</Text>
+                <Text style={styles.sectionTitle}>Privacy & security</Text>
                 <View style={styles.sectionContainer}>
                     {renderSettingToggle('lock', 'Private Profile', 'Hide your stats from others', privateProfile, (val) => handleUpdateSetting('privateProfile', val))}
                     <View style={styles.divider} />
                     {renderSettingLink('shield', 'Privacy Policy', 'How we handle your data', () => Alert.alert('Privacy Policy', 'Coming soon...'))}
                 </View>
 
-                <Text style={styles.sectionTitle}>ABOUT</Text>
+                <Text style={styles.sectionTitle}>About</Text>
                 <View style={styles.sectionContainer}>
                     {renderSettingLink('question-circle', 'Help & Support', 'Get help with the app', () => Alert.alert('Help', 'Support email: support@fitverse.com'))}
                     <View style={styles.divider} />
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: Tokens.typography.xs,
         fontWeight: '800',
-        letterSpacing: 1.5,
+        letterSpacing: 0.2,
         marginBottom: Tokens.spacing.md,
         marginLeft: Tokens.spacing.xs,
         color: FitVerseTheme.colors.textMuted,
