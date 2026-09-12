@@ -1,9 +1,12 @@
 /**
- * OpenAI integration — routes ALL calls through the Supabase Edge Function proxy.
- * This keeps the OpenAI API key securely server-side only.
+ * OpenAI integration — every call goes through the Supabase Edge Function at
+ * supabase/functions/openai-proxy, which holds the API key and verifies the
+ * caller's Supabase JWT before forwarding.
  *
- * The proxy function is at: supabase/functions/openai-proxy/index.ts
- * It validates the Supabase JWT before forwarding to OpenAI.
+ * Nothing in the client may read an OpenAI key. Expo inlines every
+ * EXPO_PUBLIC_* value into the JS bundle at build time, so a key read here
+ * ships inside the app and can be pulled straight out of any build handed to
+ * a tester. The key belongs in the function's secrets and nowhere else.
  */
 import { supabase } from './supabase';
 import { formatGymContextForAI, resolveTrainingLocation } from './gymContext';
@@ -47,37 +50,35 @@ Reference ND spots when natural — Duncan, Rockne, dining halls, the Grotto —
 Keep replies concise, kind, and practical. Teach a little, encourage a lot.`;
 
 /**
- * Call the OpenAI API directly, bypassing the edge proxy.
- * Ensure EXPO_PUBLIC_OPENAI_API_KEY is defined in your .env file.
+ * Send a chat-completion request through the edge proxy.
+ *
+ * `body` is the OpenAI request shape (messages, tools, response_format…);
+ * the proxy forwards it and returns OpenAI's response unchanged, so callers
+ * read `choices[0].message` exactly as before. The Supabase client attaches
+ * the signed-in user's access token, which is what the proxy authenticates.
  */
 export const callProxy = async (body: any): Promise<any> => {
-    const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
-    
-    if (!apiKey) {
-        console.error("❌ Missing EXPO_PUBLIC_OPENAI_API_KEY in .env");
-        throw new Error("API Key missing");
+    const { data, error } = await supabase.functions.invoke('openai-proxy', { body });
+
+    if (error) {
+        // A non-2xx from the function surfaces as FunctionsHttpError, whose
+        // message is just the status line — the useful text is in the response
+        // body, which the client hands back untouched on `context`.
+        let detail = error.message;
+        const res = (error as { context?: Response }).context;
+        if (res && typeof res.json === 'function') {
+            try {
+                const payload = await res.json();
+                detail = payload?.details || payload?.error || detail;
+            } catch {
+                // Body was not JSON; the original message stands.
+            }
+        }
+        console.error('❌ AI Backend Error:', detail);
+        throw new Error(detail);
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-        let errStr = "Unknown OpenAI Error";
-        try {
-            const errData = await response.json();
-            errStr = errData.error?.message || errStr;
-        } catch(e) {}
-        console.error('❌ AI Backend Error:', errStr);
-        throw new Error(errStr);
-    }
-
-    return response.json();
+    return data;
 };
 
 export const getLeprechaunResponse = async (messages: Message[]): Promise<string | null> => {

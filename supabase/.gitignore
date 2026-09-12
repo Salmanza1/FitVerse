@@ -6,3 +6,6 @@
 .env.keys
 .env.local
 .env.*.local
+
+# Server-side secrets pushed to Edge Functions; must never be committed.
+.env
