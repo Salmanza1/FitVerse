@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Stack, DefaultTheme, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useRef, useState } from 'react';
-import { AppState, View, ActivityIndicator, Platform } from 'react-native';
+import { AppState, View, ActivityIndicator, Platform, Appearance } from 'react-native';
 import { AuthProvider, useAuth } from '@/features/auth/AuthContext';
 import { router } from 'expo-router';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
@@ -35,6 +35,19 @@ import { VisualSystem } from '@/constants/VisualSystem';
 export const unstable_settings = {
   initialRouteName: '(auth)',
 };
+
+/**
+ * The app ships a single light theme, so pin the interface style instead of
+ * following the device. On a phone in dark mode the native views — the tab
+ * bar most visibly — render their dark appearance for a frame before our
+ * light styling applies, which reads as a grey flash with white icons on
+ * every tab change.
+ *
+ * app.json also sets userInterfaceStyle to "light", but that writes
+ * UIUserInterfaceStyle into Info.plist and only takes effect in a new native
+ * build; this covers the build already installed.
+ */
+Appearance.setColorScheme('light');
 
 SplashScreen.preventAutoHideAsync();
 
