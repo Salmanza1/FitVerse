@@ -63,6 +63,13 @@ export default function TabLayout() {
         // The system draws the bar; these tint its contents.
         tabBarActiveTintColor={VisualSystem.colors.goldText}
         tabBarInactiveTintColor={VisualSystem.colors.textSecondary}
+        screenOptions={{
+          // Liquid Glass samples whatever sits behind it. Without an explicit
+          // scene background the container shows its default for a frame while
+          // a tab mounts, and the bar mirrors that as a grey flash. Painting
+          // every scene the page colour means there is never a frame to catch.
+          sceneStyle: { backgroundColor: VisualSystem.colors.bgBase },
+        }}
       >
         <Tabs.Screen name="index" options={{ title: 'Feed', tabBarIcon: icon('index') }} />
         <Tabs.Screen name="dining" options={{ title: 'Nutrition', tabBarIcon: icon('dining') }} />
