@@ -47,6 +47,7 @@ import { SwipeToDeleteRow } from '@/components/workout/SwipeToDeleteRow';
 import { WorkoutCompleteModal } from '@/components/workout/WorkoutCompleteModal';
 import { getRestAfterSetSeconds } from '@/features/workout/restTimerUtils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useBottomTabBarHeight } from 'react-native-bottom-tabs';
 import { AlphabetIndexBar } from '@/components/workout/AlphabetIndexBar';
 import {
     ExercisePickerRow,
@@ -2298,6 +2299,9 @@ export default function GymScreen() {
     const colorScheme = useColorScheme();
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    // The native tab bar is translucent and content runs under it, so anything
+    // anchored to the bottom has to clear it or it can't be tapped.
+    const tabBarHeight = useBottomTabBarHeight();
     const { user, updateProfile } = useAuth();
 
     // State management
@@ -3525,7 +3529,7 @@ export default function GymScreen() {
 
                 <ScrollView
                     style={{ flex: 1 }}
-                    contentContainerStyle={{ paddingBottom: insets.bottom + 88 }}
+                    contentContainerStyle={{ paddingBottom: tabBarHeight + 88 }}
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                 >
@@ -3790,7 +3794,7 @@ export default function GymScreen() {
                     </View>
                 </ScrollView>
 
-                <View style={[styles.logStickyFooter, { paddingBottom: insets.bottom + 8 }]}>
+                <View style={[styles.logStickyFooter, { paddingBottom: tabBarHeight + 8 }]}>
                     <Pressable
                         style={({ pressed }) => [
                             styles.logAddExBtnPrimary,
@@ -3815,7 +3819,7 @@ export default function GymScreen() {
             />
             <RNAnimated.ScrollView
                 style={{ flex: 1 }}
-                contentContainerStyle={styles.dashboardScroll}
+                contentContainerStyle={[styles.dashboardScroll, { paddingBottom: tabBarHeight + 24 }]}
                 showsVerticalScrollIndicator={false}
                 onScroll={RNAnimated.event(
                     [{ nativeEvent: { contentOffset: { y: dashboardScrollY } } }],

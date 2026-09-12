@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { StyleSheet, View, TouchableOpacity, Modal, FlatList, Alert, ImageBackground, Dimensions, Platform, Animated, ScrollView, TextInput, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useBottomTabBarHeight } from 'react-native-bottom-tabs';
 import { Text } from '@/components/Themed';
 import { useAuth } from '@/features/auth/AuthContext';
 import { getDailyLog, addFoodToLog, removeFoodFromLog, getRecentLogs, updateFoodInLog } from '@/features/nutrition/NutritionStore';
@@ -136,6 +137,7 @@ export default function NutritionDashboard() {
 
     const scrollY = useRef(new Animated.Value(0)).current;
     const insets = useSafeAreaInsets();
+    const tabBarHeight = useBottomTabBarHeight();
     
     // Header Animation Values
     const HEADER_MAX_HEIGHT = 280;
@@ -568,7 +570,7 @@ export default function NutritionDashboard() {
             />
 
             <Animated.ScrollView 
-                contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }} 
+                contentContainerStyle={{ paddingBottom: tabBarHeight + 24, paddingTop: 8 }} 
                 showsVerticalScrollIndicator={false}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],

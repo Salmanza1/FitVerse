@@ -61,7 +61,7 @@ export default function TabLayout() {
 
       <Tabs
         // The system draws the bar; these tint its contents.
-        tabBarActiveTintColor={VisualSystem.colors.goldText}
+        tabBarActiveTintColor={VisualSystem.colors.goldVivid}
         tabBarInactiveTintColor={VisualSystem.colors.textSecondary}
         screenOptions={{
           // Liquid Glass samples whatever sits behind it. Without an explicit

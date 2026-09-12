@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useBottomTabBarHeight } from 'react-native-bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Dorm } from '@/types/user';
@@ -163,6 +164,7 @@ export default function LeaderboardScreen() {
     const { user } = useAuth();
     const [filter, setFilter] = useState<GenderFilter>('Mixed');
     const insets = useSafeAreaInsets();
+    const tabBarHeight = useBottomTabBarHeight();
     const { width: windowWidth } = useWindowDimensions();
     const flatListRef = useRef<FlatList<GenderFilter>>(null);
     const filters: GenderFilter[] = ['Mixed', 'Boys', 'Girls'];
@@ -178,7 +180,10 @@ export default function LeaderboardScreen() {
 
     // Tab bar: bottom:25, height:65 → top of tab bar = insets.bottom + 25 + 65 = ~90 above bottom
     // Add a little breathing room (8px)
-    const footerBottom = insets.bottom + 25 + 65 + 8;
+    // Sits just above the tab bar. This was insets.bottom + 25 + 65 + 8, sized
+    // for the floating bar that used to live here; the native bar reports its
+    // own height, safe area included.
+    const footerBottom = tabBarHeight + 8;
     // ScrollView needs enough padding to not be hidden behind the footer
     const bottomPad = footerBottom + 80;
 

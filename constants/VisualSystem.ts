@@ -32,6 +32,12 @@ export const VisualSystem = {
         // which is likewise below AA for small text; acceptable because the
         // label is always paired with an icon and a selected state.
         goldAccent: '#AF7F00',
+        /**
+         * Saturated gold for the selected tab. #8A6D00 is tuned for small text
+         * on white and reads olive at icon size; this keeps the hue but drops
+         * the grey out of it so the selection is obvious at a glance.
+         */
+        goldVivid: '#E3A008',
         goldSoft: 'rgba(201, 151, 0, 0.28)',
         goldMuted: 'rgba(201, 151, 0, 0.10)',
 
