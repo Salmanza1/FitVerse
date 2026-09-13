@@ -2484,7 +2484,8 @@ export default function GymScreen() {
      * leaving the app is exactly when you are relying on being told.
      */
     const setSetRestTimer = useCallback((next: RestTimerState | null) => {
-        setSetRestTimer(next);
+        // The raw setter, not this wrapper.
+        _setSetRestTimer(next);
         Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
         if (next?.status === 'running' && next.endsAt > Date.now()) {
             startRestActivity({
