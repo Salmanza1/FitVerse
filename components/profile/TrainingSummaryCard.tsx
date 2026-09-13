@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Svg, Rect, Line, Text as SvgText } from 'react-native-svg';
+import { Svg, Rect, Line, Circle, Text as SvgText } from 'react-native-svg';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { safeImpact } from '@/lib/safeHaptics';
 import {
@@ -55,11 +55,27 @@ export function TrainingSummaryCard({
     unitLabel: string;
     loading?: boolean;
 }) {
-    const [metric, setMetric] = useState<Metric>('volume');
+    // null until the reader picks one, so the default can follow the data.
+    const [chosenMetric, setChosenMetric] = useState<Metric | null>(null);
     const [plotWidth, setPlotWidth] = useState(0);
+
+    /**
+     * Volume is the headline for lifting, but a run or a plank records none —
+     * and neither does a first session that was either. Falling back to a
+     * metric the data can answer stops a real session reading as no session.
+     */
+    const suggestedMetric = useMemo<Metric>(() => {
+        if (weeks.some((w) => w.volume > 0)) return 'volume';
+        if (weeks.some((w) => w.seconds > 0)) return 'seconds';
+        return 'workouts';
+    }, [weeks]);
+
+    const metric = chosenMetric ?? suggestedMetric;
+    const setMetric = setChosenMetric;
 
     const values = useMemo(() => weeks.map((w) => valueOf(w, metric)), [weeks, metric]);
     const peak = useMemo(() => Math.max(...values, 0), [values]);
+    const loggedWeeks = useMemo(() => weeks.filter((w) => w.workouts > 0).length, [weeks]);
 
     const monthTicks = useMemo(() => {
         // Label a week only where its month differs from the week before, so the
@@ -158,6 +174,19 @@ export function TrainingSummaryCard({
                             0
                         </SvgText>
 
+                        {/* A dot per week on the baseline. Without them a
+                            lone session is one bar in an empty box, which
+                            reads as broken rather than as one session. */}
+                        {weeks.map((week, i) => (
+                            <Circle
+                                key={`tick-dot-${week.start.getTime()}`}
+                                cx={i * slot + slot / 2}
+                                cy={CHART_HEIGHT}
+                                r={2}
+                                fill={values[i] > 0 ? C.gold : C.borderStrong}
+                            />
+                        ))}
+
                         {weeks.map((week, i) => {
                             const value = values[i];
                             if (value <= 0) return null;
@@ -200,7 +229,9 @@ export function TrainingSummaryCard({
 
             {!loading && !hasData && (
                 <Text style={styles.empty}>
-                    Log a session and it shows up here the same day.
+                    {loggedWeeks > 0
+                        ? 'Nothing to chart for this measure yet — try Sessions.'
+                        : 'Log a session and it shows up here the same day.'}
                 </Text>
             )}
         </View>
