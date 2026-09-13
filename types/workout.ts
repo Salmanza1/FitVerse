@@ -12,6 +12,10 @@ export interface Set {
     estimated1RM?: number;
     /** Rest after this set (seconds) before the next set — overrides exercise default when set. */
     restAfterSeconds?: number;
+    /** Seconds held or worked. Used by 'duration' and 'cardio' exercises. */
+    durationSeconds?: number;
+    /** Distance covered, in miles. Used by 'cardio' exercises. */
+    distance?: number;
 }
 
 export interface Exercise {

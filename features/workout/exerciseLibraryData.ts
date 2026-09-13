@@ -1,4 +1,22 @@
 import { ExerciseLibraryEntry } from './exerciseTypes';
+import { ExerciseType } from '@/types/workout';
+
+/**
+ * How a movement is logged, read off its canonical name.
+ *
+ * Names follow "Exercise Name (Equipment)", so the suffix carries most of it.
+ * The holds are listed by name because "(Bodyweight)" on its own cannot tell a
+ * push-up from a plank — one is counted, the other is timed.
+ */
+const HOLDS = new Set(['Plank (Bodyweight)', 'Side Plank (Bodyweight)']);
+
+function inferType(name: string): ExerciseType {
+    if (HOLDS.has(name)) return 'duration';
+    if (name.endsWith('(Cardio)')) return 'cardio';
+    if (name.includes('- Assisted')) return 'assisted';
+    if (name.endsWith('(Bodyweight)')) return 'bodyweight';
+    return 'weight_reps';
+}
 
 /** Canonical naming: "Exercise Name (Equipment)" */
 function ex(
@@ -12,6 +30,7 @@ function ex(
         id,
         name,
         category,
+        type: inferType(name),
         primaryMuscles: primary,
         secondaryMuscles: secondary.length ? secondary : undefined,
     };

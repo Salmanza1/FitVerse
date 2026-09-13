@@ -125,7 +125,7 @@ export function workoutFromAIPlan(
             id: lib?.id ?? Math.random().toString(36).slice(2, 11),
             name: canonicalName,
             category: lib?.category ?? 'Other',
-            type: 'weight_reps',
+            type: lib?.type ?? 'weight_reps',
             primaryMuscles: lib?.primaryMuscles,
             secondaryMuscles: lib?.secondaryMuscles,
             stickyNote: aiEx.notes,

@@ -36,6 +36,34 @@ const LOG = VisualSystem.colors;
 /** Identifier for the pending "rest is over" alert. */
 const REST_NOTIFICATION_ID = 'fitverse-rest-complete';
 
+/**
+ * Headings for the two input columns. `second` is null for a movement with
+ * only one number to record, and the first column then takes the whole width.
+ */
+function setColumnLabels(type: ExerciseType | undefined): {
+    first: string;
+    second: string | null;
+} {
+    switch (type) {
+        case 'duration':
+            return { first: 'Seconds', second: null };
+        case 'cardio':
+            return { first: 'Mins', second: 'Miles' };
+        case 'bodyweight':
+            // Weight here is what you hung off a belt, not what you lifted.
+            return { first: '+ Lbs', second: 'Reps' };
+        case 'assisted':
+            return { first: '− Lbs', second: 'Reps' };
+        default:
+            return { first: 'Lbs', second: 'Reps' };
+    }
+}
+
+/** Volume is weight moved; a plank or a treadmill run has none to count. */
+function countsTowardVolume(type: ExerciseType | undefined): boolean {
+    return type === undefined || type === 'weight_reps' || type === 'bodyweight';
+}
+
 type RestTimerState = {
     exerciseIdx: number;
     setIdx: number;
@@ -2877,6 +2905,22 @@ export default function GymScreen() {
         setActiveWorkout({ ...activeWorkout, exercises });
     };
 
+    /** Write one of the non-weight numbers on a set. */
+    const setSetNumber = (
+        exIdx: number,
+        setIdx: number,
+        field: 'durationSeconds' | 'distance',
+        value: number
+    ) => {
+        if (!activeWorkout) return;
+        const exercises = [...activeWorkout.exercises];
+        exercises[exIdx].sets[setIdx] = {
+            ...exercises[exIdx].sets[setIdx],
+            [field]: Number.isFinite(value) && value >= 0 ? value : 0,
+        };
+        setActiveWorkout({ ...activeWorkout, exercises });
+    };
+
     const updateSetRestAfter = (exIdx: number, setIdx: number, seconds: number) => {
         if (!activeWorkout) return;
         const newExercises = [...activeWorkout.exercises];
@@ -3007,7 +3051,7 @@ export default function GymScreen() {
                 id: exerciseId,
                 name: exerciseName,
                 category: exercise.category || 'Other',
-                type: 'weight_reps',
+                type: exercise.type ?? 'weight_reps',
                 primaryMuscles: exercise.primaryMuscles || [],
                 secondaryMuscles: exercise.secondaryMuscles || [],
                 sets: initialSets,
@@ -3445,6 +3489,9 @@ export default function GymScreen() {
             ...ex,
             sets: ex.sets.map(s => {
                 if (!s.completed) return s;
+                // A plank and a treadmill run have no load to count; leaving
+                // them in made total volume a number about nothing.
+                if (!countsTowardVolume(ex.type)) return { ...s, volume: 0 };
                 const weight = s.weight || 0;
                 const reps = s.reps || 0;
                 const volume = weight * reps;
@@ -3824,8 +3871,21 @@ export default function GymScreen() {
                                 <View style={styles.logTableLabels}>
                                     <Text style={[styles.logLabel, { width: 26, textAlign: 'center' }]}>#</Text>
                                     <Text style={[styles.logLabel, { flex: 0.85, textAlign: 'center' }]}>Prev</Text>
-                                    <Text style={[styles.logLabel, { flex: 1, textAlign: 'center' }]}>Lbs</Text>
-                                    <Text style={[styles.logLabel, { flex: 1, textAlign: 'center' }]}>Reps</Text>
+                                    <Text
+                                        style={[
+                                            styles.logLabel,
+                                            {
+                                                flex: setColumnLabels(ex.type).second ? 1 : 2,
+                                                textAlign: 'center',
+                                            },
+                                        ]}>
+                                        {setColumnLabels(ex.type).first}
+                                    </Text>
+                                    {!!setColumnLabels(ex.type).second && (
+                                        <Text style={[styles.logLabel, { flex: 1, textAlign: 'center' }]}>
+                                            {setColumnLabels(ex.type).second}
+                                        </Text>
+                                    )}
                                     <View style={{ width: 30 }} />
                                 </View>
 
@@ -3876,26 +3936,75 @@ export default function GymScreen() {
                                                     </Text>
                                                 </View>
 
-                                                <TextInput
-                                                    style={[styles.logInput, { flex: 1 }]}
-                                                    keyboardType="decimal-pad"
-                                                    value={getWeightInputValue(set, set.id)}
-                                                    placeholder="0"
-                                                    placeholderTextColor={LOG.textTertiary}
-                                                    onChangeText={(t) => handleWeightChange(exIdx, setIdx, set.id, t)}
-                                                    onBlur={() => commitWeightDraft(exIdx, setIdx, set.id)}
-                                                    selectTextOnFocus
-                                                />
-
-                                                <TextInput
-                                                    style={[styles.logInput, { flex: 1 }]}
-                                                    keyboardType="numeric"
-                                                    value={set.reps ? String(set.reps) : ''}
-                                                    placeholder="0"
-                                                    placeholderTextColor={LOG.textTertiary}
-                                                    onChangeText={(t) => updateSetData(exIdx, setIdx, 'reps', t)}
-                                                    selectTextOnFocus
-                                                />
+                                                {ex.type === 'duration' ? (
+                                                    <TextInput
+                                                        style={[styles.logInput, { flex: 2 }]}
+                                                        keyboardType="numeric"
+                                                        value={set.durationSeconds ? String(set.durationSeconds) : ''}
+                                                        placeholder="0"
+                                                        placeholderTextColor={LOG.textTertiary}
+                                                        onChangeText={(t) =>
+                                                            setSetNumber(exIdx, setIdx, 'durationSeconds', parseInt(t, 10))
+                                                        }
+                                                        selectTextOnFocus
+                                                    />
+                                                ) : ex.type === 'cardio' ? (
+                                                    <>
+                                                        <TextInput
+                                                            style={[styles.logInput, { flex: 1 }]}
+                                                            keyboardType="numeric"
+                                                            value={
+                                                                set.durationSeconds
+                                                                    ? String(Math.round(set.durationSeconds / 60))
+                                                                    : ''
+                                                            }
+                                                            placeholder="0"
+                                                            placeholderTextColor={LOG.textTertiary}
+                                                            onChangeText={(t) =>
+                                                                setSetNumber(
+                                                                    exIdx,
+                                                                    setIdx,
+                                                                    'durationSeconds',
+                                                                    Math.round(parseFloat(t) * 60)
+                                                                )
+                                                            }
+                                                            selectTextOnFocus
+                                                        />
+                                                        <TextInput
+                                                            style={[styles.logInput, { flex: 1 }]}
+                                                            keyboardType="decimal-pad"
+                                                            value={set.distance ? String(set.distance) : ''}
+                                                            placeholder="0"
+                                                            placeholderTextColor={LOG.textTertiary}
+                                                            onChangeText={(t) =>
+                                                                setSetNumber(exIdx, setIdx, 'distance', parseFloat(t))
+                                                            }
+                                                            selectTextOnFocus
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <TextInput
+                                                            style={[styles.logInput, { flex: 1 }]}
+                                                            keyboardType="decimal-pad"
+                                                            value={getWeightInputValue(set, set.id)}
+                                                            placeholder="0"
+                                                            placeholderTextColor={LOG.textTertiary}
+                                                            onChangeText={(t) => handleWeightChange(exIdx, setIdx, set.id, t)}
+                                                            onBlur={() => commitWeightDraft(exIdx, setIdx, set.id)}
+                                                            selectTextOnFocus
+                                                        />
+                                                        <TextInput
+                                                            style={[styles.logInput, { flex: 1 }]}
+                                                            keyboardType="numeric"
+                                                            value={set.reps ? String(set.reps) : ''}
+                                                            placeholder="0"
+                                                            placeholderTextColor={LOG.textTertiary}
+                                                            onChangeText={(t) => updateSetData(exIdx, setIdx, 'reps', t)}
+                                                            selectTextOnFocus
+                                                        />
+                                                    </>
+                                                )}
 
                                                 <Pressable accessibilityLabel="Confirm" hitSlop={7}
                                                     style={({ pressed }) => [
