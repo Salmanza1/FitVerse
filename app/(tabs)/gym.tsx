@@ -743,33 +743,32 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: Platform.OS === 'ios' ? 52 : 36,
         paddingBottom: 8,
         paddingHorizontal: 16,
-        backgroundColor: 'rgba(10, 31, 56, 0.92)',
-        borderBottomWidth: 1,
+        backgroundColor: LOG.bgBase,
+        borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: LOG.borderSubtle,
     },
     headerIconButton: {
         width: 36,
         height: 36,
-        borderRadius: 16,
-        backgroundColor: 'rgba(180, 70, 70, 0.12)',
+        borderRadius: 18,
+        backgroundColor: LOG.dangerSoft,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(180, 70, 70, 0.25)',
+        borderColor: 'rgba(198, 47, 47, 0.28)',
     },
     headerFinishButton: {
         backgroundColor: LOG.gold,
         paddingVertical: 8,
         paddingHorizontal: 16,
-        borderRadius: 22,
+        borderRadius: VisualSystem.radius.pill,
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.45)',
+        borderColor: LOG.borderGold,
     },
     headerFinishText: {
-        color: LOG.bgMid,
+        color: LOG.textOnGold,
         fontSize: 13,
         fontWeight: '800',
         letterSpacing: 0.5,
@@ -778,16 +777,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logTimerLabel: {
-        color: LOG.goldText,
-        fontSize: 11,
+        color: LOG.textSecondary,
+        fontSize: VisualSystem.text.caption,
         fontWeight: '800',
         letterSpacing: 0.2,
-        marginBottom: 4,
-        opacity: 0.7,
+        marginBottom: 2,
     },
     logTimerText: {
         color: VisualSystem.colors.textPrimary,
-        fontSize: 15,
+        fontSize: VisualSystem.text.title,
         fontWeight: '800',
         fontVariant: ['tabular-nums'],
     },
@@ -1400,12 +1398,12 @@ const styles = StyleSheet.create({
     coachPlanActions: {
         paddingHorizontal: 16,
         paddingVertical: 12,
-        backgroundColor: 'rgba(30, 58, 95, 0.95)',
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(212, 175, 55, 0.25)',
+        backgroundColor: LOG.bgDeep,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: LOG.borderSubtle,
     },
     coachPlanActionsTitle: {
-        color: VisualSystem.colors.goldText,
+        color: VisualSystem.colors.textTertiary,
         fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.5,
@@ -3504,12 +3502,12 @@ export default function GymScreen() {
                 style={{ flex: 1, backgroundColor: LOG.bgBase }}
             >
                 <Animated.View entering={SlideInUp.duration(360).easing(Easing.out(Easing.cubic))}>
-                <View style={styles.logHeader}>
+                <View style={[styles.logHeader, { paddingTop: insets.top + 8 }]}>
                     <Pressable accessibilityLabel="Close" hitSlop={4}
                         onPress={cancelWorkout}
                         style={({ pressed }) => [styles.headerIconButton, pressed && { opacity: 0.65 }]}
                     >
-                        <FontAwesome name="times" size={20} color="#FF6464" />
+                        <FontAwesome name="times" size={20} color={LOG.danger} />
                     </Pressable>
                     <View style={styles.logTimerContainer}>
                         <Text style={styles.logTimerLabel}>Logging workout</Text>
