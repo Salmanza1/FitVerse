@@ -15,12 +15,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ngafney07.FitVerse",
+      "appleTeamId": "JXT3D7Y4U3",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "FitVerse uses the camera so you can scan a meal to log it and add photos to your workout posts.",
         "NSPhotoLibraryUsageDescription": "FitVerse needs access to your photos so you can set a profile picture and attach images to posts.",
         "NSPhotoLibraryAddUsageDescription": "FitVerse saves images you create in the app back to your photo library.",
-        "NSContactsUsageDescription": "FitVerse can check your contacts to suggest friends who already use the app. Your contacts are never uploaded."
+        "NSContactsUsageDescription": "FitVerse can check your contacts to suggest friends who already use the app. Your contacts are never uploaded.",
+        "NSSupportsLiveActivities": true
       }
     },
     "android": {
@@ -43,7 +45,8 @@
       "expo-splash-screen",
       "expo-status-bar",
       "react-native-bottom-tabs",
-      "expo-notifications"
+      "expo-notifications",
+      "@bacons/apple-targets"
     ],
     "experiments": {
       "typedRoutes": true

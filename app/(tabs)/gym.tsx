@@ -83,6 +83,7 @@ import {
     formatExerciseDisplayName,
 } from '@/features/workout/exerciseLibrary';
 import { ExerciseLibraryPanel } from '@/components/workout/ExerciseLibraryPanel';
+import { startRestActivity, endRestActivity } from '@/modules/rest-activity';
 import {
     STARTER_TEMPLATES,
     starterDetail,
@@ -2414,6 +2415,17 @@ export default function GymScreen() {
     const [libraryBrowseVisible, setLibraryBrowseVisible] = useState(false);
     const [aiContext, setAiContext] = useState('');
     const [activeWorkout, setActiveWorkout] = useState<Workout | null>(null);
+    /**
+     * Mirror of activeWorkout for callbacks that must not be rebuilt.
+     *
+     * setSetRestTimer is memoised with no dependencies so every call site keeps
+     * one stable reference; reading the workout through a ref gives it the
+     * current exercise name without making the callback churn on every set.
+     */
+    const activeWorkoutRef = useRef<Workout | null>(null);
+    useEffect(() => {
+        activeWorkoutRef.current = activeWorkout;
+    }, [activeWorkout]);
     const dashboardScrollY = useRef(new RNAnimated.Value(0)).current;
     const exercisePickerListRef = useRef<FlatList<ExercisePickerListItem>>(null);
     const pickerRowHeightRef = useRef(EXERCISE_PICKER_ROW_HEIGHT);
@@ -2475,6 +2487,13 @@ export default function GymScreen() {
         setSetRestTimer(next);
         Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
         if (next?.status === 'running' && next.endsAt > Date.now()) {
+            startRestActivity({
+                workoutName: activeWorkoutRef.current?.name ?? 'Workout',
+                exerciseName:
+                    activeWorkoutRef.current?.exercises[next.exerciseIdx]?.name ?? 'Next set',
+                startedAt: next.endsAt - next.total * 1000,
+                endsAt: next.endsAt,
+            });
             Notifications.scheduleNotificationAsync({
                 identifier: REST_NOTIFICATION_ID,
                 content: {
@@ -2487,6 +2506,8 @@ export default function GymScreen() {
                     date: new Date(next.endsAt),
                 },
             }).catch(() => {});
+        } else {
+            endRestActivity();
         }
     }, []);
 
@@ -2494,6 +2515,7 @@ export default function GymScreen() {
     useEffect(
         () => () => {
             Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
+            endRestActivity();
         },
         []
     );
