@@ -1279,7 +1279,7 @@ const styles = StyleSheet.create({
     },
     coachChatContainer: {
         flex: 1,
-        backgroundColor: VisualSystem.colors.bgMid,
+        backgroundColor: VisualSystem.colors.bgBase,
     },
     coachChatHeader: {
         paddingTop: Platform.OS === 'ios' ? 60 : 40,
@@ -1322,7 +1322,7 @@ const styles = StyleSheet.create({
     msgAIAvatar: {
         width: 24,
         height: 24,
-        borderRadius: 10,
+        borderRadius: 12,
         backgroundColor: VisualSystem.colors.gold,
         justifyContent: 'center',
         alignItems: 'center',
@@ -1337,10 +1337,10 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 4,
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.15)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     msgTextUser: {
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         borderTopRightRadius: 4,
     },
     msgText: {
@@ -1349,7 +1349,7 @@ const styles = StyleSheet.create({
         lineHeight: 22,
     },
     msgTextUserText: {
-        color: VisualSystem.colors.textPrimary, // Dark text on Gold background for readability
+        color: VisualSystem.colors.textOnGold,
         fontWeight: '600',
     },
     coachChatInputArea: {
@@ -1357,13 +1357,13 @@ const styles = StyleSheet.create({
         padding: 16,
         paddingBottom: Platform.OS === 'ios' ? 20 : 15,
         backgroundColor: VisualSystem.colors.bgMid,
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(212, 175, 55, 0.2)',
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: VisualSystem.colors.borderSubtle,
         alignItems: 'flex-end',
     },
     coachChatInput: {
         flex: 1,
-        backgroundColor: VisualSystem.colors.bgMid,
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 22,
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -1372,13 +1372,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         maxHeight: 100,
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.1)',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     coachSendBtn: {
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 8,
@@ -1463,6 +1463,9 @@ const styles = StyleSheet.create({
     },
     coachBtnDisabled: {
         opacity: 0.45,
+    },
+    coachSendBtnDisabled: {
+        backgroundColor: VisualSystem.colors.bgDeep,
     },
     coachPreparingOverlay: {
         position: 'absolute',
@@ -2355,6 +2358,7 @@ export default function GymScreen() {
     const [coachInput, setCoachInput] = useState('');
     const [isAiTyping, setIsAiTyping] = useState(false);
     const [isPreparingWorkout, setIsPreparingWorkout] = useState(false);
+    const canSendCoachMessage = coachInput.trim().length > 0 && !isAiTyping && !isPreparingWorkout;
     const [timer, setTimer] = useState(0);
     const workoutStartAtRef = useRef<number | null>(null);
     const [confirmCancelVisible, setConfirmCancelVisible] = useState(false);
@@ -3118,7 +3122,7 @@ export default function GymScreen() {
             presentationStyle="fullScreen"
             onRequestClose={() => !isPreparingWorkout && setCoachModalVisible(false)}
         >
-            <View style={{ flex: 1, backgroundColor: VisualSystem.colors.bgMid }}>
+            <View style={{ flex: 1, backgroundColor: VisualSystem.colors.bgBase }}>
                 <KeyboardAvoidingView 
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
                     style={styles.coachChatContainer}
@@ -3130,7 +3134,7 @@ export default function GymScreen() {
                             disabled={isPreparingWorkout}
                             style={({ pressed }) => [styles.coachChatClose, pressed && { opacity: 0.6 }]}
                         >
-                            <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.gold} />
+                            <FontAwesome name="chevron-down" size={20} color={VisualSystem.colors.textPrimary} />
                         </Pressable>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={styles.coachChatTitle}>Leprechaun coach</Text>
@@ -3261,13 +3265,21 @@ export default function GymScreen() {
                         <Pressable
                             style={({ pressed }) => [
                                 styles.coachSendBtn,
-                                (!coachInput.trim() || isAiTyping || isPreparingWorkout) && styles.coachBtnDisabled,
-                                pressed && coachInput.trim() && !isAiTyping && { opacity: 0.85 },
+                                !canSendCoachMessage && styles.coachSendBtnDisabled,
+                                pressed && canSendCoachMessage && { opacity: 0.85 },
                             ]}
-                            disabled={!coachInput.trim() || isAiTyping || isPreparingWorkout}
+                            disabled={!canSendCoachMessage}
                             onPress={sendCoachMessage}
                         >
-                            <FontAwesome name="paper-plane" size={18} color="#0C2340" />
+                            <FontAwesome
+                                name="paper-plane"
+                                size={18}
+                                color={
+                                    canSendCoachMessage
+                                        ? VisualSystem.colors.textOnGold
+                                        : VisualSystem.colors.textTertiary
+                                }
+                            />
                         </Pressable>
                     </View>
 

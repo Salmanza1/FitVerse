@@ -26,6 +26,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
     ]);
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const canSend = inputText.trim().length > 0 && !isLoading;
     const [pendingAction, setPendingAction] = useState<any | null>(null);
     const { user, updateProfile } = useAuth();
     const flatListRef = useRef<FlatList>(null);
@@ -161,7 +162,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                 </View>
                             </View>
                             <TouchableOpacity accessibilityLabel="Close" onPress={() => setIsChatOpen(false)} style={styles.closeBtn}>
-                                <FontAwesome name="times" size={20} color="#666" />
+                                <FontAwesome name="times" size={20} color={VisualSystem.colors.textTertiary} />
                             </TouchableOpacity>
                         </View>
 
@@ -187,7 +188,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                             ListFooterComponent={pendingAction ? (
                                 <View style={styles.actionCard}>
                                     <View style={styles.actionCardHeader}>
-                                        <FontAwesome name="magic" size={14} color="#C99700" />
+                                        <FontAwesome name="magic" size={14} color={VisualSystem.colors.goldText} />
                                         <Text style={styles.actionCardTitle}>Proposed action</Text>
                                     </View>
                                     <Text style={styles.actionCardDesc}>
@@ -227,20 +228,26 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Ask for advice, lad..."
-                                    placeholderTextColor="#666"
+                                    placeholderTextColor={VisualSystem.colors.textTertiary}
                                     value={inputText}
                                     onChangeText={setInputText}
                                     multiline
                                 />
                                 <TouchableOpacity
-                                    style={[styles.sendBtn, (!inputText.trim() || isLoading) && styles.sendBtnDisabled]}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Send"
+                                    style={[styles.sendBtn, !canSend && styles.sendBtnDisabled]}
                                     onPress={handleSendMessage}
-                                    disabled={!inputText.trim() || isLoading}
+                                    disabled={!canSend}
                                 >
                                     {isLoading ? (
-                                        <ActivityIndicator size="small" color="black" />
+                                        <ActivityIndicator size="small" color={VisualSystem.colors.textOnGold} />
                                     ) : (
-                                        <FontAwesome name="paper-plane" size={18} color="black" />
+                                        <FontAwesome
+                                            name="paper-plane"
+                                            size={18}
+                                            color={canSend ? VisualSystem.colors.textOnGold : VisualSystem.colors.textTertiary}
+                                        />
                                     )}
                                 </TouchableOpacity>
                             </View>
@@ -258,16 +265,13 @@ const styles = StyleSheet.create({
         bottom: 100,
         right: 25,
         zIndex: 9999,
-        shadowColor: VisualSystem.colors.gold,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.12,
-        shadowRadius: 10,
+        ...VisualSystem.shadow.goldGlow,
         elevation: 10,
     },
     button: {
         width: 64,
         height: 64,
-        borderRadius: 28,
+        borderRadius: 32,
         backgroundColor: VisualSystem.colors.bgMid,
         justifyContent: 'center',
         alignItems: 'center',
@@ -284,9 +288,9 @@ const styles = StyleSheet.create({
         margin: 8,
         padding: 0,
         overflow: 'hidden',
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgMid,
         borderWidth: 1,
-        borderColor: '#161616',
+        borderColor: VisualSystem.colors.borderSubtle,
     },
     chatHeader: {
         flexDirection: 'row',
@@ -294,7 +298,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: '#161616',
+        borderBottomColor: VisualSystem.colors.borderSubtle,
         backgroundColor: VisualSystem.colors.bgMid,
     },
     chatTitle: {
@@ -327,12 +331,12 @@ const styles = StyleSheet.create({
     },
     assistantBubble: {
         alignSelf: 'flex-start',
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderBottomLeftRadius: 4,
     },
     userBubble: {
         alignSelf: 'flex-end',
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         borderBottomRightRadius: 4,
     },
     messageText: {
@@ -343,19 +347,21 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
     },
     userText: {
-        color: '#000',
+        color: VisualSystem.colors.textOnGold,
         fontWeight: '600',
     },
     inputArea: {
         flexDirection: 'row',
         padding: 16,
         paddingBottom: Platform.OS === 'ios' ? 30 : 15,
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgMid,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: VisualSystem.colors.borderSubtle,
         alignItems: 'center',
     },
     input: {
         flex: 1,
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 22,
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -367,16 +373,17 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 8,
     },
+    // A flat grey reads as "off"; half-opacity gold just reads as faded gold.
     sendBtnDisabled: {
-        opacity: 0.5,
+        backgroundColor: VisualSystem.colors.bgDeep,
     },
     actionCard: {
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgDeep,
         borderRadius: 10,
         padding: 16,
         marginTop: 8,
@@ -403,7 +410,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     actionParamsBox: {
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgMid,
         padding: 8,
         borderRadius: 6,
         marginBottom: 16,
@@ -426,10 +433,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     actionBtnCancel: {
-        backgroundColor: VisualSystem.colors.bgBase,
+        backgroundColor: VisualSystem.colors.bgMid,
+        borderWidth: 1,
+        borderColor: VisualSystem.colors.borderStrong,
     },
     actionBtnConfirm: {
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
     },
     actionBtnTextCancel: {
         color: VisualSystem.colors.textPrimary,
@@ -437,7 +446,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     actionBtnTextConfirm: {
-        color: VisualSystem.colors.textPrimary,
+        color: VisualSystem.colors.textOnGold,
         fontWeight: '700',
         fontSize: 13,
     }
