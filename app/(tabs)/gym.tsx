@@ -1543,6 +1543,28 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         marginBottom: 4,
     },
+    logExSubRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    supersetChip: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+        borderRadius: VisualSystem.radius.xs,
+        backgroundColor: LOG.goldMuted,
+        borderWidth: 1,
+        borderColor: LOG.borderGold,
+    },
+    supersetChipText: {
+        fontSize: 9,
+        fontWeight: '800',
+        letterSpacing: 0.4,
+        color: LOG.goldText,
+    },
     dashboardSectionSub: {
         fontSize: VisualSystem.text.small,
         color: LOG.textSecondary,
@@ -2784,7 +2806,13 @@ export default function GymScreen() {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             const exercise = newExercises[exIdx];
             syncLiveWorkoutProgress({ ...activeWorkout, exercises: newExercises }, exIdx);
-            const restDuration = getRestAfterSetSeconds(exercise, set);
+            // The point of a superset is going straight to the paired
+            // movement, so rest is owed only after the last one in the group.
+            const pairedNext = newExercises[exIdx + 1];
+            const restDuration =
+                exercise.supersetId && pairedNext?.supersetId === exercise.supersetId
+                    ? 0
+                    : getRestAfterSetSeconds(exercise, set);
             setEditingRest(null);
             if (restDuration > 0) {
                 const endsAt = Date.now() + restDuration * 1000;
@@ -2807,6 +2835,46 @@ export default function GymScreen() {
         }
 
         setActiveWorkout({ ...activeWorkout, exercises: newExercises });
+    };
+
+    /**
+     * Pair an exercise with the one after it, or break it out of its pair.
+     *
+     * A superset is stored as a shared supersetId on adjacent exercises, so
+     * reordering or removing one leaves the rest of the group intact.
+     */
+    const toggleSuperset = (idx: number) => {
+        if (!activeWorkout) return;
+        const exercises = [...activeWorkout.exercises];
+        const current = exercises[idx];
+        if (!current) return;
+
+        if (current.supersetId) {
+            const leaving = current.supersetId;
+            exercises[idx] = { ...current, supersetId: undefined };
+            // A group of one is not a superset; release the straggler too.
+            const remaining = exercises.filter((e) => e.supersetId === leaving);
+            if (remaining.length === 1) {
+                const lone = exercises.findIndex((e) => e.supersetId === leaving);
+                exercises[lone] = { ...exercises[lone], supersetId: undefined };
+            }
+        } else {
+            const next = exercises[idx + 1];
+            if (!next) {
+                Alert.alert(
+                    'Nothing to pair with',
+                    'A superset needs an exercise after this one. Add or move one below it first.'
+                );
+                return;
+            }
+            const groupId = next.supersetId ?? Math.random().toString(36).slice(2, 10);
+            exercises[idx] = { ...current, supersetId: groupId };
+            exercises[idx + 1] = { ...next, supersetId: groupId };
+        }
+
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setActiveWorkout({ ...activeWorkout, exercises });
     };
 
     const updateSetRestAfter = (exIdx: number, setIdx: number, seconds: number) => {
@@ -3697,7 +3765,19 @@ export default function GymScreen() {
                                                 <FontAwesome name="exchange" size={12} color="#5C7A99" style={{ marginLeft: 8 }} />
                                             </Pressable>
                                         </View>
-                                        <Text style={styles.logExCategory}>{ex.category}</Text>
+                                        <View style={styles.logExSubRow}>
+                                            <Text style={styles.logExCategory}>{ex.category}</Text>
+                                            {!!ex.supersetId && (
+                                                <View style={styles.supersetChip}>
+                                                    <FontAwesome
+                                                        name="bars"
+                                                        size={9}
+                                                        color={LOG.goldText}
+                                                    />
+                                                    <Text style={styles.supersetChipText}>SUPERSET</Text>
+                                                </View>
+                                            )}
+                                        </View>
                                     </View>
                                     <TouchableOpacity hitSlop={6} style={styles.logExMenuBtn} onPress={() => setMenuExerciseIdx(exIdx)}>
                                         <FontAwesome name="ellipsis-h" size={18} color="#5C7A99" />
@@ -4208,22 +4288,26 @@ export default function GymScreen() {
                         <Text style={styles.menuItemText}>Replace Exercise</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.menuItem, { borderBottomWidth: 0 }]}>
+                    <TouchableOpacity
+                        style={[styles.menuItem, { borderBottomWidth: 0 }]}
+                        onPress={() => {
+                            if (menuExerciseIdx !== null) toggleSuperset(menuExerciseIdx);
+                            setMenuExerciseIdx(null);
+                        }}
+                    >
                         <FontAwesome name="bars" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
-                        <Text style={styles.menuItemText}>Create Superset</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={[styles.menuItem, { borderBottomWidth: 0 }]}>
-                        <FontAwesome name="sliders" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
-                        <Text style={styles.menuItemText}>Preferences</Text>
-                        <FontAwesome name="chevron-right" size={14} color={LOG.textTertiary} style={{ marginLeft: 'auto' }} />
+                        <Text style={styles.menuItemText}>
+                            {menuExerciseIdx !== null && activeWorkout?.exercises[menuExerciseIdx]?.supersetId
+                                ? 'Leave Superset'
+                                : 'Create Superset'}
+                        </Text>
                     </TouchableOpacity>
 
                     <View style={{ height: 1, backgroundColor: LOG.borderSubtle, marginVertical: 8 }} />
 
                     <TouchableOpacity style={[styles.menuItem, { borderBottomWidth: 0 }]} onPress={() => menuExerciseIdx !== null && handleRemoveExercise(menuExerciseIdx)}>
-                        <FontAwesome name="times" size={18} color="rgba(200, 90, 85, 1)" style={styles.menuItemIcon} />
-                        <Text style={[styles.menuItemText, { color: 'rgba(200, 90, 85, 1)' }]}>Remove Exercise</Text>
+                        <FontAwesome name="times" size={18} color={LOG.danger} style={styles.menuItemIcon} />
+                        <Text style={[styles.menuItemText, { color: LOG.danger }]}>Remove Exercise</Text>
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
