@@ -903,8 +903,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 8,
     },
-    logExName: {
+    logExTitleCol: {
+        // Bounds the name so it truncates instead of running under the menu.
         flex: 1,
+        minWidth: 0,
+        marginRight: VisualSystem.spacing.sm,
+    },
+    logExNameRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        // React Native defaults flexShrink to 0, so without this the row keeps
+        // its full text width and pushes past the column it sits in.
+        flexShrink: 1,
+    },
+    logExSwapIcon: {
+        marginLeft: VisualSystem.spacing.sm,
+        flexShrink: 0,
+    },
+    logExName: {
+        flexShrink: 1,
         fontSize: 15,
         fontWeight: '800',
         color: LOG.textPrimary,
@@ -3823,18 +3840,26 @@ export default function GymScreen() {
                                 style={styles.logExContainer}
                             >
                                 <View style={styles.logExHeader}>
-                                    <View style={{ flex: 1 }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Pressable
-                                                onPress={() => handleReplaceExercise(exIdx)}
-                                                style={({ pressed }) => [{ flexDirection: 'row', alignItems: 'center' }, pressed && { opacity: 0.7 }]}
-                                            >
-                                                <Text style={styles.logExName} numberOfLines={1} ellipsizeMode="tail">
-                                                    {formatExerciseDisplayName(ex.name, ex.category)}
-                                                </Text>
-                                                <FontAwesome name="exchange" size={12} color="#5C7A99" style={{ marginLeft: 8 }} />
-                                            </Pressable>
-                                        </View>
+                                    <View style={styles.logExTitleCol}>
+                                        <Pressable
+                                            accessibilityRole="button"
+                                            accessibilityLabel={'Replace ' + ex.name}
+                                            onPress={() => handleReplaceExercise(exIdx)}
+                                            style={({ pressed }) => [
+                                                styles.logExNameRow,
+                                                pressed && { opacity: 0.7 },
+                                            ]}
+                                        >
+                                            <Text style={styles.logExName} numberOfLines={1} ellipsizeMode="tail">
+                                                {formatExerciseDisplayName(ex.name, ex.category)}
+                                            </Text>
+                                            <FontAwesome
+                                                name="exchange"
+                                                size={12}
+                                                color={LOG.textSecondary}
+                                                style={styles.logExSwapIcon}
+                                            />
+                                        </Pressable>
                                         <View style={styles.logExSubRow}>
                                             <Text style={styles.logExCategory}>{ex.category}</Text>
                                             {!!ex.supersetId && (
@@ -3850,7 +3875,7 @@ export default function GymScreen() {
                                         </View>
                                     </View>
                                     <TouchableOpacity hitSlop={6} style={styles.logExMenuBtn} onPress={() => setMenuExerciseIdx(exIdx)}>
-                                        <FontAwesome name="ellipsis-h" size={18} color="#5C7A99" />
+                                        <FontAwesome name="ellipsis-h" size={18} color={LOG.textSecondary} />
                                     </TouchableOpacity>
                                 </View>
 
