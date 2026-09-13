@@ -12,6 +12,7 @@ import {
     Text as RNText,
 } from 'react-native';
 import { Text, SecondaryText } from '../../components/Themed';
+import { RulerPicker } from '@/components/ui/RulerPicker';
 import {
     UserProfile,
     Dorm,
@@ -51,6 +52,11 @@ const WEEKLY_GOAL_LABELS: Record<string, string> = {
     [WeeklyGoalRate.GAIN_0_5_LB]: "Gain 0.5 lbs / week",
     [WeeklyGoalRate.GAIN_1_0_LB]: "Gain 1.0 lbs / week",
 };
+
+/** Inches as feet and inches, the way the ruler and the reading both show it. */
+function formatHeight(totalInches: number): string {
+    return `${Math.floor(totalInches / 12)}'${totalInches % 12}"`;
+}
 
 function StepHeader({ title, subtitle }: { title: string; subtitle: string }) {
     return (
@@ -223,10 +229,11 @@ export default function SignupScreen() {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
     const [gender, setGender] = useState<Gender>(Gender.MALE);
-    const [age, setAge] = useState('');
-    const [heightFt, setHeightFt] = useState('');
-    const [heightIn, setHeightIn] = useState('');
-    const [weight, setWeight] = useState('');
+    // Seeded with unremarkable values: a ruler always reads something, and a
+    // blank one would just be a zero the user has to drag away from.
+    const [age, setAge] = useState(20);
+    const [heightInches, setHeightInches] = useState(70);
+    const [weightLbs, setWeightLbs] = useState(165);
 
     const [activity, setActivity] = useState<ActivityLevel>(ActivityLevel.MODERATE);
     const [goal, setGoal] = useState<Goal>(Goal.LEAN_BULK);
@@ -244,19 +251,14 @@ export default function SignupScreen() {
     const [results, setResults] = useState<{ calories: number; protein: number; carbs: number; fat: number } | null>(null);
 
     const calculate = () => {
-        if (!age || !heightFt || !heightIn || !weight) {
-            Alert.alert('Missing Info', 'Please fill in all stats to proceed.');
-            return false;
-        }
-
-        const heightCm = parseInt(heightFt, 10) * 30.48 + parseInt(heightIn, 10) * 2.54;
-        const weightKg = parseFloat(weight) * 0.453592;
+        const heightCm = heightInches * 2.54;
+        const weightKg = weightLbs * 0.453592;
 
         const calculated = calculateTargets(
             gender,
             weightKg,
             heightCm,
-            parseInt(age, 10),
+            age,
             activity,
             goal,
             weeklyGoalRate
@@ -348,8 +350,8 @@ export default function SignupScreen() {
     const handleSignup = async () => {
         if (!results) return;
 
-        const heightCm = parseInt(heightFt, 10) * 30.48 + parseInt(heightIn, 10) * 2.54;
-        const weightKg = parseFloat(weight) * 0.453592;
+        const heightCm = heightInches * 2.54;
+        const weightKg = weightLbs * 0.453592;
 
         const newUser: UserProfile = {
             id: generateId(),
@@ -358,7 +360,7 @@ export default function SignupScreen() {
             name,
             phone: phone.replace(/\D/g, ''),
             gender,
-            age: parseInt(age, 10),
+            age,
             heightCm,
             weightKg,
             activityLevel: activity,
@@ -498,22 +500,34 @@ export default function SignupScreen() {
             />
             <StyledSelect label="Gender" value={gender} options={[Gender.MALE, Gender.FEMALE]} onSelect={setGender} />
 
-            <View style={styles.fieldRow}>
-                <View style={styles.fieldRowHalf}>
-                    <StyledInput label="Age" value={age} onChangeText={setAge} keyboardType="number-pad" placeholder="21" maxLength={3} />
-                </View>
-                <View style={styles.fieldRowHalf}>
-                    <StyledInput label="Weight (lbs)" value={weight} onChangeText={setWeight} keyboardType="numeric" placeholder="165" />
-                </View>
-            </View>
-
-            <View style={styles.fieldRow}>
-                <View style={styles.fieldRowHalf}>
-                    <StyledInput label="Feet" value={heightFt} onChangeText={setHeightFt} keyboardType="number-pad" placeholder="5" maxLength={1} />
-                </View>
-                <View style={styles.fieldRowHalf}>
-                    <StyledInput label="Inches" value={heightIn} onChangeText={setHeightIn} keyboardType="number-pad" placeholder="10" maxLength={2} />
-                </View>
+            <View style={styles.rulerStack}>
+                <RulerPicker
+                    label="Age"
+                    value={age}
+                    onChange={setAge}
+                    min={13}
+                    max={90}
+                    unit="years"
+                    majorEvery={5}
+                />
+                <RulerPicker
+                    label="Height"
+                    value={heightInches}
+                    onChange={setHeightInches}
+                    min={48}
+                    max={84}
+                    formatValue={formatHeight}
+                    majorEvery={6}
+                />
+                <RulerPicker
+                    label="Weight"
+                    value={weightLbs}
+                    onChange={setWeightLbs}
+                    min={80}
+                    max={400}
+                    unit="lb"
+                    majorEvery={10}
+                />
             </View>
 
             <StyledSelect label="Workout Frequency" value={activity} options={Object.values(ActivityLevel)} onSelect={setActivity} />
@@ -751,6 +765,10 @@ const styles = StyleSheet.create({
     },
     fieldRow: {
         flexDirection: 'row',
+        gap: Tokens.spacing.md,
+        marginBottom: FIELD_GAP,
+    },
+    rulerStack: {
         gap: Tokens.spacing.md,
         marginBottom: FIELD_GAP,
     },
