@@ -21,7 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { WEB_FEED_MAX_WIDTH } from '@/constants/webLayout';
 
-type GenderFilter = 'Mixed' | 'Boys' | 'Girls';
+type GenderFilter = 'Mixed' | 'Men' | 'Women';
 
 type LeaderboardEntry = { rank: number; name: string; points: number; color?: string };
 type LeaderboardData = Record<GenderFilter, LeaderboardEntry[]>;
@@ -39,7 +39,7 @@ const fetchLeaderboard = async (): Promise<LeaderboardData> => {
 
         if (error) {
             console.warn('Leaderboard view not ready:', error.message);
-            return { Mixed: [], Boys: [], Girls: [] };
+            return { Mixed: [], Men: [], Women: [] };
         }
 
         const buildRanked = (rows: any[]): LeaderboardEntry[] =>
@@ -52,12 +52,12 @@ const fetchLeaderboard = async (): Promise<LeaderboardData> => {
 
         return {
             Mixed: buildRanked(data.filter(r => r.gender === 'Mixed') || []),
-            Boys: buildRanked(data.filter(r => r.gender === 'Male') || []),
-            Girls: buildRanked(data.filter(r => r.gender === 'Female') || []),
+            Men: buildRanked(data.filter(r => r.gender === 'Male') || []),
+            Women: buildRanked(data.filter(r => r.gender === 'Female') || []),
         };
     } catch (e) {
         console.error('fetchLeaderboard error:', e);
-        return { Mixed: [], Boys: [], Girls: [] };
+        return { Mixed: [], Men: [], Women: [] };
     }
 };
 
@@ -167,7 +167,7 @@ export default function LeaderboardScreen() {
     const tabBarHeight = useBottomTabBarHeight();
     const { width: windowWidth } = useWindowDimensions();
     const flatListRef = useRef<FlatList<GenderFilter>>(null);
-    const filters: GenderFilter[] = ['Mixed', 'Boys', 'Girls'];
+    const filters: GenderFilter[] = ['Mixed', 'Men', 'Women'];
     const isWeb = Platform.OS === 'web';
     const pageWidth = isWeb ? Math.min(windowWidth, WEB_FEED_MAX_WIDTH) : windowWidth;
 
