@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
     },
     letterDisabled: {
-        opacity: 0.28,
+        color: VisualSystem.colors.borderStrong,
     },
     letterActive: {
         color: VisualSystem.colors.gold,

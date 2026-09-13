@@ -516,9 +516,15 @@ export default function NutritionDashboard() {
                             disabled={!quickLogText.trim() || quickLogging}
                         >
                             {quickLogging ? (
-                                <ActivityIndicator size="small" color="#0C2340" />
+                                <ActivityIndicator size="small" color={VisualSystem.colors.textOnGold} />
                             ) : (
-                                <Text style={styles.aiLogBtnText}>Log</Text>
+                                <Text
+                                    style={[
+                                        styles.aiLogBtnText,
+                                        !quickLogText.trim() && styles.aiLogBtnTextDisabled,
+                                    ]}>
+                                    Log
+                                </Text>
                             )}
                         </TouchableOpacity>
                     </View>
@@ -980,7 +986,7 @@ const styles = StyleSheet.create({
         paddingRight: 8,
     },
     aiLogBtn: {
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         borderRadius: 10,
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -988,8 +994,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    aiLogBtnDisabled: { opacity: 0.45 },
-    aiLogBtnText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 13 },
+    aiLogBtnDisabled: { backgroundColor: VisualSystem.colors.bgDeep },
+    aiLogBtnText: { color: VisualSystem.colors.textOnGold, fontWeight: '800', fontSize: 13 },
+    aiLogBtnTextDisabled: { color: VisualSystem.colors.textTertiary },
     aiLogHint: {
         color: VisualSystem.colors.textTertiary,
         fontSize: 11,

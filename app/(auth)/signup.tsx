@@ -398,19 +398,6 @@ export default function SignupScreen() {
         }
     };
 
-    const generatePassword = () => {
-        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-        let newPass = '';
-        for (let i = 0; i < 12; i++) newPass += chars.charAt(Math.floor(Math.random() * chars.length));
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPass)) newPass += '!';
-        setPassword(newPass);
-        setConfirmPassword(newPass);
-        setShowPassword(true);
-        setShowConfirmPassword(true);
-        setPasswordError('');
-        setConfirmPasswordError('');
-    };
-
     const renderStep1 = () => (
         <View style={styles.stepBody}>
             <StepHeader
@@ -471,11 +458,6 @@ export default function SignupScreen() {
                 error={passwordError}
                 textContentType={passwordType}
             />
-
-            <TouchableOpacity style={styles.generateBtn} onPress={generatePassword} activeOpacity={0.7}>
-                <FontAwesome name="magic" size={12} color={VisualSystem.colors.gold} />
-                <RNText style={styles.generateText}>Generate secure password</RNText>
-            </TouchableOpacity>
 
             <PasswordField
                 label="Confirm Password"
@@ -938,21 +920,6 @@ const styles = StyleSheet.create({
         marginTop: Tokens.spacing.xs,
         marginLeft: Tokens.spacing.xs,
         fontWeight: '600',
-    },
-    generateBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-start',
-        marginTop: -8,
-        marginBottom: Tokens.spacing.md,
-        marginLeft: Tokens.spacing.xs,
-        gap: 4,
-        paddingVertical: 4,
-    },
-    generateText: {
-        fontSize: 11,
-        fontWeight: '700',
-        color: VisualSystem.colors.goldText,
     },
     actions: {
         flexDirection: 'row',

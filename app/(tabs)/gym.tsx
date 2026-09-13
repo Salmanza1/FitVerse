@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, Pressable, KeyboardAvoidingView, Platform, ScrollView, TextInput, Alert, Modal, FlatList, LayoutAnimation, UIManager, Image, PanResponder, ActivityIndicator, InteractionManager, Dimensions, Animated as RNAnimated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -32,6 +32,19 @@ import * as Haptics from 'expo-haptics';
 import { glassSurface, glassSurfaceGold, VisualSystem } from '@/constants/VisualSystem';
 
 const LOG = VisualSystem.colors;
+
+/** Identifier for the pending "rest is over" alert. */
+const REST_NOTIFICATION_ID = 'fitverse-rest-complete';
+
+type RestTimerState = {
+    exerciseIdx: number;
+    setIdx: number;
+    /** Absolute wall-clock end, so the countdown survives a suspended tick. */
+    endsAt: number;
+    remaining: number;
+    total: number;
+    status: 'running' | 'finished';
+};
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeOut, SlideInRight, SlideInUp, Easing } from 'react-native-reanimated';
 import { getLeprechaunResponseWithTools, Message as AiMessage } from '@/lib/openai';
@@ -595,8 +608,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         bottom: 0,
-        backgroundColor: VisualSystem.colors.gold,
-        opacity: 0.2,
+        backgroundColor: VisualSystem.colors.goldSoft,
     },
     inlineRestText: {
         color: VisualSystem.colors.goldText,
@@ -1008,7 +1020,6 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         backgroundColor: VisualSystem.colors.successSoft,
-        opacity: 0.3,
     },
     logRestTimerText: {
         color: VisualSystem.colors.success,
@@ -1784,7 +1795,7 @@ const styles = StyleSheet.create({
         paddingRight: 8,
     },
     activityLogBtn: {
-        backgroundColor: LOG.gold,
+        backgroundColor: LOG.goldVivid,
         borderRadius: 10,
         paddingHorizontal: 12,
         paddingVertical: 8,
@@ -1793,12 +1804,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     activityLogBtnDisabled: {
-        opacity: 0.45,
+        backgroundColor: LOG.bgDeep,
     },
     activityLogBtnText: {
-        color: LOG.bgMid,
+        color: LOG.textOnGold,
         fontWeight: '800',
         fontSize: 13,
+    },
+    activityLogBtnTextDisabled: {
+        color: LOG.textTertiary,
     },
     activityLogHint: {
         fontSize: 11,
@@ -1957,7 +1971,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     newExSaveBtnDisabled: {
-        opacity: 0.3,
+        color: VisualSystem.colors.textTertiary,
     },
     // Alphabetical Index Styles
     historyCardMini: {
@@ -2386,14 +2400,42 @@ export default function GymScreen() {
     const [workoutNotesExpanded, setWorkoutNotesExpanded] = useState(false);
 
     // In-line Rest Timer State
-    const [setRestTimer, _setSetRestTimer] = useState<{
-        exerciseIdx: number;
-        setIdx: number;
-        endsAt: number;
-        remaining: number;
-        total: number;
-        status: 'running' | 'finished';
-    } | null>(null);
+    const [setRestTimer, _setSetRestTimer] = useState<RestTimerState | null>(null);
+
+    /**
+     * Set the rest timer and arm (or disarm) its notification.
+     *
+     * The alert is scheduled for endsAt when the timer starts rather than fired
+     * when the countdown reaches zero. iOS suspends JS timers the moment the
+     * app leaves the foreground, so a tick-fired alert never arrives — and
+     * leaving the app is exactly when you are relying on being told.
+     */
+    const setSetRestTimer = useCallback((next: RestTimerState | null) => {
+        setSetRestTimer(next);
+        Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
+        if (next?.status === 'running' && next.endsAt > Date.now()) {
+            Notifications.scheduleNotificationAsync({
+                identifier: REST_NOTIFICATION_ID,
+                content: {
+                    title: 'Rest complete',
+                    body: 'Time for your next set.',
+                    sound: true,
+                },
+                trigger: {
+                    type: Notifications.SchedulableTriggerInputTypes.DATE,
+                    date: new Date(next.endsAt),
+                },
+            }).catch(() => {});
+        }
+    }, []);
+
+    // Nothing should be left armed once the screen goes away.
+    useEffect(
+        () => () => {
+            Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
+        },
+        []
+    );
 
     // Data State
     const [templates, setTemplates] = useState<Workout[]>([]);
@@ -2452,7 +2494,9 @@ export default function GymScreen() {
                 if (!prev || prev.status !== 'running') return prev;
                 const remaining = Math.max(0, Math.ceil((prev.endsAt - Date.now()) / 1000));
                 if (remaining <= 0) {
-                    triggerRestNotification();
+                    // The scheduled alert covers being told; this is the
+                    // in-hand confirmation when the app is already open.
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
                     return { ...prev, remaining: 0, status: 'finished' };
                 }
                 if (remaining === prev.remaining) return prev;
@@ -2463,17 +2507,6 @@ export default function GymScreen() {
         const interval = setInterval(tick, 250);
         return () => clearInterval(interval);
     }, [setRestTimer?.endsAt, setRestTimer?.status, setRestTimer?.exerciseIdx, setRestTimer?.setIdx]);
-
-    const triggerRestNotification = async () => {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "Rest Over!",
-                body: "REST IS OVER GET BACK TO WORKOUT",
-                sound: true,
-            },
-            trigger: null, // immediate
-        });
-    };
 
     const loadWorkouts = async () => {
         if (!user) return;
@@ -2574,7 +2607,7 @@ export default function GymScreen() {
         workoutStartAtRef.current = Date.now();
         setActiveWorkout(workout);
         setTimer(0);
-        _setSetRestTimer(null);
+        setSetRestTimer(null);
         setEditingRest(null);
         setVisibleExerciseNotes(new Set());
         setWeightDrafts({});
@@ -2718,7 +2751,7 @@ export default function GymScreen() {
             setEditingRest(null);
             if (restDuration > 0) {
                 const endsAt = Date.now() + restDuration * 1000;
-                _setSetRestTimer({
+                setSetRestTimer({
                     exerciseIdx: exIdx,
                     setIdx: setIdx,
                     endsAt,
@@ -2727,12 +2760,12 @@ export default function GymScreen() {
                     status: 'running',
                 });
             } else {
-                _setSetRestTimer(null);
+                setSetRestTimer(null);
             }
         } else {
             // Clear rest timer if unchecking
             if (setRestTimer?.exerciseIdx === exIdx && setRestTimer?.setIdx === setIdx) {
-                _setSetRestTimer(null);
+                setSetRestTimer(null);
             }
         }
 
@@ -2923,7 +2956,7 @@ export default function GymScreen() {
         setActiveWorkout(null);
         setViewMode('Dashboard');
         setTimer(0);
-        _setSetRestTimer(null);
+        setSetRestTimer(null);
         setEditingRest(null);
         setVisibleExerciseNotes(new Set());
         setWeightDrafts({});
@@ -2954,9 +2987,9 @@ export default function GymScreen() {
 
         if (setRestTimer?.exerciseIdx === exIdx) {
             if (setRestTimer.setIdx === setIdx) {
-                _setSetRestTimer(null);
+                setSetRestTimer(null);
             } else if (setRestTimer.setIdx > setIdx) {
-                _setSetRestTimer({ ...setRestTimer, setIdx: setRestTimer.setIdx - 1 });
+                setSetRestTimer({ ...setRestTimer, setIdx: setRestTimer.setIdx - 1 });
             }
         }
         if (editingRest?.exIdx === exIdx) {
@@ -3373,7 +3406,7 @@ export default function GymScreen() {
         setActiveWorkout(null);
         setViewMode('Dashboard');
         setTimer(0);
-        _setSetRestTimer(null);
+        setSetRestTimer(null);
         setEditingRest(null);
 
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -3391,7 +3424,7 @@ export default function GymScreen() {
         setActiveWorkout(null);
         setViewMode('Dashboard');
         setTimer(0);
-        _setSetRestTimer(null);
+        setSetRestTimer(null);
         setEditingRest(null);
         setVisibleExerciseNotes(new Set());
         setWeightDrafts({});
@@ -4008,9 +4041,15 @@ export default function GymScreen() {
                         disabled={!activityLogText.trim() || activityLogging}
                     >
                         {activityLogging ? (
-                            <ActivityIndicator size="small" color={LOG.bgMid} />
+                            <ActivityIndicator size="small" color={LOG.textOnGold} />
                         ) : (
-                            <Text style={styles.activityLogBtnText}>Log</Text>
+                            <Text
+                                style={[
+                                    styles.activityLogBtnText,
+                                    !activityLogText.trim() && styles.activityLogBtnTextDisabled,
+                                ]}>
+                                Log
+                            </Text>
                         )}
                     </Pressable>
                 </View>

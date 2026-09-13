@@ -30,7 +30,22 @@ const queryClient = new QueryClient();
 export {
   ErrorBoundary,
 } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 import { VisualSystem } from '@/constants/VisualSystem';
+
+/**
+ * Without a handler, expo-notifications drops anything that arrives while the
+ * app is open. The rest timer fires exactly then as often as not, so the alert
+ * has to be allowed through rather than silently swallowed.
+ */
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowBanner: true,
+        shouldShowList: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+});
 
 export const unstable_settings = {
   initialRouteName: '(auth)',
