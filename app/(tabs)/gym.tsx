@@ -55,6 +55,11 @@ import {
     formatExerciseDisplayName,
 } from '@/features/workout/exerciseLibrary';
 import { ExerciseLibraryPanel } from '@/components/workout/ExerciseLibraryPanel';
+import {
+    STARTER_TEMPLATES,
+    starterDetail,
+    workoutFromStarter,
+} from '@/features/workout/starterTemplates';
 import { BetweenSetRestRow } from '@/components/workout/BetweenSetRestRow';
 import { SwipeToDeleteRow } from '@/components/workout/SwipeToDeleteRow';
 import { WorkoutCompleteModal } from '@/components/workout/WorkoutCompleteModal';
@@ -1538,6 +1543,12 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         marginBottom: 4,
     },
+    dashboardSectionSub: {
+        fontSize: VisualSystem.text.small,
+        color: LOG.textSecondary,
+        marginLeft: 4,
+        marginBottom: 10,
+    },
     missionPanel: {
         ...glassSurface,
         borderRadius: 22,
@@ -2514,6 +2525,32 @@ export default function GymScreen() {
         const h = await getWorkoutHistory(user.id);
         setTemplates(t);
         setHistoryCount(h.length);
+    };
+
+    /** Copy a finished session into saved routines, with its ticks cleared. */
+    const handleSaveHistoryAsTemplate = async (workout: Workout) => {
+        if (!user) return;
+        try {
+            await saveTemplate(
+                {
+                    ...workout,
+                    id: Math.random().toString(36).slice(2, 11),
+                    // A routine carries the plan, not the performance: the
+                    // weights stay as a starting point, but the completed flags
+                    // go, or the next session opens already finished.
+                    exercises: workout.exercises.map((ex) => ({
+                        ...ex,
+                        sets: ex.sets.map((set) => ({ ...set, completed: false })),
+                    })),
+                },
+                user.id
+            );
+            await loadWorkouts();
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            Alert.alert('Saved', workout.name + ' is now one of your routines.');
+        } catch {
+            Alert.alert('Could not save', 'That routine could not be saved. Try again.');
+        }
     };
 
     const handleDeleteTemplate = (template: Workout) => {
@@ -3931,6 +3968,28 @@ export default function GymScreen() {
                     )}
 
                     <View style={styles.dashboardSection}>
+                        <Text style={styles.dashboardSectionTitle}>Starter routines</Text>
+                        <Text style={styles.dashboardSectionSub}>
+                            Tap one to start it. Save your own version once you have run it.
+                        </Text>
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.templateScroll}
+                        >
+                            {STARTER_TEMPLATES.map((t) => (
+                                <View key={t.id} style={styles.templateSlide}>
+                                    <TemplateCard
+                                        title={t.name}
+                                        detail={starterDetail(t)}
+                                        onPress={() => startActiveWorkout(workoutFromStarter(t))}
+                                    />
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    <View style={styles.dashboardSection}>
                         <TouchableOpacity
                             style={styles.progressSectionToggle}
                             onPress={() => {
@@ -3964,6 +4023,7 @@ export default function GymScreen() {
                                     onSelectEx={handleSelectProgressEx}
                                     progressData={progressData}
                                     isLoading={isProgressLoading}
+                                    onSaveTemplate={handleSaveHistoryAsTemplate}
                                     onRepeat={(w) => {
                                         const repeated = {
                                             ...w,
@@ -4807,15 +4867,17 @@ function ProgressView({
     onSelectEx, 
     progressData, 
     isLoading,
-    onRepeat 
-}: { 
-    userId?: string, 
+    onRepeat,
+    onSaveTemplate
+}: {
+    userId?: string,
     allExercises: string[],
     selectedEx: string | null,
     onSelectEx: (name: string) => void,
     progressData: { date: string, maxWeight: number, volume: number }[],
     isLoading: boolean,
-    onRepeat: (workout: Workout) => void
+    onRepeat: (workout: Workout) => void,
+    onSaveTemplate: (workout: Workout) => void
 }) {
     const [search, setSearch] = useState('');
     const [showSelector, setShowSelector] = useState(false);
@@ -4938,7 +5000,7 @@ function ProgressView({
             </View>
 
             {activeTab === 'workouts' ? (
-                <HistoryListView userId={userId} onRepeat={onRepeat} />
+                <HistoryListView userId={userId} onRepeat={onRepeat} onSaveTemplate={onSaveTemplate} />
             ) : (
                 <View>
                     <TouchableOpacity 
@@ -5097,7 +5159,15 @@ function ProgressView({
     );
 }
 
-function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (workout: Workout) => void }) {
+function HistoryListView({
+    userId,
+    onRepeat,
+    onSaveTemplate,
+}: {
+    userId?: string;
+    onRepeat: (workout: Workout) => void;
+    onSaveTemplate: (workout: Workout) => void;
+}) {
     const [history, setHistory] = useState<Workout[]>([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
@@ -5218,6 +5288,23 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
                                                     </Text>
                                                 </Pressable>
                                                 <Pressable
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={'Save ' + workout.name + ' as a routine'}
+                                                    style={({ pressed }) => [
+                                                        styles.historyRepeatBtn,
+                                                        pressed && { opacity: 0.8, transform: [{ scale: 0.95 }] },
+                                                    ]}
+                                                    onPress={() => {
+                                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                                        onSaveTemplate(workout);
+                                                    }}
+                                                    hitSlop={4}
+                                                >
+                                                    <FontAwesome name="bookmark-o" size={14} color={LOG.goldText} />
+                                                </Pressable>
+                                                <Pressable
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={'Repeat ' + workout.name}
                                                     style={({ pressed }) => [
                                                         styles.historyRepeatBtn,
                                                         pressed && { opacity: 0.8, transform: [{ scale: 0.95 }] },
@@ -5228,7 +5315,7 @@ function HistoryListView({ userId, onRepeat }: { userId?: string, onRepeat: (wor
                                                     }}
                                                     hitSlop={4}
                                                 >
-                                                    <FontAwesome name="repeat" size={14} color={LOG.gold} />
+                                                    <FontAwesome name="repeat" size={14} color={LOG.goldText} />
                                                 </Pressable>
                                             </View>
                                         </View>
