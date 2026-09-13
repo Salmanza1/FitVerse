@@ -95,6 +95,32 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
     return (
         <>
             <RestDayToggle userId={user.id} embedded />
+            {embedded && <View style={styles.groupDivider} />}
+            {embedded ? (
+                <TouchableOpacity
+                    style={styles.groupRow}
+                    onPress={() => setModalVisible(true)}
+                    activeOpacity={0.7}
+                >
+                    <FontAwesome
+                        name="map-marker"
+                        size={19}
+                        color={VisualSystem.colors.goldText}
+                        style={styles.groupRowIcon}
+                    />
+                    <View style={styles.groupRowText}>
+                        <Text style={styles.groupRowTitle}>Training location</Text>
+                        <Text style={styles.groupRowSub} numberOfLines={1}>
+                            {activeName}
+                        </Text>
+                    </View>
+                    <FontAwesome
+                        name="chevron-right"
+                        size={13}
+                        color={VisualSystem.colors.textTertiary}
+                    />
+                </TouchableOpacity>
+            ) : (
             <TouchableOpacity
                 style={[styles.card, embedded && styles.cardEmbedded]}
                 onPress={() => setModalVisible(true)}
@@ -134,6 +160,7 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
                     </View>
                 </View>
             </TouchableOpacity>
+            )}
 
             <Modal
                 visible={modalVisible}
@@ -206,6 +233,32 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
 }
 
 const styles = StyleSheet.create({
+    // Matches the dashboard's grouped list. The equipment summary and dorm
+    // chip live in the picker this row opens, rather than on the dashboard.
+    groupRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+    },
+    groupRowIcon: { width: 22, textAlign: 'center' },
+    groupRowText: { flex: 1, minWidth: 0 },
+    groupDivider: {
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: VisualSystem.colors.borderSubtle,
+        marginLeft: 16,
+    },
+    groupRowTitle: {
+        fontSize: 15,
+        fontWeight: '700',
+        color: VisualSystem.colors.textPrimary,
+    },
+    groupRowSub: {
+        fontSize: 13,
+        color: VisualSystem.colors.textSecondary,
+        marginTop: 1,
+    },
     card: {
         backgroundColor: VisualSystem.colors.glassFill,
         borderRadius: 16,

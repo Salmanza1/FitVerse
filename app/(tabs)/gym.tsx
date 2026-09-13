@@ -3503,7 +3503,7 @@ export default function GymScreen() {
                         <TextInput
                             style={styles.coachChatInput}
                             placeholder="e.g. Build me a 45 min push day for Duncan..."
-                            placeholderTextColor="rgba(212, 175, 55, 0.4)"
+                            placeholderTextColor={LOG.textTertiary}
                             value={coachInput}
                             onChangeText={setCoachInput}
                             multiline
@@ -3938,7 +3938,7 @@ export default function GymScreen() {
                                             }}
                                             multiline
                                             placeholder="Form cues, weight goals, injury notes…"
-                                            placeholderTextColor="rgba(212, 175, 55, 0.35)"
+                                            placeholderTextColor={LOG.textTertiary}
                                         />
                                     </View>
                                 )}
@@ -4623,7 +4623,7 @@ export default function GymScreen() {
                         <TextInput
                             style={styles.searchInput}
                             placeholder="Search exercises..."
-                            placeholderTextColor="rgba(160, 180, 203, 0.4)"
+                            placeholderTextColor={LOG.textTertiary}
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                         />
@@ -4756,7 +4756,7 @@ export default function GymScreen() {
                                 <TextInput
                                     style={styles.newExInput}
                                     placeholder="Add Name"
-                                    placeholderTextColor="rgba(160, 180, 203, 0.4)"
+                                    placeholderTextColor={LOG.textTertiary}
                                     value={newExName}
                                     onChangeText={setNewExName}
                                 />

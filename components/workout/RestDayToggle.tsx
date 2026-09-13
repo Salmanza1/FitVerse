@@ -88,6 +88,29 @@ export function RestDayToggle({ userId, compact = false, embedded = false }: Pro
         );
     }
 
+    if (embedded) {
+        return (
+            <View style={styles.groupRow}>
+                <FontAwesome name="bed" size={19} color={purple} style={styles.groupRowIcon} />
+                <View style={styles.groupRowText}>
+                    <Text style={styles.groupRowTitle}>Rest day today</Text>
+                    <Text style={styles.groupRowSub}>Friends see you in purple</Text>
+                </View>
+                {loading ? (
+                    <ActivityIndicator size="small" color={purple} />
+                ) : (
+                    <Switch
+                        value={onRest}
+                        onValueChange={handleToggle}
+                        disabled={saving}
+                        trackColor={{ false: VisualSystem.colors.borderStrong, true: `${purple}88` }}
+                        thumbColor={onRest ? purple : '#FFFFFF'}
+                    />
+                )}
+            </View>
+        );
+    }
+
     return (
         <View style={[styles.card, embedded && styles.cardEmbedded]}>
             <View style={styles.cardRow}>
@@ -126,6 +149,26 @@ export function RestDayToggle({ userId, compact = false, embedded = false }: Pro
 }
 
 const styles = StyleSheet.create({
+    // Matches the dashboard's grouped list so the rows line up.
+    groupRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+    },
+    groupRowIcon: { width: 22, textAlign: 'center' },
+    groupRowText: { flex: 1, minWidth: 0 },
+    groupRowTitle: {
+        fontSize: 15,
+        fontWeight: '700',
+        color: VisualSystem.colors.textPrimary,
+    },
+    groupRowSub: {
+        fontSize: 13,
+        color: VisualSystem.colors.textSecondary,
+        marginTop: 1,
+    },
     card: {
         backgroundColor: VisualSystem.colors.glassFill,
         borderRadius: 16,

@@ -218,7 +218,7 @@ export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: Co
                         <TextInput
                             style={styles.input}
                             placeholder="Add a comment..."
-                            placeholderTextColor="#666"
+                            placeholderTextColor={VisualSystem.colors.textTertiary}
                             value={newComment}
                             onChangeText={setNewComment}
                             multiline

@@ -68,7 +68,7 @@ export function ExerciseLibraryPanel({ visible, onClose, onSelectExercise }: Pro
                     <TextInput
                         style={styles.searchInput}
                         placeholder="Search exercises..."
-                        placeholderTextColor="rgba(160,180,203,0.45)"
+                        placeholderTextColor={VisualSystem.colors.textTertiary}
                         value={query}
                         onChangeText={setQuery}
                         autoCorrect={false}
