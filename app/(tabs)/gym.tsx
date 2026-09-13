@@ -33,6 +33,11 @@ import { glassSurface, glassSurfaceGold, VisualSystem } from '@/constants/Visual
 
 const LOG = VisualSystem.colors;
 
+/** Diameter of the start button: a little under half the screen, clamped. */
+const START_CTA_SIZE = Math.round(
+    Math.min(200, Math.max(150, Dimensions.get('window').width * 0.46))
+);
+
 /** Identifier for the pending "rest is over" alert. */
 const REST_NOTIFICATION_ID = 'fitverse-rest-complete';
 
@@ -1780,21 +1785,30 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     /** Primary action: solid, full-width, unmistakable. */
+    startCtaWrap: {
+        alignItems: 'center',
+        paddingVertical: 24,
+    },
     startCta: {
-        flexDirection: 'row',
+        width: START_CTA_SIZE,
+        height: START_CTA_SIZE,
+        borderRadius: START_CTA_SIZE / 2,
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 10,
-        backgroundColor: LOG.gold,
-        height: 52,
-        borderRadius: 16,
-        marginBottom: 24,
+        gap: 8,
+        backgroundColor: LOG.goldVivid,
+        ...VisualSystem.shadow.goldGlow,
     },
     startCtaText: {
         color: LOG.textOnGold,
         fontSize: 17,
         fontWeight: '800',
         letterSpacing: -0.2,
+        textAlign: 'center',
+        lineHeight: 20,
+        // Narrower than the circle, so the label wraps on its own instead of
+        // running to the curved edge.
+        maxWidth: START_CTA_SIZE * 0.62,
     },
     /** One container, hairline-separated rows — not a card per item. */
     group: {
@@ -4315,14 +4329,22 @@ export default function GymScreen() {
 
     const renderStartSessionSection = () => (
         <View style={styles.missionPanel}>
-            {/* The one thing you came here to do: a real button, not a card. */}
-            <Pressable
-                onPress={startQuickWorkout}
-                style={({ pressed }) => [styles.startCta, pressed && { opacity: 0.9 }]}
-            >
-                <FontAwesome name="play" size={15} color={LOG.textOnGold} />
-                <Text style={styles.startCtaText}>Start workout</Text>
-            </Pressable>
+            {/* The one thing you came here to do. Everything else on this
+                screen is a list row; this is the only round thing on it. */}
+            <View style={styles.startCtaWrap}>
+                <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Start workout"
+                    onPress={startQuickWorkout}
+                    style={({ pressed }) => [
+                        styles.startCta,
+                        pressed && { opacity: 0.92, transform: [{ scale: 0.97 }] },
+                    ]}
+                >
+                    <FontAwesome name="play" size={30} color={LOG.textOnGold} />
+                    <Text style={styles.startCtaText}>Start workout</Text>
+                </Pressable>
+            </View>
 
             {/* One grouped list with dividers, rather than a box per row. */}
             <View style={styles.group}>

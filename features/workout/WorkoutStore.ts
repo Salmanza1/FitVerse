@@ -316,20 +316,45 @@ export const getExerciseProgress = async (userId: string, exerciseName: string):
     }
 };
 
-/** Get a list of all unique exercise names the user has performed */
+/**
+ * Sessions scanned to build the list of exercises a user has performed.
+ *
+ * `exercises` is a whole JSON blob per session — every set, note and muscle
+ * tag — so selecting it unbounded ships an entire lifting history across the
+ * wire to produce a list of names, which is what timed out at the gateway.
+ * The newest few hundred sessions cover anything worth offering as a suggestion.
+ */
+const PERFORMED_EXERCISE_SCAN_LIMIT = 250;
+
+/** Unique exercise names the user has performed, newest sessions first. */
 export const getPerformedExercises = async (userId: string): Promise<string[]> => {
     try {
         const { data, error } = await supabase
             .from('workout_logs')
             .select('exercises')
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .order('date', { ascending: false })
+            .limit(PERFORMED_EXERCISE_SCAN_LIMIT);
 
         if (error) throw error;
+
         const names = new Set<string>();
-        (data || []).forEach(log => {
-            const exercises = Array.isArray(log.exercises) ? log.exercises : (log.exercises ? JSON.parse(log.exercises) : []);
-            exercises.forEach((ex: any) => names.add(ex.name));
-        });
+        for (const log of data ?? []) {
+            let exercises: unknown = log.exercises;
+            if (typeof exercises === 'string') {
+                // One malformed row should cost that row, not the whole list.
+                try {
+                    exercises = JSON.parse(exercises);
+                } catch {
+                    continue;
+                }
+            }
+            if (!Array.isArray(exercises)) continue;
+            for (const ex of exercises) {
+                const name = (ex as { name?: unknown })?.name;
+                if (typeof name === 'string' && name.trim()) names.add(name);
+            }
+        }
         return Array.from(names).sort();
     } catch (e) {
         console.error('WorkoutStore.getPerformedExercises error:', e);
