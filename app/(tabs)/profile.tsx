@@ -1,31 +1,55 @@
-import React, { useState, useCallback } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, Alert, View, Text as RNText, Modal, TextInput, ActivityIndicator, Pressable, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAuth } from '@/features/auth/AuthContext';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import {
+    ActivityIndicator,
+    Alert,
+    Animated,
+    Modal,
+    Platform,
+    Pressable,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+} from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect } from 'expo-router';
+import * as Haptics from 'expo-haptics';
+import { useBottomTabBarHeight } from 'react-native-bottom-tabs';
+
+import { useAuth } from '@/features/auth/AuthContext';
 import { FeedStore } from '@/features/feed/FeedStore';
-import { Tokens } from '@/constants/Tokens';
-import { FitVerseTheme } from '@/constants/FitVerseTheme';
-import { LinearGradient } from 'expo-linear-gradient';
+import { getWorkoutHistory } from '@/features/workout/WorkoutStore';
+import { summarizeTraining, type TrainingSummary } from '@/features/profile/profileStats';
 import { ProfileAvatar } from '@/components/profile/ProfileAvatar';
+import { TrainingSummaryCard } from '@/components/profile/TrainingSummaryCard';
+import { StreakCard } from '@/components/profile/StreakCard';
 import { WeeklyWeightCheckCard, useWeeklyWeightCheckReminder } from '@/components/profile/WeeklyWeightCheckCard';
 import { SocialDashboardModal } from '@/features/social/SocialDashboardModal';
 import { ChatsListScreen } from '@/features/chat/ChatsListScreen';
-import * as Haptics from 'expo-haptics';
-import { safeImpact } from '@/lib/safeHaptics';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { safeImpact } from '@/lib/safeHaptics';
+
+const C = VisualSystem.colors;
+
+/** Empty analytics, so the screen renders its real layout while data loads. */
+const EMPTY_SUMMARY: TrainingSummary = summarizeTraining([]);
 
 export default function ProfileScreen() {
-    const insets = useSafeAreaInsets();
+    const tabBarHeight = useBottomTabBarHeight();
     const { user, signOut, resetDatabase, updateProfile, refreshProfile } = useAuth();
     useWeeklyWeightCheckReminder(user);
+
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [editName, setEditName] = useState('');
     const [saving, setSaving] = useState(false);
     const [showDebug, setShowDebug] = useState(false);
     const [isSocialModalVisible, setSocialModalVisible] = useState(false);
     const [isChatVisible, setChatVisible] = useState(false);
+    const [summary, setSummary] = useState<TrainingSummary>(EMPTY_SUMMARY);
+    const [loadingStats, setLoadingStats] = useState(true);
+
+    const scrollY = useRef(new Animated.Value(0)).current;
 
     useFocusEffect(
         useCallback(() => {
@@ -33,600 +57,583 @@ export default function ProfileScreen() {
         }, [user?.id])
     );
 
-    const triggerHaptic = (type: Haptics.ImpactFeedbackStyle = Haptics.ImpactFeedbackStyle.Light) => {
-        safeImpact(type);
-    };
+    useFocusEffect(
+        useCallback(() => {
+            if (!user?.id) return;
+            let cancelled = false;
+
+            (async () => {
+                setLoadingStats(true);
+                const history = await getWorkoutHistory(user.id);
+                if (cancelled) return;
+                setSummary(summarizeTraining(history));
+                setLoadingStats(false);
+            })();
+
+            return () => {
+                cancelled = true;
+            };
+        }, [user?.id])
+    );
+
+    const unitLabel = user?.weightUnitLbs !== false ? 'lb' : 'kg';
+    const friendRequests = user?.friendRequestsReceived?.length ?? 0;
+    const friendCount = user?.friends?.length ?? 0;
+
+    const subtitle = useMemo(() => {
+        const parts = [`${summary.totalWorkouts} session${summary.totalWorkouts === 1 ? '' : 's'}`];
+        if (friendCount > 0) parts.push(`${friendCount} friend${friendCount === 1 ? '' : 's'}`);
+        return parts.join('  ·  ');
+    }, [summary.totalWorkouts, friendCount]);
 
     const openEditModal = () => {
         if (!user) return;
 
-        // Check for 30-day limit
+        // Display names are locked for 30 days after a change.
         if (user.lastUsernameChange) {
-            const lastChange = new Date(user.lastUsernameChange);
-            const now = new Date();
-            const diffTime = Math.abs(now.getTime() - lastChange.getTime());
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const daysLeft = 30 - diffDays;
-
-            // If it's been less than 30 days (approx check, using 30 days exactly in ms is safer)
+            const lastChange = new Date(user.lastUsernameChange).getTime();
             const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-            if (now.getTime() - lastChange.getTime() < thirtyDaysMs) {
-                const daysRemaining = Math.ceil((thirtyDaysMs - (now.getTime() - lastChange.getTime())) / (1000 * 60 * 60 * 24));
+            const elapsed = Date.now() - lastChange;
+            if (elapsed < thirtyDaysMs) {
+                const daysRemaining = Math.ceil((thirtyDaysMs - elapsed) / (1000 * 60 * 60 * 24));
                 Alert.alert(
-                    "Username Locked",
-                    `You can only change your username once every 30 days.\n\nPlease wait ${daysRemaining} more day(s).`
+                    'Username locked',
+                    `You can change your username once every 30 days.\n\nPlease wait ${daysRemaining} more day(s).`
                 );
                 return;
             }
         }
 
-        triggerHaptic(Haptics.ImpactFeedbackStyle.Medium);
+        safeImpact(Haptics.ImpactFeedbackStyle.Medium);
         setEditName(user.displayName || user.name || '');
         setEditModalVisible(true);
-    };
-
-    const handleSignOut = async () => {
-        const performSignOut = async () => {
-            triggerHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-            await signOut();
-            // AuthContext state change will trigger RootLayoutNav to show AuthScreen
-        };
-
-        if (Platform.OS === 'web') {
-            if (window.confirm("Are you sure you want to do this?")) {
-                await performSignOut();
-            }
-        } else {
-            Alert.alert(
-                "Sign Out",
-                "Are you sure you want to do this?",
-                [
-                    { text: "No", style: "cancel" },
-                    { text: "Yes", style: "destructive", onPress: performSignOut }
-                ]
-            );
-        }
-    };
-
-    const handleDebugToggle = () => {
-        triggerHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-        setShowDebug(!showDebug);
-        Alert.alert(showDebug ? "Debug Info Hidden" : "Debug Options Unlocked");
     };
 
     const handleSaveProfile = async () => {
         if (!user || !editName.trim()) return;
         setSaving(true);
         try {
-            // 1. Update Profile in Auth/DB (with new timestamp)
-            const nowIso = new Date().toISOString();
             await updateProfile({
                 displayName: editName.trim(),
-                lastUsernameChange: nowIso
+                lastUsernameChange: new Date().toISOString(),
             });
-
-            // 2. Retroactively update all posts
             await FeedStore.updateUserPosts(user.id, editName.trim(), user.avatar);
-
-            Alert.alert("Success", "Profile updated!");
             setEditModalVisible(false);
         } catch (error) {
             console.error(error);
-            Alert.alert("Error", "Failed to update profile.");
+            Alert.alert('Error', 'Failed to update profile.');
         } finally {
             setSaving(false);
         }
     };
 
+    const handleSignOut = async () => {
+        const performSignOut = async () => {
+            safeImpact(Haptics.ImpactFeedbackStyle.Heavy);
+            await signOut();
+        };
+
+        if (Platform.OS === 'web') {
+            if (window.confirm('Sign out of FitVerse?')) await performSignOut();
+            return;
+        }
+
+        Alert.alert('Sign out', 'Sign out of FitVerse?', [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Sign out', style: 'destructive', onPress: performSignOut },
+        ]);
+    };
+
     if (!user) return null;
 
     return (
-        <View style={[styles.container, { pointerEvents: 'auto' as const }]}>
-            <Modal
-                visible={editModalVisible}
-                animationType="fade"
-                transparent={true}
-                onRequestClose={() => setEditModalVisible(false)}
-            >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <RNText style={styles.modalTitle}>Edit Profile</RNText>
+        <View style={styles.container}>
+            <ScreenHeader
+                title="Profile"
+                scrollY={scrollY}
+                actions={[
+                    {
+                        icon: 'chatbubble-outline',
+                        label: 'Messages',
+                        onPress: () => {
+                            safeImpact(Haptics.ImpactFeedbackStyle.Medium);
+                            setChatVisible(true);
+                        },
+                    },
+                    {
+                        icon: 'settings-outline',
+                        label: 'Settings',
+                        onPress: () => router.push('/profile/settings'),
+                    },
+                ]}
+            />
 
-                        <RNText style={styles.inputLabel}>Display Name</RNText>
-                        <TextInput
-                            style={styles.input}
-                            value={editName}
-                            onChangeText={setEditName}
-                            placeholder="Enter your name"
-                            placeholderTextColor="#666"
+            <Animated.ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={[styles.scroll, { paddingBottom: tabBarHeight + 24 }]}
+                showsVerticalScrollIndicator={false}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+                    useNativeDriver: false,
+                })}
+                scrollEventThrottle={16}>
+                {/* Identity */}
+                <View style={styles.identity}>
+                    <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel="Edit photo"
+                        onPress={() => {
+                            safeImpact();
+                            router.push('/profile/personal-info');
+                        }}
+                        style={({ pressed }) => pressed && { opacity: 0.85 }}>
+                        <ProfileAvatar
+                            uri={user.avatar}
+                            name={user.displayName || user.name}
+                            size={72}
                         />
-
-                        <View style={styles.modalActions}>
-                            <TouchableOpacity
-                                style={styles.modalBtnCancel}
-                                onPress={() => {
-                                    triggerHaptic();
-                                    setEditModalVisible(false);
-                                }}
-                            >
-                                <RNText style={styles.modalBtnTextCancel}>Cancel</RNText>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.modalBtnSave}
-                                onPress={() => {
-                                    triggerHaptic(Haptics.ImpactFeedbackStyle.Medium);
-                                    handleSaveProfile();
-                                }}
-                                disabled={saving}
-                            >
-                                {saving ? <ActivityIndicator color={FitVerseTheme.colors.ndNavy} /> : <RNText style={styles.modalBtnTextSave}>Done</RNText>}
-                            </TouchableOpacity>
+                        <View style={styles.avatarEditDot}>
+                            <Ionicons name="camera" size={11} color={C.textOnGold} />
                         </View>
+                    </Pressable>
+
+                    <View style={styles.identityText}>
+                        <Text style={styles.name} numberOfLines={1}>
+                            {user.displayName || user.name || 'Athlete'}
+                        </Text>
+                        <Text style={styles.subtitle}>{subtitle}</Text>
+                        {!!(user.dorm || user.goal) && (
+                            <Text style={styles.bio} numberOfLines={1}>
+                                {[user.dorm, user.goal].filter(Boolean).join('  ·  ')}
+                            </Text>
+                        )}
                     </View>
                 </View>
-            </Modal>
 
-            <View style={[styles.heroSection, { paddingTop: insets.top + 12 }]}>
-                <View style={styles.heroTopBar}>
-                    <RNText style={styles.headerEyebrow}>Profile</RNText>
-                    <TouchableOpacity accessibilityLabel="Settings" hitSlop={4}
-                        style={styles.headerIconBtn}
+                {/* Primary actions */}
+                <View style={styles.pillRow}>
+                    <OutlinePill label="Edit profile" onPress={openEditModal} />
+                    <OutlinePill
+                        label="Friends"
+                        badge={friendRequests}
                         onPress={() => {
-                            triggerHaptic();
-                            router.push('/profile/settings');
+                            safeImpact();
+                            setSocialModalVisible(true);
                         }}
-                        activeOpacity={0.85}
-                    >
-                        <FontAwesome name="cog" size={16} color={FitVerseTheme.colors.textPrimary} />
-                    </TouchableOpacity>
+                    />
                 </View>
 
-                <LinearGradient
-                    colors={['rgba(212, 175, 55, 0.14)', 'rgba(212, 175, 55, 0.02)', 'transparent']}
-                    style={styles.heroGlow}
+                {/* Analytics */}
+                <TrainingSummaryCard
+                    weeks={summary.weeks}
+                    thisWeek={summary.thisWeek}
+                    unitLabel={unitLabel}
+                    loading={loadingStats}
                 />
 
-                <TouchableOpacity accessibilityLabel="Take photo"
-                    style={styles.avatarRing}
-                    onPress={() => {
-                        triggerHaptic();
-                        router.push('/profile/personal-info');
-                    }}
-                    activeOpacity={0.85}
-                >
-                    <ProfileAvatar
-                        uri={user.avatar}
-                        name={user.displayName || user.name}
-                        size={92}
-                        style={styles.avatarHero}
-                    />
-                    <View style={styles.avatarEditDot}>
-                        <FontAwesome name="camera" size={11} color={FitVerseTheme.colors.ndNavy} />
-                    </View>
-                </TouchableOpacity>
+                <View style={styles.gap} />
 
-                <Pressable style={styles.nameRow} onPress={openEditModal}>
-                    <RNText style={styles.userName} numberOfLines={1}>
-                        {user.displayName || user.name || 'Athlete'}
-                    </RNText>
-                    <FontAwesome name="pencil" size={12} color={VisualSystem.colors.textTertiary} />
+                <StreakCard
+                    streakWeeks={summary.streakWeeks}
+                    activeDays={summary.activeDays}
+                    totalWorkouts={summary.totalWorkouts}
+                />
+
+                <View style={styles.gap} />
+
+                <WeeklyWeightCheckCard user={user} />
+
+                <View style={styles.gap} />
+
+                {/* Destinations. One grouped list rather than a tile grid, so the
+                    eye runs down a single column instead of scanning a board. */}
+                <View style={styles.group}>
+                    <NavRow
+                        icon="barbell-outline"
+                        label="Workout history"
+                        detail={`${summary.totalWorkouts}`}
+                        onPress={() => router.push('/profile/workouts')}
+                    />
+                    <NavRow
+                        icon="person-outline"
+                        label="My stats"
+                        onPress={() => router.push('/profile/personal-info')}
+                    />
+                    <NavRow
+                        icon="options-outline"
+                        label="Settings"
+                        onPress={() => router.push('/profile/settings')}
+                        last
+                    />
+                </View>
+
+                <View style={styles.gap} />
+
+                <Pressable
+                    accessibilityRole="button"
+                    onPress={handleSignOut}
+                    style={({ pressed }) => [styles.signOut, pressed && { opacity: 0.7 }]}>
+                    <Ionicons name="log-out-outline" size={17} color={C.danger} />
+                    <Text style={styles.signOutText}>Sign out</Text>
                 </Pressable>
 
-                <View style={styles.chipRow}>
-                    {user.dorm ? (
-                        <View style={styles.chip}>
-                            <FontAwesome name="building" size={10} color={FitVerseTheme.colors.accentGold} />
-                            <RNText style={styles.chipText}>{user.dorm}</RNText>
-                        </View>
-                    ) : null}
-                    {user.goal ? (
-                        <View style={styles.chip}>
-                            <FontAwesome name="bullseye" size={10} color={FitVerseTheme.colors.accentGold} />
-                            <RNText style={styles.chipText}>{user.goal}</RNText>
-                        </View>
-                    ) : null}
-                    <View style={styles.chip}>
-                        <FontAwesome name="users" size={10} color={FitVerseTheme.colors.accentGold} />
-                        <RNText style={styles.chipText}>
-                            {(user.friends?.length ?? 0)} friend{(user.friends?.length ?? 0) === 1 ? '' : 's'}
-                        </RNText>
-                    </View>
-                </View>
-            </View>
+                {showDebug && (
+                    <Pressable
+                        accessibilityRole="button"
+                        style={({ pressed }) => [styles.debugBtn, pressed && { opacity: 0.7 }]}
+                        onPress={() => {
+                            safeImpact(Haptics.ImpactFeedbackStyle.Heavy);
+                            Alert.alert(
+                                'DEBUG: Reset all data',
+                                'This will delete ALL accounts and sessions. Continue?',
+                                [
+                                    { text: 'Cancel', style: 'cancel' },
+                                    {
+                                        text: 'Reset',
+                                        style: 'destructive',
+                                        onPress: async () => {
+                                            await resetDatabase();
+                                            Alert.alert('Success', 'All accounts have been cleared.');
+                                        },
+                                    },
+                                ]
+                            );
+                        }}>
+                        <Ionicons name="trash-outline" size={15} color={C.textTertiary} />
+                        <Text style={styles.debugText}>Debug: clear all accounts</Text>
+                    </Pressable>
+                )}
+
+                <Pressable
+                    onLongPress={() => {
+                        safeImpact(Haptics.ImpactFeedbackStyle.Heavy);
+                        setShowDebug((v) => !v);
+                    }}
+                    delayLongPress={2000}
+                    style={styles.version}>
+                    <Text style={styles.versionText}>FitVerse v1.0.0</Text>
+                </Pressable>
+            </Animated.ScrollView>
 
             <SocialDashboardModal
                 visible={isSocialModalVisible}
                 onClose={() => setSocialModalVisible(false)}
             />
-            {user && (
-                <ChatsListScreen
-                    visible={isChatVisible}
-                    currentUser={user}
-                    onClose={() => setChatVisible(false)}
-                />
-            )}
+            <ChatsListScreen
+                visible={isChatVisible}
+                currentUser={user}
+                onClose={() => setChatVisible(false)}
+            />
 
-            <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 110 }]}
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.actionGrid}>
-                    <ActionTile
-                        icon="line-chart"
-                        label="Workouts"
-                        onPress={() => router.push('/profile/workouts')}
-                    />
-                    <ActionTile
-                        icon="user"
-                        label="My stats"
-                        onPress={() => router.push('/profile/personal-info')}
-                    />
-                    <ActionTile
-                        icon="comments"
-                        label="Messages"
-                        onPress={() => {
-                            triggerHaptic(Haptics.ImpactFeedbackStyle.Medium);
-                            setChatVisible(true);
-                        }}
-                    />
-                    <ActionTile
-                        icon="users"
-                        label="Friends"
-                        badge={user.friendRequestsReceived?.length}
-                        onPress={() => setSocialModalVisible(true)}
-                    />
-                    <ActionTile
-                        icon="sliders"
-                        label="Settings"
-                        onPress={() => router.push('/profile/settings')}
-                    />
+            <Modal
+                visible={editModalVisible}
+                animationType="fade"
+                transparent
+                onRequestClose={() => setEditModalVisible(false)}>
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalCard}>
+                        <Text style={styles.modalTitle}>Edit profile</Text>
+                        <Text style={styles.inputLabel}>Display name</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={editName}
+                            onChangeText={setEditName}
+                            placeholder="Enter your name"
+                            placeholderTextColor={C.textTertiary}
+                            autoFocus
+                        />
+                        <Text style={styles.inputHint}>
+                            You can change this once every 30 days.
+                        </Text>
+
+                        <View style={styles.modalActions}>
+                            <Pressable
+                                style={({ pressed }) => [styles.modalBtnGhost, pressed && { opacity: 0.7 }]}
+                                onPress={() => setEditModalVisible(false)}>
+                                <Text style={styles.modalBtnGhostText}>Cancel</Text>
+                            </Pressable>
+                            <Pressable
+                                style={({ pressed }) => [styles.modalBtnPrimary, pressed && { opacity: 0.85 }]}
+                                onPress={handleSaveProfile}
+                                disabled={saving}>
+                                {saving ? (
+                                    <ActivityIndicator color={C.textOnGold} />
+                                ) : (
+                                    <Text style={styles.modalBtnPrimaryText}>Save</Text>
+                                )}
+                            </Pressable>
+                        </View>
+                    </View>
                 </View>
-
-                <WeeklyWeightCheckCard user={user} />
-
-                <View style={styles.footerBlock}>
-                    <Pressable
-                        style={({ pressed }) => [
-                            styles.signOutBtn,
-                            { opacity: pressed ? 0.7 : 1, transform: [{ scale: pressed ? 0.98 : 1 }] }
-                        ]}
-                        onPress={handleSignOut}
-                    >
-                        <FontAwesome name="sign-out" size={14} color="#ff8a8a" />
-                        <RNText style={styles.signOutText}>Sign out</RNText>
-                    </Pressable>
-
-                    {showDebug && (
-                        <Pressable
-                            style={({ pressed }) => [
-                                styles.debugBtn,
-                                { opacity: pressed ? 0.7 : 0.5, transform: [{ scale: pressed ? 0.98 : 1 }] }
-                            ]}
-                            onPress={() => {
-                                triggerHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-                                Alert.alert(
-                                    "DEBUG: Reset All Data",
-                                    "This will delete ALL accounts and sessions. Continue?",
-                                    [
-                                        { text: "Cancel", style: "cancel" },
-                                        {
-                                            text: "Reset",
-                                            style: "destructive",
-                                            onPress: async () => {
-                                                triggerHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-                                                await resetDatabase();
-                                                Alert.alert("Success", "All accounts have been cleared.");
-                                            }
-                                        }
-                                    ]
-                                );
-                            }}
-                        >
-                            <FontAwesome name="trash" size={Tokens.typography.lg} color={Tokens.colors.textMuted} style={{ marginRight: Tokens.spacing.lg }} />
-                            <RNText style={styles.debugBtnText}>Debug: Clear All Accounts</RNText>
-                        </Pressable>
-                    )}
-
-                    <TouchableOpacity
-                        onLongPress={handleDebugToggle}
-                        delayLongPress={2000}
-                        activeOpacity={0.7}
-                        style={styles.versionContainer}
-                    >
-                        <RNText style={styles.versionText}>FitVerse v1.0.0-PROD</RNText>
-                    </TouchableOpacity>
-                </View>
-
-            </ScrollView>
+            </Modal>
         </View>
     );
 }
 
-function ActionTile({
-    icon,
+function OutlinePill({
     label,
     onPress,
     badge,
 }: {
-    icon: React.ComponentProps<typeof FontAwesome>['name'];
     label: string;
     onPress: () => void;
     badge?: number;
 }) {
     return (
         <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={badge ? `${label}, ${badge} pending` : label}
+            onPress={onPress}
+            style={({ pressed }) => [styles.pill, pressed && { opacity: 0.7 }]}>
+            <Text style={styles.pillText}>{label}</Text>
+            {!!badge && badge > 0 && (
+                <View style={styles.pillBadge}>
+                    <Text style={styles.pillBadgeText}>{badge > 9 ? '9+' : badge}</Text>
+                </View>
+            )}
+        </Pressable>
+    );
+}
+
+function NavRow({
+    icon,
+    label,
+    detail,
+    onPress,
+    last,
+}: {
+    icon: React.ComponentProps<typeof Ionicons>['name'];
+    label: string;
+    detail?: string;
+    onPress: () => void;
+    last?: boolean;
+}) {
+    return (
+        <Pressable
+            accessibilityRole="button"
             onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                safeImpact();
                 onPress();
             }}
             style={({ pressed }) => [
-                styles.actionTile,
-                { opacity: pressed ? 0.85 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
-            ]}
-        >
-            <View style={styles.actionTileIconWrap}>
-                <FontAwesome name={icon} size={18} color={FitVerseTheme.colors.accentGold} />
-                {badge != null && badge > 0 && <View style={styles.tileBadge} />}
-            </View>
-            <RNText style={styles.actionTileLabel}>{label}</RNText>
+                styles.navRow,
+                !last && styles.navRowDivider,
+                pressed && { backgroundColor: C.bgDeep },
+            ]}>
+            <Ionicons name={icon} size={19} color={C.goldText} style={styles.navIcon} />
+            <Text style={styles.navLabel}>{label}</Text>
+            {!!detail && <Text style={styles.navDetail}>{detail}</Text>}
+            <Ionicons name="chevron-forward" size={16} color={C.textTertiary} />
         </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-    },
-    scrollView: { flex: 1 },
+    container: { flex: 1 },
     scroll: {
-        paddingHorizontal: Tokens.spacing.xl,
-        paddingTop: 8,
-        backgroundColor: 'transparent',
+        paddingHorizontal: VisualSystem.spacing.lg,
+        paddingTop: VisualSystem.spacing.md,
     },
-    heroSection: {
-        alignItems: 'center',
-        paddingHorizontal: Tokens.spacing.xl,
-        paddingBottom: 16,
-        position: 'relative',
-    },
-    heroTopBar: {
-        width: '100%',
+    gap: { height: VisualSystem.spacing.md },
+
+    identity: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 8,
+        gap: VisualSystem.spacing.lg,
+        marginBottom: VisualSystem.spacing.lg,
     },
-    heroGlow: {
-        position: 'absolute',
-        top: 28,
-        left: '8%',
-        right: '8%',
-        height: 160,
-        borderRadius: 80,
-    },
-    headerEyebrow: {
-        fontSize: 20,
-        fontWeight: '800',
-        letterSpacing: -0.3,
-        color: VisualSystem.colors.textPrimary,
-    },
-    avatarRing: {
-        marginTop: 12,
-        marginBottom: 12,
-        padding: 4,
-        borderRadius: 52,
-        borderWidth: 2,
-        borderColor: 'rgba(212, 175, 55, 0.35)',
-        position: 'relative',
-    },
-    avatarHero: {
-        borderWidth: 0,
-    },
+    identityText: { flex: 1, minWidth: 0 },
     avatarEditDot: {
         position: 'absolute',
-        right: 2,
-        bottom: 2,
-        width: 28,
-        height: 28,
-        borderRadius: 16,
-        backgroundColor: FitVerseTheme.colors.accentGold,
+        right: -2,
+        bottom: -2,
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        backgroundColor: C.gold,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: VisualSystem.colors.borderStrong,
+        borderColor: C.bgBase,
     },
-    nameRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        maxWidth: '90%',
-        marginBottom: 12,
-    },
-    userName: {
-        fontSize: 24,
+    name: {
+        fontSize: VisualSystem.text.heading,
         fontWeight: '800',
-        color: VisualSystem.colors.textPrimary,
-        letterSpacing: -0.4,
+        color: C.textPrimary,
+        letterSpacing: -0.5,
     },
-    chipRow: {
+    subtitle: {
+        fontSize: VisualSystem.text.body,
+        color: C.textSecondary,
+        marginTop: 2,
+    },
+    bio: {
+        fontSize: VisualSystem.text.small,
+        color: C.textTertiary,
+        marginTop: 3,
+    },
+
+    pillRow: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: 8,
-        paddingHorizontal: 8,
+        gap: VisualSystem.spacing.md,
+        marginBottom: VisualSystem.spacing.lg,
     },
-    chip: {
+    pill: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        borderRadius: 22,
-        backgroundColor: VisualSystem.colors.bgMid,
-        borderWidth: 1,
-        borderColor: VisualSystem.colors.borderSubtle,
-    },
-    chipText: {
-        fontSize: 11,
-        fontWeight: '600',
-        color: VisualSystem.colors.textPrimary,
-    },
-    headerIconBtn: {
-        width: 36,
-        height: 36,
-        borderRadius: 16,
-        backgroundColor: VisualSystem.colors.bgMid,
-        borderWidth: 1,
-        borderColor: VisualSystem.colors.borderSubtle,
         justifyContent: 'center',
-        alignItems: 'center',
-    },
-    actionGrid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 12,
-        marginBottom: 16,
-    },
-    actionTile: {
-        width: '47%',
-        flexGrow: 1,
-        minHeight: 96,
-        borderRadius: 16,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        backgroundColor: VisualSystem.colors.bgMid,
-        borderWidth: 1,
-        borderColor: VisualSystem.colors.borderSubtle,
-        justifyContent: 'center',
-    },
-    actionTileIconWrap: {
-        width: 40,
+        gap: 6,
         height: 40,
-        borderRadius: 10,
-        backgroundColor: 'rgba(212, 175, 55, 0.12)',
+        borderRadius: VisualSystem.radius.pill,
+        borderWidth: 1,
+        borderColor: C.borderStrong,
+    },
+    pillText: {
+        fontSize: VisualSystem.text.body,
+        fontWeight: '700',
+        color: C.textPrimary,
+    },
+    pillBadge: {
+        minWidth: 18,
+        height: 18,
+        borderRadius: 9,
+        paddingHorizontal: 5,
+        backgroundColor: C.danger,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 8,
-        position: 'relative',
     },
-    actionTileLabel: {
-        fontSize: 15,
-        fontWeight: '700',
-        color: VisualSystem.colors.textPrimary,
+    pillBadgeText: { color: '#FFFFFF', fontSize: 10, fontWeight: '800' },
+
+    group: {
+        backgroundColor: C.bgMid,
+        borderRadius: VisualSystem.radius.md,
+        borderWidth: 1,
+        borderColor: C.borderSubtle,
+        overflow: 'hidden',
+        ...VisualSystem.shadow.card,
     },
-    tileBadge: {
-        position: 'absolute',
-        top: -2,
-        right: -2,
-        width: 10,
-        height: 10,
-        borderRadius: 6,
-        backgroundColor: '#ef4444',
-        borderWidth: 1.5,
-        borderColor: VisualSystem.colors.borderStrong,
+    navRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        minHeight: 52,
+        paddingHorizontal: VisualSystem.spacing.lg,
+        gap: VisualSystem.spacing.md,
     },
-    footerBlock: {
-        marginTop: 4,
+    navRowDivider: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: C.borderSubtle,
     },
-    signOutBtn: {
+    navIcon: { width: 22, textAlign: 'center' },
+    navLabel: {
+        flex: 1,
+        fontSize: VisualSystem.text.emphasis,
+        fontWeight: '600',
+        color: C.textPrimary,
+    },
+    navDetail: {
+        fontSize: VisualSystem.text.body,
+        color: C.textTertiary,
+        fontVariant: ['tabular-nums'],
+    },
+
+    signOut: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 8,
-        paddingVertical: 12,
-        marginBottom: 8,
+        gap: VisualSystem.spacing.sm,
+        height: 48,
+        borderRadius: VisualSystem.radius.md,
+        backgroundColor: C.dangerSoft,
     },
     signOutText: {
-        fontSize: 13,
-        fontWeight: '600',
-        color: VisualSystem.colors.danger,
+        fontSize: VisualSystem.text.body,
+        fontWeight: '700',
+        color: C.danger,
     },
     debugBtn: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 12,
-        marginTop: 8,
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: VisualSystem.colors.borderSubtle,
-        backgroundColor: VisualSystem.colors.bgMid,
+        gap: VisualSystem.spacing.sm,
+        height: 44,
+        marginTop: VisualSystem.spacing.md,
     },
-    debugBtnText: {
-        fontSize: 13,
-        fontWeight: '600',
-        color: Tokens.colors.textMuted,
-    },
+    debugText: { fontSize: VisualSystem.text.small, color: C.textTertiary },
+    version: { alignItems: 'center', paddingVertical: VisualSystem.spacing.xl },
+    versionText: { fontSize: VisualSystem.text.caption, color: C.textTertiary },
+
     modalOverlay: {
         flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'center',
+        backgroundColor: C.overlay,
         alignItems: 'center',
+        justifyContent: 'center',
+        padding: VisualSystem.spacing.xl,
     },
-    modalContent: {
-        width: '85%',
-        backgroundColor: VisualSystem.colors.bgMid,
-        borderRadius: Tokens.radius.lg,
-        padding: Tokens.spacing.xl,
-        borderWidth: 1,
-        borderColor: FitVerseTheme.colors.border,
+    modalCard: {
+        width: '100%',
+        maxWidth: 420,
+        backgroundColor: C.bgElevated,
+        borderRadius: VisualSystem.radius.lg,
+        padding: VisualSystem.spacing.xl,
+        ...VisualSystem.shadow.raised,
     },
     modalTitle: {
-        fontSize: Tokens.typography.xl,
-        fontWeight: '700',
-        color: VisualSystem.colors.goldText,
-        textAlign: 'center',
-        marginBottom: Tokens.spacing.xl,
+        fontSize: VisualSystem.text.title,
+        fontWeight: '800',
+        color: C.textPrimary,
+        marginBottom: VisualSystem.spacing.lg,
     },
     inputLabel: {
-        color: FitVerseTheme.colors.textMuted,
-        marginBottom: Tokens.spacing.sm,
-        fontSize: Tokens.typography.sm,
-        fontWeight: '600',
+        fontSize: VisualSystem.text.small,
+        fontWeight: '700',
+        color: C.textSecondary,
+        marginBottom: 6,
     },
     input: {
-        backgroundColor: VisualSystem.colors.bgMid,
-        color: FitVerseTheme.colors.textPrimary,
-        padding: Tokens.spacing.md,
-        borderRadius: Tokens.radius.sm,
+        height: 46,
+        borderRadius: VisualSystem.radius.sm,
         borderWidth: 1,
-        borderColor: FitVerseTheme.colors.border,
-        marginBottom: Tokens.spacing.xl,
+        borderColor: C.borderStrong,
+        backgroundColor: C.bgBase,
+        paddingHorizontal: VisualSystem.spacing.md,
+        fontSize: VisualSystem.text.emphasis,
+        color: C.textPrimary,
+    },
+    inputHint: {
+        fontSize: VisualSystem.text.caption,
+        color: C.textTertiary,
+        marginTop: 6,
     },
     modalActions: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        gap: Tokens.spacing.md,
+        gap: VisualSystem.spacing.md,
+        marginTop: VisualSystem.spacing.xl,
     },
-    modalBtnCancel: {
+    modalBtnGhost: {
         flex: 1,
-        padding: Tokens.spacing.md,
-        borderRadius: Tokens.radius.sm,
+        height: 46,
+        borderRadius: VisualSystem.radius.sm,
+        alignItems: 'center',
+        justifyContent: 'center',
         borderWidth: 1,
-        borderColor: FitVerseTheme.colors.border,
-        alignItems: 'center',
+        borderColor: C.borderStrong,
     },
-    modalBtnSave: {
-        flex: 1,
-        padding: Tokens.spacing.md,
-        borderRadius: Tokens.radius.sm,
-        backgroundColor: FitVerseTheme.colors.accentGold,
-        alignItems: 'center',
-    },
-    modalBtnTextCancel: { color: FitVerseTheme.colors.textMuted, fontWeight: '700' },
-    modalBtnTextSave: { color: FitVerseTheme.colors.ndNavy, fontWeight: '700' },
-    versionContainer: {
-        marginTop: 16,
-        alignItems: 'center',
-        paddingVertical: Tokens.spacing.sm,
-    },
-    versionText: {
-        fontSize: 11,
-        color: FitVerseTheme.colors.textMuted,
-        letterSpacing: 0.2,
+    modalBtnGhostText: {
+        fontSize: VisualSystem.text.body,
         fontWeight: '700',
-        opacity: 0.5,
+        color: C.textPrimary,
+    },
+    modalBtnPrimary: {
+        flex: 1,
+        height: 46,
+        borderRadius: VisualSystem.radius.sm,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: C.gold,
+    },
+    modalBtnPrimaryText: {
+        fontSize: VisualSystem.text.body,
+        fontWeight: '800',
+        color: C.textOnGold,
     },
 });
