@@ -133,7 +133,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                 onPress={() => setIsChatOpen(true)}
                 activeOpacity={0.8}
             >
-                <FontAwesome name="leaf" size={24} color="#C99700" />
+                <FontAwesome name="leaf" size={24} color={VisualSystem.colors.goldVivid} />
             </TouchableOpacity>
         </Animated.View>
     );
@@ -154,7 +154,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                         <View style={styles.chatHeader}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={styles.miniLeaf}>
-                                    <FontAwesome name="leaf" size={14} color="#C99700" />
+                                    <FontAwesome name="leaf" size={14} color={VisualSystem.colors.goldVivid} />
                                 </View>
                                 <View style={{ marginLeft: 12 }}>
                                     <Text style={styles.chatTitle}>Leprechaun AI</Text>

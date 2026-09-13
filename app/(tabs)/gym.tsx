@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, Pressable, KeyboardAvoidingView, Platform, ScrollView, TextInput, Alert, Modal, FlatList, LayoutAnimation, UIManager, Image, PanResponder, ActivityIndicator, InteractionManager, Dimensions, Animated as RNAnimated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -62,6 +62,44 @@ function setColumnLabels(type: ExerciseType | undefined): {
 /** Volume is weight moved; a plank or a treadmill run has none to count. */
 function countsTowardVolume(type: ExerciseType | undefined): boolean {
     return type === undefined || type === 'weight_reps' || type === 'bodyweight';
+}
+
+/**
+ * Everything about a session worth typing into a search box.
+ *
+ * A workout is as likely to be remembered as "last Tuesday" or "sep 3" as by
+ * what was in it, so the date goes in alongside the name and the exercises —
+ * in several spellings, since nobody knows which one the box wants.
+ */
+function workoutSearchText(workout: Workout, now: Date): string {
+    const parts: string[] = [workout.name, ...workout.exercises.map((e) => e.name)];
+
+    // Works for a bare 'YYYY-MM-DD' and for a full ISO timestamp alike.
+    const iso = (workout.date || '').slice(0, 10);
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    if (m) {
+        const date = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        parts.push(
+            iso,
+            date.toLocaleDateString(undefined, {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            }),
+            date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }),
+            date.toLocaleDateString('en-US')
+        );
+
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const daysAgo = Math.round((today.getTime() - date.getTime()) / 86_400_000);
+        if (daysAgo === 0) parts.push('today');
+        if (daysAgo === 1) parts.push('yesterday');
+        if (daysAgo >= 0 && daysAgo < 7) parts.push('this week');
+        if (daysAgo >= 7 && daysAgo < 14) parts.push('last week');
+    }
+
+    return parts.join(' ').toLowerCase();
 }
 
 type RestTimerState = {
@@ -916,9 +954,10 @@ const styles = StyleSheet.create({
         // its full text width and pushes past the column it sits in.
         flexShrink: 1,
     },
-    logExSwapIcon: {
+    logExSwapBtn: {
         marginLeft: VisualSystem.spacing.sm,
         flexShrink: 0,
+        padding: 2,
     },
     logExName: {
         flexShrink: 1,
@@ -1299,7 +1338,7 @@ const styles = StyleSheet.create({
         borderRadius: 22,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.2)',
+        borderColor: LOG.borderGold,
     },
     coachGradient: {
         padding: 16,
@@ -1310,12 +1349,10 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+        backgroundColor: LOG.goldVivid,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 16,
-        borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.2)',
     },
     coachCardTitle: {
         fontSize: 13,
@@ -1328,7 +1365,7 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textSecondary,
     },
     coachBadge: {
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 6,
@@ -1385,7 +1422,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderRadius: 12,
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 4,
@@ -1449,7 +1486,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
         paddingTop: 8,
         borderTopWidth: 1,
-        borderTopColor: 'rgba(212, 175, 55, 0.2)',
+        borderTopColor: LOG.borderGold,
     },
     planPreviewLine: {
         color: VisualSystem.colors.textPrimary,
@@ -1481,12 +1518,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        backgroundColor: VisualSystem.colors.gold,
+        backgroundColor: VisualSystem.colors.goldVivid,
         paddingVertical: 12,
         borderRadius: 10,
     },
     coachPlanBtnPrimaryText: {
-        color: VisualSystem.colors.textPrimary,
+        color: VisualSystem.colors.textOnGold,
         fontWeight: '800',
         fontSize: 13,
     },
@@ -1500,7 +1537,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'rgba(212, 175, 55, 0.35)',
+        borderColor: LOG.borderStrong,
     },
     coachPlanBtnSecondaryText: {
         color: VisualSystem.colors.goldText,
@@ -1524,7 +1561,10 @@ const styles = StyleSheet.create({
         lineHeight: 15,
     },
     coachBtnDisabled: {
-        opacity: 0.45,
+        opacity: 0.55,
+    },
+    coachPlanBtnPrimaryDisabled: {
+        backgroundColor: LOG.bgDeep,
     },
     coachSendBtnDisabled: {
         backgroundColor: VisualSystem.colors.bgDeep,
@@ -2332,21 +2372,6 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         borderWidth: 1,
         borderColor: LOG.borderSubtle,
-    },
-    historyCollapsedHint: {
-        paddingVertical: 24,
-        paddingHorizontal: 16,
-        alignItems: 'center',
-        backgroundColor: LOG.glassFill,
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: LOG.borderSubtle,
-    },
-    historyCollapsedCount: {
-        color: LOG.textPrimary,
-        fontSize: 15,
-        fontWeight: '800',
-        marginBottom: 4,
     },
     progressSectionToggle: {
         flexDirection: 'row',
@@ -3430,7 +3455,7 @@ export default function GymScreen() {
                                     style={({ pressed }) => [
                                         styles.coachPlanBtnPrimary,
                                         pressed && { opacity: 0.88, transform: [{ scale: 0.98 }] },
-                                        isPreparingWorkout && styles.coachBtnDisabled,
+                                        isPreparingWorkout && styles.coachPlanBtnPrimaryDisabled,
                                     ]}
                                     disabled={isPreparingWorkout}
                                     onPress={startCoachDraftWorkout}
@@ -3438,7 +3463,7 @@ export default function GymScreen() {
                                     {isPreparingWorkout ? (
                                         <ActivityIndicator size="small" color="#0C2340" />
                                     ) : (
-                                        <FontAwesome name="play" size={14} color="#0C2340" />
+                                        <FontAwesome name="play" size={14} color={LOG.textOnGold} />
                                     )}
                                     <Text style={styles.coachPlanBtnPrimaryText}>
                                         {isPreparingWorkout ? 'Preparing…' : 'Start Workout'}
@@ -3841,25 +3866,27 @@ export default function GymScreen() {
                             >
                                 <View style={styles.logExHeader}>
                                     <View style={styles.logExTitleCol}>
-                                        <Pressable
-                                            accessibilityRole="button"
-                                            accessibilityLabel={'Replace ' + ex.name}
-                                            onPress={() => handleReplaceExercise(exIdx)}
-                                            style={({ pressed }) => [
-                                                styles.logExNameRow,
-                                                pressed && { opacity: 0.7 },
-                                            ]}
-                                        >
+                                        <View style={styles.logExNameRow}>
                                             <Text style={styles.logExName} numberOfLines={1} ellipsizeMode="tail">
                                                 {formatExerciseDisplayName(ex.name, ex.category)}
                                             </Text>
-                                            <FontAwesome
-                                                name="exchange"
-                                                size={12}
-                                                color={LOG.textSecondary}
-                                                style={styles.logExSwapIcon}
-                                            />
-                                        </Pressable>
+                                            <Pressable
+                                                accessibilityRole="button"
+                                                accessibilityLabel={'Replace ' + ex.name}
+                                                onPress={() => handleReplaceExercise(exIdx)}
+                                                hitSlop={10}
+                                                style={({ pressed }) => [
+                                                    styles.logExSwapBtn,
+                                                    pressed && { opacity: 0.6 },
+                                                ]}
+                                            >
+                                                <FontAwesome
+                                                    name="exchange"
+                                                    size={12}
+                                                    color={LOG.goldText}
+                                                />
+                                            </Pressable>
+                                        </View>
                                         <View style={styles.logExSubRow}>
                                             <Text style={styles.logExCategory}>{ex.category}</Text>
                                             {!!ex.supersetId && (
@@ -4439,11 +4466,6 @@ export default function GymScreen() {
                             <Text style={styles.menuItemText}>Move Down</Text>
                         </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity style={styles.menuItem} onPress={() => { if (menuExerciseIdx !== null) handleReplaceExercise(menuExerciseIdx); setMenuExerciseIdx(null); }}>
-                        <FontAwesome name="exchange" size={18} color={VisualSystem.colors.goldText} style={styles.menuItemIcon} />
-                        <Text style={styles.menuItemText}>Replace Exercise</Text>
-                    </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.menuItem, { borderBottomWidth: 0 }]}
@@ -5429,9 +5451,16 @@ function HistoryListView({
         setLoading(false);
     };
 
-    const filtered = history.filter(w => 
-        w.name.toLowerCase().includes(search.toLowerCase()) ||
-        w.exercises.some(ex => ex.name.toLowerCase().includes(search.toLowerCase()))
+    // Indexed once per load rather than per keystroke.
+    const indexed = useMemo(() => {
+        const now = new Date();
+        return history.map((workout) => ({ workout, text: workoutSearchText(workout, now) }));
+    }, [history]);
+
+    const query = search.trim().toLowerCase();
+    const filtered = useMemo(
+        () => (query ? indexed.filter((row) => row.text.includes(query)).map((row) => row.workout) : history),
+        [indexed, query, history]
     );
 
     const visibleWorkouts = filtered.slice(0, visibleCount);
@@ -5459,7 +5488,7 @@ function HistoryListView({
                 <FontAwesome name="search" size={14} color={LOG.textTertiary} />
                 <TextInput 
                     style={styles.historySearchInput}
-                    placeholder="Search workouts or exercises..."
+                    placeholder="Search by name, exercise, or date"
                     placeholderTextColor={LOG.textTertiary}
                     value={search}
                     onChangeText={setSearch}
@@ -5471,30 +5500,18 @@ function HistoryListView({
                 )}
             </View>
 
-            {!search.trim() ? (
-                history.length === 0 ? (
-                    <View style={styles.historyEmpty}>
-                        <FontAwesome name="history" size={24} color={LOG.gold} style={{ marginBottom: 8 }} />
-                        <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
-                            No history yet. Finish a session to see it here.
-                        </SecondaryText>
-                    </View>
-                ) : (
-                    <View style={styles.historyCollapsedHint}>
-                        <FontAwesome name="history" size={22} color={LOG.gold} style={{ marginBottom: 8 }} />
-                        <Text style={styles.historyCollapsedCount}>
-                            {history.length} workout{history.length === 1 ? '' : 's'} logged
-                        </Text>
-                        <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
-                            Search above by workout name or exercise to pull up a session.
-                        </SecondaryText>
-                    </View>
-                )
+            {history.length === 0 ? (
+                <View style={styles.historyEmpty}>
+                    <FontAwesome name="history" size={24} color={LOG.goldVivid} style={{ marginBottom: 8 }} />
+                    <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
+                        No history yet. Finish a session to see it here.
+                    </SecondaryText>
+                </View>
             ) : filtered.length === 0 ? (
                 <View style={styles.historyEmpty}>
-                    <FontAwesome name="search" size={24} color={LOG.gold} style={{ marginBottom: 8 }} />
+                    <FontAwesome name="search" size={24} color={LOG.goldVivid} style={{ marginBottom: 8 }} />
                     <SecondaryText style={{ textAlign: 'center', lineHeight: 18 }}>
-                        No workouts match your search.
+                        Nothing matches "{search.trim()}". Try a workout name, an exercise, or a date.
                     </SecondaryText>
                 </View>
             ) : (
