@@ -70,6 +70,18 @@ function statusColor(status: WorkoutDayStatus): string {
     return WORKOUT_STATUS_COLORS[status];
 }
 
+/** The fields the room actually renders from. */
+function sameChat(a: Chat, b: Chat): boolean {
+    return (
+        a.id === b.id &&
+        a.name === b.name &&
+        a.type === b.type &&
+        a.hasPendingInvites === b.hasPendingInvites &&
+        a.memberIds.join('|') === b.memberIds.join('|') &&
+        a.memberNames.join('|') === b.memberNames.join('|')
+    );
+}
+
 export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, onClose, embedded = false, onMessageSent }: Props) {
     const insets = useSafeAreaInsets();
     const [messages, setMessages] = useState<Message[]>([]);
@@ -96,7 +108,10 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
         const updated = await ChatStore.getChatById(chat.id, currentUserId);
         if (!updated) return;
 
-        setRoomChat(updated);
+        // Several realtime handlers call this, and each fetch returns a fresh
+        // object. Swapping one in that says the same thing re-renders the whole
+        // room for nothing, so only take it when something actually changed.
+        setRoomChat((prev) => (prev && sameChat(prev, updated) ? prev : updated));
 
         if (updated.type === 'group') {
             const pending = await ChatStore.getPendingInviteesForChat(chat.id);
@@ -155,7 +170,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
             for (const m of pending) byId.set(m.id, m);
             return Array.from(byId.values()).sort((a, b) => a.sentAt.localeCompare(b.sentAt));
         });
-    }, [chat]);
+    }, [chat?.id]);
 
     const loadMessages = useCallback(async () => {
         if (!activeChat) return;
@@ -172,30 +187,32 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
     }, [activeChat?.id, activeChat?.memberIds?.join('|'), currentUserId]);
 
     const loadMemberStatuses = useCallback(async () => {
-        if (!activeChat) return;
-        const others = activeChat.memberIds.filter((id) => id !== currentUserId);
-        const allIds = Array.from(new Set([currentUserId, ...activeChat.memberIds]));
+        const c = roomChatRef.current ?? chat;
+        if (!c) return;
+        const others = c.memberIds.filter((id) => id !== currentUserId);
+        const allIds = Array.from(new Set([currentUserId, ...c.memberIds]));
         const [statuses, nudged] = await Promise.all([
             getMemberWorkoutStatuses(allIds),
             ChatStore.getNudgedToday(currentUserId, others),
         ]);
         setMemberStatuses(statuses);
         setNudgedToday(nudged);
-    }, [activeChat, currentUserId]);
+    }, [chat?.id, currentUserId]);
 
     const loadStreak = useCallback(async () => {
-        if (!activeChat || activeChat.type !== 'dm') {
+        const c = roomChatRef.current ?? chat;
+        if (!c || c.type !== 'dm') {
             setStreakDays(0);
             return;
         }
-        const friendId = activeChat.memberIds.find((id) => id !== currentUserId);
+        const friendId = c.memberIds.find((id) => id !== currentUserId);
         if (!friendId) {
             setStreakDays(0);
             return;
         }
         const days = await ChatStore.getFriendActiveDaysTogether(currentUserId, friendId);
         setStreakDays(days);
-    }, [activeChat, currentUserId]);
+    }, [chat?.id, currentUserId]);
 
     useEffect(() => {
         if (visible && activeChat) {
@@ -239,7 +256,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                 setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 0);
             }
         },
-        [chat, currentUserId]
+        [chat?.id, currentUserId]
     );
 
     const appendLiveMessage = useCallback(
@@ -272,7 +289,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                 void refreshRoomChat();
             }
         },
-        [chat, appendMessage, refreshRoomChat]
+        [chat?.id, appendMessage, refreshRoomChat]
     );
 
     useEffect(() => {

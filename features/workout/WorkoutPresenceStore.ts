@@ -16,11 +16,29 @@ function todayDateString(): string {
     return getLocalDateString();
 }
 
-function isActiveSession(startedAt?: string | null): boolean {
-    if (!startedAt) return false;
-    const started = new Date(startedAt).getTime();
-    const fourHoursMs = 4 * 60 * 60 * 1000;
-    return Date.now() - started < fourHoursMs;
+/** Nobody is still in the same session after this long. */
+const MAX_SESSION_MS = 4 * 60 * 60 * 1000;
+/**
+ * A live session is only believed while it keeps checking in. Every completed
+ * set writes updated_at, so a row that has gone quiet for this long belongs to
+ * a session the app never got to close — force quit, or a finish that failed
+ * before clearWorkoutActive ran.
+ */
+const HEARTBEAT_MS = 90 * 60 * 1000;
+
+const msSince = (value?: string | null): number | null => {
+    if (!value) return null;
+    const t = new Date(value).getTime();
+    return Number.isFinite(t) ? Date.now() - t : null;
+};
+
+function isActiveSession(startedAt?: string | null, updatedAt?: string | null): boolean {
+    const sinceStart = msSince(startedAt);
+    if (sinceStart == null || sinceStart > MAX_SESSION_MS) return false;
+    // Fall back to the start when nothing has been logged yet: a session in its
+    // first minutes is real even though no set has landed.
+    const sinceBeat = msSince(updatedAt) ?? sinceStart;
+    return sinceBeat < HEARTBEAT_MS;
 }
 
 export async function declareRestDay(userId: string, date = todayDateString()): Promise<void> {
@@ -113,11 +131,11 @@ export async function getMemberWorkoutStatuses(
     const [liveRes, logsRes, restRes] = await Promise.all([
         supabase
             .from('workout_live_status')
-            .select('user_id, status, workout_name, exercise_name, sets_completed, started_at')
+            .select('user_id, status, workout_name, exercise_name, sets_completed, started_at, updated_at')
             .in('user_id', userIds),
         supabase
             .from('workout_logs')
-            .select('user_id')
+            .select('user_id, created_at')
             .in('user_id', userIds)
             .eq('date', today),
         supabase
@@ -130,17 +148,33 @@ export async function getMemberWorkoutStatuses(
     const completedToday = new Set((logsRes.data ?? []).map((r) => r.user_id));
     const restToday = new Set((restRes.data ?? []).map((r) => r.user_id));
 
+    // When today's workout was saved, so a live row left behind by that same
+    // session can be told apart from a genuine second one started afterwards.
+    const loggedAt = new Map<string, number>();
+    for (const row of logsRes.data ?? []) {
+        const t = new Date((row as { created_at?: string }).created_at ?? 0).getTime();
+        if (!Number.isFinite(t)) continue;
+        loggedAt.set(row.user_id, Math.max(loggedAt.get(row.user_id) ?? 0, t));
+    }
+
     for (const row of liveRes.data ?? []) {
-        if (row.status === 'active' && isActiveSession(row.started_at)) {
-            result[row.user_id] = {
-                userId: row.user_id,
-                status: 'in_progress',
-                workoutName: row.workout_name ?? undefined,
-                exerciseName: row.exercise_name ?? undefined,
-                setsCompleted: row.sets_completed ?? 0,
-                startedAt: row.started_at ?? undefined,
-            };
-        }
+        if (row.status !== 'active') continue;
+        if (!isActiveSession(row.started_at, row.updated_at)) continue;
+
+        // The workout was saved after this row last checked in, so the row is
+        // the leftover of a session that is already finished and logged.
+        const beat = new Date(row.updated_at ?? row.started_at ?? 0).getTime();
+        const saved = loggedAt.get(row.user_id);
+        if (saved != null && Number.isFinite(beat) && saved >= beat) continue;
+
+        result[row.user_id] = {
+            userId: row.user_id,
+            status: 'in_progress',
+            workoutName: row.workout_name ?? undefined,
+            exerciseName: row.exercise_name ?? undefined,
+            setsCompleted: row.sets_completed ?? 0,
+            startedAt: row.started_at ?? undefined,
+        };
     }
 
     for (const id of userIds) {
