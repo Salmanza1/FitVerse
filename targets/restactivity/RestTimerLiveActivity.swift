@@ -130,7 +130,18 @@ struct RestTimerLiveActivity: Widget {
                     .padding(.top, 2)
                 }
             } compactLeading: {
-                EmptyView()
+                // The compact presentation is two views flanking the camera,
+                // and the pill has to wrap the housing either way — so an
+                // empty leading slot does not shrink the island, it just
+                // leaves a gap. A ring of the time remaining fills it with
+                // something worth the space.
+                ProgressView(timerInterval: context.state.startedAt...context.state.endsAt, countsDown: true) {
+                    EmptyView()
+                } currentValueLabel: {
+                    EmptyView()
+                }
+                .progressViewStyle(.circular)
+                .tint(goldVivid)
             } compactTrailing: {
                 Countdown(state: context.state, font: .system(.body, design: .rounded).weight(.semibold))
                     .frame(maxWidth: 56)
