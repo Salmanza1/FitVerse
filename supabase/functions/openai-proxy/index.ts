@@ -22,12 +22,30 @@ const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
  * Models the client may ask for. An allowlist rather than a passthrough: the
  * caller is authenticated but not trusted, and a request for a large model is
  * billed to this account at many times the rate of the one the app uses.
+ *
+ * The gpt-5.6 tier is for the meal scanner, which needs a strong vision
+ * model — model choice is the single biggest lever on portion and calorie
+ * accuracy in the published benchmarks. Chat and the text estimators stay on
+ * gpt-4o-mini.
  */
-const ALLOWED_MODELS = ['gpt-4o-mini'];
+const ALLOWED_MODELS = ['gpt-4o-mini', 'gpt-5.6-luna', 'gpt-5.6-terra', 'gpt-5.6-sol'];
 const DEFAULT_MODEL = 'gpt-4o-mini';
 
-/** Ceiling on a single completion, for the same reason. */
+/**
+ * gpt-5.x and later are reasoning models: they take max_completion_tokens
+ * (which also counts hidden reasoning tokens) and reasoning_effort, and
+ * reject temperature.
+ */
+const isReasoningModel = (model: string) => /^gpt-(5[.][0-9]|6)/.test(model);
+const ALLOWED_REASONING_EFFORT = ['none', 'minimal', 'low', 'medium', 'high'];
+
+/** Ceilings on a single completion, for the same billing reason. */
 const MAX_OUTPUT_TOKENS = 1200;
+/**
+ * Higher for reasoning models because the budget is shared with reasoning;
+ * a ceiling that only fits the visible JSON would come back empty.
+ */
+const MAX_REASONING_OUTPUT_TOKENS = 8000;
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -83,18 +101,31 @@ serve(async (req: Request) => {
             response_format,
             temperature = 0.7,
             max_tokens = 500,
+            max_completion_tokens,
+            reasoning_effort,
         } = body;
 
         if (!Array.isArray(messages) || messages.length === 0) {
             return json({ error: 'messages is required' }, 400);
         }
 
+        const resolvedModel = ALLOWED_MODELS.includes(model) ? model : DEFAULT_MODEL;
+        const requestedTokens = Number(max_completion_tokens ?? max_tokens) || 500;
+
         const requestBody: Record<string, unknown> = {
-            model: ALLOWED_MODELS.includes(model) ? model : DEFAULT_MODEL,
+            model: resolvedModel,
             messages,
-            temperature,
-            max_tokens: Math.min(Number(max_tokens) || 500, MAX_OUTPUT_TOKENS),
         };
+
+        if (isReasoningModel(resolvedModel)) {
+            requestBody.max_completion_tokens = Math.min(requestedTokens, MAX_REASONING_OUTPUT_TOKENS);
+            if (ALLOWED_REASONING_EFFORT.includes(reasoning_effort)) {
+                requestBody.reasoning_effort = reasoning_effort;
+            }
+        } else {
+            requestBody.temperature = temperature;
+            requestBody.max_tokens = Math.min(requestedTokens, MAX_OUTPUT_TOKENS);
+        }
 
         if (tools && tools.length > 0) {
             requestBody.tools = tools;

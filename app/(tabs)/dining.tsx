@@ -18,7 +18,7 @@ import { StyledInput } from '@/components/ui/StyledInput';
 import { StyledSelect } from '@/components/ui/StyledSelect';
 import * as Haptics from 'expo-haptics';
 import { calculateMultiplier, getAvailableUnits, formatAmount, UNITS } from '@/features/nutrition/NutritionUtils';
-import { FoodScannerModal } from '@/features/nutrition/FoodScannerModal';
+import { MealScanModal } from '@/features/nutrition/MealScanModal';
 import { estimateFoodFromDescription, estimateToFoodItem } from '@/features/nutrition/NutritionAIService';
 import { SwipeToDeleteRow } from '@/components/workout/SwipeToDeleteRow';
 import { getNutritionBudgetView } from '@/lib/nutrition';
@@ -262,16 +262,16 @@ export default function NutritionDashboard() {
         }
     };
 
-    const handleScannerAddItem = async (item: FoodItem, quantity: number, amount: number, unit: string, meal: MealType) => {
+    /** Each scanned item lands as its own entry so one can be dropped later. */
+    const handleScanLog = async (items: FoodItem[], meal: MealType) => {
         if (!user) return;
         setLoading(true);
         try {
-            await addFoodToLog(user.id, today, meal, item, quantity, amount, unit, user);
+            for (const item of items) {
+                await addFoodToLog(user.id, today, meal, item, 1, 1, item.baseUnit || 'serving', user);
+            }
             await loadLog();
             setExpandedMeals(prev => ({ ...prev, [meal]: true }));
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        } catch (e) {
-            Alert.alert("Error", "Could not log scanned item.");
         } finally {
             setLoading(false);
         }
@@ -665,7 +665,15 @@ export default function NutritionDashboard() {
                  </View>
             </Modal>
          
-            <FoodScannerModal visible={isScannerVisible} onClose={() => setIsScannerVisible(false)} onAddItem={handleScannerAddItem} currentMeal={selectedMeal} />
+            <MealScanModal
+                visible={isScannerVisible}
+                onClose={() => setIsScannerVisible(false)}
+                meal={selectedMeal}
+                location={selectedLocation}
+                menu={liveMenu}
+                today={today}
+                onLog={handleScanLog}
+            />
         </View>
     );
 }

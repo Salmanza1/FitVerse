@@ -1,12 +1,6 @@
 import { callProxy } from '@/lib/openai';
 import { FoodItem } from '@/types/nutrition';
 
-export interface AIAnalysisResult {
-    items: Partial<FoodItem>[];
-    confidence: number;
-    insight: string;
-}
-
 export interface QuickFoodEstimate {
     name: string;
     calories: number;
@@ -93,53 +87,4 @@ export const estimateFoodFromDescription = async (description: string): Promise<
         insight: parsed.insight || 'Logged as an AI estimate — adjust if you know the exact macros.',
         breakdown: parsed.breakdown,
     };
-};
-
-export const analyzePlateImage = async (base64Image: string, description?: string): Promise<AIAnalysisResult> => {
-    try {
-        const response = await callProxy({
-            model: 'gpt-4o-mini',
-            messages: [
-                {
-                    role: 'system',
-                    content: `You are the Nutrition Expert at Notre Dame. 
-                    Analyze the provided plate of food. 
-                    Identify major food items, estimate their portions (in cups, grams, or counts), 
-                    and estimate Calories, Protein, Carbs, and Fat.
-                    
-                    If the user provides a description of what they got (e.g. "one scoop of rice"), 
-                    prioritize that context for portion estimation.
-                    
-                    Return ONLY a JSON object in this format:
-                    {
-                        "items": [
-                            { "name": "Food Name", "calories": 250, "protein": 20, "carbs": 10, "fat": 5, "servingSize": "1 cup", "baseUnit": "serving", "baseAmount": 1 }
-                        ],
-                        "confidence": 0.85,
-                        "insight": "Dashing effort! High protein choice here, perfect for the Irish spirit ☘️"
-                    }`
-                },
-                {
-                    role: 'user',
-                    content: [
-                        { type: 'text', text: `Analyze this plate for me, lad! ${description ? `The user says: "${description}"` : ''}` },
-                        {
-                            type: 'image_url',
-                            image_url: {
-                                url: `data:image/jpeg;base64,${base64Image}`,
-                            },
-                        },
-                    ],
-                },
-            ],
-            response_format: { type: "json_object" },
-            max_tokens: 500,
-        });
-
-        const content = response.choices?.[0]?.message?.content;
-        return JSON.parse(content || '{}') as AIAnalysisResult;
-    } catch (error) {
-        console.error('AI Analysis Error:', error);
-        throw error;
-    }
 };
