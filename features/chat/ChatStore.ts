@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase';
+import { getLocalDateString } from '../utils/DateUtils';
 import {
     Chat,
     ChatCreateResult,
@@ -489,7 +490,7 @@ export const ChatStore = {
         try {
             const since = new Date();
             since.setDate(since.getDate() - (days - 1));
-            const sinceStr = since.toISOString().split('T')[0];
+            const sinceStr = getLocalDateString(since);
 
             const [{ data: mine }, { data: theirs }] = await Promise.all([
                 supabase
@@ -534,7 +535,7 @@ export const ChatStore = {
         receiverId: string,
         receiverName: string
     ): Promise<{ sent: boolean; message?: Message }> {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
 
         const { data: existing } = await supabase
             .from('workout_nudges')
@@ -567,7 +568,7 @@ export const ChatStore = {
 
     async getNudgedToday(senderId: string, receiverIds: string[]): Promise<Set<string>> {
         if (receiverIds.length === 0) return new Set();
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         const { data } = await supabase
             .from('workout_nudges')
             .select('receiver_id')

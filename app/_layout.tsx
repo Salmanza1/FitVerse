@@ -15,6 +15,7 @@ import { AppWebFrame } from '@/components/ui/AppWebFrame';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { sanitizeStoredRoute, resetAppHomeRoute, LAST_TAB_STORAGE_KEY } from '@/lib/navigation';
 import { WEB_BG, webRoot, webStackContent } from '@/constants/webLayout';
+import { getLocalDateString } from '@/features/utils/DateUtils';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -114,7 +115,7 @@ function RootLayoutNav() {
   usePushNotifications();
 
   // Store the date when this session/app-open started
-  const sessionStartDate = useRef(new Date().toISOString().split('T')[0]);
+  const sessionStartDate = useRef(getLocalDateString());
   // Ensure we only restore the last route once per session
   const hasRestoredRoute = useRef(false);
 
@@ -125,7 +126,7 @@ function RootLayoutNav() {
     if (!user) return;
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (nextAppState === 'active') {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         if (today !== sessionStartDate.current) {
           sessionStartDate.current = today;
           // New calendar day — reset to home so macros & stats refresh

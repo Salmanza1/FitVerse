@@ -1,5 +1,6 @@
 import { supabase } from '../../lib/supabase';
 import { Workout } from '../../types/workout';
+import { getLocalDateString } from '../utils/DateUtils';
 
 /**
  * WorkoutStore — Supabase-backed workout history & templates.
@@ -117,7 +118,7 @@ export const getRecentWorkouts = async (userId: string, days: number = 30): Prom
     try {
         const since = new Date();
         since.setDate(since.getDate() - days);
-        const sinceStr = since.toISOString().slice(0, 10);
+        const sinceStr = getLocalDateString(since);
 
         const { data, error } = await supabase
             .from('workout_logs')

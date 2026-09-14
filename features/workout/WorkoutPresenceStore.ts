@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { getLocalDateString } from '@/features/utils/DateUtils';
 
 export type WorkoutDayStatus = 'not_done' | 'in_progress' | 'completed' | 'rest_day';
 
@@ -12,7 +13,7 @@ export interface MemberWorkoutStatus {
 }
 
 function todayDateString(): string {
-    return new Date().toISOString().split('T')[0];
+    return getLocalDateString();
 }
 
 function isActiveSession(startedAt?: string | null): boolean {

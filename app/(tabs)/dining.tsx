@@ -25,6 +25,7 @@ import { getNutritionBudgetView } from '@/lib/nutrition';
 import { useFocusEffect } from 'expo-router';
 import { Svg, Circle as SvgCircle, Defs, LinearGradient as SvgGradient, Stop } from 'react-native-svg';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { getLocalDateString } from '@/features/utils/DateUtils';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DISPLAY_MEALS: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
@@ -88,10 +89,10 @@ export default function NutritionDashboard() {
     const aiLogInputRef = useRef<TextInput>(null);
     const [expandedStations, setExpandedStations] = useState<Record<string, boolean>>({});
     
-    // Dynamic Date Handling: Resets strictly every 24 hours
-    const today = useMemo(() => new Date().toISOString().split('T')[0], [
-        new Date().getDate() 
-    ]);
+    // The user's local calendar day, not UTC — an evening log must not roll
+    // onto tomorrow. Recomputed each render; the value only changes at local
+    // midnight, and the midnight-reset effect in _layout re-renders the tab.
+    const today = getLocalDateString();
 
     const loadLog = async () => {
         if (!user) return;

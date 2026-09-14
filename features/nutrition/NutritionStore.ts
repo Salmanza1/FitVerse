@@ -2,6 +2,7 @@ import { supabase } from '../../lib/supabase';
 import { DailyLog, FoodItem, MealType, LoggedFoodItem } from '../../types/nutrition';
 import { UserProfile } from '../../types/user';
 import { calculateTargets } from '../../lib/nutrition';
+import { getLocalDateString } from '../utils/DateUtils';
 
 /**
  * NutritionStore — Supabase-backed nutrition logging.
@@ -221,7 +222,7 @@ export const getRecentLogs = async (userId: string, days: number = 7): Promise<D
     try {
         const since = new Date();
         since.setDate(since.getDate() - days);
-        const sinceStr = since.toISOString().slice(0, 10);
+        const sinceStr = getLocalDateString(since);
 
         const { data, error } = await supabase
             .from('nutrition_logs')
