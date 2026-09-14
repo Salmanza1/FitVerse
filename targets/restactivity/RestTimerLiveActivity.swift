@@ -93,23 +93,28 @@ struct RestTimerLiveActivity: Widget {
 
         } dynamicIsland: { context in
             DynamicIsland {
+                // The leading and trailing regions are narrow columns either
+                // side of the sensor housing, so each holds one small thing.
+                // Anything wider is clipped against the outside edge, which is
+                // what an icon paired with a label did here.
                 DynamicIslandExpandedRegion(.leading) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "timer")
-                            .foregroundColor(goldVivid)
-                        Text("Resting")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+                    Image(systemName: "timer")
+                        .font(.title3)
+                        .foregroundColor(goldVivid)
+                        .padding(.leading, 2)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     Countdown(state: context.state, font: .system(.title2, design: .rounded).weight(.semibold))
-                        .frame(maxWidth: 76, alignment: .trailing)
+                        .frame(maxWidth: 72, alignment: .trailing)
+                        .padding(.trailing, 2)
                 }
-                // Bottom spans the full width, so the names get room and the
-                // bar can run edge to edge.
+                // Bottom spans the full width under the housing, so everything
+                // with a real width belongs here.
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack(alignment: .leading, spacing: 6) {
+                        Text("RESTING")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundColor(.secondary)
                         Text(context.state.exerciseName)
                             .font(.headline)
                             .lineLimit(1)
@@ -120,6 +125,9 @@ struct RestTimerLiveActivity: Widget {
                             .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 4)
+                    .padding(.top, 2)
                 }
             } compactLeading: {
                 EmptyView()
