@@ -191,7 +191,17 @@ function RootLayoutNav() {
         </View>
         <View style={styles.contentLayer}>
           <AppWebFrame>
-            <Stack screenOptions={{ contentStyle: webStackContent, headerShown: false }}>
+            {/* No back swipe. Popping the tabs lands on index, which redirects
+                straight back, and on the workout screen the gesture competed
+                with swiping a set away. Every pushed screen carries its own
+                back button. */}
+            <Stack
+              screenOptions={{
+                contentStyle: webStackContent,
+                headerShown: false,
+                gestureEnabled: false,
+              }}
+            >
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" />

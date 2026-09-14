@@ -13,7 +13,19 @@ type Props = {
     contentBackgroundColor?: string;
 };
 
-const SWIPE_DELETE_THRESHOLD = 72;
+/** How far the row has to travel before letting go deletes it. */
+const SWIPE_DELETE_THRESHOLD = 56;
+/** A quick flick counts even if it did not travel the full distance. */
+const FLING_VELOCITY = 0.4;
+const FLING_MIN_DISTANCE = 28;
+/** Movement below this is a tap or the start of a scroll, not a swipe. */
+const CLAIM_DISTANCE = 6;
+/**
+ * How much more horizontal than vertical the movement has to be before the row
+ * takes the gesture. The list scrolls vertically, so a drag that is at all
+ * ambiguous has to stay with the scroll view.
+ */
+const CLAIM_RATIO = 1.5;
 
 export function SwipeToDeleteRow({
     children,
@@ -27,16 +39,32 @@ export function SwipeToDeleteRow({
     const panResponder = useMemo(
         () =>
             PanResponder.create({
+                /**
+                 * Claimed on the capture phase so the row wins the gesture
+                 * from the scrolling list rather than waiting for it to
+                 * decline. Without this the swipe only registered once the
+                 * list had already decided the drag was not a scroll, which
+                 * is what made deleting a set feel like a fight.
+                 */
+                onMoveShouldSetPanResponderCapture: (_, gesture) => {
+                    if (!enabled) return false;
+                    const { dx, dy } = gesture;
+                    return Math.abs(dx) > CLAIM_DISTANCE && Math.abs(dx) > Math.abs(dy) * CLAIM_RATIO;
+                },
                 onMoveShouldSetPanResponder: (_, gesture) => {
                     if (!enabled) return false;
                     const { dx, dy } = gesture;
-                    return Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 10;
+                    return Math.abs(dx) > CLAIM_DISTANCE && Math.abs(dx) > Math.abs(dy) * CLAIM_RATIO;
                 },
                 onPanResponderMove: (_, gesture) => {
                     translateX.setValue(gesture.dx);
                 },
                 onPanResponderRelease: (_, gesture) => {
-                    if (Math.abs(gesture.dx) >= SWIPE_DELETE_THRESHOLD) {
+                    const far = Math.abs(gesture.dx) >= SWIPE_DELETE_THRESHOLD;
+                    const flung =
+                        Math.abs(gesture.vx) >= FLING_VELOCITY &&
+                        Math.abs(gesture.dx) >= FLING_MIN_DISTANCE;
+                    if (far || flung) {
                         const direction = gesture.dx > 0 ? 1 : -1;
                         Animated.timing(translateX, {
                             toValue: direction * 420,

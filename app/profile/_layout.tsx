@@ -7,6 +7,8 @@ export default function ProfileLayout() {
             screenOptions={{
                 headerShown: false,
                 contentStyle: webStackContent,
+                // Each of these screens has its own back chevron.
+                gestureEnabled: false,
             }}
         />
     );

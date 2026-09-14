@@ -34,7 +34,12 @@ export default function AuthLayout() {
 
     return (
         <ThemeProvider value={AuthTheme}>
-            <Stack screenOptions={{ contentStyle: { backgroundColor: VisualSystem.colors.bgMid } }}>
+            <Stack
+                screenOptions={{
+                    contentStyle: { backgroundColor: VisualSystem.colors.bgMid },
+                    gestureEnabled: false,
+                }}
+            >
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen name="signup" options={{ headerShown: false }} />
             </Stack>
