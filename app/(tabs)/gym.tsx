@@ -4755,7 +4755,7 @@ export default function GymScreen() {
         return (
             <Modal
                 visible={createExerciseVisible}
-                animationType="slide"
+                animationType="fade"
                 transparent
             >
                 <View style={styles.modalOverlay}>
@@ -4946,7 +4946,7 @@ function RestTimerModal({
         <Modal
             visible={true}
             transparent={true}
-            animationType="slide"
+            animationType="fade"
             onRequestClose={onClose}
         >
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.modalOverlay}>

@@ -365,7 +365,7 @@ export default function FeedScreen() {
             <Modal
                 visible={editModalVisible}
                 transparent={true}
-                animationType="slide"
+                animationType="fade"
                 onRequestClose={() => setEditModalVisible(false)}
             >
                 <View style={styles.modalOverlay}>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    Modal,
     View,
     StyleSheet,
     Pressable,
@@ -9,11 +8,8 @@ import {
     Alert,
     ActivityIndicator,
     ScrollView,
-    KeyboardAvoidingView,
-    Platform,
     Switch,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '@/components/Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +19,7 @@ import { Post } from '@/types/social';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 import * as Haptics from 'expo-haptics';
 import { buildWorkoutPostCaption, publishWorkoutPost, WorkoutPostPreview } from './workoutPostUtils';
 
@@ -45,7 +42,6 @@ function formatWorkoutDuration(seconds: number): string {
 
 export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkoutData }: CreatePostModalProps) {
     const { user } = useAuth();
-    const insets = useSafeAreaInsets();
     const [image, setImage] = useState<string | null>(null);
     const [caption, setCaption] = useState('');
     const [shareToCommunity, setShareToCommunity] = useState(false);
@@ -170,183 +166,156 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
     const canPost = isWorkoutPost || !!image;
 
     return (
-        <Modal
-            visible={visible}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={handleClose}
-        >
-            <KeyboardAvoidingView
-                style={styles.modalOverlay}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            >
-                <View style={[styles.modalContent, { paddingBottom: Math.max(insets.bottom, 20) }]}>
-                    <View style={styles.header}>
-                        <Pressable accessibilityLabel="Close"
-                            onPress={handleClose}
-                            style={({ pressed }) => [{ padding: 8, opacity: pressed ? 0.6 : 1 }]}
-                        >
-                            <FontAwesome name="times" size={22} color={C.textTertiary} />
-                        </Pressable>
-                        <Text style={styles.title}>{isWorkoutPost ? 'Share Workout' : 'New Post'}</Text>
-                        <Pressable
-                            onPress={handlePost}
-                            disabled={loading || !canPost}
-                            style={({ pressed }) => [
-                                styles.postBtnWrap,
-                                (!canPost || loading) && { opacity: 0.4 },
-                                pressed && canPost && { opacity: 0.7 },
-                            ]}
-                        >
-                            {loading ? (
-                                <ActivityIndicator color={C.gold} />
-                            ) : (
-                                <Text style={styles.postButton}>Post</Text>
-                            )}
-                        </Pressable>
-                    </View>
+        <SheetModal visible={visible} onClose={handleClose}>
+            <View style={styles.header}>
+                <Pressable accessibilityLabel="Close"
+                    onPress={handleClose}
+                    style={({ pressed }) => [{ padding: 8, opacity: pressed ? 0.6 : 1 }]}
+                >
+                    <FontAwesome name="times" size={22} color={C.textTertiary} />
+                </Pressable>
+                <Text style={styles.title}>{isWorkoutPost ? 'Share Workout' : 'New Post'}</Text>
+                <Pressable
+                    onPress={handlePost}
+                    disabled={loading || !canPost}
+                    style={({ pressed }) => [
+                        styles.postBtnWrap,
+                        (!canPost || loading) && { opacity: 0.4 },
+                        pressed && canPost && { opacity: 0.7 },
+                    ]}
+                >
+                    {loading ? (
+                        <ActivityIndicator color={C.gold} />
+                    ) : (
+                        <Text style={styles.postButton}>Post</Text>
+                    )}
+                </Pressable>
+            </View>
 
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        keyboardShouldPersistTaps="handled"
-                        contentContainerStyle={styles.scrollContent}
-                    >
-                        {isWorkoutPost && initialWorkoutData && (
-                            <View style={styles.workoutCard}>
-                                <View style={styles.workoutCardBadge}>
-                                    <FontAwesome name="heartbeat" size={11} color={C.gold} />
-                                    <Text style={styles.workoutCardBadgeText}>Workout preview</Text>
-                                </View>
-                                <Text style={styles.workoutCardTitle} numberOfLines={2}>
-                                    {initialWorkoutData.title}
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.scrollContent}
+            >
+                {isWorkoutPost && initialWorkoutData && (
+                    <View style={styles.workoutCard}>
+                        <View style={styles.workoutCardBadge}>
+                            <FontAwesome name="heartbeat" size={11} color={C.gold} />
+                            <Text style={styles.workoutCardBadgeText}>Workout preview</Text>
+                        </View>
+                        <Text style={styles.workoutCardTitle} numberOfLines={2}>
+                            {initialWorkoutData.title}
+                        </Text>
+                        <View style={styles.workoutStatsGrid}>
+                            <View style={styles.workoutStatCol}>
+                                <Text style={styles.workoutStatNum}>
+                                    {formatWorkoutDuration(initialWorkoutData.duration)}
                                 </Text>
-                                <View style={styles.workoutStatsGrid}>
-                                    <View style={styles.workoutStatCol}>
-                                        <Text style={styles.workoutStatNum}>
-                                            {formatWorkoutDuration(initialWorkoutData.duration)}
-                                        </Text>
-                                        <Text style={styles.workoutStatLbl}>Time</Text>
+                                <Text style={styles.workoutStatLbl}>Time</Text>
+                            </View>
+                            <View style={styles.workoutStatDivider} />
+                            <View style={styles.workoutStatCol}>
+                                <Text style={styles.workoutStatNum}>{initialWorkoutData.setsCompleted}</Text>
+                                <Text style={styles.workoutStatLbl}>Sets</Text>
+                            </View>
+                            <View style={styles.workoutStatDivider} />
+                            <View style={styles.workoutStatCol}>
+                                <Text style={styles.workoutStatNum}>
+                                    {initialWorkoutData.totalVolume > 0
+                                        ? initialWorkoutData.totalVolume.toLocaleString()
+                                        : '—'}
+                                </Text>
+                                <Text style={styles.workoutStatLbl}>lbs</Text>
+                            </View>
+                        </View>
+                        {(initialWorkoutData.milestones?.length ?? 0) > 0 && (
+                            <View style={styles.milestoneChips}>
+                                {initialWorkoutData.milestones!.map((m, i) => (
+                                    <View key={`${m.type}-${i}`} style={styles.milestoneChip}>
+                                        <Text style={styles.milestoneChipText}>{m.label}</Text>
                                     </View>
-                                    <View style={styles.workoutStatDivider} />
-                                    <View style={styles.workoutStatCol}>
-                                        <Text style={styles.workoutStatNum}>{initialWorkoutData.setsCompleted}</Text>
-                                        <Text style={styles.workoutStatLbl}>Sets</Text>
-                                    </View>
-                                    <View style={styles.workoutStatDivider} />
-                                    <View style={styles.workoutStatCol}>
-                                        <Text style={styles.workoutStatNum}>
-                                            {initialWorkoutData.totalVolume > 0
-                                                ? initialWorkoutData.totalVolume.toLocaleString()
-                                                : '—'}
-                                        </Text>
-                                        <Text style={styles.workoutStatLbl}>lbs</Text>
-                                    </View>
-                                </View>
-                                {(initialWorkoutData.milestones?.length ?? 0) > 0 && (
-                                    <View style={styles.milestoneChips}>
-                                        {initialWorkoutData.milestones!.map((m, i) => (
-                                            <View key={`${m.type}-${i}`} style={styles.milestoneChip}>
-                                                <Text style={styles.milestoneChipText}>{m.label}</Text>
-                                            </View>
-                                        ))}
-                                    </View>
-                                )}
+                                ))}
                             </View>
                         )}
+                    </View>
+                )}
 
-                        <View style={styles.photoSection}>
-                            <Text style={styles.photoSectionLabel}>
-                                {isWorkoutPost ? 'Photo (optional)' : 'Photo'}
-                            </Text>
-                            {image ? (
-                                <View style={styles.previewWrapper}>
-                                    <Image source={{ uri: image }} style={styles.previewImage} resizeMode="cover" />
-                                    <Pressable accessibilityLabel="Delete" hitSlop={6}
-                                        style={({ pressed }) => [styles.removeImageBtn, { opacity: pressed ? 0.8 : 1 }]}
-                                        onPress={() => {
-                                            triggerHaptic();
-                                            setImage(null);
-                                        }}
-                                    >
-                                        <FontAwesome name="trash" size={16} color={VisualSystem.colors.textPrimary} />
-                                    </Pressable>
-                                </View>
-                            ) : (
-                                <View style={styles.photoActions}>
-                                    <Pressable
-                                        style={({ pressed }) => [styles.photoActionBtn, pressed && { opacity: 0.75 }]}
-                                        onPress={takePhoto}
-                                    >
-                                        <FontAwesome name="camera" size={20} color={C.gold} />
-                                        <Text style={styles.photoActionText}>Camera</Text>
-                                    </Pressable>
-                                    <Pressable
-                                        style={({ pressed }) => [styles.photoActionBtn, pressed && { opacity: 0.75 }]}
-                                        onPress={pickImage}
-                                    >
-                                        <FontAwesome name="image" size={20} color={C.gold} />
-                                        <Text style={styles.photoActionText}>Library</Text>
-                                    </Pressable>
-                                </View>
-                            )}
-                        </View>
-
-                        <Text style={styles.captionLabel}>
-                            {isWorkoutPost ? 'Caption (optional)' : 'Caption'}
-                        </Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder={
-                                isWorkoutPost
-                                    ? 'Add a note — stats show on the card automatically'
-                                    : 'Write a caption…'
-                            }
-                            placeholderTextColor={C.textTertiary}
-                            value={caption}
-                            onChangeText={setCaption}
-                            multiline
-                        />
-
-                        <View style={styles.shareRow}>
-                            <View style={styles.shareRowText}>
-                                <Text style={styles.shareRowTitle}>Share to Community</Text>
-                                <Text style={styles.shareRowHint}>
-                                    Off = friends only. On = visible to everyone on campus.
-                                </Text>
-                            </View>
-                            <Switch
-                                value={shareToCommunity}
-                                onValueChange={(v) => {
+                <View style={styles.photoSection}>
+                    <Text style={styles.photoSectionLabel}>
+                        {isWorkoutPost ? 'Photo (optional)' : 'Photo'}
+                    </Text>
+                    {image ? (
+                        <View style={styles.previewWrapper}>
+                            <Image source={{ uri: image }} style={styles.previewImage} resizeMode="cover" />
+                            <Pressable accessibilityLabel="Delete" hitSlop={6}
+                                style={({ pressed }) => [styles.removeImageBtn, { opacity: pressed ? 0.8 : 1 }]}
+                                onPress={() => {
                                     triggerHaptic();
-                                    setShareToCommunity(v);
+                                    setImage(null);
                                 }}
-                                trackColor={{ false: C.borderSubtle, true: C.goldMuted }}
-                                thumbColor={shareToCommunity ? C.gold : '#f4f3f4'}
-                            />
+                            >
+                                <FontAwesome name="trash" size={16} color={VisualSystem.colors.textPrimary} />
+                            </Pressable>
                         </View>
-                    </ScrollView>
+                    ) : (
+                        <View style={styles.photoActions}>
+                            <Pressable
+                                style={({ pressed }) => [styles.photoActionBtn, pressed && { opacity: 0.75 }]}
+                                onPress={takePhoto}
+                            >
+                                <FontAwesome name="camera" size={20} color={C.gold} />
+                                <Text style={styles.photoActionText}>Camera</Text>
+                            </Pressable>
+                            <Pressable
+                                style={({ pressed }) => [styles.photoActionBtn, pressed && { opacity: 0.75 }]}
+                                onPress={pickImage}
+                            >
+                                <FontAwesome name="image" size={20} color={C.gold} />
+                                <Text style={styles.photoActionText}>Library</Text>
+                            </Pressable>
+                        </View>
+                    )}
                 </View>
-            </KeyboardAvoidingView>
-        </Modal>
+
+                <Text style={styles.captionLabel}>
+                    {isWorkoutPost ? 'Caption (optional)' : 'Caption'}
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder={
+                        isWorkoutPost
+                            ? 'Add a note — stats show on the card automatically'
+                            : 'Write a caption…'
+                    }
+                    placeholderTextColor={C.textTertiary}
+                    value={caption}
+                    onChangeText={setCaption}
+                    multiline
+                />
+
+                <View style={styles.shareRow}>
+                    <View style={styles.shareRowText}>
+                        <Text style={styles.shareRowTitle}>Share to Community</Text>
+                        <Text style={styles.shareRowHint}>
+                            Off = friends only. On = visible to everyone on campus.
+                        </Text>
+                    </View>
+                    <Switch
+                        value={shareToCommunity}
+                        onValueChange={(v) => {
+                            triggerHaptic();
+                            setShareToCommunity(v);
+                        }}
+                        trackColor={{ false: C.borderSubtle, true: C.goldMuted }}
+                        thumbColor={shareToCommunity ? C.gold : '#f4f3f4'}
+                    />
+                </View>
+            </ScrollView>
+        </SheetModal>
     );
 }
 
 const styles = StyleSheet.create({
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: C.overlay,
-        justifyContent: 'flex-end',
-    },
-    modalContent: {
-        backgroundColor: C.bgMid,
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        maxHeight: '92%',
-        borderWidth: 1,
-        borderColor: C.borderSubtle,
-    },
     scrollContent: {
         paddingBottom: 8,
     },

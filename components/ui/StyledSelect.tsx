@@ -59,7 +59,7 @@ export function StyledSelect({
                 </Pressable>
             </View>
 
-            <Modal visible={visible} transparent animationType="slide">
+            <Modal visible={visible} transparent animationType="fade">
                 <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
                     <Pressable style={styles.modalSheet} onPress={(e) => e.stopPropagation()}>
                         <View style={styles.modalHeader}>

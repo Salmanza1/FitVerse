@@ -42,7 +42,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
     return (
         <Modal
             visible={visible}
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             onRequestClose={onClose}
         >

@@ -676,7 +676,7 @@ export default function PersonalInfoScreen() {
 
             </ScrollView>
 
-            <Modal visible={isEditingDob} transparent animationType="slide">
+            <Modal visible={isEditingDob} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeaderLine} />
@@ -719,7 +719,7 @@ export default function PersonalInfoScreen() {
                 </View>
             </Modal>
 
-            <Modal visible={editingPicker !== null} transparent animationType="slide">
+            <Modal visible={editingPicker !== null} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeaderLine} />

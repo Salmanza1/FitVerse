@@ -230,7 +230,7 @@ export default function LoginScreen() {
                 </WebShell>
             </ScrollView>
 
-            <Modal visible={showForgotModal} animationType="slide" transparent={true}>
+            <Modal visible={showForgotModal} animationType="fade" transparent={true}>
                 <View style={styles.modalOverlay}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.modalCard}>
                         <View style={styles.modalHeaderRow}>

@@ -144,7 +144,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
 
             <Modal
                 visible={isChatOpen}
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 onRequestClose={() => setIsChatOpen(false)}
             >
