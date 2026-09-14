@@ -18,7 +18,12 @@ type Props = {
     onStartEdit: () => void;
     onSaveRest: (seconds: number) => void;
     onCancelEdit: () => void;
+    /** Add or take time off the rest that is already running. */
+    onAdjustActive: (deltaSeconds: number) => void;
 };
+
+/** How much each tap on the running timer is worth. */
+const NUDGE_SECONDS = 15;
 
 export type ActiveSetRestTimer = {
     remaining: number;
@@ -34,6 +39,7 @@ export function BetweenSetRestRow({
     onStartEdit,
     onSaveRest,
     onCancelEdit,
+    onAdjustActive,
 }: Props) {
     const displaySeconds = getRestAfterSetSeconds(exercise, set);
     const [draft, setDraft] = useState(formatRestSeconds(displaySeconds));
@@ -75,9 +81,27 @@ export function BetweenSetRestRow({
                 ? Math.min(100, Math.max(0, ((activeTimer.total - activeTimer.remaining) / activeTimer.total) * 100))
                 : 0;
         return (
-            <View style={[styles.bar, styles.barActive]}>
+            <View style={[styles.bar, styles.barActive, styles.barRunning]}>
                 <View style={[styles.fill, { width: `${progress}%` }]} />
+                {/* Taps land outside the 28pt bar via hitSlop, so the targets
+                    are usable mid-set without making the row tall. */}
+                <Pressable
+                    accessibilityLabel={`Take ${NUDGE_SECONDS} seconds off the rest`}
+                    onPress={() => onAdjustActive(-NUDGE_SECONDS)}
+                    hitSlop={{ top: 12, bottom: 12, left: 12, right: 8 }}
+                    style={({ pressed }) => [styles.nudge, pressed && { opacity: 0.55 }]}
+                >
+                    <Text style={styles.nudgeText}>−{NUDGE_SECONDS}</Text>
+                </Pressable>
                 <Text style={styles.barTextActive}>REST {formatRestSeconds(activeTimer.remaining)}</Text>
+                <Pressable
+                    accessibilityLabel={`Add ${NUDGE_SECONDS} seconds to the rest`}
+                    onPress={() => onAdjustActive(NUDGE_SECONDS)}
+                    hitSlop={{ top: 12, bottom: 12, left: 8, right: 12 }}
+                    style={({ pressed }) => [styles.nudge, pressed && { opacity: 0.55 }]}
+                >
+                    <Text style={styles.nudgeText}>+{NUDGE_SECONDS}</Text>
+                </Pressable>
             </View>
         );
     }
@@ -129,6 +153,22 @@ const styles = StyleSheet.create({
     },
     barActive: {
         borderColor: 'rgba(46, 204, 113, 0.35)',
+    },
+    barRunning: {
+        height: 28,
+        justifyContent: 'space-between',
+        paddingHorizontal: 8,
+    },
+    nudge: {
+        zIndex: 1,
+        paddingHorizontal: 4,
+        justifyContent: 'center',
+    },
+    nudgeText: {
+        color: REST_GREEN,
+        fontSize: 11,
+        fontWeight: '800',
+        letterSpacing: 0.2,
     },
     fill: {
         position: 'absolute',

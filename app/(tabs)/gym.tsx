@@ -3004,6 +3004,27 @@ export default function GymScreen() {
         setActiveWorkout({ ...activeWorkout, exercises });
     };
 
+    /**
+     * Add or remove time from the rest already counting down.
+     *
+     * Routed through setSetRestTimer rather than the raw setter so the
+     * scheduled "Rest complete" alert and the Live Activity both move to the
+     * new end time; otherwise the phone would still buzz at the old one.
+     */
+    const adjustActiveRest = (deltaSeconds: number) => {
+        if (!setRestTimer) return;
+        // Never push the end into the past, and keep at least a second so the
+        // tick does not resolve it as finished mid-adjustment.
+        const endsAt = Math.max(Date.now() + 1000, setRestTimer.endsAt + deltaSeconds * 1000);
+        setSetRestTimer({
+            ...setRestTimer,
+            endsAt,
+            total: Math.max(1, setRestTimer.total + deltaSeconds),
+            remaining: Math.max(1, Math.ceil((endsAt - Date.now()) / 1000)),
+        });
+        Haptics.selectionAsync();
+    };
+
     const updateSetRestAfter = (exIdx: number, setIdx: number, seconds: number) => {
         if (!activeWorkout) return;
         const newExercises = [...activeWorkout.exercises];
@@ -3988,10 +4009,18 @@ export default function GymScreen() {
                                     const isEditingRest =
                                         editingRest?.exIdx === exIdx && editingRest?.setIdx === setIdx;
                                     const restSeconds = getRestAfterSetSeconds(ex, set);
+                                    // A superset runs straight into its paired
+                                    // movement, so rest is owed only after the
+                                    // last one — matching what toggleSet does.
+                                    const pairedNext = workout.exercises[exIdx + 1];
+                                    const restsIntoSuperset =
+                                        !!ex.supersetId && pairedNext?.supersetId === ex.supersetId;
+                                    // Shown for every set, not just finished
+                                    // ones: the row is the only way to change
+                                    // the rest, so hiding it until the set was
+                                    // done made upcoming rests uneditable.
                                     const showRestRow =
-                                        isResting ||
-                                        isEditingRest ||
-                                        (set.completed && restSeconds > 0);
+                                        isResting || isEditingRest || !restsIntoSuperset;
                                     return (
                                         <View key={set.id}>
                                             <SwipeToDeleteRow
@@ -4134,6 +4163,7 @@ export default function GymScreen() {
                                                         setEditingRest(null);
                                                     }}
                                                     onCancelEdit={() => setEditingRest(null)}
+                                                    onAdjustActive={adjustActiveRest}
                                                 />
                                             ) : null}
                                         </View>
