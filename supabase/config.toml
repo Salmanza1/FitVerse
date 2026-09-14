@@ -386,3 +386,9 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+# Called by database triggers, which have no user session. The function
+# authenticates the caller with a shared secret header instead — see
+# supabase/migrations/20260914000000_push_notification_webhooks.sql.
+[functions.expo-notifications]
+verify_jwt = false

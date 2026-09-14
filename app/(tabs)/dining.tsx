@@ -26,6 +26,8 @@ import { useFocusEffect } from 'expo-router';
 import { Svg, Circle as SvgCircle, Defs, LinearGradient as SvgGradient, Stop } from 'react-native-svg';
 import { VisualSystem } from '@/constants/VisualSystem';
 import { getLocalDateString } from '@/features/utils/DateUtils';
+import { NutritionTrendCard } from '@/components/nutrition/NutritionTrendCard';
+import { summarizeNutrition, DAYS_SHOWN, type NutritionSummary } from '@/features/nutrition/nutritionStats';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DISPLAY_MEALS: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
@@ -88,6 +90,8 @@ export default function NutritionDashboard() {
     const [lastAiLogMessage, setLastAiLogMessage] = useState<string | null>(null);
     const aiLogInputRef = useRef<TextInput>(null);
     const [expandedStations, setExpandedStations] = useState<Record<string, boolean>>({});
+    const [trend, setTrend] = useState<NutritionSummary>(() => summarizeNutrition([]));
+    const [trendLoading, setTrendLoading] = useState(true);
     
     // The user's local calendar day, not UTC — an evening log must not roll
     // onto tomorrow. Recomputed each render; the value only changes at local
@@ -121,6 +125,15 @@ export default function NutritionDashboard() {
             }
             return prev;
         });
+    };
+
+    const loadTrend = async () => {
+        if (!user) return;
+        // One extra day so a log written either side of local midnight is
+        // still inside the window the chart draws.
+        const logs = await getRecentLogs(user.id, DAYS_SHOWN + 1);
+        setTrend(summarizeNutrition(logs));
+        setTrendLoading(false);
     };
 
     const loadLiveMenu = async () => {
@@ -188,6 +201,7 @@ export default function NutritionDashboard() {
     useFocusEffect(
         useCallback(() => {
             loadLog();
+            void loadTrend();
         }, [user, today])
     );
 
@@ -272,6 +286,7 @@ export default function NutritionDashboard() {
                 await addFoodToLog(user.id, today, meal, item, 1, 1, item.baseUnit || 'serving', user);
             }
             await loadLog();
+            void loadTrend();
             setExpandedMeals(prev => ({ ...prev, [meal]: true }));
         } finally {
             setLoading(false);
@@ -559,6 +574,9 @@ export default function NutritionDashboard() {
                             />
                         ))}
                     </View>
+
+                    <Text style={styles.trendHeading}>Last 2 weeks</Text>
+                    <NutritionTrendCard summary={trend} loading={trendLoading} />
                 </View>
             </>
         );
@@ -1189,6 +1207,14 @@ const styles = StyleSheet.create({
      * longest line and runs past the row, where it is clipped; minWidth lets
      * it shrink below that width so the text wraps or ellipsises instead.
      */
+    trendHeading: {
+        color: VisualSystem.colors.textSecondary,
+        fontSize: 11,
+        fontWeight: '800',
+        letterSpacing: 0.2,
+        marginTop: 24,
+        marginBottom: 8,
+    },
     rowTextColumn: {
         flex: 1,
         minWidth: 0,

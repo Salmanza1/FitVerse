@@ -5,131 +5,167 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4"
 
 /**
- * Supabase Edge Function: expo-notifications
- * 
- * This function handles database webhooks for `messages` and `friendships` 
- * and securely triggers push notifications via the Expo Push API.
+ * Push notifications for new messages and friend requests.
+ *
+ * Called by database triggers on `messages` and `friendships` (see the
+ * migration that creates them), which post the row that changed. The trigger
+ * is the only caller, so the request is authenticated with a shared secret
+ * rather than a user JWT — this endpoint runs with verify_jwt off, and
+ * without the check anyone could send any FitVerse user a notification.
  */
+
+const EXPO_PUSH_URL = 'https://exp.host/--/api/v2/push/send'
+/** Expo accepts up to 100 messages per request. */
+const EXPO_BATCH = 100
+/** A notification body is a preview, not the whole message. */
+const BODY_MAX = 140
+
+const json = (payload: unknown, status = 200) =>
+    new Response(JSON.stringify(payload), {
+        status,
+        headers: { 'Content-Type': 'application/json' },
+    })
+
+const displayName = (p?: { name?: string; display_name?: string } | null) =>
+    p?.display_name || p?.name || 'Someone'
+
+const preview = (text?: string | null) => {
+    const t = (text ?? '').trim()
+    if (!t) return 'Sent an attachment.'
+    return t.length > BODY_MAX ? `${t.slice(0, BODY_MAX - 1)}…` : t
+}
 
 serve(async (req) => {
     try {
-        const payload = await req.json()
+        const secret = Deno.env.get('NOTIFY_HOOK_SECRET')
+        // Fail closed. An unset secret means the function is misconfigured, and
+        // serving it open is worse than serving nothing.
+        if (!secret) {
+            console.error('NOTIFY_HOOK_SECRET is not set on this function')
+            return json({ error: 'Not configured' }, 500)
+        }
+        if (req.headers.get('x-notify-secret') !== secret) {
+            return json({ error: 'Unauthorized' }, 401)
+        }
 
-        // 1. Initialize Supabase Admin Client
+        const payload = await req.json()
+        const record = payload?.record
+        if (!record) return json({ message: 'No record on payload' })
+
         const supabaseClient = createClient(
-            Deno.env.get("SUPABASE_URL") ?? "",
-            Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+            Deno.env.get('SUPABASE_URL') ?? '',
+            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         )
 
-        let title = "New Notification"
-        let body = "You have a new update in FitVerse."
-        let targetUserId = ""
+        let title = ''
+        let body = ''
+        let targetUserIds: string[] = []
+        const data: Record<string, unknown> = { table: payload.table, recordId: record.id }
 
-        // 2. Parse Payload from Webhooks
         if (payload.table === 'messages' && payload.type === 'INSERT') {
-            const message = payload.record;
-
-            // Extract sender display name
-            const { data: sender } = await supabaseClient
-                .from('profiles')
-                .select('name, display_name')
-                .eq('id', message.sender_id)
-                .single()
-
-            const senderName = sender?.display_name || sender?.name || 'Someone'
-            title = `New text from ${senderName}`
-            body = message.content || "Sent an attachment."
-
-            // Extract the target participant (the person receiving the DM)
-            // Assuming a 1-on-1 chat logic for now, or broadcast to all participants in group.
-            const { data: participants } = await supabaseClient
-                .from('chat_participants')
-                .select('user_id')
-                .eq('chat_id', message.chat_id)
-                .neq('user_id', message.sender_id)
-
-            if (participants && participants.length > 0) {
-                // For simplicity, targeting the first other user
-                targetUserId = participants[0].user_id
-            }
-
-        } else if (payload.table === 'friendships') {
-            const friendship = payload.record;
-
-            if (friendship.status === 'pending' && payload.type === 'INSERT') {
-                const { data: sender } = await supabaseClient
+            const [{ data: sender }, { data: chat }, { data: participants }] = await Promise.all([
+                supabaseClient
                     .from('profiles')
                     .select('name, display_name')
-                    .eq('id', friendship.requester_id)
-                    .single()
+                    .eq('id', record.sender_id)
+                    .maybeSingle(),
+                supabaseClient
+                    .from('chats')
+                    .select('type, name')
+                    .eq('id', record.chat_id)
+                    .maybeSingle(),
+                // Everyone in the room except whoever sent it.
+                supabaseClient
+                    .from('chat_participants')
+                    .select('user_id')
+                    .eq('chat_id', record.chat_id)
+                    .neq('user_id', record.sender_id),
+            ])
 
-                const senderName = sender?.display_name || sender?.name || 'Someone'
-                title = "New Friend Request"
-                body = `${senderName} wants to be your gym buddy.`
-                targetUserId = friendship.receiver_id
+            const senderName = displayName(sender)
+            // In a group the room is the thing you recognise, so name it.
+            title =
+                chat?.type === 'group' && chat?.name
+                    ? `${senderName} in ${chat.name}`
+                    : senderName
+            body = preview(record.content)
+            targetUserIds = (participants ?? []).map((p) => p.user_id)
+            data.chatId = record.chat_id
 
-            } else if (friendship.status === 'accepted' && payload.type === 'UPDATE') {
+        } else if (payload.table === 'friendships') {
+            if (payload.type === 'INSERT' && record.status === 'pending') {
+                const { data: requester } = await supabaseClient
+                    .from('profiles')
+                    .select('name, display_name')
+                    .eq('id', record.requester_id)
+                    .maybeSingle()
+
+                title = 'New friend request'
+                body = `${displayName(requester)} wants to be your gym buddy.`
+                targetUserIds = [record.receiver_id]
+
+            } else if (payload.type === 'UPDATE' && record.status === 'accepted') {
+                // Only tell the requester, and only when this update is what
+                // changed the status — otherwise every later edit re-notifies.
+                if (payload.old_record?.status === 'accepted') {
+                    return json({ message: 'Already accepted; nothing to send.' })
+                }
                 const { data: receiver } = await supabaseClient
                     .from('profiles')
                     .select('name, display_name')
-                    .eq('id', friendship.receiver_id)
-                    .single()
+                    .eq('id', record.receiver_id)
+                    .maybeSingle()
 
-                const receiverName = receiver?.display_name || receiver?.name || 'Someone'
-                title = "Friend Request Accepted!"
-                body = `${receiverName} accepted your friend request.`
-                targetUserId = friendship.requester_id
+                title = 'Friend request accepted'
+                body = `${displayName(receiver)} accepted your friend request.`
+                targetUserIds = [record.requester_id]
             }
         }
 
-        if (!targetUserId) {
-            return new Response(JSON.stringify({ message: "No valid target user ID to ping." }), { status: 200 })
+        targetUserIds = Array.from(new Set(targetUserIds.filter(Boolean)))
+        if (targetUserIds.length === 0 || !title) {
+            return json({ message: 'Nothing to send.' })
         }
 
-        // 3. Look up target user's Expo Push Token
-        const { data: targetProfile, error: profileErr } = await supabaseClient
+        const { data: targets, error: profileErr } = await supabaseClient
             .from('profiles')
-            .select('push_token, push_notifications')
-            .eq('id', targetUserId)
-            .single()
+            .select('id, push_token, push_notifications')
+            .in('id', targetUserIds)
 
-        if (profileErr || !targetProfile) {
-            return new Response(JSON.stringify({ message: "Target profile missing", error: profileErr }), { status: 200 })
-        }
+        if (profileErr) return json({ message: 'Lookup failed', error: profileErr.message })
 
-        // Abort if push token missing or user disabled notifications
-        if (!targetProfile.push_token || targetProfile.push_notifications === false) {
-            return new Response(JSON.stringify({ message: "Push token missing or explicitly disabled." }), { status: 200 })
-        }
-
-        // 4. Send to Expo Push Service
-        const expoResponse = await fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Accept-encoding': 'gzip, deflate',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                to: targetProfile.push_token,
+        const messages = (targets ?? [])
+            .filter((t) => t.push_token && t.push_notifications !== false)
+            .map((t) => ({
+                to: t.push_token,
                 sound: 'default',
-                title: title,
-                body: body,
-                badge: 1, // Increments badge count natively
-                data: { table: payload.table, recordId: payload.record.id },
-            }),
-        });
+                title,
+                body,
+                badge: 1,
+                data,
+            }))
 
-        const expoData = await expoResponse.json()
+        if (messages.length === 0) {
+            return json({ message: 'No reachable recipients.' })
+        }
 
-        return new Response(
-            JSON.stringify({ success: true, expoData }),
-            { headers: { "Content-Type": "application/json" } }
-        )
+        const results: unknown[] = []
+        for (let i = 0; i < messages.length; i += EXPO_BATCH) {
+            const res = await fetch(EXPO_PUSH_URL, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Accept-encoding': 'gzip, deflate',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(messages.slice(i, i + EXPO_BATCH)),
+            })
+            results.push(await res.json())
+        }
+
+        return json({ success: true, sent: messages.length, results })
     } catch (err) {
-        return new Response(
-            JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),
-            { headers: { "Content-Type": "application/json" }, status: 500 }
-        )
+        console.error('expo-notifications failed:', err)
+        return json({ error: err instanceof Error ? err.message : String(err) }, 500)
     }
 })
