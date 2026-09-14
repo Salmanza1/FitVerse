@@ -7,7 +7,8 @@ import {
     ScrollView,
     StyleSheet,
     Modal,
-    KeyboardAvoidingView,
+    Dimensions,
+    Keyboard,
     Platform,
     ActivityIndicator,
     Animated,
@@ -66,6 +67,52 @@ interface Props {
     onMessageSent?: (message: Message) => void;
 }
 
+/**
+ * How much of the window the keyboard is covering.
+ *
+ * KeyboardAvoidingView cannot be used here. It compares the frame it gets from
+ * onLayout, which is relative to its parent, against the keyboard's position,
+ * which is relative to the window — so it only lands correctly when it sits at
+ * the window origin. This room renders inside the inbox's modal, several
+ * levels deep, and came up short by roughly that offset, leaving the input row
+ * behind the keyboard.
+ *
+ * The keyboard's own frame is absolute, so deriving the overlap from it works
+ * at any depth.
+ */
+function useKeyboardHeight(): number {
+    const [height, setHeight] = useState(0);
+
+    useEffect(() => {
+        const apply = (event: { endCoordinates?: { screenY?: number; height?: number } }) => {
+            const end = event?.endCoordinates;
+            if (!end) return;
+            // screenY covers split, floating and undocked keyboards, which do
+            // not overlap the view even though they report a height.
+            const overlap =
+                typeof end.screenY === 'number'
+                    ? Dimensions.get('window').height - end.screenY
+                    : end.height ?? 0;
+            setHeight(Math.max(0, Math.round(overlap)));
+        };
+
+        const subs =
+            Platform.OS === 'ios'
+                ? [
+                      Keyboard.addListener('keyboardWillChangeFrame', apply),
+                      Keyboard.addListener('keyboardWillHide', () => setHeight(0)),
+                  ]
+                : [
+                      Keyboard.addListener('keyboardDidShow', apply),
+                      Keyboard.addListener('keyboardDidHide', () => setHeight(0)),
+                  ];
+
+        return () => subs.forEach((s) => s.remove());
+    }, []);
+
+    return height;
+}
+
 function statusColor(status: WorkoutDayStatus): string {
     return WORKOUT_STATUS_COLORS[status];
 }
@@ -84,6 +131,7 @@ function sameChat(a: Chat, b: Chat): boolean {
 
 export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, onClose, embedded = false, onMessageSent }: Props) {
     const insets = useSafeAreaInsets();
+    const keyboardHeight = useKeyboardHeight();
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
     const [loading, setLoading] = useState(false);
@@ -141,6 +189,14 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
         setMessages([]);
         setInputText('');
     }, [visible, chat?.id]);
+
+    // Opening the keyboard shortens the list, which would otherwise leave the
+    // newest message hidden above the input row.
+    useEffect(() => {
+        if (keyboardHeight <= 0) return;
+        const id = setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 50);
+        return () => clearTimeout(id);
+    }, [keyboardHeight]);
 
     const notifyMessageSent = useCallback(
         (msg: Message) => {
@@ -754,12 +810,9 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                     <FriendStreakBanner days={streakDays} />
                 )}
 
-                {/* Messages */}
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                    keyboardVerticalOffset={embedded ? 0 : insets.top}
-                >
+                {/* Messages. See useKeyboardHeight for why this is not a
+                    KeyboardAvoidingView. */}
+                <View style={{ flex: 1, paddingBottom: keyboardHeight }}>
                     {loading ? (
                         <View style={styles.loadingWrap}>
                             <ActivityIndicator color={VisualSystem.colors.gold} />
@@ -858,7 +911,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                     />
 
                     {/* Input Row */}
-                    <View style={[styles.inputRow, { paddingBottom: insets.bottom + 8 }]}>
+                    <View style={[styles.inputRow, { paddingBottom: keyboardHeight > 0 ? 8 : insets.bottom + 8 }]}>
                         <Animated.View style={{ transform: [{ scale: nudgeScale }] }}>
                             <Pressable
                                 onPress={handleNudge}
@@ -895,7 +948,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                             <FontAwesome name="send" size={16} color={inputText.trim() ? '#0C2340' : 'rgba(12,35,64,0.4)'} />
                         </Pressable>
                     </View>
-                </KeyboardAvoidingView>
+                </View>
             </View>
     );
 

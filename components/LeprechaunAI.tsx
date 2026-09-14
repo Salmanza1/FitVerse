@@ -144,7 +144,15 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
         <>
             {renderTrigger ? renderTrigger(() => setIsChatOpen(true)) : renderFloating()}
 
-            <SheetModal visible={isChatOpen} onClose={() => setIsChatOpen(false)} bare dismissOnBackdrop={false}>
+            {/* The chat manages the keyboard itself, just below; letting the
+                sheet do it as well lifts the panel twice. */}
+            <SheetModal
+                visible={isChatOpen}
+                onClose={() => setIsChatOpen(false)}
+                bare
+                dismissOnBackdrop={false}
+                avoidKeyboard={false}
+            >
                     <Card style={[styles.chatContainer, { height: windowHeight * 0.8 }]}>
                         {/* Header */}
                         <View style={styles.chatHeader}>
