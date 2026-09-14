@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Alert, Platform, Modal, Pressable, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Alert, Platform, Pressable, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -24,6 +24,7 @@ import { uploadProfileAvatar } from '@/features/profile/uploadProfileAvatar';
 import { ProfileAvatar } from '@/components/profile/ProfileAvatar';
 import type { ImagePickerAsset } from 'expo-image-picker';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 const WEEKLY_GOAL_LABELS: Record<string, string> = {
     "lose_1_5_lb_per_week": "Lose 1.5 lbs / week",
@@ -676,8 +677,7 @@ export default function PersonalInfoScreen() {
 
             </ScrollView>
 
-            <Modal visible={isEditingDob} transparent animationType="fade">
-                <View style={styles.modalOverlay}>
+            <SheetModal visible={isEditingDob} onClose={() => setIsEditingDob(false)} bare>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeaderLine} />
                         <Text style={styles.modalTitle}>Set Birthday</Text>
@@ -716,11 +716,9 @@ export default function PersonalInfoScreen() {
                             <Text style={styles.dobCancelText}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-            </Modal>
+            </SheetModal>
 
-            <Modal visible={editingPicker !== null} transparent animationType="fade">
-                <View style={styles.modalOverlay}>
+            <SheetModal visible={editingPicker !== null} onClose={() => setEditingPicker(null)} bare>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeaderLine} />
                         <Text style={styles.modalTitle}>
@@ -787,8 +785,7 @@ export default function PersonalInfoScreen() {
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
-                </View>
-            </Modal>
+            </SheetModal>
         </KeyboardAvoidingView>
     );
 }
@@ -1053,11 +1050,6 @@ const styles = StyleSheet.create({
         fontSize: Tokens.typography.xs,
         lineHeight: 18,
         fontStyle: 'italic',
-    },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'flex-end',
     },
     modalContent: {
         backgroundColor: VisualSystem.colors.bgMid,

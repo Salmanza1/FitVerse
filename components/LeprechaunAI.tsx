@@ -4,22 +4,24 @@ import {
     TouchableOpacity,
     Animated,
     PanResponder,
-    Modal,
     FlatList,
     TextInput,
     KeyboardAvoidingView,
     Platform,
-    ActivityIndicator
+    ActivityIndicator,
+    useWindowDimensions
 } from 'react-native';
 import { View, Text, Card, SecondaryText } from './Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { getLeprechaunResponse, getLeprechaunResponseWithTools, Message } from '@/lib/openai';
 import { useAuth } from '@/features/auth/AuthContext';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => void) => React.ReactNode }) {
     const pan = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const { height: windowHeight } = useWindowDimensions();
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'assistant', content: "☘️ Top o' the morning to ya! I'm the Leprechaun AI. Ready to crush some elite goals today?" }
@@ -142,14 +144,8 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
         <>
             {renderTrigger ? renderTrigger(() => setIsChatOpen(true)) : renderFloating()}
 
-            <Modal
-                visible={isChatOpen}
-                animationType="fade"
-                transparent={true}
-                onRequestClose={() => setIsChatOpen(false)}
-            >
-                <View style={styles.modalOverlay}>
-                    <Card style={styles.chatContainer}>
+            <SheetModal visible={isChatOpen} onClose={() => setIsChatOpen(false)} bare dismissOnBackdrop={false}>
+                    <Card style={[styles.chatContainer, { height: windowHeight * 0.8 }]}>
                         {/* Header */}
                         <View style={styles.chatHeader}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -253,8 +249,7 @@ export function LeprechaunAI({ renderTrigger }: { renderTrigger?: (open: () => v
                             </View>
                         </KeyboardAvoidingView>
                     </Card>
-                </View>
-            </Modal>
+            </SheetModal>
         </>
     );
 }
@@ -278,14 +273,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: VisualSystem.colors.borderGold,
     },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'flex-end',
-    },
     chatContainer: {
-        height: '80%',
-        margin: 8,
+            margin: 8,
         padding: 0,
         overflow: 'hidden',
         backgroundColor: VisualSystem.colors.bgMid,

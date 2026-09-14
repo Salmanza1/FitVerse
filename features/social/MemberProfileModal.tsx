@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView, ActivityIndicator, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, ScrollView, ActivityIndicator, ImageBackground, useWindowDimensions } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { Tokens } from '@/constants/Tokens';
@@ -7,6 +7,7 @@ import { SocialStore } from './SocialStore';
 import { UserProfile } from '@/types/user';
 import { LinearGradient } from 'expo-linear-gradient';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 interface MemberProfileModalProps {
     userId: string | null;
@@ -15,6 +16,7 @@ interface MemberProfileModalProps {
 }
 
 export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, visible, onClose }) => {
+    const { height: windowHeight } = useWindowDimensions();
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -40,14 +42,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
     if (!visible) return null;
 
     return (
-        <Modal
-            visible={visible}
-            animationType="fade"
-            transparent={true}
-            onRequestClose={onClose}
-        >
-            <View style={styles.overlay}>
-                <View style={styles.container}>
+        <SheetModal visible={visible} onClose={onClose} bare>
+                <View style={[styles.container, { height: windowHeight * 0.92 }]}>
                     {loading ? (
                         <View style={styles.center}>
                             <ActivityIndicator color={FitVerseTheme.colors.accentGold} size="large" />
@@ -113,25 +109,18 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({ userId, 
                         </View>
                     )}
                 </View>
-            </View>
-        </Modal>
+        </SheetModal>
     );
 };
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'flex-end',
-    },
     container: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         borderTopWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
-        height: '92%',
-        overflow: 'hidden',
+            overflow: 'hidden',
     },
     center: {
         flex: 1,

@@ -42,6 +42,15 @@ type Props = {
     maxHeight?: ViewStyle['maxHeight'];
     /** Extra styling on the panel itself. */
     contentStyle?: ViewStyle;
+    /**
+     * Supply no panel chrome — no surface, radius, padding or safe-area
+     * inset — and animate the child as it is. For sheets that already style
+     * themselves and only need the scrim taken out of the slide. The child
+     * must size itself in points, not per cent: it is measured to find the
+     * slide distance, so its parent here hugs it and a percentage height
+     * would have nothing definite to resolve against.
+     */
+    bare?: boolean;
 };
 
 export function SheetModal({
@@ -52,6 +61,7 @@ export function SheetModal({
     avoidKeyboard = true,
     maxHeight = '92%',
     contentStyle,
+    bare = false,
 }: Props) {
     const insets = useSafeAreaInsets();
     // Kept mounted through the close animation so it plays out.
@@ -109,8 +119,9 @@ export function SheetModal({
                 if (h > 0 && h !== sheetHeight) setSheetHeight(h);
             }}
             style={[
-                styles.sheet,
-                { paddingBottom: Math.max(insets.bottom, 20), maxHeight },
+                bare
+                    ? null
+                    : [styles.sheet, { paddingBottom: Math.max(insets.bottom, 20), maxHeight }],
                 contentStyle,
                 // Hidden only for the frame between mount and first layout.
                 { opacity: sheetHeight > 0 ? 1 : 0, transform: [{ translateY }] },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Modal, TextInput, Pressable, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Pressable, ScrollView, ActivityIndicator, Alert, useWindowDimensions } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { FitVerseTheme } from '@/constants/FitVerseTheme';
 import { Tokens } from '@/constants/Tokens';
@@ -11,6 +11,7 @@ import * as Contacts from 'expo-contacts';
 import { MemberProfileModal } from './MemberProfileModal';
 import { supabase } from '@/lib/supabase';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 interface SocialDashboardModalProps {
     visible: boolean;
@@ -19,6 +20,7 @@ interface SocialDashboardModalProps {
 
 export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visible, onClose }) => {
     const { user, refreshProfile } = useAuth();
+    const { height: windowHeight } = useWindowDimensions();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
     const [receivedProfiles, setReceivedProfiles] = useState<UserProfile[]>([]);
@@ -300,14 +302,8 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
 
     return (
         <React.Fragment>
-            <Modal
-                visible={visible}
-                animationType="fade"
-                transparent={true}
-                onRequestClose={onClose}
-            >
-                <View style={styles.overlay}>
-                    <View style={styles.container}>
+            <SheetModal visible={visible} onClose={onClose} bare>
+                    <View style={[styles.container, { height: windowHeight * 0.85 }]}>
                         <View style={styles.header}>
                             <Text style={styles.title}>Friends</Text>
                             <Pressable accessibilityLabel="Close" onPress={onClose} style={styles.closeBtn}>
@@ -425,8 +421,7 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
                             )}
                         </ScrollView>
                     </View>
-                </View>
-            </Modal>
+            </SheetModal>
 
             <MemberProfileModal
                 visible={!!selectedMemberId}
@@ -438,17 +433,11 @@ export const SocialDashboardModal: React.FC<SocialDashboardModalProps> = ({ visi
 };
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'flex-end',
-    },
     container: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        height: '85%',
-        padding: 16,
+            padding: 16,
         borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.2)',
     },

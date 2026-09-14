@@ -4,8 +4,8 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Modal,
     ScrollView,
+    useWindowDimensions,
     Pressable,
     Platform,
 } from 'react-native';
@@ -13,6 +13,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useAuth } from '@/features/auth/AuthContext';
 import { Dorm, Gym } from '@/types/user';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 import {
     CAMPUS_GYM_NAMES,
     GYM_PROFILES,
@@ -79,6 +80,7 @@ type TrainingLocationSectionProps = {
 export function TrainingLocationSection({ embedded = false }: TrainingLocationSectionProps = {}) {
     const { user, updateProfile } = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
+    const { height: windowHeight } = useWindowDimensions();
 
     const activeName = user ? selectedGymName(user) : 'Duncan Student Center';
     const atDormHall = user?.dorm ? isUserDormGymLocation(activeName, user.dorm) : false;
@@ -162,15 +164,8 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
             </TouchableOpacity>
             )}
 
-            <Modal
-                visible={modalVisible}
-                transparent
-                animationType="fade"
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.sheetRoot}>
-                    <Pressable style={styles.backdrop} onPress={() => setModalVisible(false)} />
-                    <View style={styles.sheet}>
+            <SheetModal visible={modalVisible} onClose={() => setModalVisible(false)} bare>
+                    <View style={[styles.sheet, { maxHeight: windowHeight * 0.88 }]}>
                         <View style={styles.handle} />
                         <View style={styles.sheetHeader}>
                             <View>
@@ -226,8 +221,7 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
                             <RestDayToggle userId={user.id} embedded />
                         </View>
                     </View>
-                </View>
-            </Modal>
+            </SheetModal>
         </>
     );
 }
@@ -347,18 +341,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    sheetRoot: {
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    backdrop: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: VisualSystem.colors.overlay,
-    },
     sheet: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 24,
@@ -366,8 +348,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderBottomWidth: 0,
         borderColor: VisualSystem.colors.borderSubtle,
-        maxHeight: '88%',
-        paddingBottom: Platform.OS === 'ios' ? 28 : 16,
+            paddingBottom: Platform.OS === 'ios' ? 28 : 16,
     },
     handle: {
         alignSelf: 'center',

@@ -4,13 +4,14 @@ import {
     StyleSheet,
     Text,
     View,
-    Modal,
     ScrollView,
+    useWindowDimensions,
     TouchableOpacity,
 } from 'react-native';
 import { Tokens } from '@/constants/Tokens';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 interface StyledSelectProps {
     label: string;
@@ -31,6 +32,7 @@ export function StyledSelect({
     containerStyle,
 }: StyledSelectProps) {
     const [visible, setVisible] = React.useState(false);
+    const { height: windowHeight } = useWindowDimensions();
     const hasValue = !!value?.trim();
     const displayText = hasValue ? value : (placeholder ?? 'Select...');
 
@@ -59,9 +61,8 @@ export function StyledSelect({
                 </Pressable>
             </View>
 
-            <Modal visible={visible} transparent animationType="fade">
-                <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
-                    <Pressable style={styles.modalSheet} onPress={(e) => e.stopPropagation()}>
+            <SheetModal visible={visible} onClose={() => setVisible(false)} bare>
+                    <View style={[styles.modalSheet, { maxHeight: windowHeight * 0.7 }]}>
                         <View style={styles.modalHeader}>
                             <Text style={styles.modalTitle}>Select {label}</Text>
                             <TouchableOpacity accessibilityLabel="Close" onPress={() => setVisible(false)} hitSlop={12}>
@@ -98,9 +99,8 @@ export function StyledSelect({
                                 );
                             })}
                         </ScrollView>
-                    </Pressable>
-                </Pressable>
-            </Modal>
+                    </View>
+            </SheetModal>
         </>
     );
 }
@@ -147,11 +147,6 @@ const styles = StyleSheet.create({
     chevron: {
         marginLeft: Tokens.spacing.xs,
     },
-    overlay: {
-        flex: 1,
-        backgroundColor: VisualSystem.colors.overlay,
-        justifyContent: 'flex-end',
-    },
     modalSheet: {
         backgroundColor: '#F8FAFC',
         borderTopLeftRadius: Tokens.radius.lg,
@@ -159,8 +154,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: Tokens.spacing.xl,
         paddingTop: Tokens.spacing.xl,
         paddingBottom: Tokens.spacing.xxl,
-        maxHeight: '70%',
-    },
+        },
     modalHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',

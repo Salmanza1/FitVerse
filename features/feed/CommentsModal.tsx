@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Modal,
     View,
     StyleSheet,
     TouchableOpacity,
     FlatList,
     TextInput,
     Alert,
-    KeyboardAvoidingView,
     Platform,
-    ActionSheetIOS
+    ActionSheetIOS,
+    useWindowDimensions
 } from 'react-native';
 import { Text, SecondaryText, GlowView } from '@/components/Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -20,6 +19,7 @@ import { supabase } from '@/lib/supabase';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { VisualSystem } from '@/constants/VisualSystem';
+import { SheetModal } from '@/components/ui/SheetModal';
 
 interface CommentsModalProps {
     visible: boolean;
@@ -36,6 +36,7 @@ const BAD_WORDS = [
 
 export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: CommentsModalProps) {
     const { user } = useAuth();
+    const { height: windowHeight } = useWindowDimensions();
     const [comments, setComments] = useState<SocialComment[]>([]);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(false);
@@ -183,17 +184,8 @@ export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: Co
     };
 
     return (
-        <Modal
-            visible={visible}
-            animationType="fade"
-            transparent={true}
-            onRequestClose={onClose}
-        >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.modalContainer}
-            >
-                <View style={styles.modalContent}>
+        <SheetModal visible={visible} onClose={onClose} bare dismissOnBackdrop={false}>
+                <View style={[styles.modalContent, { height: windowHeight * 0.8 }]}>
                     <View style={styles.header}>
                         <Text style={styles.title}>Comments</Text>
                         <TouchableOpacity accessibilityLabel="Close" onPress={onClose} style={styles.closeBtn}>
@@ -232,23 +224,16 @@ export function CommentsModal({ visible, postId, onClose, onCommentUpdated }: Co
                         </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
-        </Modal>
+        </SheetModal>
     );
 }
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: VisualSystem.colors.overlay,
-    },
     modalContent: {
         backgroundColor: VisualSystem.colors.bgMid,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
-        height: '80%',
-        borderWidth: 1,
+            borderWidth: 1,
         borderColor: 'rgba(212, 175, 55, 0.3)',
         overflow: 'hidden'
     },

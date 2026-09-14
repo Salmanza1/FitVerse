@@ -166,7 +166,13 @@ export function CreatePostModal({ visible, onClose, onPostCreated, initialWorkou
     const canPost = isWorkoutPost || !!image;
 
     return (
-        <SheetModal visible={visible} onClose={handleClose}>
+        <SheetModal
+            visible={visible}
+            onClose={handleClose}
+            // Closing clears the caption and photo, so a stray tap beside
+            // the sheet must not throw a draft away.
+            dismissOnBackdrop={false}
+        >
             <View style={styles.header}>
                 <Pressable accessibilityLabel="Close"
                     onPress={handleClose}
