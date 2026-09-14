@@ -9,6 +9,7 @@ import { setWorkoutActive, updateWorkoutProgress, clearWorkoutActive } from '@/f
 import { resolveExerciseStickyNote, saveExerciseStickyNote } from '@/features/workout/exerciseStickyNotes';
 import { addWorkoutCaloriesToLog } from '@/features/nutrition/NutritionStore';
 import { getLocalDateString } from '@/features/utils/DateUtils';
+import { formatDuration } from '@/features/profile/profileStats';
 import { useAuth } from '@/features/auth/AuthContext';
 import { useColorScheme } from 'react-native';
 import { TrainingSplit, Goal, Gym } from '@/types/user';
@@ -2633,7 +2634,13 @@ export default function GymScreen() {
             return;
         }
         const tick = () => {
-            setTimer(Math.max(0, Math.floor((Date.now() - workoutStartAtRef.current!) / 1000)));
+            // finishWorkout clears this on its first line but then awaits the
+            // save before the view change tears this interval down. Ticking
+            // through that gap measured from zero, i.e. from 1970, and put
+            // something like 487000:00 on screen until the summary appeared.
+            const startedAt = workoutStartAtRef.current;
+            if (!startedAt) return;
+            setTimer(Math.max(0, Math.floor((Date.now() - startedAt) / 1000)));
         };
         tick();
         const interval = setInterval(tick, 1000);
@@ -2730,10 +2737,15 @@ export default function GymScreen() {
         );
     };
 
+    /** `8:05` under an hour, `1:08:05` past it. */
     const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        const safe = Math.max(0, Math.floor(seconds));
+        const hrs = Math.floor(safe / 3600);
+        const mins = Math.floor((safe % 3600) / 60);
+        const secs = safe % 60;
+        const ss = String(secs).padStart(2, '0');
+        // Minutes are only padded once there are hours in front of them.
+        return hrs > 0 ? `${hrs}:${String(mins).padStart(2, '0')}:${ss}` : `${mins}:${ss}`;
     };
 
     // Filtered Exercises
@@ -5614,7 +5626,11 @@ function HistoryListView({
                                     month: 'short',
                                     day: 'numeric',
                                 });
-                                const durationMin = Math.max(1, Math.round(workout.duration / 60));
+                                // Same formatter the summary and the profile
+                                // chart use, so an hour-plus session does not
+                                // read as "95m" here and "1h 35m" there. The
+                                // floor keeps a very short one off "0m".
+                                const durationLabel = formatDuration(Math.max(60, workout.duration || 0));
                                 const volume = Math.round(workout.totalVolume || 0).toLocaleString();
                                 const isExpanded = expandedIds.has(workout.id);
                                 const hasExercises = workout.exercises.length > 0;
@@ -5629,7 +5645,7 @@ function HistoryListView({
                                                 >
                                                     <Text style={styles.historyName} numberOfLines={1}>{workout.name}</Text>
                                                     <Text style={styles.historyMetaLine}>
-                                                        {dateLabel} · {durationMin}m · {workout.exercises.length} ex ·{' '}
+                                                        {dateLabel} · {durationLabel} · {workout.exercises.length} ex ·{' '}
                                                         <Text style={styles.historyVolumeInline}>{volume} lbs</Text>
                                                     </Text>
                                                 </Pressable>
