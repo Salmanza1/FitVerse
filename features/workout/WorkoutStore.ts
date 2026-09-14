@@ -10,6 +10,25 @@ import { Workout } from '../../types/workout';
  *   workout_templates { id, user_id, name, exercises (JSONB), created_at }
  */
 
+/**
+ * The calendar day a workout belongs to, in the user's own timezone.
+ *
+ * `new Date().toISOString()` is UTC, which rolls over to tomorrow every
+ * evening west of Greenwich — an evening session then files under the next
+ * day, drops out of "this week", and the profile reads zero. The day is
+ * taken from local calendar parts instead. A value that is already a bare
+ * 'YYYY-MM-DD' is passed through untouched, since parsing it as a Date would
+ * reintroduce the same UTC shift.
+ */
+const toLocalDay = (value?: string): string => {
+    if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+    const d = value ? new Date(value) : new Date();
+    const base = Number.isNaN(d.getTime()) ? new Date() : d;
+    const month = String(base.getMonth() + 1).padStart(2, '0');
+    const day = String(base.getDate()).padStart(2, '0');
+    return `${base.getFullYear()}-${month}-${day}`;
+};
+
 // Helper: map a Supabase row → Workout
 const mapWorkout = (row: any): Workout | null => {
     if (!row) return null;
@@ -43,7 +62,7 @@ export const saveWorkout = async (workout: Workout, userId: string): Promise<voi
         const { error } = await supabase.from('workout_logs').insert({
             user_id: userId,
             name: workout.name,
-            date: workout.date ? new Date(workout.date).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+            date: toLocalDay(workout.date),
             duration: Math.round(workout.duration),
             notes: workout.notes || null,
             exercises: JSON.stringify(workout.exercises), // Explicitly stringify for JSONB
