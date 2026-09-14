@@ -114,7 +114,6 @@ type RestTimerState = {
     endsAt: number;
     remaining: number;
     total: number;
-    status: 'running' | 'finished';
 };
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeOut, SlideInRight, SlideInUp, Easing } from 'react-native-reanimated';
@@ -2543,7 +2542,7 @@ export default function GymScreen() {
         // The raw setter, not this wrapper.
         _setSetRestTimer(next);
         Notifications.cancelScheduledNotificationAsync(REST_NOTIFICATION_ID).catch(() => {});
-        if (next?.status === 'running' && next.endsAt > Date.now()) {
+        if (next && next.endsAt > Date.now()) {
             startRestActivity({
                 workoutName: activeWorkoutRef.current?.name ?? 'Workout',
                 exerciseName:
@@ -2628,16 +2627,20 @@ export default function GymScreen() {
     }, [activeWorkout?.id]);
 
     useEffect(() => {
-        if (!setRestTimer || setRestTimer.status !== 'running') return;
+        if (!setRestTimer) return;
         const tick = () => {
             _setSetRestTimer((prev) => {
-                if (!prev || prev.status !== 'running') return prev;
+                if (!prev) return prev;
                 const remaining = Math.max(0, Math.ceil((prev.endsAt - Date.now()) / 1000));
                 if (remaining <= 0) {
-                    // The scheduled alert covers being told; this is the
-                    // in-hand confirmation when the app is already open.
+                    // Rest is up: the countdown just goes away and the set
+                    // stays ticked. The scheduled alert covers being told;
+                    // this is the in-hand confirmation when the app is
+                    // already open. Raw setter on purpose — the wrapper
+                    // would cancel that alert, which may still be in flight.
                     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-                    return { ...prev, remaining: 0, status: 'finished' };
+                    endRestActivity();
+                    return null;
                 }
                 if (remaining === prev.remaining) return prev;
                 return { ...prev, remaining };
@@ -2646,7 +2649,7 @@ export default function GymScreen() {
         tick();
         const interval = setInterval(tick, 250);
         return () => clearInterval(interval);
-    }, [setRestTimer?.endsAt, setRestTimer?.status, setRestTimer?.exerciseIdx, setRestTimer?.setIdx]);
+    }, [setRestTimer?.endsAt, setRestTimer?.exerciseIdx, setRestTimer?.setIdx]);
 
     const loadWorkouts = async () => {
         if (!user) return;
@@ -2929,7 +2932,6 @@ export default function GymScreen() {
                     endsAt,
                     remaining: restDuration,
                     total: restDuration,
-                    status: 'running',
                 });
             } else {
                 setSetRestTimer(null);
@@ -4118,7 +4120,6 @@ export default function GymScreen() {
                                                             ? {
                                                                   remaining: setRestTimer.remaining,
                                                                   total: setRestTimer.total,
-                                                                  status: setRestTimer.status,
                                                               }
                                                             : null
                                                     }

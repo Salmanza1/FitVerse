@@ -23,7 +23,6 @@ type Props = {
 export type ActiveSetRestTimer = {
     remaining: number;
     total: number;
-    status: 'running' | 'finished';
 };
 
 export function BetweenSetRestRow({
@@ -78,10 +77,7 @@ export function BetweenSetRestRow({
         return (
             <View style={[styles.bar, styles.barActive]}>
                 <View style={[styles.fill, { width: `${progress}%` }]} />
-                <Text style={styles.barTextActive}>
-                    REST {formatRestSeconds(activeTimer.remaining)}
-                    {activeTimer.status === 'finished' ? ' · Go!' : ''}
-                </Text>
+                <Text style={styles.barTextActive}>REST {formatRestSeconds(activeTimer.remaining)}</Text>
             </View>
         );
     }
