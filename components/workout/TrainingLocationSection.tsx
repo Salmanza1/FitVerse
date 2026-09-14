@@ -168,7 +168,7 @@ export function TrainingLocationSection({ embedded = false }: TrainingLocationSe
                     <View style={[styles.sheet, { maxHeight: windowHeight * 0.88 }]}>
                         <View style={styles.handle} />
                         <View style={styles.sheetHeader}>
-                            <View>
+                            <View style={styles.sheetHeaderText}>
                                 <Text style={styles.sheetTitle}>Training location</Text>
                                 <Text style={styles.sheetSubtitle}>
                                     Equipment plans match where you train
@@ -358,6 +358,15 @@ const styles = StyleSheet.create({
         backgroundColor: VisualSystem.colors.bgDeep,
         marginTop: 8,
         marginBottom: 8,
+    },
+    /**
+     * Text column of a row. Without flex it sizes to the natural width of its
+     * longest line and runs past the row, where it is clipped; minWidth lets
+     * it shrink below that width so the text wraps or ellipsises instead.
+     */
+    sheetHeaderText: {
+        flex: 1,
+        minWidth: 0,
     },
     sheetHeader: {
         flexDirection: 'row',

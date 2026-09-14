@@ -77,7 +77,7 @@ function MVPCard({ userName }: { userName: string }) {
                 <View style={styles.mvpAvatar}>
                     <RNText style={styles.mvpAvatarText}>{userName.charAt(0).toUpperCase()}</RNText>
                 </View>
-                <View>
+                <View style={styles.mvpText}>
                     <RNText style={styles.mvpName}>{userName}</RNText>
                     <RNText style={styles.mvpStats}>Every workout you log lifts your dorm — thanks for showing up.</RNText>
                 </View>
@@ -460,6 +460,16 @@ const styles = StyleSheet.create({
         color: VisualSystem.colors.textPrimary,
         fontWeight: '700',
         fontSize: 17,
+    },
+    /**
+     * The text column of a row. Without this the column sizes to the natural
+     * width of its longest line and runs off the card, where it is clipped —
+     * flex lets it take the space left beside the avatar, and minWidth lets
+     * it shrink below that natural width so the sentence wraps.
+     */
+    mvpText: {
+        flex: 1,
+        minWidth: 0,
     },
     mvpName: {
         color: VisualSystem.colors.textPrimary,

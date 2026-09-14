@@ -698,7 +698,7 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                                 color={activeChat.type === 'dm' ? statusColor(otherStatus) : '#D4AF37'}
                             />
                         </View>
-                        <View>
+                        <View style={styles.headerText}>
                             <Text
                                 style={[styles.headerTitle, { color: dmTitleColor }]}
                                 numberOfLines={1}
@@ -1122,6 +1122,15 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         borderWidth: 1.5,
         borderColor: VisualSystem.colors.borderStrong,
+    },
+    /**
+     * Text column of a row. Without flex it sizes to the natural width of its
+     * longest line and runs past the row, where it is clipped; minWidth lets
+     * it shrink below that width so the text wraps or ellipsises instead.
+     */
+    headerText: {
+        flex: 1,
+        minWidth: 0,
     },
     headerTitle: {
         color: VisualSystem.colors.textPrimary,

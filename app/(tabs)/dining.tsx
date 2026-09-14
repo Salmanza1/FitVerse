@@ -593,7 +593,7 @@ export default function NutritionDashboard() {
             <Modal visible={modalVisible} animationType="slide" presentationStyle="pageSheet">
                  <View style={styles.modalBg}>
                      <View style={styles.modalHeader}>
-                         <View>
+                         <View style={styles.rowTextColumn}>
                              <Text style={styles.modalTitle}>Add {selectedMeal}</Text>
                              <Text style={styles.modalSubtitle}>Today's Fresh Selection</Text>
                          </View>
@@ -893,7 +893,7 @@ const MealSection = ({
                         <View style={[styles.mealIconCircle, isActiveMeal && styles.mealIconCircleActive]}>
                             <FontAwesome name={MEAL_ICONS[type] as any} size={11} color={isActiveMeal ? '#D4AF37' : 'rgba(255,255,255,0.5)'} />
                         </View>
-                        <View>
+                        <View style={styles.rowTextColumn}>
                             <Text style={[styles.mealSectionTitle, isActiveMeal && styles.mealSectionTitleActive]}>{type}</Text>
                             {!isExpanded && hasItems && (
                                 <Text style={styles.mealCollapsedHint}>
@@ -1184,6 +1184,15 @@ const styles = StyleSheet.create({
     portionSaveBtn: { backgroundColor: VisualSystem.colors.gold, borderRadius: 10, paddingHorizontal: 16, paddingVertical: 8 },
     portionSaveText: { color: VisualSystem.colors.textPrimary, fontWeight: '800', fontSize: 11 },
     modalBg: { flex: 1, backgroundColor: VisualSystem.colors.bgMid, paddingTop: 16 },
+    /**
+     * Text column of a row. Without flex it sizes to the natural width of its
+     * longest line and runs past the row, where it is clipped; minWidth lets
+     * it shrink below that width so the text wraps or ellipsises instead.
+     */
+    rowTextColumn: {
+        flex: 1,
+        minWidth: 0,
+    },
     modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingBottom: 16, borderBottomWidth: 1, borderBottomColor: VisualSystem.colors.borderSubtle },
     modalTitle: { color: VisualSystem.colors.textPrimary, fontSize: 24, fontWeight: '800', letterSpacing: 0.2 },
     modalSubtitle: { color: VisualSystem.colors.textTertiary, fontSize: 11, fontWeight: '700', marginTop: 4 },
