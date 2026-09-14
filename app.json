@@ -45,7 +45,14 @@
       "expo-splash-screen",
       "expo-status-bar",
       "react-native-bottom-tabs",
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/sounds/rest-complete.wav"
+          ]
+        }
+      ],
       "@bacons/apple-targets"
     ],
     "experiments": {

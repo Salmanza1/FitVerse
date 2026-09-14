@@ -2555,7 +2555,9 @@ export default function GymScreen() {
                 content: {
                     title: 'Rest complete',
                     body: 'Time for your next set.',
-                    sound: true,
+                    // Bundled by the expo-notifications plugin in app.json.
+                    // Named, not `true`, or iOS plays its own default tone.
+                    sound: 'rest-complete.wav',
                 },
                 trigger: {
                     type: Notifications.SchedulableTriggerInputTypes.DATE,
