@@ -65,6 +65,8 @@ export interface ScannedItem {
     note: string;
     /** True when tied to a dish on today's dining hall menu. */
     menuMatch: boolean;
+    /** True when the numbers were read off a Nutrition Facts panel. */
+    fromLabel: boolean;
 }
 
 export interface MealScanResult {
@@ -142,7 +144,7 @@ const SYSTEM_PROMPT = `You are a registered dietitian and a technical food-image
 
 Work through the meal in this order.
 
-1. Identify every distinct food and drink. Count discrete pieces (slices, nuggets, eggs). Ignore packaging, utensils and anything that is not food.
+1. Identify every distinct food and drink. Count discrete pieces (slices, nuggets, eggs). Ignore utensils and background clutter. Read packaging rather than ignoring it — a product name or a Nutrition Facts panel is evidence, and the label rules below take over when one is legible.
 
 2. Estimate the edible portion of each item in grams. Anchor to visible references: a dinner plate is about 26-27 cm across, a side plate about 20 cm, a standard fork about 18 cm, a cafeteria tray about 35 x 45 cm, a mug about 300 ml, a cereal or rice bowl about 400-500 ml when full. Judge depth and heaping: bowls and piles are the most under-estimated shapes. Any quantity stated in the notes is authoritative.
 
@@ -154,11 +156,21 @@ Work through the meal in this order.
 
 6. Ask at most two short questions whose answers would most change the numbers — cooking fat, dressing or sauce, meat cut, dairy fat, piece count. Never ask about something the notes already answer. Ask nothing if the estimate is already high-confidence.
 
-When a list of dishes served at the venue today is provided, match an item to a listed dish whenever the photo plausibly shows it, use that dish's per-serving nutrition scaled to the portion you see, and mark the item as a menu match. Do not force a match onto food that is clearly something else.
+NUTRITION LABELS AND PACKAGING
+
+A readable Nutrition Facts panel is the most accurate input there is. When the photo shows one, read it rather than estimating, and mark those items as coming from a label.
+
+- Take the serving size, servings per container, calories, protein, carbohydrate and fat straight off the panel. Never re-estimate a number the label states, even if it looks unusual.
+- Use the product name from the packaging as the item name when it is legible (e.g. "Soy & scallion noodle bowl"); otherwise describe the food plainly.
+- Then work out how much was actually eaten, which the panel does not tell you. Unless the notes say otherwise, assume a single-serve container — a noodle cup, a yoghurt pot, a canned drink, a snack bar, a ready meal for one — was finished, so multiply the per-serving figures by the servings per container. If the container plainly holds several servings and the notes do not say how much was eaten, assume one serving and record that in the assumptions.
+- Set an item's confidence to high when its numbers come from a label. If part of the panel is cut off or unreadable, estimate only the missing figures and say which ones in the assumptions.
+- A label and food may both be in shot. Do not double count: log the food once, using the label's numbers.
+
+When a list of dishes served at the venue today is provided, match an item to a listed dish whenever the photo plausibly shows it, use that dish's per-serving nutrition scaled to the portion you see, and mark the item as a menu match. Do not force a match onto food that is clearly something else. A label always beats a menu match.
 
 Keep item names short and plain (e.g. "Grilled chicken breast", "Brown rice", "Caesar dressing"). The meal name is at most five words.
 
-If the image does not show food or drink, set is_food to false and return no items.`;
+Set is_food to false only when there is nothing loggable in the photo at all — no food, no drink, and no nutrition panel or packaging you can read.`;
 
 const RESPONSE_SCHEMA = {
     type: 'object',
@@ -183,6 +195,7 @@ const RESPONSE_SCHEMA = {
                     'confidence',
                     'note',
                     'menu_match',
+                    'from_label',
                 ],
                 properties: {
                     name: { type: 'string' },
@@ -195,6 +208,10 @@ const RESPONSE_SCHEMA = {
                     confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
                     note: { type: 'string', description: 'The one assumption that most affects this item, or empty' },
                     menu_match: { type: 'boolean' },
+                    from_label: {
+                        type: 'boolean',
+                        description: 'Figures read off a Nutrition Facts panel rather than estimated',
+                    },
                 },
             },
         },
@@ -343,6 +360,7 @@ export async function scanMeal(input: MealScanInput): Promise<MealScanResult> {
             confidence: confidenceOf(it?.confidence),
             note: String(it?.note || '').trim(),
             menuMatch: it?.menu_match === true,
+            fromLabel: it?.from_label === true,
         }))
         .filter((it: ScannedItem) => it.calories > 0 || it.protein > 0 || it.carbs > 0 || it.fat > 0);
 
@@ -393,7 +411,7 @@ export function scannedItemToFood(item: ScannedItem, scale = 1): FoodItem {
         servingSize: portion || (grams > 0 ? `~${grams} g` : undefined),
         baseUnit: 'serving',
         baseAmount: 1,
-        tags: ['AI Scan'],
+        tags: [item.fromLabel ? 'Label' : 'AI Scan'],
         category: 'Meal Scan',
     };
 }

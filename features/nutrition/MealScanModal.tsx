@@ -198,7 +198,7 @@ export function MealScanModal({ visible, onClose, meal, location, menu, today, o
                 setStage(result ? 'result' : 'capture');
                 setError(
                     e instanceof NotFoodError
-                        ? 'No food was found in that photo. Try again with the plate in frame.'
+                        ? 'Nothing to log was found in that photo. Try the plate in frame, or the nutrition label straight on.'
                         : e?.message || 'The analysis did not go through. Check your connection and try again.'
                 );
                 Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -287,8 +287,10 @@ export function MealScanModal({ visible, onClose, meal, location, menu, today, o
                     <View style={styles.cameraCircle}>
                         <Ionicons name="camera" size={26} color={C.navy} />
                     </View>
-                    <Text style={styles.photoEmptyTitle}>Photograph your plate</Text>
-                    <Text style={styles.photoEmptyHint}>Straight down, good light, the whole plate in frame</Text>
+                    <Text style={styles.photoEmptyTitle}>Photograph your meal</Text>
+                    <Text style={styles.photoEmptyHint}>
+                        Straight down, good light, the whole plate in frame — or shoot the nutrition label for exact numbers
+                    </Text>
                 </>
             )}
         </Pressable>
@@ -448,7 +450,13 @@ function ResultBody({
 }: ResultBodyProps) {
     const macroKcal = totals.protein * 4 + totals.carbs * 4 + totals.fat * 9;
     const share = (g: number, perG: number) => (macroKcal > 0 ? (g * perG) / macroKcal : 0);
+    const anyLabel = items.some((it) => it.fromLabel);
     const anyMenu = items.some((it) => it.menuMatch);
+    const itemsLegend = anyLabel
+        ? 'Label = read off the packet'
+        : anyMenu
+          ? 'Menu = on today’s hall menu'
+          : undefined;
 
     return (
         <>
@@ -481,7 +489,7 @@ function ResultBody({
                 </View>
             </View>
 
-            <Section title="Items" trailing={anyMenu ? 'Menu = on today’s hall menu' : undefined}>
+            <Section title="Items" trailing={itemsLegend}>
                 <View style={styles.list}>
                     {items.map((it, i) => (
                         <SwipeToDeleteRow key={it.id} enabled deleteLabel="Remove" onDelete={() => onRemove(it.id)}>
@@ -571,11 +579,15 @@ function ItemRow({
                     <Text style={styles.itemName} numberOfLines={1}>
                         {item.name}
                     </Text>
-                    {item.menuMatch && (
+                    {item.fromLabel ? (
+                        <View style={styles.labelTag}>
+                            <Text style={styles.labelTagText}>Label</Text>
+                        </View>
+                    ) : item.menuMatch ? (
                         <View style={styles.menuTag}>
                             <Text style={styles.menuTagText}>Menu</Text>
                         </View>
-                    )}
+                    ) : null}
                 </View>
                 {portion ? (
                     <Text style={styles.itemPortion} numberOfLines={1}>
@@ -908,6 +920,8 @@ const styles = StyleSheet.create({
     itemMacros: { color: C.textTertiary, fontSize: T.caption, marginTop: 3 },
     menuTag: { backgroundColor: C.goldMuted, borderRadius: VisualSystem.radius.xs, paddingHorizontal: 6, paddingVertical: 2 },
     menuTagText: { color: C.goldText, fontSize: 10, fontWeight: VisualSystem.weight.semibold },
+    labelTag: { backgroundColor: C.successSoft, borderRadius: VisualSystem.radius.xs, paddingHorizontal: 6, paddingVertical: 2 },
+    labelTagText: { color: C.success, fontSize: 10, fontWeight: VisualSystem.weight.semibold },
     itemSide: { alignItems: 'flex-end', gap: 6 },
     itemKcal: { color: C.textPrimary, fontSize: T.emphasis, fontWeight: VisualSystem.weight.semibold, fontVariant: ['tabular-nums'] },
     stepper: {
