@@ -42,6 +42,26 @@ const START_CTA_SIZE = Math.round(
 const REST_NOTIFICATION_ID = 'fitverse-rest-complete';
 
 /**
+ * The suffix a custom exercise's name should carry, given what was picked in
+ * the Category dropdown.
+ *
+ * The dropdown says "Machine / Other" and "Reps Only", which read badly inside
+ * a name. The library only ever uses Barbell, Dumbbell, Cable, Bodyweight,
+ * Machine and Cardio, so map onto that vocabulary and a custom exercise sits
+ * among the built-in ones without looking out of place.
+ */
+const EQUIPMENT_SUFFIX: Record<string, string> = {
+    'Barbell': 'Barbell',
+    'Dumbbell': 'Dumbbell',
+    'Machine / Other': 'Machine',
+    'Weighted Bodyweight': 'Bodyweight',
+    'Assisted Bodyweight': 'Assisted',
+    'Reps Only': 'Bodyweight',
+    'Cardio': 'Cardio',
+    'Duration': 'Duration',
+};
+
+/**
  * Headings for the two input columns. `second` is null for a movement with
  * only one number to record, and the first column then takes the whole width.
  */
@@ -3179,29 +3199,39 @@ export default function GymScreen() {
         }
     };
 
+
     const saveCustomExercise = async () => {
-        if (!newExName || !user) return;
-        
+        const typed = newExName.trim();
+        if (!typed || !user) return;
+
+        // The library names every movement "Bench Press (Barbell)", and the
+        // picker sorts and searches on that, so a custom one has to carry its
+        // equipment the same way. Anyone who typed it themselves keeps theirs.
+        const suffix = EQUIPMENT_SUFFIX[newExType] ?? newExType;
+        const name = /\([^)]+\)\s*$/.test(typed) ? typed : `${typed} (${suffix})`;
+
         const newEx = {
             id: 'custom_' + Date.now(),
-            name: newExName.trim(),
+            name,
             category: newExBodyPart,
             type: 'weight_reps',
             primaryMuscles: [newExBodyPart.toLowerCase()]
         };
 
-        const updatedCustom = [...(user.customExercises || []), newEx];
-        
         await updateProfile({
-            customExercises: updatedCustom
+            customExercises: [...(user.customExercises || []), newEx],
         });
 
-        // Close and clear the Create Modal, keeping the user in the Add Exercise List 
-        // to find their newly sorted exercise alphabetically as requested.
         setCreateExerciseVisible(false);
         setNewExName('');
         setNewExBodyPart('Arms');
         setNewExType('Barbell');
+
+        // Creating one mid-workout means you want to do it now, so it goes
+        // into the session rather than leaving you to find it in the list.
+        if (activeWorkout) {
+            await addExerciseToActive(newEx as typeof EXERCISE_LIBRARY[0]);
+        }
     };
 
     const dismissFinishedWorkout = () => {
@@ -4774,6 +4804,11 @@ export default function GymScreen() {
                             </>
                         )}
                     </View>
+
+                    {/* Nested, not a sibling: iOS will not present a second
+                        modal alongside this full-screen one, which is why the
+                        New button looked dead until the picker was closed. */}
+                    {renderCreateNewExerciseModal()}
                 </View>
             </Modal>
         );
@@ -4921,7 +4956,6 @@ export default function GymScreen() {
             {renderPlateCalculatorModal()}
             {renderWarmupCalculatorModal()}
             {renderAddExerciseModal()}
-            {renderCreateNewExerciseModal()}
 
             <ExerciseLibraryPanel
                 visible={libraryBrowseVisible}
