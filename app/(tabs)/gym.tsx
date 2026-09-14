@@ -4008,7 +4008,6 @@ export default function GymScreen() {
                                         setRestTimer?.exerciseIdx === exIdx && setRestTimer?.setIdx === setIdx;
                                     const isEditingRest =
                                         editingRest?.exIdx === exIdx && editingRest?.setIdx === setIdx;
-                                    const restSeconds = getRestAfterSetSeconds(ex, set);
                                     // A superset runs straight into its paired
                                     // movement, so rest is owed only after the
                                     // last one — matching what toggleSet does.
