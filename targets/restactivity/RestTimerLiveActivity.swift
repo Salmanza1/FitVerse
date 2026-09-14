@@ -28,6 +28,42 @@ struct RestTimerAttributes: ActivityAttributes {
 private let goldVivid = Color(red: 0.89, green: 0.63, blue: 0.03)
 private let navy = Color(red: 0.05, green: 0.14, blue: 0.25)
 
+/// The ticking m:ss.
+///
+/// `showsHours: false` matters: with it on (the default) the timer text lays
+/// itself out wide enough for `0:00:00`, which does not fit the Dynamic
+/// Island's compact and trailing slots and gets clipped to an ellipsis. Rests
+/// are never an hour long. The scale factor is a backstop so a long rest
+/// shrinks rather than clips.
+private struct Countdown: View {
+    let state: RestTimerAttributes.ContentState
+    var font: Font
+
+    var body: some View {
+        Text(timerInterval: state.startedAt...state.endsAt, countsDown: true, showsHours: false)
+            .font(font.monospacedDigit())
+            .foregroundColor(goldVivid)
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+    }
+}
+
+/// Full at the start of the rest, drains to empty as it ends. The system
+/// animates it, so it keeps moving while the app is suspended.
+private struct RestBar: View {
+    let state: RestTimerAttributes.ContentState
+
+    var body: some View {
+        ProgressView(timerInterval: state.startedAt...state.endsAt, countsDown: true) {
+            EmptyView()
+        } currentValueLabel: {
+            EmptyView()
+        }
+        .progressViewStyle(.linear)
+        .tint(goldVivid)
+    }
+}
+
 struct RestTimerLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: RestTimerAttributes.self) { context in
@@ -48,9 +84,7 @@ struct RestTimerLiveActivity: Widget {
 
                 Spacer()
 
-                Text(timerInterval: context.state.startedAt...context.state.endsAt, countsDown: true)
-                    .font(.system(.title, design: .rounded).monospacedDigit())
-                    .foregroundColor(goldVivid)
+                Countdown(state: context.state, font: .system(.title, design: .rounded))
                     .frame(maxWidth: 90, alignment: .trailing)
             }
             .padding()
@@ -60,39 +94,41 @@ struct RestTimerLiveActivity: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Image(systemName: "timer")
-                        .font(.title2)
-                        .foregroundColor(goldVivid)
+                    HStack(spacing: 6) {
+                        Image(systemName: "timer")
+                            .foregroundColor(goldVivid)
+                        Text("Resting")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(timerInterval: context.state.startedAt...context.state.endsAt, countsDown: true)
-                        .font(.system(.title2, design: .rounded).monospacedDigit())
-                        .foregroundColor(goldVivid)
-                        .frame(maxWidth: 80)
+                    Countdown(state: context.state, font: .system(.title2, design: .rounded).weight(.semibold))
+                        .frame(maxWidth: 76, alignment: .trailing)
                 }
+                // Bottom spans the full width, so the names get room and the
+                // bar can run edge to edge.
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text(context.state.exerciseName)
                             .font(.headline)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                        RestBar(state: context.state)
                         Text(context.attributes.workoutName)
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             } compactLeading: {
-                Image(systemName: "timer")
-                    .foregroundColor(goldVivid)
+                EmptyView()
             } compactTrailing: {
-                Text(timerInterval: context.state.startedAt...context.state.endsAt, countsDown: true)
-                    .monospacedDigit()
-                    .foregroundColor(goldVivid)
-                    .frame(maxWidth: 44)
+                Countdown(state: context.state, font: .system(.body, design: .rounded).weight(.semibold))
+                    .frame(maxWidth: 56)
             } minimal: {
-                Image(systemName: "timer")
-                    .foregroundColor(goldVivid)
+                Countdown(state: context.state, font: .system(size: 11, weight: .semibold, design: .rounded))
+                    .frame(maxWidth: 34)
             }
             .keylineTint(goldVivid)
         }
