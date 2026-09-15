@@ -12,6 +12,7 @@ import { NotreDameFactLoading } from '@/components/ui/NotreDameFactLoading';
 import { PersonalizingAccountLoading } from '@/components/ui/PersonalizingAccountLoading';
 import { ModernAppBackground } from '@/components/ui/ModernAppBackground';
 import { AppWebFrame } from '@/components/ui/AppWebFrame';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { sanitizeStoredRoute, resetAppHomeRoute, LAST_TAB_STORAGE_KEY } from '@/lib/navigation';
 import { WEB_BG, webRoot, webStackContent } from '@/constants/webLayout';
@@ -185,6 +186,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={AppTheme}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={webRoot}>
         <View style={styles.backgroundLayer} pointerEvents="none">
           <ModernAppBackground />
@@ -210,6 +212,7 @@ function RootLayoutNav() {
           </AppWebFrame>
         </View>
       </View>
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }

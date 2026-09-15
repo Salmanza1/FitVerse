@@ -253,6 +253,47 @@ export const getLatestSetsForExercise = async (userId: string, exerciseId: strin
     }
 };
 
+/**
+ * The last time this exercise was performed, sets and rest together.
+ *
+ * getLatestSetsForExercise returns only the sets, so the rest a user had
+ * dialled in — both the per-set gaps and the exercise default — was thrown
+ * away and every session started back at two minutes.
+ */
+export const getLatestExerciseSnapshot = async (
+    userId: string,
+    exerciseId: string,
+    exerciseName: string
+): Promise<{ sets: any[]; restTimers?: { work: number; warmup: number; dropset: number } } | null> => {
+    try {
+        const { data, error } = await supabase
+            .from('workout_logs')
+            .select('*')
+            .eq('user_id', userId)
+            .order('date', { ascending: false })
+            .order('created_at', { ascending: false })
+            .limit(10);
+
+        if (error) throw error;
+
+        for (const log of data ?? []) {
+            const exercises = Array.isArray(log.exercises)
+                ? log.exercises
+                : log.exercises
+                  ? JSON.parse(log.exercises)
+                  : [];
+            const match = exercises.find((ex: any) => ex.id === exerciseId || ex.name === exerciseName);
+            if (match?.sets) {
+                return { sets: match.sets, restTimers: match.restTimers };
+            }
+        }
+        return null;
+    } catch (e) {
+        console.error('WorkoutStore.getLatestExerciseSnapshot error:', e);
+        return null;
+    }
+};
+
 // ─── Templates ────────────────────────────────────────────────────────────────
 
 /** Save a workout as a reusable template */

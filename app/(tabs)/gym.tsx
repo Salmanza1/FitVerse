@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { StyleSheet, TouchableOpacity, Pressable, KeyboardAvoidingView, Platform, ScrollView, TextInput, Alert, Modal, FlatList, LayoutAnimation, UIManager, Image, PanResponder, ActivityIndicator, InteractionManager, Dimensions, Animated as RNAnimated } from 'react-native';
+import { StyleSheet, TouchableOpacity, Pressable, KeyboardAvoidingView, Platform, ScrollView, TextInput, Alert, Modal, FlatList, LayoutAnimation, UIManager, Image, ActivityIndicator, InteractionManager, Dimensions, Animated as RNAnimated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as Notifications from 'expo-notifications';
 import { Exercise, Set as WorkoutSet, Workout, SetType, ExerciseType } from '@/types/workout';
-import { getTemplates, saveWorkout, getWorkoutHistory, saveTemplate, deleteTemplate, getLastWorkoutByName, getRecentWorkouts, getWorkoutHistoryCount, getLatestSetsForExercise, getExerciseProgress, getPerformedExercises } from '@/features/workout/WorkoutStore';
+import { getTemplates, saveWorkout, getWorkoutHistory, saveTemplate, deleteTemplate, getLastWorkoutByName, getRecentWorkouts, getWorkoutHistoryCount, getLatestSetsForExercise, getLatestExerciseSnapshot, getExerciseProgress, getPerformedExercises } from '@/features/workout/WorkoutStore';
 import { setWorkoutActive, updateWorkoutProgress, clearWorkoutActive } from '@/features/workout/WorkoutPresenceStore';
 import { resolveExerciseStickyNote, saveExerciseStickyNote } from '@/features/workout/exerciseStickyNotes';
 import { addWorkoutCaloriesToLog } from '@/features/nutrition/NutritionStore';
@@ -3162,12 +3162,14 @@ export default function GymScreen() {
                 { id: Math.random().toString(), reps: 0, weight: 0, completed: false, type: 'normal' },
             ];
             let stickyNote = '';
+            let restTimers: Exercise['restTimers'];
 
             try {
-                const [prevSets, note] = await Promise.all([
-                    getLatestSetsForExercise(user.id, exerciseId, exerciseName),
+                const [snapshot, note] = await Promise.all([
+                    getLatestExerciseSnapshot(user.id, exerciseId, exerciseName),
                     resolveExerciseStickyNote(user.id, exerciseId, exerciseName),
                 ]);
+                const prevSets = snapshot?.sets;
                 if (prevSets && prevSets.length > 0) {
                     initialSets = prevSets.slice(0, 4).map((ps) => ({
                         id: Math.random().toString(),
@@ -3176,8 +3178,14 @@ export default function GymScreen() {
                         completed: false,
                         type: ps.type || 'normal',
                         previousPerformance: `${ps.weight} x ${ps.reps}`,
+                        // Rest comes back with the set it belongs to, so a gap
+                        // dialled in last time is not retyped every session.
+                        ...(ps.restAfterSeconds != null
+                            ? { restAfterSeconds: ps.restAfterSeconds }
+                            : {}),
                     }));
                 }
+                restTimers = snapshot?.restTimers;
                 stickyNote = note;
             } catch (historyErr) {
                 console.warn('[gym] exercise history lookup failed:', historyErr);
@@ -3192,6 +3200,9 @@ export default function GymScreen() {
                 secondaryMuscles: exercise.secondaryMuscles || [],
                 sets: initialSets,
                 stickyNote,
+                // The exercise-level default follows too, or every session
+                // would start back at two minutes.
+                ...(restTimers ? { restTimers } : {}),
             };
 
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -3794,8 +3805,18 @@ export default function GymScreen() {
 
     const updateExerciseRestTimers = (idx: number, timers: { work: number; warmup: number; dropset: number }) => {
         if (!activeWorkout) return;
-        const newExercises = [...activeWorkout.exercises];
-        newExercises[idx].restTimers = timers;
+        const newExercises = activeWorkout.exercises.map((ex, i) => {
+            if (i !== idx) return ex;
+            return {
+                ...ex,
+                restTimers: timers,
+                // A per-set value always beat the exercise one, so once any
+                // set had been tapped this control appeared to do nothing.
+                // Setting rest for the whole exercise now means exactly that,
+                // and the per-set rows go back to following it.
+                sets: ex.sets.map(({ restAfterSeconds, ...rest }) => rest),
+            };
+        });
         setActiveWorkout({ ...activeWorkout, exercises: newExercises });
         setRestModalExerciseIdx(null);
     };
@@ -5030,7 +5051,7 @@ function RestTimerModal({
                 <View style={styles.restModalContent}>
                     <Text style={styles.restModalTitle}>Update Rest Timers</Text>
                     <SecondaryText style={styles.restModalSub}>
-                        Sets default rest for this exercise in this workout. Tap rest between sets to customize one gap. Per-set edits are kept unless you change them.
+                        Sets the rest for every set of this exercise, replacing any you changed one at a time. Tap the rest under a set to adjust that gap on its own.
                     </SecondaryText>
 
                     <View style={styles.restInputRow}>

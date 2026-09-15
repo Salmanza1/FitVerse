@@ -1,5 +1,13 @@
-import React, { useMemo, useRef } from 'react';
-import { Animated, PanResponder, StyleSheet, View, Text } from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import Animated, {
+    runOnJS,
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+    withTiming,
+} from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { VisualSystem } from '@/constants/VisualSystem';
 
@@ -13,20 +21,28 @@ type Props = {
     contentBackgroundColor?: string;
 };
 
-/** How far the row has to travel before letting go deletes it. */
-const SWIPE_DELETE_THRESHOLD = 56;
-/** A quick flick counts even if it did not travel the full distance. */
-const FLING_VELOCITY = 0.4;
+/** How far the row must travel before letting go deletes it. */
+const DELETE_DISTANCE = 56;
+/** A flick counts even when it has not travelled that far. */
+const FLING_VELOCITY = 500;
 const FLING_MIN_DISTANCE = 28;
-/** Movement below this is a tap or the start of a scroll, not a swipe. */
-const CLAIM_DISTANCE = 6;
 /**
- * How much more horizontal than vertical the movement has to be before the row
- * takes the gesture. The list scrolls vertically, so a drag that is at all
- * ambiguous has to stay with the scroll view.
+ * Sideways movement that activates the swipe, and vertical movement that
+ * abandons it. Together these hand a vertical drag to the list and a
+ * horizontal one to the row, decided natively before either starts moving.
  */
-const CLAIM_RATIO = 1.5;
+const ACTIVATE_X = 12;
+const FAIL_Y = 14;
 
+/**
+ * A row that is deleted by swiping it aside.
+ *
+ * This used to be a PanResponder, which lost to the scrolling list it sits in:
+ * the JS responder system only offers the gesture to the row after the native
+ * scroll view has declined it, so a swipe scrolled the page, blurred whichever
+ * weight or reps field was focused, and sprang the row back. Gesture Handler
+ * recognises the direction natively and the two never both claim the drag.
+ */
 export function SwipeToDeleteRow({
     children,
     onDelete,
@@ -34,79 +50,54 @@ export function SwipeToDeleteRow({
     deleteLabel = 'Delete set',
     contentBackgroundColor = 'transparent',
 }: Props) {
-    const translateX = useRef(new Animated.Value(0)).current;
+    const translateX = useSharedValue(0);
+    const remove = useCallback(() => onDelete(), [onDelete]);
 
-    const panResponder = useMemo(
-        () =>
-            PanResponder.create({
-                /**
-                 * Claimed on the capture phase so the row wins the gesture
-                 * from the scrolling list rather than waiting for it to
-                 * decline. Without this the swipe only registered once the
-                 * list had already decided the drag was not a scroll, which
-                 * is what made deleting a set feel like a fight.
-                 */
-                onMoveShouldSetPanResponderCapture: (_, gesture) => {
-                    if (!enabled) return false;
-                    const { dx, dy } = gesture;
-                    return Math.abs(dx) > CLAIM_DISTANCE && Math.abs(dx) > Math.abs(dy) * CLAIM_RATIO;
-                },
-                onMoveShouldSetPanResponder: (_, gesture) => {
-                    if (!enabled) return false;
-                    const { dx, dy } = gesture;
-                    return Math.abs(dx) > CLAIM_DISTANCE && Math.abs(dx) > Math.abs(dy) * CLAIM_RATIO;
-                },
-                onPanResponderMove: (_, gesture) => {
-                    translateX.setValue(gesture.dx);
-                },
-                onPanResponderRelease: (_, gesture) => {
-                    const far = Math.abs(gesture.dx) >= SWIPE_DELETE_THRESHOLD;
-                    const flung =
-                        Math.abs(gesture.vx) >= FLING_VELOCITY &&
-                        Math.abs(gesture.dx) >= FLING_MIN_DISTANCE;
-                    if (far || flung) {
-                        const direction = gesture.dx > 0 ? 1 : -1;
-                        Animated.timing(translateX, {
-                            toValue: direction * 420,
-                            duration: 180,
-                            useNativeDriver: true,
-                        }).start(() => {
-                            onDelete();
-                            translateX.setValue(0);
-                        });
-                        return;
-                    }
-                    Animated.spring(translateX, {
-                        toValue: 0,
-                        useNativeDriver: true,
-                        friction: 8,
-                    }).start();
-                },
-                onPanResponderTerminate: () => {
-                    Animated.spring(translateX, { toValue: 0, useNativeDriver: true }).start();
-                },
-            }),
-        [enabled, onDelete, translateX]
-    );
+    const pan = Gesture.Pan()
+        .enabled(enabled)
+        .activeOffsetX([-ACTIVATE_X, ACTIVATE_X])
+        .failOffsetY([-FAIL_Y, FAIL_Y])
+        .onUpdate((e) => {
+            translateX.value = e.translationX;
+        })
+        .onEnd((e) => {
+            const travelled = Math.abs(e.translationX);
+            const flung = Math.abs(e.velocityX) >= FLING_VELOCITY && travelled >= FLING_MIN_DISTANCE;
 
-    const deleteOpacity = translateX.interpolate({
-        inputRange: [-100, -40, 0, 40, 100],
-        outputRange: [1, 0.5, 0, 0.5, 1],
-        extrapolate: 'clamp',
-    });
+            if (travelled >= DELETE_DISTANCE || flung) {
+                const direction = e.translationX > 0 ? 1 : -1;
+                translateX.value = withTiming(direction * 420, { duration: 160 }, (finished) => {
+                    if (!finished) return;
+                    runOnJS(remove)();
+                    translateX.value = 0;
+                });
+                return;
+            }
+
+            translateX.value = withSpring(0, { damping: 18, stiffness: 180 });
+        });
+
+    const contentStyle = useAnimatedStyle(() => ({
+        transform: [{ translateX: translateX.value }],
+    }));
+
+    // The backdrop shows through in step with the row, so the action is
+    // legible before the swipe is far enough to commit to it.
+    const backdropStyle = useAnimatedStyle(() => ({
+        opacity: Math.min(1, Math.abs(translateX.value) / DELETE_DISTANCE),
+    }));
 
     return (
         <View style={styles.wrapper}>
-            <Animated.View style={[styles.deleteBg, { opacity: deleteOpacity }]}>
+            <Animated.View style={[styles.deleteBg, backdropStyle]}>
                 <FontAwesome name="trash" size={16} color={C.textPrimary} />
                 <Text style={styles.deleteText}>{deleteLabel}</Text>
             </Animated.View>
-            <Animated.View
-                style={[styles.content, { backgroundColor: contentBackgroundColor, transform: [{ translateX }] }]}
-                {...panResponder.panHandlers}
-            >
-                {children}
-            </Animated.View>
+            <GestureDetector gesture={pan}>
+                <Animated.View style={[styles.content, { backgroundColor: contentBackgroundColor }, contentStyle]}>
+                    {children}
+                </Animated.View>
+            </GestureDetector>
         </View>
     );
 }
