@@ -51,6 +51,8 @@ export interface Chat {
     type: ChatType;
     memberIds: string[]; // User IDs
     memberNames: string[]; // Matching display names
+    /** Matching profile picture URLs; null where a member has none. */
+    memberAvatars?: (string | null)[];
     name?: string; // Group chat name (optional for DMs)
     goalContext?: string; // e.g. "Cut (Lose Fat)"
     lastMessage?: {

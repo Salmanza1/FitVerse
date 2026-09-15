@@ -17,6 +17,7 @@ import { ChatStore } from './ChatStore';
 import { CHAT_MESSAGE_EVENT, getChatRoomChannelName } from './chatRealtime';
 import { NewChatModal } from './NewChatModal';
 import { ChatRoomScreen } from './ChatRoomScreen';
+import { ChatAvatarImage, avatarForChat } from './ChatAvatar';
 import { supabase } from '@/lib/supabase';
 import {
     getMemberWorkoutStatuses,
@@ -506,15 +507,19 @@ function ChatsListScreenBody({ visible, currentUser, onClose }: Props) {
                                                     },
                                                 ]}
                                             >
-                                                <Text
-                                                    style={{
-                                                        color: dmStatus != null ? statusColor(dmStatus) : '#D4AF37',
-                                                        fontWeight: '800',
-                                                        fontSize: 17,
-                                                    }}
-                                                >
-                                                    {getInitial(chat)}
-                                                </Text>
+                                                {avatarForChat(chat, currentUser.id) ? (
+                                                    <ChatAvatarImage uri={avatarForChat(chat, currentUser.id)!} />
+                                                ) : (
+                                                    <Text
+                                                        style={{
+                                                            color: dmStatus != null ? statusColor(dmStatus) : '#D4AF37',
+                                                            fontWeight: '800',
+                                                            fontSize: 17,
+                                                        }}
+                                                    >
+                                                        {getInitial(chat)}
+                                                    </Text>
+                                                )}
                                                 {dmStatus != null && (
                                                     <View
                                                         style={[

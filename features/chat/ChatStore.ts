@@ -47,6 +47,7 @@ function mapChatRow(c: any, lastMessage?: Chat['lastMessage']): Chat {
     const memberNames = members.map((m: any) =>
         m.profiles ? m.profiles.display_name : 'User'
     );
+    const memberAvatars = members.map((m: any) => m.profiles?.avatar ?? null);
 
     return {
         id: c.id,
@@ -54,6 +55,7 @@ function mapChatRow(c: any, lastMessage?: Chat['lastMessage']): Chat {
         name: c.name ?? undefined,
         memberIds,
         memberNames,
+        memberAvatars,
         createdAt: c.created_at,
         unreadCounts: {},
         lastMessage,
@@ -85,7 +87,7 @@ export const ChatStore = {
                     *,
                     participants:chat_participants(
                         user_id,
-                        profiles(display_name)
+                        profiles(display_name, avatar)
                     )
                 `)
                 .in('id', chatIds);
@@ -163,7 +165,7 @@ export const ChatStore = {
                     *,
                     participants:chat_participants(
                         user_id,
-                        profiles(display_name)
+                        profiles(display_name, avatar)
                     )
                 `)
                 .eq('id', chatId)

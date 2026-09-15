@@ -46,6 +46,7 @@ import {
     MemberWorkoutStatus,
 } from '@/features/workout/WorkoutPresenceStore';
 import { isRestDayMessage } from './chatSocial';
+import { ChatAvatarImage, avatarForChat, avatarForMember } from './ChatAvatar';
 import { VisualSystem } from '@/constants/VisualSystem';
 
 /** Shape of a `message_reactions` row as delivered by Supabase realtime. */
@@ -148,6 +149,8 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
     const nudgeScale = useRef(new Animated.Value(1)).current;
 
     const activeChat = roomChat ?? chat;
+    // A group has many faces, so it keeps its icon rather than borrowing one.
+    const headerAvatar = avatarForChat(activeChat, currentUserId);
     const roomChatRef = useRef(activeChat);
     roomChatRef.current = activeChat;
 
@@ -757,6 +760,16 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                                 },
                             ]}
                         >
+                            {headerAvatar ? (
+                                <ChatAvatarImage uri={headerAvatar} />
+                            ) : (
+                                <FontAwesome
+                                    name={activeChat.type === 'group' ? 'users' : 'user'}
+                                    size={16}
+                                    color={activeChat.type === 'dm' ? statusColor(otherStatus) : '#D4AF37'}
+                                />
+                            )}
+                            {/* After the picture, or it would sit underneath it. */}
                             {activeChat.type === 'dm' && (
                                 <View
                                     style={[
@@ -765,11 +778,6 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                                     ]}
                                 />
                             )}
-                            <FontAwesome
-                                name={activeChat.type === 'group' ? 'users' : 'user'}
-                                size={16}
-                                color={activeChat.type === 'dm' ? statusColor(otherStatus) : '#D4AF37'}
-                            />
                         </View>
                         <View style={styles.headerText}>
                             <Text
@@ -847,9 +855,15 @@ export function ChatRoomScreen({ visible, chat, currentUserId, currentUserName, 
                                     >
                                         {!isMine && (
                                             <View style={styles.smallAvatar}>
-                                                <Text style={styles.smallAvatarText}>
-                                                    {msg.senderName.charAt(0).toUpperCase()}
-                                                </Text>
+                                                {avatarForMember(activeChat, msg.senderId) ? (
+                                                    <ChatAvatarImage
+                                                        uri={avatarForMember(activeChat, msg.senderId)!}
+                                                    />
+                                                ) : (
+                                                    <Text style={styles.smallAvatarText}>
+                                                        {msg.senderName.charAt(0).toUpperCase()}
+                                                    </Text>
+                                                )}
                                             </View>
                                         )}
                                         <View style={{ maxWidth: '72%' }}>
